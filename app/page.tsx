@@ -1,65 +1,125 @@
-import Image from "next/image";
+import Hero from "./components/hero";
+import { Services } from "./components/services";
+import { Feature } from "./components/feature";
+import { CTA } from "./components/cta";
+import { TraditionalBusinessIcon, TechCocampaniesIcon, StartupsIcon } from "./components/icons";
+import { Clients } from "./components/clients";
+import { Footer } from "./components/footer";
+import { Testimonials } from "./components/testimonials";
 
+const services = {
+  "external-tech-team": {
+    name: "External Tech Team",
+    description: "A complete dedicated team with 100% time allocated to your business. From developers to project managers—everything you need to create your custom software.",
+  },
+  "tech-consulting": {
+    name: "Tech Consulting",
+    description: "We help bring your software to life. Share your idea with us, and we'll guide you toward the best technology and infrastructure to host it.",
+  },
+  "tech-support": {
+    name: "Tech Support",
+    description: "Small, punctual jobs to create custom scripts, develop integrations with third-party services, perform bugfixes and debugging, and provide overall technical support and maintenance for existing software systems.",
+  },
+  "tech-training": {
+    name: "Tech Training",
+    description: "We provide training programs that help your team learn and adapt to new technologies. From one-on-one sessions to larger audiences, we can help your team understand programming languages, technologies, best practices, and more.",
+  },
+  "team-augmentation": {
+    name: "Team Augmentation",
+    description: "Outsourcing services tailored to your needs—from Python to JavaScript or from developer to product owner—we can provide the professionals to help you grow your team.",
+  },
+  "internalization": {
+    name: "Internalization",
+    description: "We help you hire the best people for your company. Start by outsourcing our professionals, and if you want, you can hire them directly to your team—making trials easier and ensuring the best professionals are on your team.",
+  },
+  "mvp-development": {
+    name: "MVP Development",
+    description: "Let's create a plan to bring your project to life. We believe startups should be fast-paced, evolving companies. Let's make a 3-month plan to bring your software to life.",
+  },
+}
+
+const features = [
+  {
+    id: "traditional-business",
+    title: "Traditional Business",
+    subtitle: "Solutions for Traditional Businesses",
+    description: "For traditional businesses with no technical expertise, you need the right technology partner to drive your digital transformation without disrupting your core operations—bringing your software to life.",
+    icon: <TraditionalBusinessIcon />,
+    color: "orange",
+    side: "left",
+    services: [
+      services["external-tech-team"],
+      services["tech-consulting"],
+      services["tech-support"],
+      services["tech-training"],
+    ],
+    benefits:[
+      "Full-time dedicated team that understands your industry",
+      "Seamless integration with your existing business processes",
+      "Flexible engagement models to fit your needs",
+      "Scalable solutions that grow with your business",
+      "Partner that understands your business and your goals, not just your technology needs",
+    ]
+  },
+  {
+    id: "tech-companies",
+    title: "Tech Companies",
+    subtitle: "Solutions for Tech Companies",
+    description: "Your organization has a solid business foundation with established teams. What you need is the right technology partner to drive your digital transformation without disrupting your core operations.",
+    icon: <TechCocampaniesIcon />,
+    color: "indigo",
+    side: "right",
+    services: [
+      services["team-augmentation"],
+      services["internalization"],
+      services["tech-consulting"],
+      services["tech-training"],
+    ],
+    benefits:[
+      "Full-time dedicated team that understands your industry",
+      "Seamless integration with your existing business processes",
+      "Flexible engagement models to fit your needs",
+      "Scalable solutions that grow with your business",
+      "Partner that understands your business and your goals, not just your technology needs",
+    ]
+  },
+
+  {
+    id: "startups",
+    title: "Startups",
+    subtitle: "Solutions for Startups",
+    description: "Your organization has a solid business foundation with established teams. What you need is the right technology partner to drive your digital transformation without disrupting your core operations.",
+    icon: <StartupsIcon />,
+    color: "green",
+    side: "left",
+    services: [
+      services["external-tech-team"],
+      services["internalization"],
+      services["tech-consulting"],
+      services["mvp-development"],
+    ],
+    benefits:[
+      "Full-time dedicated team that understands your industry",
+      "Seamless integration with your existing business processes",
+      "Flexible engagement models to fit your needs",
+      "Scalable solutions that grow with your business",
+      "Partner that understands your business and your goals, not just your technology needs",
+    ]
+  },
+]
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+    <>
+      <Hero />
+      <Services /> 
+      {features.map((feature) => (
+        <Feature key={feature.title} feature={feature} />
+      ))}
+      {/* <Testimonials /> */}
+      <Clients />
+      
+      <CTA />
+      <Footer />
+    </>
   );
 }
