@@ -56,7 +56,7 @@ const features = [
     benefits:[
       "Full-time dedicated team that understands your industry",
       "Seamless integration with your existing business processes",
-      "Flexible engagement models to fit your needs",
+      "Flexible pricing models to fit your needs",
       "Scalable solutions that grow with your business",
       "Partner that understands your business and your goals, not just your technology needs",
     ]
@@ -65,7 +65,7 @@ const features = [
     id: "tech-companies",
     title: "Tech Companies",
     subtitle: "Solutions for Tech Companies",
-    description: "Your organization has a solid business foundation with established teams. What you need is the right technology partner to drive your digital transformation without disrupting your core operations.",
+    description: "You already have an ongoing tech team, but you're aiming to scale to the next level or boost your development capabilities. We can help you achieve this while hiring the best talent without risk",
     icon: <TechCocampaniesIcon />,
     color: "indigo",
     side: "right",
@@ -76,11 +76,11 @@ const features = [
       services["tech-training"],
     ],
     benefits:[
-      "Full-time dedicated team that understands your industry",
-      "Seamless integration with your existing business processes",
-      "Flexible engagement models to fit your needs",
-      "Scalable solutions that grow with your business",
-      "Partner that understands your business and your goals, not just your technology needs",
+      "Full-time dedicated team or outsourcing the best talent for your needs",
+      "Seamless integration with your existing tech team",
+      "Flexible princing models to fit your needs",
+      "Internalize the best talent for your company",
+      "A tech partner who can mentor and teach your team to help them grow and evolve",
     ]
   },
 
@@ -88,7 +88,7 @@ const features = [
     id: "startups",
     title: "Startups",
     subtitle: "Solutions for Startups",
-    description: "Your organization has a solid business foundation with established teams. What you need is the right technology partner to drive your digital transformation without disrupting your core operations.",
+    description: "As a startup, we can help you take your first steps or scale your project from 1 to 100. We're here to plan, execute, and gather feedback—providing the best team and tech to make it happen.",
     icon: <StartupsIcon />,
     color: "green",
     side: "left",
@@ -99,11 +99,11 @@ const features = [
       services["mvp-development"],
     ],
     benefits:[
-      "Full-time dedicated team that understands your industry",
-      "Seamless integration with your existing business processes",
-      "Flexible engagement models to fit your needs",
-      "Scalable solutions that grow with your business",
-      "Partner that understands your business and your goals, not just your technology needs",
+      "Full-time dedicated team that helps you go from 0 to 100 in 3 months",
+      "A team that can help you validate your idea and get it to market quickly and efficiently",
+      "Flexible pricing models to fit your needs",
+      "Internalize the best talent for your company",
+      "Partner that understands your business and your goals, and can point in the right technology direction",
     ]
   },
 ]
