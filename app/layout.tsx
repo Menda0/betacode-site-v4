@@ -4,6 +4,7 @@ import Script from "next/script";
 import "./globals.css";
 import { ThemeProvider } from "./components/theme-provider";
 import { Google } from "./components/google";
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -43,6 +44,7 @@ export default function RootLayout({
 }>) {
   return (
     <html className="scroll-smooth" lang="en" suppressHydrationWarning>
+
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
@@ -52,6 +54,7 @@ export default function RootLayout({
         </Script>
         <ThemeProvider>{children}</ThemeProvider>
       </body>
+      <GoogleAnalytics gaId='G-TTP70YDXYR' />
     </html>
   );
 }
