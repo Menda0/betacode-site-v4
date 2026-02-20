@@ -162,7 +162,7 @@ export default function Example() {
                   Empowering Your Business with Innovative Software Solutions
                   </h1> */}
                   <HeroCarousel />
-                  <p className="mt-8 text-lg font-medium text-pretty text-gray-500 sm:max-w-md sm:text-xl/8 lg:max-w-none dark:text-gray-400">
+                  <p className="hidden md:block mt-8 text-lg font-medium text-pretty text-gray-500 sm:max-w-md sm:text-xl/8 lg:max-w-none dark:text-gray-400">
                     Our team of experienced developers are dedicated to creating innovative, custom software solutions that drive your success and help your business reach its full potential.
                   </p>
                   <div className="mt-10 flex flex-col md:flex-row items-center gap-6">
