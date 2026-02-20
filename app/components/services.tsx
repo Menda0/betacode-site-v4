@@ -23,7 +23,7 @@ const features = [
         ]
     },
     {
-        name: 'Tech Cocampanies',
+        name: 'Tech Companies',
         description:
             'Technology-focused organizations seeking to scale their development capacity',
         href: '#tech-companies',
