@@ -121,7 +121,7 @@ function Description({ feature }: FeatureProps) {
                 <div className="mt-4 flex flex-col md:flex-row-reverse items-center gap-6">
                     <Link
                         href="https://calendar.app.google/1kXGjsszjPB3eFGr7"
-                        className="rounded-md bg-primary-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:bg-primary-500 dark:hover:bg-primary-400 dark:focus-visible:outline-primary-500"
+                        className="rounded-md bg-primary-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:bg-primary-500 dark:hover:bg-primary-400 dark:focus-visible:outline-primary-500 z-10"
                     >
                         Book a call!
                     </Link>
