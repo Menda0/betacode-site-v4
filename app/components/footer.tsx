@@ -53,18 +53,18 @@ export function Footer() {
   const year = new Date().getFullYear();
   return (
     <footer className="bg-white dark:bg-gray-900">
-      <div className="mx-auto max-w-7xl px-6 py-12 md:flex md:items-center md:justify-between lg:px-8">
+      <div className="mx-auto max-w-7xl px-6 py-12 flex flex-col gap-4 md:flex md:flex-row md:items-center md:justify-between lg:px-8">
         <div className="flex flex-col gap-2">
-          <div className="flex flex-row items-center">
-            <Image src="/images/iefp2.png" alt="Apoios" width={1200} height={1200} className="h-12 w-auto mr-6 dark:invert dark:filter dark:brightness-0" />
+          <div className="flex flex-col gap-8 md:gap-0 md:flex-row items-center">
+            <Image src="/images/iefp2.png" alt="Apoios" width={1200} height={1200} className="h-12 w-auto md:mr-6 dark:invert dark:filter dark:brightness-0" />
             <Image src="/images/pessoas2030.png" alt="Apoios" width={1200} height={1200} className="h-10 w-auto dark:invert dark:filter dark:brightness-0" />
-            <Image src="/images/pt2030.png" alt="Apoios" width={1200} height={1200} className="h-12 w-auto mr-4 dark:invert dark:filter dark:brightness-0" />
-            <div className="flex flex-row items-center gap-x-2">
-              <Image src="/images/eu2.png" alt="Apoios" width={1200} height={1200} className="h-10 w-auto" />
-              <span className="text-xs font-medium text-blue-500 dark:text-white max-w-48">Cofinanciado pela União Europeia</span>
+            <Image src="/images/pt2030.png" alt="Apoios" width={1200} height={1200} className="h-12 w-auto md:mr-4 dark:invert dark:filter dark:brightness-0" />
+            <div className="flex flex-col md:flex-row items-center gap-y-2 gap-x-2">
+              <Image src="/images/eu2.png" alt="Apoios" width={1200} height={1200} className="h-10 w-auto md:mr-2" />
+              <span className="text-xs font-medium text-blue-500 dark:text-white max-w-48 text-center md:text-left">Cofinanciado pela União Europeia</span>
             </div>
           </div>
-          <div className="flex flex-row items-center gap-x-6 text-gray-600 dark:text-gray-400 text-[10px]">
+          <div className="flex flex-row items-center gap-x-6 text-gray-600 dark:text-gray-400 text-[10px] text-center md:text-left">
             Projeto financiado pelo Programa AVANÇAR, no âmbito do Portugal 2030, cofinanciado pelo Fundo Social Europeu Mais (FSE+)
           </div>
         </div>

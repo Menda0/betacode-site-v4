@@ -140,7 +140,7 @@ function ServiceCard({ feature }: { feature: any }) {
                     <h4 className="text-md font-semibold text-gray-900 dark:text-white">Services</h4>
                     <ul className="text-gray-600 dark:text-gray-400 text-sm ">
                         {feature.services.map((service: string) => (
-                            <li className="flex items-center gap-x-2"><IconPoint className="size-4 text-blue-500" /> {service}</li>
+                            <li key={service} className="flex items-center gap-x-2"><IconPoint className="size-4 text-blue-500" /> {service}</li>
                         ))}
                     </ul>
                 </div>
