@@ -17,7 +17,7 @@ export function SiteHeader() {
   const pathname = usePathname()
 
   return (
-    <header className="sticky top-0 z-50 border-b border-gray-200/60 bg-white/75 backdrop-blur-lg dark:border-white/10 dark:bg-gray-900/75">
+    <header className="sticky top-0 z-50 border-b border-gray-200/60 bg-white/75 backdrop-blur-lg dark:border-white/10 dark:bg-[#111828]/95">
       <nav aria-label="Global" className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 lg:px-8">
         <Link href="/" className="flex shrink-0 items-center">
           <span className="sr-only">Betacode</span>
@@ -57,7 +57,7 @@ export function SiteHeader() {
 
       <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
         <div className="fixed inset-0 z-50 bg-gray-900/20 backdrop-blur-sm dark:bg-black/40" />
-        <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white/95 p-6 backdrop-blur-lg sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 dark:bg-gray-900/95 dark:sm:ring-gray-100/10">
+        <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white/95 p-6 backdrop-blur-lg sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 dark:bg-[#111828]/95 dark:sm:ring-gray-100/10">
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center" onClick={() => setMobileMenuOpen(false)}>
               <span className="sr-only">Betacode</span>
