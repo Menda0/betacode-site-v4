@@ -6,6 +6,7 @@
       "id": "small-team",
       "label": "Small Team",
       "serviceGroup": "self-managed-tech-teams",
+      "summary": "Lean dedicated team—junior dev plus part-time PO. Best for MVPs and focused builds.",
       "description": "A lean dedicated team with a junior developer and a part-time product owner—ideal for MVPs and focused builds.",
       "pricingModel": "project",
       "teamComposition": [
@@ -25,6 +26,7 @@
       "id": "base-team",
       "label": "Base Team",
       "serviceGroup": "self-managed-tech-teams",
+      "summary": "Full team with junior and senior developers. For larger or more complex products.",
       "description": "A full dedicated team with junior and mid/senior developers plus a part-time product owner—for larger or more complex products.",
       "pricingModel": "project",
       "teamComposition": [
@@ -44,6 +46,7 @@
     "team-augmentation": {
       "id": "team-augmentation",
       "label": "Team Augmentation",
+      "summary": "Hourly developers and POs who embed with your existing team and processes.",
       "description": "Flexible hourly professionals—from developers to product owners—who integrate with your existing tech team.",
       "pricingModel": "hourly",
       "teamComposition": [
@@ -62,6 +65,7 @@
     "support": {
       "id": "support",
       "label": "Support",
+      "summary": "Scoped work—integrations, bug fixes, scripts, and maintenance on existing systems.",
       "description": "Punctual work for integrations, custom scripts, bugfixes, and technical support for existing systems.",
       "pricingModel": "hourly",
       "teamComposition": [],
@@ -80,6 +84,7 @@
     "training": {
       "id": "training",
       "label": "Training",
+      "summary": "Upskill your team with sessions on languages, frameworks, and best practices.",
       "description": "Training programs to help your team learn new technologies—from one-on-one sessions to larger audiences.",
       "pricingModel": "hourly",
       "teamComposition": [
@@ -94,6 +99,7 @@
     "betacode-ventures": {
       "id": "betacode-ventures",
       "label": "Betacode Ventures",
+      "summary": "Technical co-founder partnership—from validation through launch. Equity-based.",
       "description": "A technical co-founder partnership—from idea validation through launch and scale. We invest our team; you invest your vision.",
       "pricingModel": "partnership",
       "teamComposition": [],

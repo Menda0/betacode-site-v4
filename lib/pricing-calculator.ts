@@ -41,6 +41,7 @@ export type CalculatorOutcome = {
   id: OutcomeId
   label: string
   description: string
+  summary?: string
   serviceGroup?: string
   pricingModel: PricingModel
   teamComposition: TeamMember[]
@@ -369,6 +370,78 @@ export function clearBranchAnswers(
   delete nextAnswers["product-help"]
 
   return nextAnswers
+}
+
+export function getOutcomeSummary(outcome: CalculatorOutcome): string {
+  return outcome.summary ?? outcome.description
+}
+
+export type BriefPriceSummary = {
+  label: string
+  value: string
+}
+
+export function getBriefPriceSummary(outcome: CalculatorOutcome): BriefPriceSummary {
+  if (outcome.pricingModel === "partnership") {
+    return { label: "Model", value: "Equity partnership" }
+  }
+
+  if (outcome.rate) {
+    return {
+      label: "Hourly rate",
+      value: `${formatHourlyRange(outcome.rate.rateMin, outcome.rate.rateMax)}/h`,
+    }
+  }
+
+  const mvpEstimate = outcome.estimates.find((estimate) =>
+    estimate.label.toLowerCase().includes("mvp")
+  )
+  if (mvpEstimate) {
+    return {
+      label: "MVP estimate",
+      value: formatEuroRange(mvpEstimate.min, mvpEstimate.max),
+    }
+  }
+
+  if (outcome.estimates.length > 0) {
+    const estimate = outcome.estimates[0]
+    return {
+      label: estimate.label,
+      value: formatEuroRange(estimate.min, estimate.max),
+    }
+  }
+
+  if (outcome.teamComposition.length > 0) {
+    const rateMin = Math.min(...outcome.teamComposition.map((member) => member.rateMin))
+    const rateMax = Math.max(...outcome.teamComposition.map((member) => member.rateMax))
+    return {
+      label: "Hourly rates",
+      value: `${formatHourlyRange(rateMin, rateMax)}/h`,
+    }
+  }
+
+  return { label: "Pricing", value: "Contact for quote" }
+}
+
+export const OUTCOME_DISPLAY_ORDER: OutcomeId[] = [
+  "betacode-ventures",
+  "small-team",
+  "base-team",
+  "team-augmentation",
+  "training",
+  "support",
+]
+
+export function sortOutcomesForDisplay(outcomes: CalculatorOutcome[]): CalculatorOutcome[] {
+  const order = new Map(OUTCOME_DISPLAY_ORDER.map((id, index) => [id, index]))
+  return [...outcomes].sort(
+    (a, b) => (order.get(a.id) ?? 99) - (order.get(b.id) ?? 99)
+  )
+}
+
+export function getServiceGroupLabel(serviceGroupId: string | undefined): string | null {
+  if (!serviceGroupId) return null
+  return pricingCalculatorConfig.serviceGroups?.[serviceGroupId]?.label ?? null
 }
 
 export function formatEuro(amount: number): string {

@@ -2,22 +2,25 @@
 
 import { useMemo, useState } from "react"
 import Link from "next/link"
-import { IconArrowLeft, IconArrowRight, IconCalculator, IconCheck } from "@tabler/icons-react"
+import { IconArrowLeft, IconArrowRight, IconCalculator, IconCheck, IconChevronDown, IconRocket, IconSchool, IconTool, IconUserPlus, IconUsersGroup } from "@tabler/icons-react"
 import {
   clearBranchAnswers,
   formatEuroRange,
   formatHourlyRange,
+  getBriefPriceSummary,
+  getOutcomeSummary,
   getPricingModelNote,
   getQuestionPath,
+  getServiceGroupLabel,
   getStartQuestion,
-  groupOutcomesForDisplay,
   isQuestionFlowComplete,
   pricingCalculatorConfig,
   resolveOutcomes,
+  sortOutcomesForDisplay,
   type CalculatorAnswers,
   type CalculatorOutcome,
   type CalculatorQuestion,
-  type ServiceDisplayGroup,
+  type OutcomeId,
 } from "@/lib/pricing-calculator"
 import { cn } from "@/lib/utils"
 
@@ -162,7 +165,12 @@ export function PriceCalculator() {
           </p>
         </div>
 
-        <div className="mx-auto mt-12 max-w-3xl">
+        <div
+          className={cn(
+            "mx-auto mt-12",
+            phase === "results" ? "max-w-5xl" : "max-w-3xl"
+          )}
+        >
           <StepIndicator currentStep={questionStep} totalSteps={totalSteps} />
 
           <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm sm:p-8 dark:border-gray-800 dark:bg-gray-900">
@@ -396,7 +404,7 @@ function ResultsStep({
   onContinue: () => void
   onReset: () => void
 }) {
-  const serviceGroups = groupOutcomesForDisplay(outcomes)
+  const sortedOutcomes = sortOutcomesForDisplay(outcomes)
 
   if (outcomes.length === 0) {
     return (
@@ -426,18 +434,18 @@ function ResultsStep({
         Back
       </button>
 
-      <div className="rounded-xl bg-primary-600/5 p-5 dark:bg-primary-500/10">
+      <div className="rounded-xl bg-primary-600/5 p-4 sm:p-5 dark:bg-primary-500/10">
         <p className="text-sm font-medium text-primary-700 uppercase dark:text-primary-300">
-          {outcomes.length > 1 ? "Recommended services" : "Recommended service"}
+          {sortedOutcomes.length > 1 ? "Recommended services" : "Recommended service"}
         </p>
-        <p className="mt-2 text-gray-600 dark:text-gray-300">
-          Based on your answers, these options may fit your needs. We suggest more than one when your situation calls for a combined approach.
+        <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
+          Compare options below. Tap any card for full pricing breakdowns.
         </p>
       </div>
 
-      <div className="mt-8 space-y-8">
-        {serviceGroups.map((group) => (
-          <ServiceGroupSection key={group.id} group={group} />
+      <div className="mt-6 grid gap-3 sm:grid-cols-2">
+        {sortedOutcomes.map((outcome) => (
+          <ServiceResultCard key={outcome.id} outcome={outcome} />
         ))}
       </div>
 
@@ -462,88 +470,144 @@ function ResultsStep({
   )
 }
 
-function ServiceGroupSection({ group }: { group: ServiceDisplayGroup }) {
-  const isSelfManaged = group.id === "self-managed-tech-teams"
+const OUTCOME_ICON_STYLES: Record<
+  OutcomeId,
+  { icon: typeof IconUsersGroup; bg: string; text: string }
+> = {
+  "small-team": {
+    icon: IconUsersGroup,
+    bg: "bg-primary-100 dark:bg-primary-900/40",
+    text: "text-primary-600 dark:text-primary-400",
+  },
+  "base-team": {
+    icon: IconUsersGroup,
+    bg: "bg-primary-100 dark:bg-primary-900/40",
+    text: "text-primary-600 dark:text-primary-400",
+  },
+  "team-augmentation": {
+    icon: IconUserPlus,
+    bg: "bg-indigo-100 dark:bg-indigo-900/40",
+    text: "text-indigo-600 dark:text-indigo-400",
+  },
+  support: {
+    icon: IconTool,
+    bg: "bg-sky-100 dark:bg-sky-900/40",
+    text: "text-sky-600 dark:text-sky-400",
+  },
+  training: {
+    icon: IconSchool,
+    bg: "bg-amber-100 dark:bg-amber-900/40",
+    text: "text-amber-600 dark:text-amber-400",
+  },
+  "betacode-ventures": {
+    icon: IconRocket,
+    bg: "bg-purple-100 dark:bg-purple-900/40",
+    text: "text-purple-600 dark:text-purple-400",
+  },
+}
+
+function ServiceResultCard({ outcome }: { outcome: CalculatorOutcome }) {
+  const [expanded, setExpanded] = useState(false)
+  const iconStyle = OUTCOME_ICON_STYLES[outcome.id]
+  const Icon = iconStyle.icon
+  const briefPrice = getBriefPriceSummary(outcome)
+  const groupLabel = getServiceGroupLabel(outcome.serviceGroup)
 
   return (
-    <div className="rounded-xl border border-gray-200 p-5 dark:border-gray-700">
-      <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{group.label}</h3>
-      {group.description && (
-        <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">{group.description}</p>
+    <div
+      className={cn(
+        "rounded-xl border bg-white transition-all dark:bg-gray-900/50",
+        expanded
+          ? "border-primary-300 shadow-sm ring-1 ring-primary-200 dark:border-primary-600 dark:ring-primary-800"
+          : "border-gray-200 hover:border-primary-200 dark:border-gray-700 dark:hover:border-primary-800"
       )}
+    >
+      <button
+        type="button"
+        onClick={() => setExpanded((open) => !open)}
+        className="flex w-full items-start gap-3 p-4 text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
+        aria-expanded={expanded}
+      >
+        <div
+          className={cn(
+            "flex size-10 shrink-0 items-center justify-center rounded-lg",
+            iconStyle.bg,
+            iconStyle.text
+          )}
+        >
+          <Icon className="size-5" aria-hidden="true" />
+        </div>
 
-      <div className={cn("space-y-4", isSelfManaged && "mt-6")}>
-        {group.outcomes.map((outcome) => (
-          <OutcomeCard
-            key={outcome.id}
-            outcome={outcome}
-            showServiceHeader={isSelfManaged}
-            compact={!isSelfManaged}
-          />
-        ))}
-      </div>
+        <div className="min-w-0 flex-1">
+          <div className="flex items-start justify-between gap-3">
+            <div className="min-w-0">
+              <h3 className="font-semibold text-gray-900 dark:text-white">{outcome.label}</h3>
+              {groupLabel && (
+                <span className="mt-1 inline-block rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600 dark:bg-gray-800 dark:text-gray-400">
+                  {groupLabel}
+                </span>
+              )}
+            </div>
+            <div className="shrink-0 text-right">
+              <p className="text-xs text-gray-500 dark:text-gray-400">{briefPrice.label}</p>
+              <p className="text-sm font-semibold text-primary-600 dark:text-primary-400">
+                {briefPrice.value}
+              </p>
+            </div>
+          </div>
+          <p className="mt-2 line-clamp-2 text-sm text-gray-600 dark:text-gray-400">
+            {getOutcomeSummary(outcome)}
+          </p>
+          <span className="mt-2 inline-flex items-center gap-1 text-xs font-medium text-primary-600 dark:text-primary-400">
+            {expanded ? "Hide pricing" : "See full pricing"}
+            <IconChevronDown
+              className={cn("size-3.5 transition-transform", expanded && "rotate-180")}
+              aria-hidden="true"
+            />
+          </span>
+        </div>
+      </button>
 
-      {!isSelfManaged && group.outcomes[0] && (
-        <div className="mt-4">
-          <Link
-            href={group.outcomes[0].cta.href}
-            className="text-sm font-semibold text-primary-600 hover:text-primary-500 dark:text-primary-400"
-          >
-            {group.outcomes[0].cta.label} →
-          </Link>
+      {expanded && (
+        <div className="border-t border-gray-100 px-4 pb-4 pt-3 dark:border-gray-800">
+          <OutcomePricingDetails outcome={outcome} />
         </div>
       )}
     </div>
   )
 }
 
-function OutcomeCard({
-  outcome,
-  showServiceHeader = true,
-  compact = false,
-}: {
-  outcome: CalculatorOutcome
-  showServiceHeader?: boolean
-  compact?: boolean
-}) {
+function OutcomePricingDetails({ outcome }: { outcome: CalculatorOutcome }) {
   const pricingNote = getPricingModelNote(outcome.pricingModel)
   const showTeamTable = outcome.teamComposition.length > 0
   const showRate = Boolean(outcome.rate)
   const showEstimates = outcome.estimates.length > 0
 
   return (
-    <div
-      className={cn(
-        compact ? "" : "rounded-xl border border-gray-200 p-5 dark:border-gray-700",
-        showServiceHeader && !compact && "rounded-lg border border-gray-100 bg-gray-50/50 p-4 dark:border-gray-800 dark:bg-gray-800/40"
-      )}
-    >
-      {showServiceHeader && (
-        <>
-          <h4 className="text-base font-semibold text-gray-900 dark:text-white">{outcome.label}</h4>
-          <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">{outcome.description}</p>
-        </>
-      )}
+    <div>
+      <p className="text-sm text-gray-600 dark:text-gray-300">{outcome.description}</p>
 
       {(showTeamTable || showRate || showEstimates) && (
-        <div className={cn("grid gap-4 sm:grid-cols-2", showServiceHeader && "mt-4")}>
+        <div className="mt-4 grid gap-4 sm:grid-cols-2">
           {showTeamTable && (
-            <div>
-              <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Team configuration</p>
-              <div className="mt-3 overflow-x-auto">
-                <table className="min-w-full text-sm">
+            <div className="w-full rounded-lg bg-gray-50 p-3 sm:col-span-2 dark:bg-gray-800/50">
+              <p className="text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                Team configuration
+              </p>
+              <div className="mt-2 w-full overflow-x-auto">
+                <table className="w-full table-fixed text-sm">
                   <thead>
                     <tr className="border-b border-gray-200 text-left dark:border-gray-700">
-                      <th className="pb-2 pr-4 font-semibold text-primary-600 dark:text-primary-400">Profile</th>
-                      <th className="pb-2 pr-4 font-semibold text-primary-600 dark:text-primary-400">Regime</th>
-                      <th className="pb-2 font-semibold text-primary-600 dark:text-primary-400">Rate</th>
+                      <th className="w-[45%] pb-1.5 pr-3 font-semibold text-primary-600 dark:text-primary-400">Profile</th>
+                      <th className="w-[30%] pb-1.5 pr-3 font-semibold text-primary-600 dark:text-primary-400">Regime</th>
+                      <th className="w-[25%] pb-1.5 font-semibold text-primary-600 dark:text-primary-400">Rate</th>
                     </tr>
                   </thead>
                   <tbody className="text-gray-700 dark:text-gray-300">
                     {outcome.teamComposition.map((member) => (
                       <tr key={member.profile} className="border-b border-gray-100 last:border-0 dark:border-gray-800">
-                        <td className="py-2 pr-4">{member.profile}</td>
-                        <td className="py-2 pr-4">{member.regime}</td>
+                        <td className="py-2 pr-3">{member.profile}</td>
+                        <td className="py-2 pr-3">{member.regime}</td>
                         <td className="py-2">{formatHourlyRange(member.rateMin, member.rateMax)}/h</td>
                       </tr>
                     ))}
@@ -554,26 +618,27 @@ function OutcomeCard({
           )}
 
           {showRate && outcome.rate && (
-            <div>
-              <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Pricing</p>
-              <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">{outcome.rate.label}</p>
-              {outcome.rate.regime && (
-                <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">{outcome.rate.regime}</p>
-              )}
+            <div className="rounded-lg bg-gray-50 p-3 dark:bg-gray-800/50">
+              <p className="text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">Pricing</p>
               <p className="mt-2 text-lg font-semibold text-gray-900 dark:text-white">
                 {formatHourlyRange(outcome.rate.rateMin, outcome.rate.rateMax)}/h
               </p>
+              {outcome.rate.regime && (
+                <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">{outcome.rate.regime}</p>
+              )}
             </div>
           )}
 
           {showEstimates && (
-            <div>
-              <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Estimated prices</p>
-              <div className="mt-3 space-y-3">
+            <div className="rounded-lg bg-gray-50 p-3 dark:bg-gray-800/50 sm:col-span-2">
+              <p className="text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                Estimated prices
+              </p>
+              <div className="mt-2 grid gap-3 sm:grid-cols-2">
                 {outcome.estimates.map((estimate) => (
                   <div key={estimate.label}>
                     <p className="text-sm text-gray-600 dark:text-gray-400">{estimate.label}</p>
-                    <p className="mt-1 text-lg font-semibold text-gray-900 dark:text-white">
+                    <p className="mt-0.5 text-base font-semibold text-gray-900 dark:text-white">
                       {formatEuroRange(estimate.min, estimate.max)}
                     </p>
                   </div>
@@ -585,21 +650,15 @@ function OutcomeCard({
       )}
 
       {pricingNote && (
-        <p className={cn("text-xs text-gray-500 dark:text-gray-400", showServiceHeader ? "mt-4" : "mt-3")}>
-          {pricingNote}
-        </p>
+        <p className="mt-3 text-xs text-gray-500 dark:text-gray-400">{pricingNote}</p>
       )}
 
-      {showServiceHeader && !compact && (
-        <div className="mt-4">
-          <Link
-            href={outcome.cta.href}
-            className="text-sm font-semibold text-primary-600 hover:text-primary-500 dark:text-primary-400"
-          >
-            {outcome.cta.label} →
-          </Link>
-        </div>
-      )}
+      <Link
+        href={outcome.cta.href}
+        className="mt-4 inline-flex text-sm font-semibold text-primary-600 hover:text-primary-500 dark:text-primary-400"
+      >
+        {outcome.cta.label} →
+      </Link>
     </div>
   )
 }
