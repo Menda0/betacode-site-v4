@@ -1,6 +1,16 @@
-export type BusinessType = "tech-company" | "traditional-business" | "startup"
-export type SoftwareType = "saas" | "b2b" | "social-network" | "integration"
-export type TeamType = "small" | "base"
+import calculatorData from "@/data/pricing-calculator.json"
+
+export type OutcomeId =
+  | "small-team"
+  | "base-team"
+  | "team-augmentation"
+  | "support"
+  | "training"
+  | "betacode-ventures"
+
+export type PricingModel = "project" | "hourly" | "partnership"
+
+export type QuestionType = "choice" | "dropdown" | "textarea"
 
 export type TeamMember = {
   profile: string
@@ -15,172 +25,226 @@ export type PriceEstimate = {
   max: number
 }
 
-export type PricingRecommendation = {
-  service: string
-  serviceDescription: string
-  teamType: TeamType
-  teamLabel: string
+export type OutcomeCta = {
+  label: string
+  href: string
+}
+
+export type OutcomeRate = {
+  label: string
+  regime?: string
+  rateMin: number
+  rateMax: number
+}
+
+export type CalculatorOutcome = {
+  id: OutcomeId
+  label: string
+  description: string
+  pricingModel: PricingModel
   teamComposition: TeamMember[]
+  rate?: OutcomeRate
   estimates: PriceEstimate[]
-  summary: string
+  cta: OutcomeCta
 }
 
-const TEAM_COMPOSITIONS: Record<TeamType, TeamMember[]> = {
-  small: [
-    { profile: "Junior Developer", regime: "Full-time", rateMin: 20, rateMax: 30 },
-    { profile: "Product Owner", regime: "Part-time", rateMin: 50, rateMax: 60 },
-  ],
-  base: [
-    { profile: "Junior Developer", regime: "Full-time", rateMin: 20, rateMax: 30 },
-    { profile: "Mid/Senior Developer", regime: "Full-time", rateMin: 30, rateMax: 50 },
-    { profile: "Product Owner", regime: "Part-time", rateMin: 50, rateMax: 60 },
-  ],
-}
-
-const PROJECT_ESTIMATES: Record<TeamType, PriceEstimate[]> = {
-  small: [
-    { label: "MVP (3 months)", min: 20_000, max: 30_000 },
-    { label: "First Year", min: 85_000, max: 120_000 },
-  ],
-  base: [
-    { label: "MVP (3 months)", min: 30_000, max: 45_000 },
-    { label: "First Year", min: 120_000, max: 180_000 },
-  ],
-}
-
-const SERVICES = {
-  "external-tech-team": {
-    name: "External Tech Team",
-    description:
-      "A complete dedicated team with 100% time allocated to your business—from developers to project managers.",
-  },
-  "team-augmentation": {
-    name: "Team Augmentation",
-    description:
-      "Outsourcing professionals tailored to your needs—from developers to product owners—to grow your existing team.",
-  },
-  "mvp-development": {
-    name: "MVP Development",
-    description:
-      "A focused 3-month plan to bring your product to life quickly, validate your idea, and get to market.",
-  },
-  "tech-support": {
-    name: "Tech Support",
-    description:
-      "Punctual work for integrations, custom scripts, bugfixes, and technical support for existing systems.",
-  },
-} as const
-
-export const BUSINESS_OPTIONS: {
-  id: BusinessType
+export type CalculatorOption = {
+  id: string
   label: string
-  description: string
-}[] = [
-  {
-    id: "tech-company",
-    label: "Tech Company",
-    description: "You already have an in-house tech team and want to scale capacity.",
-  },
-  {
-    id: "traditional-business",
-    label: "Traditional Business",
-    description: "No internal tech team—you need a partner to build and maintain software.",
-  },
-  {
-    id: "startup",
-    label: "Startup",
-    description: "Early-stage company looking to launch or scale a new product fast.",
-  },
-]
+  description?: string
+  nextQuestionId?: string
+  outcomeId?: OutcomeId
+}
 
-export const SOFTWARE_OPTIONS: {
-  id: SoftwareType
+export type CalculatorQuestion = {
+  id: string
+  type: QuestionType
+  title: string
+  description?: string
+  optional?: boolean
+  placeholder?: string
+  nextQuestionId?: string
+  options: CalculatorOption[]
+}
+
+export type ContactField = {
+  id: string
   label: string
-  description: string
-}[] = [
-  {
-    id: "saas",
-    label: "SaaS Platform",
-    description: "Subscription-based software product with user accounts and billing.",
-  },
-  {
-    id: "b2b",
-    label: "B2B Business",
-    description: "Business-facing platform with workflows, dashboards, or portals.",
-  },
-  {
-    id: "social-network",
-    label: "Social Network",
-    description: "Community platform with profiles, feeds, messaging, or user-generated content.",
-  },
-  {
-    id: "integration",
-    label: "Integration with Other Services",
-    description: "Connect existing tools, APIs, or third-party services.",
-  },
-]
-
-function getTeamType(business: BusinessType, software: SoftwareType): TeamType {
-  if (software === "social-network") return "base"
-  if (software === "integration") return "small"
-  if (business === "startup") return "small"
-  if (business === "tech-company" && software === "saas") return "small"
-  return "base"
+  description?: string
+  type: "text" | "email" | "url"
+  placeholder?: string
+  optional?: boolean
 }
 
-function getServiceKey(business: BusinessType, software: SoftwareType): keyof typeof SERVICES {
-  if (software === "integration") return "tech-support"
-  if (business === "tech-company") return "team-augmentation"
-  if (business === "startup") return "mvp-development"
-  return "external-tech-team"
+export type ContactConfig = {
+  title: string
+  description?: string
+  fields: ContactField[]
 }
 
-function buildSummary(business: BusinessType, software: SoftwareType, serviceName: string, teamLabel: string): string {
-  const businessLabel = BUSINESS_OPTIONS.find((option) => option.id === business)?.label ?? ""
-  const softwareLabel = SOFTWARE_OPTIONS.find((option) => option.id === software)?.label ?? ""
-
-  if (business === "tech-company" && software !== "integration") {
-    return `As a ${businessLabel} building a ${softwareLabel}, we recommend ${serviceName} with our ${teamLabel}. You get flexible hourly professionals who integrate with your existing team.`
-  }
-
-  if (software === "integration") {
-    return `For ${softwareLabel} work at a ${businessLabel}, ${serviceName} with our ${teamLabel} is the most efficient path—focused scope, faster delivery, and lower investment.`
-  }
-
-  if (business === "startup") {
-    return `As a ${businessLabel} launching a ${softwareLabel}, ${serviceName} with our ${teamLabel} gives you a dedicated team and a clear 3-month roadmap to validate and ship.`
-  }
-
-  return `As a ${businessLabel} without an internal tech team, ${serviceName} with our ${teamLabel} provides the full-stack expertise you need to build a ${softwareLabel} from scratch.`
+export type CalculatorRule = {
+  id: string
+  conditions: Record<string, string>
+  outcomeIds: OutcomeId[]
 }
 
-export function getPricingRecommendation(
-  business: BusinessType,
-  software: SoftwareType
-): PricingRecommendation {
-  const teamType = getTeamType(business, software)
-  const serviceKey = getServiceKey(business, software)
-  const service = SERVICES[serviceKey]
-  const teamLabel = teamType === "small" ? "Small Team" : "Base Team"
-  const isHourlyModel = business === "tech-company" && software !== "integration"
+export type CalculatorConfig = {
+  version: number
+  startQuestionId: string
+  outcomes: Record<OutcomeId, CalculatorOutcome>
+  questions: CalculatorQuestion[]
+  contact: ContactConfig
+  rules: CalculatorRule[]
+}
 
-  return {
-    service: service.name,
-    serviceDescription: service.description,
-    teamType,
-    teamLabel,
-    teamComposition: TEAM_COMPOSITIONS[teamType],
-    estimates: isHourlyModel
-      ? [
-          {
-            label: "Typical engagement (reference)",
-            min: PROJECT_ESTIMATES[teamType][1].min,
-            max: PROJECT_ESTIMATES[teamType][1].max,
-          },
-        ]
-      : PROJECT_ESTIMATES[teamType],
-    summary: buildSummary(business, software, service.name, teamLabel),
+export type CalculatorAnswers = Record<string, string>
+
+export const pricingCalculatorConfig = calculatorData as unknown as CalculatorConfig
+
+export function getQuestionById(questionId: string): CalculatorQuestion | undefined {
+  return pricingCalculatorConfig.questions.find((question) => question.id === questionId)
+}
+
+export function getStartQuestion(): CalculatorQuestion {
+  const question = getQuestionById(pricingCalculatorConfig.startQuestionId)
+  if (!question) {
+    throw new Error(`Start question "${pricingCalculatorConfig.startQuestionId}" not found`)
   }
+  return question
+}
+
+function getNextQuestionIdForAnswer(question: CalculatorQuestion, optionId: string): string | undefined {
+  const selectedOption = question.options.find((option) => option.id === optionId)
+  if (selectedOption?.nextQuestionId) return selectedOption.nextQuestionId
+  if (question.nextQuestionId) return question.nextQuestionId
+  return undefined
+}
+
+export function getQuestionPath(answers: CalculatorAnswers): CalculatorQuestion[] {
+  const path: CalculatorQuestion[] = []
+  let currentQuestionId: string | undefined = pricingCalculatorConfig.startQuestionId
+
+  while (currentQuestionId) {
+    const question = getQuestionById(currentQuestionId)
+    if (!question) break
+
+    path.push(question)
+
+    const answer = answers[question.id]
+    if (!answer) break
+
+    if (question.type === "textarea") break
+
+    currentQuestionId = getNextQuestionIdForAnswer(question, answer)
+  }
+
+  return path
+}
+
+export function isQuestionFlowComplete(answers: CalculatorAnswers): boolean {
+  const path = getQuestionPath(answers)
+  const lastQuestion = path[path.length - 1]
+  if (!lastQuestion) return false
+
+  if (lastQuestion.type === "textarea") {
+    return path.slice(0, -1).every((question) => Boolean(answers[question.id]))
+  }
+
+  return path.every((question) => Boolean(answers[question.id]))
+}
+
+export function resolveOutcomes(answers: CalculatorAnswers): CalculatorOutcome[] {
+  const directOutcomeId = findDirectOutcomeId(answers)
+  if (directOutcomeId) {
+    const outcome = pricingCalculatorConfig.outcomes[directOutcomeId]
+    return outcome ? [outcome] : []
+  }
+
+  const matchedOutcomeIds = new Set<OutcomeId>()
+
+  for (const rule of pricingCalculatorConfig.rules) {
+    const matches = Object.entries(rule.conditions).every(
+      ([questionId, optionId]) => answers[questionId] === optionId
+    )
+    if (matches) {
+      for (const outcomeId of rule.outcomeIds) {
+        matchedOutcomeIds.add(outcomeId)
+      }
+    }
+  }
+
+  if (matchedOutcomeIds.size === 0) {
+    const fallback = getFallbackOutcomeIds(answers)
+    for (const outcomeId of fallback) {
+      matchedOutcomeIds.add(outcomeId)
+    }
+  }
+
+  return Array.from(matchedOutcomeIds)
+    .map((outcomeId) => pricingCalculatorConfig.outcomes[outcomeId])
+    .filter(Boolean)
+}
+
+function getFallbackOutcomeIds(answers: CalculatorAnswers): OutcomeId[] {
+  const productHelp = answers["product-help"]
+  switch (productHelp) {
+    case "punctual-support":
+      return ["support"]
+    case "team-augmentation":
+      return ["team-augmentation"]
+    case "modernize":
+      return answers["business-stage"] === "startup" ? ["small-team"] : ["base-team"]
+    case "new-product":
+      return answers["business-stage"] === "startup" ? ["small-team"] : ["base-team"]
+    default:
+      return []
+  }
+}
+
+function findDirectOutcomeId(answers: CalculatorAnswers): OutcomeId | null {
+  for (const question of pricingCalculatorConfig.questions) {
+    const selectedOptionId = answers[question.id]
+    if (!selectedOptionId) continue
+
+    const selectedOption = question.options.find((option) => option.id === selectedOptionId)
+    if (selectedOption?.outcomeId) {
+      return selectedOption.outcomeId
+    }
+  }
+
+  return null
+}
+
+export function getBranchQuestionIds(businessStage: string | undefined): string[] {
+  if (businessStage === "startup") {
+    return ["startup-funding", "startup-mvp"]
+  }
+  if (businessStage === "established") {
+    return ["team-dimensions", "has-tech-team"]
+  }
+  return []
+}
+
+export function clearBranchAnswers(
+  answers: CalculatorAnswers,
+  businessStage: string | undefined
+): CalculatorAnswers {
+  const nextAnswers = { ...answers }
+  const branchIds = getBranchQuestionIds(businessStage)
+
+  for (const questionId of branchIds) {
+    delete nextAnswers[questionId]
+  }
+
+  if (businessStage === "startup") {
+    delete nextAnswers["team-dimensions"]
+    delete nextAnswers["has-tech-team"]
+  } else if (businessStage === "established") {
+    delete nextAnswers["startup-funding"]
+    delete nextAnswers["startup-mvp"]
+  }
+
+  return nextAnswers
 }
 
 export function formatEuro(amount: number): string {
@@ -197,4 +261,17 @@ export function formatEuroRange(min: number, max: number): string {
 
 export function formatHourlyRange(min: number, max: number): string {
   return `${min} – ${max} €`
+}
+
+export function getPricingModelNote(pricingModel: PricingModel): string | null {
+  switch (pricingModel) {
+    case "hourly":
+      return "Hourly rates above. Project ranges shown as a reference where applicable."
+    case "project":
+      return "Ranges based on our standard team configurations. Final pricing depends on scope and requirements."
+    case "partnership":
+      return "Betacode Ventures is an equity partnership—pricing is tailored to your stage and product."
+    default:
+      return null
+  }
 }
