@@ -19,32 +19,32 @@ export function HeroCarousel() {
       <CarouselContent>
           <CarouselItem>
             <h1 className="text-5xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-7xl dark:text-white">
-                Empowering Your Business with Innovative Software Solutions
+                Your dedicated team for custom software
             </h1>
           </CarouselItem>
           <CarouselItem>
             <h1 className="text-5xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-7xl dark:text-white">
-                Building software takes your business to the next level
+                From MVP to production in three months
             </h1>
           </CarouselItem>
           <CarouselItem>
             <h1 className="text-5xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-7xl dark:text-white">
-                Developing MVPs that put your ideas to the test
+                Scale engineering without the hiring gamble
             </h1>
           </CarouselItem>
           <CarouselItem>
             <h1 className="text-5xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-7xl dark:text-white">
-                Helping you hire the best people for your company
+                Technology partnerships that grow with your business
             </h1>
           </CarouselItem>
           <CarouselItem>
             <h1 className="text-5xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-7xl dark:text-white">
-                Providing technical support and maintenance for your software
+                Ship products that reach real users
             </h1>
           </CarouselItem>
           <CarouselItem>
             <h1 className="text-5xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-7xl dark:text-white">
-                Helping you understand your technology needs
+                One team, fully committed — not a rotating bench
             </h1>
           </CarouselItem>
       </CarouselContent>

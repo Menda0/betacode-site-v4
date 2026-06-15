@@ -35,7 +35,7 @@ export function InsightsPreview({ posts }: { posts: BlogPost[] }) {
               From the Betacode team
             </h2>
             <p className="mt-4 text-lg/8 text-gray-600 dark:text-gray-400">
-              Practical advice on building software, launching startups, and modernizing products.
+              Practical takes on building software, launching products, and growing engineering teams.
             </p>
           </div>
           <Link

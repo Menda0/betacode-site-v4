@@ -20,10 +20,10 @@ export function VenturesPromo() {
               Betacode Ventures
             </div>
             <h2 className="mt-4 text-3xl font-semibold tracking-tight text-gray-900 sm:text-4xl dark:text-white">
-              Got a startup idea but no technical co-founder?
+              Have the vision but need a technical co-founder?
             </h2>
             <p className="mt-4 text-lg/8 text-gray-700 dark:text-gray-200">
-              We partner with founders to build MVPs in ~3 months — no dev fees, just equity.
+              Betacode Ventures partners with founders to build MVPs in ~3 months — no dev fees, equity instead.
               From zero to a product you can put in front of real users.
             </p>
           </div>

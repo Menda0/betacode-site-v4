@@ -18,11 +18,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Betacode - Empowering Your Business with Innovative Software Solutions",
-  description: "Empowering Your Business with Innovative Software Solutions",
+  title: "Betacode — Dedicated software teams for businesses and startups",
+  description: "Custom software, dedicated engineering teams, and technical co-founder partnerships. From MVPs in three months to long-term team augmentation.",
   openGraph: {
     title: "Betacode",
-    description: "Empowering Your Business with Innovative Software Solutions",
+    description: "Custom software, dedicated engineering teams, and technical co-founder partnerships. From MVPs in three months to long-term team augmentation.",
     images: "/images/betacode-facebook.png",
     url: "/",
   },

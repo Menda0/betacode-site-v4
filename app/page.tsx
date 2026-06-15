@@ -12,31 +12,31 @@ import { getBlogPosts } from "@/lib/blog-content";
 const services = {
   "external-tech-team": {
     name: "External Tech Team",
-    description: "A complete dedicated team with 100% time allocated to your business. From developers to project managers—everything you need to create your custom software.",
+    description: "A fully dedicated team — developers, designers, and project managers — working exclusively on your product. No shared attention, no rotating freelancers.",
   },
   "tech-consulting": {
     name: "Tech Consulting",
-    description: "We help bring your software to life. Share your idea with us, and we'll guide you toward the best technology and infrastructure to host it.",
+    description: "Turn your idea into a concrete plan. We help you choose the right stack, architecture, and infrastructure before a single line of code is written.",
   },
   "tech-support": {
     name: "Tech Support",
-    description: "Small, punctual jobs to create custom scripts, develop integrations with third-party services, perform bugfixes and debugging, and provide overall technical support and maintenance for existing software systems.",
+    description: "Targeted technical work when you need it: integrations, scripts, bug fixes, and maintenance for systems already in production.",
   },
   "tech-training": {
     name: "Tech Training",
-    description: "We provide training programs that help your team learn and adapt to new technologies. From one-on-one sessions to larger audiences, we can help your team understand programming languages, technologies, best practices, and more.",
+    description: "Upskill your team on the languages, frameworks, and practices your product depends on — from one-on-one coaching to team workshops.",
   },
   "team-augmentation": {
     name: "Team Augmentation",
-    description: "Outsourcing services tailored to your needs—from Python to JavaScript or from developer to product owner—we can provide the professionals to help you grow your team.",
+    description: "Add senior engineers, product owners, or specialists to your existing team — matched to your stack and working alongside your people from day one.",
   },
   "internalization": {
-    name: "Internalization",
-    description: "We help you hire the best people for your company. Start by outsourcing our professionals, and if you want, you can hire them directly to your team—making trials easier and ensuring the best professionals are on your team.",
+    name: "Team Internalization",
+    description: "Try before you hire. Start with our people embedded in your team, then bring the best fit in-house when you're confident they're the right long-term match.",
   },
   "mvp-development": {
     name: "MVP Development",
-    description: "Let's create a plan to bring your project to life. We believe startups should be fast-paced, evolving companies. Let's make a 3-month plan to bring your software to life.",
+    description: "A focused 3-month plan to get your product in front of real users — scoped, built, and shipped with a team that moves at startup speed.",
   },
 }
 
@@ -44,8 +44,8 @@ const features = [
   {
     id: "traditional-business",
     title: "Traditional Business",
-    subtitle: "Solutions for Traditional Businesses",
-    description: "For traditional businesses with no technical expertise, you need the right technology partner to drive your digital transformation without disrupting your core operations—bringing your software to life.",
+    subtitle: "Modernize without disrupting what already works",
+    description: "You know your industry — we bring the engineering. We embed as your technology partner, building custom software around your existing operations so digital transformation doesn't slow the business down.",
     icon: <TraditionalBusinessIcon />,
     color: "orange",
     side: "left",
@@ -56,18 +56,18 @@ const features = [
       services["tech-training"],
     ],
     benefits:[
-      "Full-time dedicated team that understands your industry",
-      "Seamless integration with your existing business processes",
-      "Flexible pricing models to fit your needs",
-      "Scalable solutions that grow with your business",
-      "Partner that understands your business and your goals, not just your technology needs",
+      "A dedicated team that learns your business, not just your codebase",
+      "Software built around your workflows — not the other way around",
+      "Flexible engagement models that fit established budgets",
+      "Solutions that scale as your operations grow",
+      "A long-term partner invested in your outcomes, not billable hours",
     ]
   },
   {
     id: "tech-companies",
     title: "Tech Companies",
-    subtitle: "Solutions for Tech Companies",
-    description: "You already have an ongoing tech team, but you're aiming to scale to the next level or boost your development capabilities. We can help you achieve this while hiring the best talent without risk",
+    subtitle: "Move faster without compromising on quality",
+    description: "Your product roadmap is ambitious and hiring takes months. We augment your team with senior talent who integrate from day one — and help you internalize the best people when the time is right.",
     icon: <TechCocampaniesIcon />,
     color: "indigo",
     side: "right",
@@ -78,19 +78,19 @@ const features = [
       services["tech-training"],
     ],
     benefits:[
-      "Full-time dedicated team or outsourcing the best talent for your needs",
-      "Seamless integration with your existing tech team",
-      "Flexible princing models to fit your needs",
-      "Internalize the best talent for your company",
-      "A tech partner who can mentor and teach your team to help them grow and evolve",
+      "Senior engineers and product leads matched to your stack",
+      "Seamless integration with your existing processes and tools",
+      "Flexible pricing that scales with your needs",
+      "A low-risk path to hiring — try before you commit",
+      "Mentorship and knowledge transfer that raises the bar for your whole team",
     ]
   },
 
   {
     id: "startups",
     title: "Startups",
-    subtitle: "Solutions for Startups",
-    description: "As a startup, we can help you take your first steps or scale your project from 1 to 100. We're here to plan, execute, and gather feedback—providing the best team and tech to make it happen.",
+    subtitle: "From zero to users in three months",
+    description: "Whether you're validating a new idea or scaling what already works, we bring the team, the technical direction, and the speed to get your product in front of real users — fast.",
     icon: <StartupsIcon />,
     color: "green",
     side: "left",
@@ -101,11 +101,11 @@ const features = [
       services["mvp-development"],
     ],
     benefits:[
-      "Full-time dedicated team that helps you go from 0 to 100 in 3 months",
-      "A team that can help you validate your idea and get it to market quickly and efficiently",
-      "Flexible pricing models to fit your needs",
-      "Internalize the best talent for your company",
-      "Partner that understands your business and your goals, and can point in the right technology direction",
+      "A dedicated team focused on shipping, not scoping meetings",
+      "A 3-month roadmap from idea to a product you can put in users' hands",
+      "Technical guidance on stack, architecture, and what to build first",
+      "Flexible pricing designed for early-stage budgets",
+      "A path to your own engineering team as you grow",
     ]
   },
 ]

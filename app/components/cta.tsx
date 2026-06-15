@@ -6,10 +6,10 @@ export function CTA() {
         <div className="px-6 py-24 sm:py-32 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-4xl font-semibold tracking-tight text-balance text-white sm:text-5xl">
-              Ready to take your business to the next level?
+              Ready to build something that moves the needle?
             </h2>
             <p className="mx-auto mt-6 max-w-xl text-lg/8 text-pretty text-primary-200">
-              I am sure we can find a solution that fits your needs. Let's talk about your project and see how we can help you.
+              Tell us about your project — we&apos;ll help you find the right team, timeline, and engagement model. No pitch deck required.
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <Link

@@ -6,7 +6,7 @@ const features = [
     {
         name: 'Traditional Business',
         description:
-            'Organizations with established business teams looking to enhance their tech capabilities',
+            'Established companies going digital — we become your tech team so operations keep running while you modernize.',
         href: '#traditional-business',
         icon: TraditionalBusinessIcon,
         color: 'orange',
@@ -25,7 +25,7 @@ const features = [
     {
         name: 'Tech Companies',
         description:
-            'Technology-focused organizations seeking to scale their development capacity',
+            'Product teams that need to move faster — add senior talent on demand and hire the best fit when you\'re ready.',
         href: '#tech-companies',
         icon: TechCocampaniesIcon,
         color: 'indigo',
@@ -36,7 +36,7 @@ const features = [
         },
         services: [
             "Team Augmentation",
-            "Hiring",
+            "Team Internalization",
             "Tech Consulting",
             "Tech Training"
         ]
@@ -44,27 +44,26 @@ const features = [
     {
         name: 'Startups',
         description:
-            'Early-stage companies with a business plan seeking complete tech solutions',
+            'Founders with a vision and a plan — we help you validate, build, and launch in months, not years.',
         href: '#startups',
         icon: StartupsIcon,
         color: 'green',
         techTeam: {
-            label: "Can have Tech Team",
+            label: "Tech team optional",
             color: "bg-yellow-900/10 text-yellow-900 inset-ring inset-ring-yellow-200 dark:text-white dark:inset-ring-yellow-800 dark:bg-yellow-200/10",
             icon: IconInfoSquareRounded,
         },
         services: [
             "External Tech Team",
-            "Hiring",
+            "Team Internalization",
             "Tech Consulting",
-            "Tech Training",
             "MVP Development",
         ],
     },
     {
         name: 'Betacode Ventures',
         description:
-            'Technical co-founder for startups — we partner from idea to launch and help you go from 0 to 100%',
+            'Equity partnership for founders — we embed as your technical co-founder from idea to launch and beyond.',
         href: '/betacode-ventures',
         icon: BetacodeVenturesIcon,
         color: 'purple',
@@ -191,11 +190,10 @@ export function Services() {
                 <div className="mx-auto max-w-2xl lg:text-center">
                     <h2 className="text-base/7 font-semibold text-indigo-400 uppercase">What we do</h2>
                     <p className="mt-2 text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl lg:text-balance dark:text-white">
-                        Our services span every stage of the transformation process
-
+                        The right team, shaped around your business
                     </p>
                     <p className="mt-6 text-lg/8 text-gray-600 dark:text-gray-300">
-                        We tailor our approach based on your business type and current capabilities
+                        Whether you&apos;re modernizing operations, scaling an engineering org, or launching a startup — we match the engagement to where you are today.
                     </p>
                 </div>
                 <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">

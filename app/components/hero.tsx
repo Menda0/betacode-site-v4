@@ -56,14 +56,14 @@ export default function Example() {
                   </h1> */}
                   <HeroCarousel />
                   <p className="hidden md:block mt-8 text-lg font-medium text-pretty text-gray-500 sm:max-w-md sm:text-xl/8 lg:max-w-none dark:text-gray-400">
-                    Our team of experienced developers are dedicated to creating innovative, custom software solutions that drive your success and help your business reach its full potential.
+                    We embed dedicated engineers, product leads, and technical co-founders — so you can ship custom software, validate startup ideas, and scale without building a department from scratch.
                   </p>
                   <div className="mt-10 flex flex-col items-center gap-4 md:flex-row md:gap-6">
                     <Link
                       href={CALENDAR_URL}
                       className="rounded-md bg-primary-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:bg-primary-500 dark:hover:bg-primary-400 dark:focus-visible:outline-primary-500"
                     >
-                      Book a call!
+                      Book a call
                     </Link>
                     <Link
                       href="/pricing"
@@ -72,7 +72,7 @@ export default function Example() {
                       Get a price estimate
                     </Link>
                     <Link href="#services" className="text-sm/6 font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-                      <span>Learn more about we can help you</span>  <IconArrowBigDown className=" size-6 animate-bounce" />
+                      <span>See how we can help</span>  <IconArrowBigDown className=" size-6 animate-bounce" />
                     </Link> 
                   </div>
                 </div>

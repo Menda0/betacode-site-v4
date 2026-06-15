@@ -124,11 +124,11 @@ function Description({ feature }: FeatureProps) {
                         href="https://calendar.app.google/1kXGjsszjPB3eFGr7"
                         className="rounded-md bg-primary-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:bg-primary-500 dark:hover:bg-primary-400 dark:focus-visible:outline-primary-500 z-10"
                     >
-                        Book a call!
+                        Book a call
                     </Link>
                 </div>
                 <dl className="mt-10 max-w-xl space-y-8 text-base/7 text-gray-600 lg:max-w-none dark:text-gray-400">
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Key Benefits</h3>
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Why teams choose us</h3>
                     <div className="flex flex-col gap-y-2">
                         {feature.benefits.map((benefit) => (
                             <div key={benefit} className="relative pl-9 ">
@@ -163,7 +163,7 @@ function Services({ feature }: FeatureProps) {
                     <div className="overflow-hidden rounded-tl-xl ">
                         <div className="md:px-6 pt-6 pb-14">
                             <div className="flex flex-col gap-y-2 gap-x-4 rounded-md md:p-4">
-                                <h4 className={`text-lg font-semibold text-gray-900 dark:text-white w-full text-center mb-4 ${side === "left" ? "md:text-right" : "md:text-left"}`}>Our services that can help you!</h4>
+                                <h4 className={`text-lg font-semibold text-gray-900 dark:text-white w-full text-center mb-4 ${side === "left" ? "md:text-right" : "md:text-left"}`}>Services for your stage</h4>
                                 {feature.services.map((service) => (
                                     <FeatureService key={service.name} service={service} color={feature.color} />
                                 ))}
