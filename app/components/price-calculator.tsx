@@ -27,6 +27,7 @@ import {
   type TeamConfiguration,
   type TeamMember,
 } from "@/lib/pricing-calculator"
+import { CALENDAR_URL } from "@/lib/ventures-content"
 import { cn } from "@/lib/utils"
 
 type Phase = "questions" | "results" | "product" | "contact" | "submitted"
@@ -780,12 +781,24 @@ function OutcomePricingDetails({ outcome }: { outcome: CalculatorOutcome }) {
         <p className="mt-3 text-xs text-gray-500 dark:text-gray-400">{pricingNote}</p>
       )}
 
-      <Link
-        href={outcome.cta.href}
-        className="mt-4 inline-flex text-sm font-semibold text-primary-600 hover:text-primary-500 dark:text-primary-400"
-      >
-        {outcome.cta.label} →
-      </Link>
+      <div className="mt-6">
+        {outcome.pricingModel === "partnership" ? (
+          <Link
+            href="/betacode-ventures"
+            className="inline-flex items-center gap-2 rounded-md bg-primary-600 px-5 py-3 text-sm font-semibold text-white shadow-sm hover:bg-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:bg-white dark:text-purple-900 dark:hover:bg-purple-50 dark:focus-visible:outline-white"
+          >
+            Explore Betacode Ventures
+            <IconArrowRight className="size-4" aria-hidden="true" />
+          </Link>
+        ) : (
+          <Link
+            href={CALENDAR_URL}
+            className="inline-flex items-center justify-center rounded-md bg-primary-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:bg-primary-500 dark:hover:bg-primary-400 animate-bounce"
+          >
+            Book a call
+          </Link>
+        )}
+      </div>
     </div>
   )
 }
@@ -929,8 +942,8 @@ function ContactStep({
           </button>
           <div className="flex flex-col gap-3 sm:flex-row">
             <Link
-              href="https://calendar.app.google/1kXGjsszjPB3eFGr7"
-              className="inline-flex items-center justify-center rounded-md border border-gray-300 px-4 py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800"
+              href={CALENDAR_URL}
+              className="inline-flex items-center justify-center rounded-md bg-primary-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:bg-primary-500 dark:hover:bg-primary-400 animate-bounce"
             >
               Book a call
             </Link>

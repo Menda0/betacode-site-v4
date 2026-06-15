@@ -1,6 +1,11 @@
 import type { Metadata } from "next"
 import { PriceCalculator } from "../components/price-calculator"
+import { InsightsPreview } from "../components/insights-preview"
+import { Clients } from "../components/clients"
+import { CTA } from "../components/cta"
+import { VenturesPromo } from "../components/ventures-promo"
 import { Footer } from "../components/footer"
+import { getBlogPosts } from "@/lib/blog-content"
 
 export const metadata: Metadata = {
   title: "Price Calculator — Betacode",
@@ -16,9 +21,15 @@ export const metadata: Metadata = {
 }
 
 export default function PricingPage() {
+  const insightPosts = getBlogPosts()
+
   return (
     <>
       <PriceCalculator />
+      <InsightsPreview posts={insightPosts} />
+      <Clients />
+      <VenturesPromo />
+      <CTA />
       <Footer />
     </>
   )
