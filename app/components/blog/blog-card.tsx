@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import type { BlogPost } from '@/lib/blog-content'
-import { formatBlogDate } from '@/lib/blog-content'
 import { BlogAuthor } from '@/app/components/blog/blog-author'
 
 export function BlogCard({ post }: { post: BlogPost }) {
@@ -10,9 +9,6 @@ export function BlogCard({ post }: { post: BlogPost }) {
         <span className="rounded-full bg-secondary-100 px-3 py-1 text-secondary-700 dark:bg-secondary-900/40 dark:text-secondary-300">
           {post.category}
         </span>
-        <time dateTime={post.publishedAt} className="text-gray-500 dark:text-gray-400">
-          {formatBlogDate(post.publishedAt)}
-        </time>
       </div>
       <h2 className="mt-4 text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
         <Link href={`/insights/${post.slug}`} className="hover:text-primary-600 dark:hover:text-primary-400">

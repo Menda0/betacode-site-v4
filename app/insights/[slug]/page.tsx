@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { IconArrowLeft } from '@tabler/icons-react'
-import { blogPosts, formatBlogDate, getBlogPost } from '@/lib/blog-content'
+import { blogPosts, getBlogPost } from '@/lib/blog-content'
 import { BlogContent } from '@/app/components/blog/blog-content'
 import { BlogBackground } from '@/app/components/blog/blog-background'
 import { BlogAuthor } from '@/app/components/blog/blog-author'
@@ -63,9 +63,6 @@ export default async function InsightPostPage({ params }: Props) {
               <span className="rounded-full bg-secondary-100 px-3 py-1 text-xs font-medium text-secondary-700 dark:bg-secondary-900/40 dark:text-secondary-300">
                 {post.category}
               </span>
-              <time dateTime={post.publishedAt} className="text-gray-500 dark:text-gray-400">
-                {formatBlogDate(post.publishedAt)}
-              </time>
               <span className="text-gray-500 dark:text-gray-400">
                 {post.readingTimeMinutes} min read
               </span>

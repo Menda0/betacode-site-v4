@@ -13,6 +13,11 @@ const nextConfig: NextConfig = {
         destination: '/insights/:slug',
         permanent: true,
       },
+      {
+        source: '/insights/choosing-the-right-tech-stack',
+        destination: '/insights/how-ai-can-help-you-create-your-next-project',
+        permanent: true,
+      },
     ]
   },
 };
