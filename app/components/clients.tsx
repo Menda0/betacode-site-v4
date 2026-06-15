@@ -1,10 +1,16 @@
-import Image from "next/image";
+'use client'
+
+import { useTranslations } from 'next-intl'
+import Image from 'next/image'
+
 export function Clients() {
+  const t = useTranslations('clients')
+
   return (
     <div className="bg-white py-24 sm:py-32 dark:bg-gray-900">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <h2 className="text-center text-lg/8 font-semibold text-gray-900 dark:text-white">
-          Trusted by teams across Europe and beyond
+          {t('title')}
         </h2>
         <div className="mx-auto mt-10 items-center gap-x-8 gap-y-10  sm:gap-x-10 lg:mx-0 lg:max-w-none grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 items-center justify-center">
           <div>

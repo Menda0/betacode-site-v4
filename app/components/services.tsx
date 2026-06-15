@@ -1,85 +1,9 @@
-import { ArrowPathIcon, CloudArrowUpIcon, LockClosedIcon } from '@heroicons/react/20/solid'
-import { Icon, IconBuilding, IconCheck, IconDeviceLaptop, IconHelp, IconRocket, IconX, IconSquareX, IconSquareCheck, IconInfoSquareRounded, IconPoint, IconUsers } from '@tabler/icons-react'
-import { TraditionalBusinessIcon, TechCocampaniesIcon, StartupsIcon, BetacodeVenturesIcon } from './icons';
-import Link from 'next/link';
-const features = [
-    {
-        name: 'Traditional Business',
-        description:
-            'Established companies going digital — we become your tech team so operations keep running while you modernize.',
-        href: '#traditional-business',
-        icon: TraditionalBusinessIcon,
-        color: 'orange',
-        techTeam: {
-            label: "No Tech Team",
-            color: "bg-red-900/10 text-red-900 inset-ring inset-ring-red-200 dark:text-white dark:inset-ring-red-800 dark:bg-red-200/10",
-            icon: IconSquareX,
-        },
-        services: [
-            "External Tech Team",
-            "Tech Consulting",
-            "Tech Support",
-            "Tech Training"
-        ]
-    },
-    {
-        name: 'Tech Companies',
-        description:
-            'Product teams that need to move faster — add senior talent on demand and hire the best fit when you\'re ready.',
-        href: '#tech-companies',
-        icon: TechCocampaniesIcon,
-        color: 'indigo',
-        techTeam: {
-            label: "Has Tech Team",
-            color: "bg-green-900/10 text-green-900 inset-ring inset-ring-green-200 dark:text-white dark:inset-ring-green-800 dark:bg-green-200/10",
-            icon: IconSquareCheck,
-        },
-        services: [
-            "Team Augmentation",
-            "Team Internalization",
-            "Tech Consulting",
-            "Tech Training"
-        ]
-    },
-    {
-        name: 'Startups',
-        description:
-            'Founders with a vision and a plan — we help you validate, build, and launch in months, not years.',
-        href: '#startups',
-        icon: StartupsIcon,
-        color: 'green',
-        techTeam: {
-            label: "Tech team optional",
-            color: "bg-yellow-900/10 text-yellow-900 inset-ring inset-ring-yellow-200 dark:text-white dark:inset-ring-yellow-800 dark:bg-yellow-200/10",
-            icon: IconInfoSquareRounded,
-        },
-        services: [
-            "External Tech Team",
-            "Team Internalization",
-            "Tech Consulting",
-            "MVP Development",
-        ],
-    },
-    {
-        name: 'Betacode Ventures',
-        description:
-            'Equity partnership for founders — we embed as your technical co-founder from idea to launch and beyond.',
-        href: '/betacode-ventures',
-        icon: BetacodeVenturesIcon,
-        color: 'purple',
-        techTeam: {
-            label: "Technical Co-Founder",
-            color: "bg-purple-900/10 text-purple-900 inset-ring inset-ring-purple-200 dark:text-white dark:inset-ring-purple-800 dark:bg-purple-200/10",
-            icon: IconRocket,
-        },
-        services: [
-            "MVP Development",
-            "Product Strategy",
-            "Technical Leadership",
-            "Team Internalization",
-        ],
-    },
-]
+'use client'
+
+import { useTranslations } from 'next-intl'
+import { Icon, IconBuilding, IconInfoSquareRounded, IconPoint, IconRocket, IconSquareCheck, IconSquareX, IconUsers } from '@tabler/icons-react'
+import { TraditionalBusinessIcon, TechCocampaniesIcon, StartupsIcon, BetacodeVenturesIcon } from './icons'
+import { Link } from '@/i18n/navigation'
 
 const styles = {
     green: {
@@ -92,7 +16,7 @@ const styles = {
     },
     blue: {
         color: 'text-blue-400',
-        icon: IconDeviceLaptop,
+        icon: IconBuilding,
         borderColor: 'bg-gray-100/40 dark:bg-gray-800/80 border-gray-200 dark:border-gray-800 hover:border-blue-200 dark:hover:border-blue-800',
         IconBgColor: 'bg-blue-800/50 dark:bg-blue-200',
         IconColor: 'text-blue-200 dark:text-blue-800',
@@ -140,6 +64,63 @@ const styles = {
     },
 }
 
+type FeatureItem = {
+    name: string
+    description: string
+    href: string
+    icon: React.ComponentType
+    color: keyof typeof styles
+    techTeam: {
+        label: string
+        color: string
+        icon: Icon
+    }
+    services: string[]
+}
+
+const featureConfig = [
+    {
+        key: 'traditionalBusiness' as const,
+        href: '#traditional-business',
+        icon: TraditionalBusinessIcon,
+        color: 'orange' as const,
+        techTeam: {
+            color: 'bg-red-900/10 text-red-900 inset-ring inset-ring-red-200 dark:text-white dark:inset-ring-red-800 dark:bg-red-200/10',
+            icon: IconSquareX,
+        },
+    },
+    {
+        key: 'techCompanies' as const,
+        href: '#tech-companies',
+        icon: TechCocampaniesIcon,
+        color: 'indigo' as const,
+        techTeam: {
+            color: 'bg-green-900/10 text-green-900 inset-ring inset-ring-green-200 dark:text-white dark:inset-ring-green-800 dark:bg-green-200/10',
+            icon: IconSquareCheck,
+        },
+    },
+    {
+        key: 'startups' as const,
+        href: '#startups',
+        icon: StartupsIcon,
+        color: 'green' as const,
+        techTeam: {
+            color: 'bg-yellow-900/10 text-yellow-900 inset-ring inset-ring-yellow-200 dark:text-white dark:inset-ring-yellow-800 dark:bg-yellow-200/10',
+            icon: IconInfoSquareRounded,
+        },
+    },
+    {
+        key: 'betacodeVentures' as const,
+        href: '/betacode-ventures',
+        icon: BetacodeVenturesIcon,
+        color: 'purple' as const,
+        techTeam: {
+            color: 'bg-purple-900/10 text-purple-900 inset-ring inset-ring-purple-200 dark:text-white dark:inset-ring-purple-800 dark:bg-purple-200/10',
+            icon: IconRocket,
+        },
+    },
+]
+
 function TeamBadge({ techTeam }: { techTeam: { label: string, color: string, icon: Icon } }) {
     return (
         <span className={`inline-flex items-center gap-x-1.5 rounded-full px-2 py-1 text-xs font-medium ${techTeam.color}`}>
@@ -149,8 +130,8 @@ function TeamBadge({ techTeam }: { techTeam: { label: string, color: string, ico
     )
 }
 
-function ServiceCard({ feature }: { feature: any }) {
-    const style = styles[feature.color as keyof typeof styles]
+function ServiceCard({ feature, learnMoreLabel, servicesLabel }: { feature: FeatureItem; learnMoreLabel: string; servicesLabel: string }) {
+    const style = styles[feature.color]
     return (
         <Link href={feature.href} key={feature.name} className={`flex flex-col border ${style.borderColor} rounded-md p-4 group transition-all duration-300 cursor-pointer`}>
             <dt className="flex items-center gap-x-3 text-base/7 font-semibold text-gray-900 dark:text-white">
@@ -159,11 +140,11 @@ function ServiceCard({ feature }: { feature: any }) {
             </dt>
             <dd className="mt-4 flex flex-auto flex-col gap-y-4 text-base/7 text-gray-600 dark:text-gray-400">
                 <p>{feature.description}</p>
-                <div >
+                <div>
                     <TeamBadge techTeam={feature.techTeam} />
                 </div>
                 <div className="grow">
-                    <h4 className="text-md font-semibold text-gray-900 dark:text-white">Services</h4>
+                    <h4 className="text-md font-semibold text-gray-900 dark:text-white">{servicesLabel}</h4>
                     <ul className="text-gray-600 dark:text-gray-400 text-sm ">
                         {feature.services.map((service: string) => (
                             <li key={service} className="flex items-center gap-x-2"><IconPoint className="size-4 text-blue-500" /> {service}</li>
@@ -171,12 +152,9 @@ function ServiceCard({ feature }: { feature: any }) {
                     </ul>
                 </div>
                 <p className="mt-6">
-                    <Link
-                        href={feature.href}
-                        className={`text-sm/6 font-semibold ${style.textColor}`}
-                    >
-                        Learn more <span aria-hidden="true">→</span>
-                    </Link>
+                    <span className={`text-sm/6 font-semibold ${style.textColor}`}>
+                        {learnMoreLabel} <span aria-hidden="true">→</span>
+                    </span>
                 </p>
             </dd>
         </Link>
@@ -184,22 +162,43 @@ function ServiceCard({ feature }: { feature: any }) {
 }
 
 export function Services() {
+    const t = useTranslations('services')
+
+    const features: FeatureItem[] = featureConfig.map((config) => ({
+        name: t(`${config.key}.name`),
+        description: t(`${config.key}.description`),
+        href: config.href,
+        icon: config.icon,
+        color: config.color,
+        techTeam: {
+            label: t(`${config.key}.techTeam`),
+            color: config.techTeam.color,
+            icon: config.techTeam.icon,
+        },
+        services: t.raw(`${config.key}.services`) as string[],
+    }))
+
     return (
         <div id="services" className="bg-gray-50 py-24 sm:py-32 dark:bg-gray-950">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
                 <div className="mx-auto max-w-2xl lg:text-center">
-                    <h2 className="text-base/7 font-semibold text-indigo-400 uppercase">What we do</h2>
+                    <h2 className="text-base/7 font-semibold text-indigo-400 uppercase">{t('eyebrow')}</h2>
                     <p className="mt-2 text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl lg:text-balance dark:text-white">
-                        The right team, shaped around your business
+                        {t('title')}
                     </p>
                     <p className="mt-6 text-lg/8 text-gray-600 dark:text-gray-300">
-                        Whether you&apos;re modernizing operations, scaling an engineering org, or launching a startup — we match the engagement to where you are today.
+                        {t('description')}
                     </p>
                 </div>
                 <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
                     <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-2 xl:grid-cols-4 ">
                         {features.map((feature) => (
-                            <ServiceCard key={feature.name} feature={feature} />
+                            <ServiceCard
+                                key={feature.name}
+                                feature={feature}
+                                learnMoreLabel={t('learnMore')}
+                                servicesLabel={t('servicesLabel')}
+                            />
                         ))}
                     </dl>
                 </div>

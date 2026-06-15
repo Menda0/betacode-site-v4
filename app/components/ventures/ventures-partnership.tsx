@@ -1,5 +1,7 @@
+'use client'
+
+import { useTranslations } from 'next-intl'
 import { IconCircleCheck, IconHeartHandshake } from '@tabler/icons-react'
-import { venturesPartnership } from '@/lib/ventures-content'
 
 function PartnershipList({
   title,
@@ -38,32 +40,34 @@ function PartnershipList({
 }
 
 export function VenturesPartnership() {
+  const t = useTranslations('ventures.partnership')
+
   return (
     <div id="partnership" className="bg-gray-50 py-24 sm:py-32 dark:bg-gray-950">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl lg:text-center">
           <h2 className="text-base/7 font-semibold text-purple-600 uppercase dark:text-purple-400">
-            {venturesPartnership.title}
+            {t('title')}
           </h2>
           <p className="mt-2 text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl dark:text-white">
-            {venturesPartnership.subtitle}
+            {t('subtitle')}
           </p>
           <p className="mt-6 text-lg/8 text-gray-600 dark:text-gray-300">
-            {venturesPartnership.description}
+            {t('description')}
           </p>
         </div>
         <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 lg:max-w-none lg:grid-cols-2 lg:items-stretch lg:gap-10">
           <PartnershipList
-            title={venturesPartnership.whatYouGet.title}
-            subtitle={venturesPartnership.whatYouGet.subtitle}
-            items={venturesPartnership.whatYouGet.items}
+            title={t('whatYouGet.title')}
+            subtitle={t('whatYouGet.subtitle')}
+            items={t.raw('whatYouGet.items') as string[]}
             icon={IconCircleCheck}
             iconClassName="text-purple-600 dark:text-purple-400"
           />
           <PartnershipList
-            title={venturesPartnership.partnershipAsk.title}
-            subtitle={venturesPartnership.partnershipAsk.subtitle}
-            items={venturesPartnership.partnershipAsk.items}
+            title={t('partnershipAsk.title')}
+            subtitle={t('partnershipAsk.subtitle')}
+            items={t.raw('partnershipAsk.items') as string[]}
             icon={IconHeartHandshake}
             iconClassName="text-indigo-600 dark:text-indigo-400"
           />

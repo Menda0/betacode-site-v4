@@ -3,15 +3,16 @@
 import { useState } from 'react'
 import { Dialog, DialogPanel } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import { useTranslations } from 'next-intl'
 import { ThemeToggle } from './theme-toggle'
+import { LanguageSelector } from './language-selector'
 import Image from 'next/image'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { Link, usePathname } from '@/i18n/navigation'
 
 const navigation = [
-  { name: 'Pricing', href: '/pricing' },
-  { name: 'Insights', href: '/insights' },
-  { name: 'Betacode Ventures', href: '/betacode-ventures' },
+  { key: 'pricing' as const, href: '/pricing' },
+  { key: 'insights' as const, href: '/insights' },
+  { key: 'betacodeVentures' as const, href: '/betacode-ventures' },
 ]
 
 function isNavActive(pathname: string, href: string) {
@@ -20,6 +21,7 @@ function isNavActive(pathname: string, href: string) {
 }
 
 export function SiteHeader() {
+  const t = useTranslations('nav')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const pathname = usePathname()
 
@@ -32,10 +34,10 @@ export function SiteHeader() {
           <Image src="/images/logo-dark.svg" alt="Betacode" width={200} height={200} className="h-8 w-auto not-dark:hidden" />
         </Link>
 
-        <div className="hidden items-center gap-8 lg:flex">
+        <div className="hidden items-center gap-6 lg:flex">
           {navigation.map((item) => (
             <Link
-              key={item.name}
+              key={item.key}
               href={item.href}
               className={`text-sm/6 font-semibold ${
                 isNavActive(pathname, item.href)
@@ -43,20 +45,22 @@ export function SiteHeader() {
                   : 'text-gray-900 dark:text-white'
               }`}
             >
-              {item.name}
+              {t(item.key)}
             </Link>
           ))}
+          <LanguageSelector />
           <ThemeToggle />
         </div>
 
         <div className="flex items-center gap-2 lg:hidden">
+          <LanguageSelector />
           <ThemeToggle />
           <button
             type="button"
             onClick={() => setMobileMenuOpen(true)}
             className="inline-flex items-center justify-center rounded-md p-2 text-gray-700 dark:text-gray-200"
           >
-            <span className="sr-only">Open main menu</span>
+            <span className="sr-only">{t('openMenu')}</span>
             <Bars3Icon aria-hidden="true" className="size-6" />
           </button>
         </div>
@@ -76,7 +80,7 @@ export function SiteHeader() {
               onClick={() => setMobileMenuOpen(false)}
               className="inline-flex items-center justify-center rounded-md p-2 text-gray-700 dark:text-gray-200"
             >
-              <span className="sr-only">Close menu</span>
+              <span className="sr-only">{t('closeMenu')}</span>
               <XMarkIcon aria-hidden="true" className="size-6" />
             </button>
           </div>
@@ -85,7 +89,7 @@ export function SiteHeader() {
               <div className="space-y-2 py-6">
                 {navigation.map((item) => (
                   <Link
-                    key={item.name}
+                    key={item.key}
                     href={item.href}
                     onClick={() => setMobileMenuOpen(false)}
                     className={`-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold hover:bg-gray-50 dark:hover:bg-white/5 ${
@@ -94,7 +98,7 @@ export function SiteHeader() {
                         : 'text-gray-900 dark:text-white'
                     }`}
                   >
-                    {item.name}
+                    {t(item.key)}
                   </Link>
                 ))}
               </div>

@@ -1,9 +1,13 @@
-import Image from 'next/image';
+'use client'
+
+import { useTranslations } from 'next-intl'
+import Image from 'next/image'
+
 const navigation = [
   {
     name: 'Facebook',
     href: 'https://www.facebook.com/betacode.tech/',
-    icon: (props: any) => (
+    icon: (props: React.SVGProps<SVGSVGElement>) => (
       <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
         <path
           fillRule="evenodd"
@@ -16,7 +20,7 @@ const navigation = [
   {
     name: 'Instagram',
     href: 'https://www.instagram.com/betacode.tech',
-    icon: (props: any) => (
+    icon: (props: React.SVGProps<SVGSVGElement>) => (
       <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
         <path
           fillRule="evenodd"
@@ -29,7 +33,7 @@ const navigation = [
   {
     name: 'Twitter',
     href: 'https://twitter.com/betacode_tech',
-    icon: (props: any) => (
+    icon: (props: React.SVGProps<SVGSVGElement>) => (
       <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
         <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
       </svg>
@@ -38,7 +42,7 @@ const navigation = [
   {
     name: 'GitHub',
     href: 'https://github.com/BetacodeTech',
-    icon: (props: any) => (
+    icon: (props: React.SVGProps<SVGSVGElement>) => (
       <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
         <path
           fillRule="evenodd"
@@ -49,8 +53,11 @@ const navigation = [
     ),
   }
 ]
+
 export function Footer() {
-  const year = new Date().getFullYear();
+  const t = useTranslations('common')
+  const year = new Date().getFullYear()
+
   return (
     <footer className="bg-white dark:bg-gray-900">
       <div className="mx-auto max-w-7xl px-6 py-12 flex flex-col gap-4 md:flex md:flex-row md:items-center md:justify-between lg:px-8">
@@ -61,11 +68,11 @@ export function Footer() {
             <Image src="/images/pt2030.png" alt="Apoios" width={1200} height={1200} className="h-12 w-auto md:mr-4 dark:invert dark:filter dark:brightness-0" />
             <div className="flex flex-col md:flex-row items-center gap-y-2 gap-x-2">
               <Image src="/images/eu2.png" alt="Apoios" width={1200} height={1200} className="h-10 w-auto md:mr-2" />
-              <span className="text-xs font-medium text-blue-500 dark:text-white max-w-48 text-center md:text-left">Cofinanciado pela União Europeia</span>
+              <span className="text-xs font-medium text-blue-500 dark:text-white max-w-48 text-center md:text-left">{t('euFunding')}</span>
             </div>
           </div>
           <div className="flex flex-row items-center gap-x-6 text-gray-600 dark:text-gray-400 text-[10px] text-center md:text-left">
-            Projeto financiado pelo Programa AVANÇAR, no âmbito do Portugal 2030, cofinanciado pelo Fundo Social Europeu Mais (FSE+)
+            {t('euFundingDetail')}
           </div>
         </div>
         <div className="flex justify-center gap-x-6">
@@ -81,9 +88,8 @@ export function Footer() {
           ))}
         </div>
         <p className="mt-8 text-center text-sm/6 text-gray-600 md:mt-0 dark:text-gray-400">
-          &copy; {year} Betacode, Inc. All rights reserved.
+          {t('copyright', { year })}
         </p>
-
       </div>
     </footer>
   )

@@ -1,6 +1,7 @@
 'use client'
 
-import Link from 'next/link'
+import { useTranslations } from 'next-intl'
+import { Link } from '@/i18n/navigation'
 import Autoplay from 'embla-carousel-autoplay'
 import { IconArrowRight } from '@tabler/icons-react'
 import {
@@ -14,6 +15,9 @@ import type { BlogPost } from '@/lib/blog-content'
 import { BlogCard } from '@/app/components/blog/blog-card'
 
 export function BlogMoreInsights({ posts }: { posts: BlogPost[] }) {
+  const t = useTranslations('blog')
+  const tCommon = useTranslations('common')
+
   if (posts.length === 0) return null
 
   return (
@@ -22,17 +26,17 @@ export function BlogMoreInsights({ posts }: { posts: BlogPost[] }) {
         <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
           <div>
             <p className="text-sm font-semibold text-secondary-600 uppercase dark:text-secondary-400">
-              Keep reading
+              {t('keepReading')}
             </p>
             <h2 className="mt-2 text-2xl font-semibold tracking-tight text-gray-900 sm:text-3xl dark:text-white">
-              More insights from the team
+              {t('moreInsights')}
             </h2>
           </div>
           <Link
             href="/insights"
             className="inline-flex items-center gap-2 text-sm font-semibold text-primary-600 hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300"
           >
-            View all insights
+            {tCommon('viewAllInsights')}
             <IconArrowRight className="size-4" aria-hidden="true" />
           </Link>
         </div>

@@ -1,28 +1,31 @@
-import Link from "next/link";
+'use client'
+
+import { useTranslations } from 'next-intl'
+import { CALENDAR_URL } from '@/lib/ventures-content'
 
 export function CTA() {
-    return (
-      <div className="bg-primary-600">
-        <div className="px-6 py-24 sm:py-32 lg:px-8">
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-4xl font-semibold tracking-tight text-balance text-white sm:text-5xl">
-              Ready to build something that moves the needle?
-            </h2>
-            <p className="mx-auto mt-6 max-w-xl text-lg/8 text-pretty text-primary-200">
-              Tell us about your project — we&apos;ll help you find the right team, timeline, and engagement model. No pitch deck required.
-            </p>
-            <div className="mt-10 flex items-center justify-center gap-x-6">
-              <Link
-                href="https://calendar.app.google/1kXGjsszjPB3eFGr7"
-                className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-primary-600 shadow-xs hover:bg-primary-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white dark:shadow-none animate-bounce"
-              >
-                {' '}
-                Book a call{' '}
-              </Link>
-            </div>
+  const t = useTranslations('common')
+
+  return (
+    <div className="bg-primary-600">
+      <div className="px-6 py-24 sm:py-32 lg:px-8">
+        <div className="mx-auto max-w-2xl text-center">
+          <h2 className="text-4xl font-semibold tracking-tight text-balance text-white sm:text-5xl">
+            {t('cta.headline')}
+          </h2>
+          <p className="mx-auto mt-6 max-w-xl text-lg/8 text-pretty text-primary-200">
+            {t('cta.description')}
+          </p>
+          <div className="mt-10 flex items-center justify-center gap-x-6">
+            <a
+              href={CALENDAR_URL}
+              className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-primary-600 shadow-xs hover:bg-primary-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white dark:shadow-none animate-bounce"
+            >
+              {t('bookCall')}
+            </a>
           </div>
         </div>
       </div>
-    )
-  }
-  
+    </div>
+  )
+}

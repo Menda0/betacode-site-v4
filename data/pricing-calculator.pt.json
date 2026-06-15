@@ -1,0 +1,310 @@
+{
+  "version": 2,
+  "startQuestionId": "business-stage",
+  "outcomes": {
+    "self-managed-tech-teams": {
+      "id": "self-managed-tech-teams",
+      "label": "Equipas técnicas autogeridas",
+      "summary": "Equipas dedicadas que são donas do seu produto — de MVPs enxutos a configurações completas com vários programadores.",
+      "description": "Equipas dedicadas que são donas da entrega do seu produto — do planeamento, desenvolvimento e lançamento — sem gerir freelancers individuais. Escolha uma equipa pequena enxuta ou uma equipa base mais completa consoante o âmbito e a complexidade.",
+      "pricingModel": "project",
+      "teamComposition": [],
+      "teamConfigurations": [
+        {
+          "id": "small-team",
+          "label": "Equipa pequena",
+          "summary": "Equipa dedicada enxuta — programador júnior mais PO a tempo parcial. Ideal para MVPs e builds focados.",
+          "description": "Uma equipa dedicada enxuta com um programador júnior e um product owner a tempo parcial — ideal para MVPs e builds focados.",
+          "teamComposition": [
+            { "profile": "Programador júnior", "regime": "Tempo inteiro", "rateMin": 20, "rateMax": 30 },
+            { "profile": "Product Owner", "regime": "Tempo parcial", "rateMin": 50, "rateMax": 60 }
+          ],
+          "estimates": [
+            { "label": "MVP (3 meses)", "min": 20000, "max": 30000 },
+            { "label": "Primeiro ano", "min": 85000, "max": 120000 }
+          ]
+        },
+        {
+          "id": "base-team",
+          "label": "Equipa base",
+          "summary": "Equipa completa com programadores júnior e sénior. Para produtos maiores ou mais complexos.",
+          "description": "Uma equipa dedicada completa com programadores júnior e médio/sénior mais um product owner a tempo parcial — para produtos maiores ou mais complexos.",
+          "teamComposition": [
+            { "profile": "Programador júnior", "regime": "Tempo inteiro", "rateMin": 20, "rateMax": 30 },
+            { "profile": "Programador médio/sénior", "regime": "Tempo inteiro", "rateMin": 30, "rateMax": 50 },
+            { "profile": "Product Owner", "regime": "Tempo parcial", "rateMin": 50, "rateMax": 60 }
+          ],
+          "estimates": [
+            { "label": "MVP (3 meses)", "min": 30000, "max": 45000 },
+            { "label": "Primeiro ano", "min": 120000, "max": 180000 }
+          ]
+        }
+      ],
+      "estimates": [],
+      "cta": {
+        "label": "Fale connosco para orçamento detalhado",
+        "href": "https://calendar.app.google/1kXGjsszjPB3eFGr7"
+      }
+    },
+    "team-augmentation": {
+      "id": "team-augmentation",
+      "label": "Reforço de equipa",
+      "summary": "Programadores e POs à hora que se integram na sua equipa e processos existentes.",
+      "description": "Profissionais flexíveis à hora — de programadores a product owners — que se integram na sua equipa técnica existente.",
+      "pricingModel": "hourly",
+      "teamComposition": [
+        { "profile": "Programador júnior", "regime": "Tempo inteiro", "rateMin": 20, "rateMax": 30 },
+        { "profile": "Programador médio/sénior", "regime": "Tempo inteiro", "rateMin": 30, "rateMax": 50 },
+        { "profile": "Product Owner", "regime": "Tempo parcial", "rateMin": 50, "rateMax": 60 }
+      ],
+      "estimates": [
+        { "label": "Projeto típico (referência)", "min": 85000, "max": 180000 }
+      ],
+      "cta": {
+        "label": "Fale connosco para orçamento detalhado",
+        "href": "https://calendar.app.google/1kXGjsszjPB3eFGr7"
+      }
+    },
+    "support": {
+      "id": "support",
+      "label": "Suporte",
+      "summary": "Trabalho delimitado — integrações, correção de bugs, scripts e manutenção em sistemas existentes.",
+      "description": "Trabalho pontual para integrações, scripts personalizados, correção de bugs e suporte técnico em sistemas existentes.",
+      "pricingModel": "hourly",
+      "teamComposition": [],
+      "rate": {
+        "label": "Taxa horária",
+        "regime": "Tempo parcial",
+        "rateMin": 50,
+        "rateMax": 60
+      },
+      "estimates": [],
+      "cta": {
+        "label": "Fale connosco para orçamento detalhado",
+        "href": "https://calendar.app.google/1kXGjsszjPB3eFGr7"
+      }
+    },
+    "training": {
+      "id": "training",
+      "label": "Formação",
+      "summary": "Desenvolva a sua equipa com sessões sobre linguagens, frameworks e boas práticas.",
+      "description": "Programas de formação para ajudar a sua equipa a aprender novas tecnologias — de sessões individuais a audiências maiores.",
+      "pricingModel": "hourly",
+      "teamComposition": [
+        { "profile": "Formador sénior", "regime": "Tempo parcial", "rateMin": 50, "rateMax": 60 }
+      ],
+      "estimates": [],
+      "cta": {
+        "label": "Fale connosco para orçamento detalhado",
+        "href": "https://calendar.app.google/1kXGjsszjPB3eFGr7"
+      }
+    },
+    "betacode-ventures": {
+      "id": "betacode-ventures",
+      "label": "Betacode Ventures",
+      "summary": "Parceria de co-fundador técnico — da validação ao lançamento. Baseada em equity.",
+      "description": "Uma parceria de co-fundador técnico — da validação da ideia ao lançamento e escala. Investimos a nossa equipa; investe a sua visão.",
+      "pricingModel": "partnership",
+      "teamComposition": [],
+      "estimates": [],
+      "cta": {
+        "label": "Candidatar-se à Betacode Ventures",
+        "href": "/betacode-ventures"
+      }
+    }
+  },
+  "questions": [
+    {
+      "id": "business-stage",
+      "type": "choice",
+      "title": "É um negócio estabelecido ou um negócio novo (startup)?",
+      "description": "Isto ajuda-nos a perceber a sua fase, perfil de risco e o tipo de parceria que normalmente funciona melhor.",
+      "options": [
+        {
+          "id": "startup",
+          "label": "Negócio novo (startup)",
+          "description": "Está a lançar algo novo — muitas vezes pré-receita ou em fase inicial. Escolha isto se estiver a validar uma ideia, a construir um MVP ou a escalar a partir do zero.",
+          "nextQuestionId": "startup-funding"
+        },
+        {
+          "id": "established",
+          "label": "Negócio estabelecido",
+          "description": "A sua empresa já opera com clientes, receita ou equipas internas. Escolha isto se o software deve apoiar ou fazer crescer o que já faz.",
+          "nextQuestionId": "team-dimensions"
+        }
+      ]
+    },
+    {
+      "id": "startup-funding",
+      "type": "choice",
+      "title": "Tem financiamento?",
+      "description": "O financiamento afeta a velocidade com que pode avançar, o tamanho da equipa e se um modelo de parceria como a Betacode Ventures faz sentido.",
+      "options": [
+        {
+          "id": "yes",
+          "label": "Sim",
+          "description": "Levantou capital ou tem um orçamento dedicado para desenvolvimento de produto. Podemos planear uma equipa mais completa e um calendário de entrega claro.",
+          "nextQuestionId": "product-help-startup"
+        },
+        {
+          "id": "no",
+          "label": "Não",
+          "description": "Está a bootstrapping ou ainda a garantir investimento. Inclinamo-nos para builds eficientes em custo ou parcerias por equity para começar.",
+          "nextQuestionId": "product-help-startup"
+        }
+      ]
+    },
+    {
+      "id": "team-dimensions",
+      "type": "choice",
+      "title": "Qual é a dimensão da sua empresa?",
+      "description": "O tamanho da empresa ajuda-nos a avaliar complexidade, necessidades de compliance e se precisa de uma equipa completa ou de suporte pontual.",
+      "options": [
+        {
+          "id": "1-10",
+          "label": "1–10 colaboradores",
+          "description": "Equipa pequena ou liderada por fundadores. Muitas vezes precisa de um parceiro técnico externo dedicado ou de um MVP focado.",
+          "nextQuestionId": "has-tech-team"
+        },
+        {
+          "id": "11-50",
+          "label": "11–50 colaboradores",
+          "description": "Empresa em crescimento com necessidades em evolução. Muitas vezes uma mistura de equipa dedicada e reforço flexível.",
+          "nextQuestionId": "has-tech-team"
+        },
+        {
+          "id": "51-200",
+          "label": "51–200 colaboradores",
+          "description": "Organização de dimensão média. Normalmente equilibra capacidade interna com especialistas para projetos específicos.",
+          "nextQuestionId": "has-tech-team"
+        },
+        {
+          "id": "200-plus",
+          "label": "Mais de 200 colaboradores",
+          "description": "Organização grande. Muitas vezes precisa de reforço, migrações ou suporte especializado em escala junto das equipas internas.",
+          "nextQuestionId": "has-tech-team"
+        }
+      ]
+    },
+    {
+      "id": "has-tech-team",
+      "type": "choice",
+      "title": "Tem equipa técnica?",
+      "description": "Saber se tem pessoas técnicas internas muda se nos integramos na sua equipa ou nos tornamos o seu departamento técnico.",
+      "options": [
+        {
+          "id": "yes",
+          "label": "Sim",
+          "description": "Tem programadores, engenheiros ou um líder técnico. Reforço, consultoria e suporte pontual encaixam muitas vezes melhor.",
+          "nextQuestionId": "product-help-established"
+        },
+        {
+          "id": "no",
+          "label": "Não",
+          "description": "A tecnologia ainda não é o seu ponto forte. Uma equipa externa dedicada ou um build completo é normalmente o ponto de partida certo.",
+          "nextQuestionId": "product-help-established"
+        }
+      ]
+    },
+    {
+      "id": "product-help-startup",
+      "type": "choice",
+      "title": "Que tipo de produto ou ajuda precisa?",
+      "description": "Escolha o que pretende alcançar agora. Combinamos isto com a sua situação de financiamento para recomendar os serviços certos.",
+      "options": [
+        {
+          "id": "develop-mvp",
+          "label": "Desenvolver um MVP",
+          "description": "Entregue uma primeira versão funcional em meses — não em anos. Ideal quando precisa de validar a ideia com utilizadores reais rapidamente."
+        },
+        {
+          "id": "create-tech-team",
+          "label": "Criar uma equipa técnica",
+          "description": "Construa uma equipa dedicada que seja dona do produto a longo prazo — uma equipa autogerida que montamos e gerimos por si."
+        },
+        {
+          "id": "technical-support",
+          "label": "Suporte técnico",
+          "description": "Ajuda delimitada: integrações, correção de bugs, scripts ou manutenção em algo que já tem."
+        },
+        {
+          "id": "help-me-decide",
+          "label": "Não sei — ajudem-me a decidir",
+          "description": "Recomendamos com base no financiamento e nos objetivos — não só no tipo de projeto."
+        }
+      ]
+    },
+    {
+      "id": "product-help-established",
+      "type": "choice",
+      "title": "Que tipo de produto ou ajuda precisa?",
+      "description": "Escolha a opção mais próxima do seu objetivo principal. Consideramos se tem equipa técnica ao sugerir serviços.",
+      "options": [
+        {
+          "id": "new-product",
+          "label": "Desenvolver um produto novo",
+          "description": "Construa algo novo — uma plataforma SaaS, portal de clientes, ferramenta interna ou produto mobile-first de raiz."
+        },
+        {
+          "id": "modernize",
+          "label": "Modernizar aplicação antiga",
+          "description": "Atualize software legado: melhore a experiência de utilização, refatore código, migre de plataforma ou adopte um stack moderno sem uma reescrita total arriscada."
+        },
+        {
+          "id": "team-augmentation",
+          "label": "Reforço de equipa (outsourcing)",
+          "description": "Acrescente programadores, product owners ou especialistas à sua equipa existente — capacidade flexível no seu roadmap e processos."
+        },
+        {
+          "id": "technical-support",
+          "label": "Suporte técnico",
+          "description": "Trabalho curto e delimitado: integrações de API, correção de bugs, scripts ou manutenção — sem compromisso de equipa a longo prazo."
+        },
+        {
+          "id": "help-me-decide",
+          "label": "Não sei — ajudem-me a decidir",
+          "description": "Recomendamos com base na dimensão da empresa, equipa técnica e objetivos."
+        }
+      ]
+    },
+    {
+      "id": "product-description",
+      "type": "textarea",
+      "title": "Fale um pouco sobre o seu produto",
+      "description": "Opcional — mas quanto mais contexto partilhar, melhor podemos adaptar o contacto de seguimento. Mencione o setor, utilizadores, calendário ou stack se souber.",
+      "optional": true,
+      "placeholder": "Ex.: Somos uma empresa de logística a construir um portal de clientes. Precisamos de integrações com o nosso ERP e uma interface adaptada a telemóvel até ao terceiro trimestre..."
+    }
+  ],
+  "contact": {
+    "title": "Fale connosco",
+    "description": "Partilhe o seu nome e e-mail para podermos entrar em contacto consigo com uma proposta à medida. O sítio web é opcional.",
+    "fields": [
+      {
+        "id": "website",
+        "label": "Sítio web da empresa ou projeto",
+        "description": "Ajuda-nos a perceber a marca, o produto e o mercado antes do contacto.",
+        "type": "url",
+        "placeholder": "https://asuaempresa.com",
+        "optional": true
+      },
+      {
+        "id": "name",
+        "label": "Nome",
+        "description": "Para sabermos como o contactar quando entrarmos em contacto.",
+        "type": "text",
+        "placeholder": "O seu nome",
+        "optional": false
+      },
+      {
+        "id": "email",
+        "label": "E-mail",
+        "description": "Usamos isto para enviar o resumo da estimativa e agendar o contacto de seguimento.",
+        "type": "email",
+        "placeholder": "nome@empresa.com",
+        "optional": false
+      }
+    ]
+  },
+  "rules": []
+}

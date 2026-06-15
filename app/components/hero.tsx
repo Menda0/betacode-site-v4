@@ -1,12 +1,16 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
 import { HeroCarousel } from './hero-carousel'
 import Image from 'next/image'
 import { IconArrowBigDown } from '@tabler/icons-react'
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 import { CALENDAR_URL } from '@/lib/ventures-content'
 
 export default function Example() {
+  const tHero = useTranslations('hero')
+  const t = useTranslations('common')
+
   return (
     <div className="bg-white dark:bg-gray-900">
       <main>
@@ -51,85 +55,58 @@ export default function Example() {
             <div className="mx-auto max-w-7xl px-6 pt-16 pb-32 sm:pt-20 lg:px-8 lg:pt-24">
               <div className="mx-auto max-w-2xl gap-x-14 lg:mx-0 lg:flex lg:max-w-none lg:items-center">
                 <div className="relative w-full lg:max-w-xl lg:shrink-0 xl:max-w-2xl">
-                  {/* <h1 className="text-5xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-7xl dark:text-white">
-                  Empowering Your Business with Innovative Software Solutions
-                  </h1> */}
                   <HeroCarousel />
                   <p className="hidden md:block mt-8 text-lg font-medium text-pretty text-gray-500 sm:max-w-md sm:text-xl/8 lg:max-w-none dark:text-gray-400">
-                    We embed dedicated engineers, product leads, and technical co-founders — so you can ship custom software, validate startup ideas, and scale without building a department from scratch.
+                    {tHero('subheadline')}
                   </p>
                   <div className="mt-10 flex flex-col items-center gap-4 md:flex-row md:gap-6">
-                    <Link
+                    <a
                       href={CALENDAR_URL}
                       className="rounded-md bg-primary-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:bg-primary-500 dark:hover:bg-primary-400 dark:focus-visible:outline-primary-500"
                     >
-                      Book a call
-                    </Link>
+                      {t('bookCall')}
+                    </a>
                     <Link
                       href="/pricing"
                       className="rounded-md border border-gray-300 bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-xs hover:bg-gray-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:focus-visible:outline-primary-500"
                     >
-                      Get a price estimate
+                      {t('getPriceEstimate')}
                     </Link>
                     <Link href="#services" className="text-sm/6 font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-                      <span>See how we can help</span>  <IconArrowBigDown className=" size-6 animate-bounce" />
-                    </Link> 
+                      <span>{t('seeHowWeCanHelp')}</span>
+                      <IconArrowBigDown className=" size-6 animate-bounce" />
+                    </Link>
                   </div>
                 </div>
                 <div className="mt-14 flex justify-end gap-8 sm:-mt-44 sm:justify-start sm:pl-20 lg:mt-0 lg:pl-0">
                   <div className="ml-auto w-44 flex-none space-y-8 pt-32 sm:ml-0 sm:pt-80 lg:order-last lg:pt-36 xl:order-0 xl:pt-80">
                     <div className="relative">
-                      <Image src="/images/hero1.jpg" alt="Betacode" width={500} height={500} 
-                      className="aspect-2/3 w-full rounded-xl bg-gray-900/5 object-cover shadow-lg dark:bg-gray-700/5" />
-                      {/* <img
-                        alt=""
-                        src="https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&h=528&q=80"
-                        className="aspect-2/3 w-full rounded-xl bg-gray-900/5 object-cover shadow-lg dark:bg-gray-700/5"
-                      /> */}
+                      <Image src="/images/hero1.jpg" alt="Betacode" width={500} height={500}
+                        className="aspect-2/3 w-full rounded-xl bg-gray-900/5 object-cover shadow-lg dark:bg-gray-700/5" />
                       <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-gray-900/10 ring-inset dark:ring-white/10" />
                     </div>
                   </div>
                   <div className="mr-auto w-44 flex-none space-y-8 sm:mr-0 sm:pt-52 lg:pt-36">
                     <div className="relative">
-                      <Image src="/images/hero2.jpg" alt="Betacode" width={500} height={500} 
-                      className="aspect-2/3 w-full rounded-xl bg-gray-900/5 object-cover shadow-lg dark:bg-gray-700/5" />
-                      {/* <img
-                        alt=""
-                        src="https://images.unsplash.com/photo-1485217988980-11786ced9454?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&h=528&q=80"
-                        className="aspect-2/3 w-full rounded-xl bg-gray-900/5 object-cover shadow-lg dark:bg-gray-700/5"
-                      /> */}
+                      <Image src="/images/hero2.jpg" alt="Betacode" width={500} height={500}
+                        className="aspect-2/3 w-full rounded-xl bg-gray-900/5 object-cover shadow-lg dark:bg-gray-700/5" />
                       <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-gray-900/10 ring-inset dark:ring-white/10" />
                     </div>
                     <div className="relative">
-                      <Image src="/images/hero3.jpg" alt="Betacode" width={500} height={500} 
-                      className="aspect-2/3 w-full rounded-xl bg-gray-900/5 object-cover shadow-lg dark:bg-gray-700/5" />
-                      {/* <img
-                        alt=""
-                        src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&crop=focalpoint&fp-x=.4&w=396&h=528&q=80"
-                        className="aspect-2/3 w-full rounded-xl bg-gray-900/5 object-cover shadow-lg dark:bg-gray-700/5"
-                      /> */}
+                      <Image src="/images/hero3.jpg" alt="Betacode" width={500} height={500}
+                        className="aspect-2/3 w-full rounded-xl bg-gray-900/5 object-cover shadow-lg dark:bg-gray-700/5" />
                       <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-gray-900/10 ring-inset dark:ring-white/10" />
                     </div>
                   </div>
                   <div className="w-44 flex-none space-y-8 pt-32 sm:pt-0">
                     <div className="relative">
-                      <Image src="/images/hero4.jpg" alt="Betacode" width={500} height={500} 
-                      className="aspect-2/3 w-full rounded-xl bg-gray-900/5 object-cover shadow-lg dark:bg-gray-700/5" />
-                      {/* <img
-                        alt=""
-                        src="https://images.unsplash.com/photo-1670272504528-790c24957dda?ixlib=rb-4.0.3&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&crop=left&w=400&h=528&q=80"
-                        className="aspect-2/3 w-full rounded-xl bg-gray-900/5 object-cover shadow-lg dark:bg-gray-700/5"
-                      /> */}
+                      <Image src="/images/hero4.jpg" alt="Betacode" width={500} height={500}
+                        className="aspect-2/3 w-full rounded-xl bg-gray-900/5 object-cover shadow-lg dark:bg-gray-700/5" />
                       <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-gray-900/10 ring-inset dark:ring-white/10" />
                     </div>
                     <div className="relative">
-                      <Image src="/images/hero5.jpg" alt="Betacode" width={500} height={500} 
-                      className="aspect-2/3 w-full rounded-xl bg-gray-900/5 object-cover shadow-lg dark:bg-gray-700/5" />
-                      {/* <img
-                        alt=""
-                        src="https://images.unsplash.com/photo-1670272505284-8faba1c31f7d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&h=528&q=80"
-                        className="aspect-2/3 w-full rounded-xl bg-gray-900/5 object-cover shadow-lg dark:bg-gray-700/5"
-                      /> */}
+                      <Image src="/images/hero5.jpg" alt="Betacode" width={500} height={500}
+                        className="aspect-2/3 w-full rounded-xl bg-gray-900/5 object-cover shadow-lg dark:bg-gray-700/5" />
                       <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-gray-900/10 ring-inset dark:ring-white/10" />
                     </div>
                   </div>

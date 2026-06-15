@@ -1,8 +1,13 @@
-import Link from 'next/link'
+'use client'
+
+import { useTranslations } from 'next-intl'
 import { IconArrowBigDown } from '@tabler/icons-react'
-import { CALENDAR_URL, venturesHero } from '@/lib/ventures-content'
+import { Link } from '@/i18n/navigation'
+import { CALENDAR_URL } from '@/lib/ventures-content'
 
 export function VenturesHero() {
+  const t = useTranslations('ventures.hero')
+
   return (
     <div className="bg-white dark:bg-gray-900">
       <div className="relative isolate">
@@ -45,26 +50,26 @@ export function VenturesHero() {
         <div className="mx-auto max-w-7xl px-6 pt-16 pb-24 sm:pt-20 lg:px-8 lg:pt-24">
           <div className="mx-auto max-w-3xl text-center">
             <p className="text-base/7 font-semibold text-purple-600 uppercase dark:text-purple-400">
-              {venturesHero.eyebrow}
+              {t('eyebrow')}
             </p>
             <h1 className="mt-4 text-5xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-6xl dark:text-white">
-              {venturesHero.headline}
+              {t('headline')}
             </h1>
             <p className="mt-6 text-lg/8 text-gray-600 dark:text-gray-400">
-              {venturesHero.subheadline}
+              {t('subheadline')}
             </p>
             <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-6">
-              <Link
+              <a
                 href={CALENDAR_URL}
                 className="rounded-md bg-primary-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:bg-primary-500 dark:hover:bg-primary-400 dark:focus-visible:outline-primary-500"
               >
-                {venturesHero.primaryCta}
-              </Link>
+                {t('primaryCta')}
+              </a>
               <Link
                 href="#coachid"
                 className="text-sm/6 font-semibold text-gray-900 dark:text-white flex items-center gap-2"
               >
-                <span>{venturesHero.secondaryCta}</span>
+                <span>{t('secondaryCta')}</span>
                 <IconArrowBigDown className="size-6 animate-bounce" />
               </Link>
             </div>

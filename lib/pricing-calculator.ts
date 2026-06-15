@@ -1,4 +1,6 @@
-import calculatorData from "@/data/pricing-calculator.json"
+import calculatorEn from "@/data/pricing-calculator.json"
+import calculatorPt from "@/data/pricing-calculator.pt.json"
+import type { Locale } from "@/i18n/routing"
 
 export type OutcomeId =
   | "self-managed-tech-teams"
@@ -123,7 +125,39 @@ export type CalculatorConfig = {
 
 export type CalculatorAnswers = Record<string, string>
 
-export const pricingCalculatorConfig = calculatorData as unknown as CalculatorConfig
+export type PricingUiLabels = {
+  summaryLabels: Record<string, string>
+  fundingWith: string
+  fundingWithout: string
+  hasTechTeamYes: string
+  hasTechTeamNo: string
+  briefPrice: {
+    model: string
+    equityPartnership: string
+    hourlyRate: string
+    mvpEstimate: string
+    priceRange: string
+    hourlyRates: string
+    contactForQuote: string
+    pricing: string
+  }
+  pricingNotes: {
+    hourly: string
+    project: string
+    partnership: string
+  }
+}
+
+const calculatorByLocale: Record<Locale, CalculatorConfig> = {
+  en: calculatorEn as unknown as CalculatorConfig,
+  pt: calculatorPt as unknown as CalculatorConfig,
+}
+
+export function getPricingCalculatorConfig(locale: Locale = "en"): CalculatorConfig {
+  return calculatorByLocale[locale] ?? calculatorByLocale.en
+}
+
+export const pricingCalculatorConfig = getPricingCalculatorConfig("en")
 
 const SELF_MANAGED_TEAM_ID: OutcomeId = "self-managed-tech-teams"
 
@@ -232,14 +266,17 @@ export function groupOutcomesForDisplay(outcomes: CalculatorOutcome[]): ServiceD
   }))
 }
 
-export function getQuestionById(questionId: string): CalculatorQuestion | undefined {
-  return pricingCalculatorConfig.questions.find((question) => question.id === questionId)
+export function getQuestionById(
+  questionId: string,
+  config: CalculatorConfig = pricingCalculatorConfig
+): CalculatorQuestion | undefined {
+  return config.questions.find((question) => question.id === questionId)
 }
 
-export function getStartQuestion(): CalculatorQuestion {
-  const question = getQuestionById(pricingCalculatorConfig.startQuestionId)
+export function getStartQuestion(config: CalculatorConfig = pricingCalculatorConfig): CalculatorQuestion {
+  const question = getQuestionById(config.startQuestionId, config)
   if (!question) {
-    throw new Error(`Start question "${pricingCalculatorConfig.startQuestionId}" not found`)
+    throw new Error(`Start question "${config.startQuestionId}" not found`)
   }
   return question
 }
@@ -257,29 +294,38 @@ export type AnswerSummaryItem = {
   value: string
 }
 
-const QUESTION_SUMMARY_LABELS: Record<string, string> = {
-  "business-stage": "Business",
-  "startup-funding": "Funding",
-  "team-dimensions": "Company size",
-  "has-tech-team": "Tech team",
-  "product-help-startup": "Goal",
-  "product-help-established": "Goal",
+const QUESTION_SUMMARY_LABEL_KEYS: Record<string, keyof PricingUiLabels["summaryLabels"] | string> = {
+  "business-stage": "businessStage",
+  "startup-funding": "startupFunding",
+  "team-dimensions": "teamDimensions",
+  "has-tech-team": "hasTechTeam",
+  "product-help-startup": "productHelpStartup",
+  "product-help-established": "productHelpEstablished",
 }
 
-function formatSummaryAnswerLabel(questionId: string, optionId: string, optionLabel: string): string {
-  if (questionId === "startup-funding") {
-    return optionId === "yes" ? "With funding" : "Without funding"
+function formatSummaryAnswerLabel(
+  questionId: string,
+  optionId: string,
+  optionLabel: string,
+  ui?: PricingUiLabels
+): string {
+  if (questionId === "startup-funding" && ui) {
+    return optionId === "yes" ? ui.fundingWith : ui.fundingWithout
   }
 
-  if (questionId === "has-tech-team") {
-    return optionId === "yes" ? "Has a tech team" : "No tech team"
+  if (questionId === "has-tech-team" && ui) {
+    return optionId === "yes" ? ui.hasTechTeamYes : ui.hasTechTeamNo
   }
 
   return optionLabel
 }
 
-export function getAnswersSummary(answers: CalculatorAnswers): AnswerSummaryItem[] {
-  const path = getQuestionPath(answers)
+export function getAnswersSummary(
+  answers: CalculatorAnswers,
+  config: CalculatorConfig = pricingCalculatorConfig,
+  ui?: PricingUiLabels
+): AnswerSummaryItem[] {
+  const path = getQuestionPath(answers, config)
 
   return path
     .filter((question) => question.type !== "textarea")
@@ -290,26 +336,34 @@ export function getAnswersSummary(answers: CalculatorAnswers): AnswerSummaryItem
       const selectedOption = question.options.find((option) => option.id === selectedOptionId)
       if (!selectedOption) return null
 
+      const labelKey = QUESTION_SUMMARY_LABEL_KEYS[question.id]
+      const label =
+        ui && labelKey && labelKey in ui.summaryLabels
+          ? ui.summaryLabels[labelKey as keyof typeof ui.summaryLabels]
+          : ui?.summaryLabels[question.id] ?? question.title
+
       return {
         questionId: question.id,
-        label: QUESTION_SUMMARY_LABELS[question.id] ?? question.title,
-        value: formatSummaryAnswerLabel(question.id, selectedOption.id, selectedOption.label),
+        label,
+        value: formatSummaryAnswerLabel(question.id, selectedOption.id, selectedOption.label, ui),
       }
     })
     .filter((item): item is AnswerSummaryItem => item !== null)
 }
 
-export function getProductDescriptionQuestion(): CalculatorQuestion {
-  const question = getQuestionById("product-description")
+export function getProductDescriptionQuestion(
+  config: CalculatorConfig = pricingCalculatorConfig
+): CalculatorQuestion {
+  const question = getQuestionById("product-description", config)
   if (!question) {
-    throw new Error("Question \"product-description\" not found")
+    throw new Error('Question "product-description" not found')
   }
   return question
 }
 
-export function getExpectedBranchingQuestionCount(answers: CalculatorAnswers): number {
-  if (isQuestionFlowComplete(answers)) {
-    return getQuestionPath(answers).length
+export function getExpectedBranchingQuestionCount(answers: CalculatorAnswers, config: CalculatorConfig = pricingCalculatorConfig): number {
+  if (isQuestionFlowComplete(answers, config)) {
+    return getQuestionPath(answers, config).length
   }
 
   const stage = answers["business-stage"]
@@ -318,12 +372,15 @@ export function getExpectedBranchingQuestionCount(answers: CalculatorAnswers): n
   return 1
 }
 
-export function getQuestionPath(answers: CalculatorAnswers): CalculatorQuestion[] {
+export function getQuestionPath(
+  answers: CalculatorAnswers,
+  config: CalculatorConfig = pricingCalculatorConfig
+): CalculatorQuestion[] {
   const path: CalculatorQuestion[] = []
-  let currentQuestionId: string | undefined = pricingCalculatorConfig.startQuestionId
+  let currentQuestionId: string | undefined = config.startQuestionId
 
   while (currentQuestionId) {
-    const question = getQuestionById(currentQuestionId)
+    const question = getQuestionById(currentQuestionId, config)
     if (!question) break
 
     path.push(question)
@@ -339,21 +396,27 @@ export function getQuestionPath(answers: CalculatorAnswers): CalculatorQuestion[
   return path
 }
 
-export function isQuestionFlowComplete(answers: CalculatorAnswers): boolean {
-  const path = getQuestionPath(answers)
+export function isQuestionFlowComplete(
+  answers: CalculatorAnswers,
+  config: CalculatorConfig = pricingCalculatorConfig
+): boolean {
+  const path = getQuestionPath(answers, config)
   return path.length > 0 && path.every((question) => Boolean(answers[question.id]))
 }
 
-export function resolveOutcomes(answers: CalculatorAnswers): CalculatorOutcome[] {
-  const directOutcomeId = findDirectOutcomeId(answers)
+export function resolveOutcomes(
+  answers: CalculatorAnswers,
+  config: CalculatorConfig = pricingCalculatorConfig
+): CalculatorOutcome[] {
+  const directOutcomeId = findDirectOutcomeId(answers, config)
   if (directOutcomeId) {
-    const outcome = pricingCalculatorConfig.outcomes[directOutcomeId]
+    const outcome = config.outcomes[directOutcomeId]
     return outcome ? [outcome] : []
   }
 
   const matchedOutcomeIds = new Set<OutcomeId>(resolveOutcomeIds(answers))
 
-  for (const rule of pricingCalculatorConfig.rules) {
+  for (const rule of config.rules) {
     const matches = Object.entries(rule.conditions).every(
       ([questionId, optionId]) => answers[questionId] === optionId
     )
@@ -365,12 +428,15 @@ export function resolveOutcomes(answers: CalculatorAnswers): CalculatorOutcome[]
   }
 
   return Array.from(matchedOutcomeIds)
-    .map((outcomeId) => pricingCalculatorConfig.outcomes[outcomeId])
+    .map((outcomeId) => config.outcomes[outcomeId])
     .filter(Boolean)
 }
 
-function findDirectOutcomeId(answers: CalculatorAnswers): OutcomeId | null {
-  for (const question of pricingCalculatorConfig.questions) {
+function findDirectOutcomeId(
+  answers: CalculatorAnswers,
+  config: CalculatorConfig = pricingCalculatorConfig
+): OutcomeId | null {
+  for (const question of config.questions) {
     const selectedOptionId = answers[question.id]
     if (!selectedOptionId) continue
 
@@ -428,14 +494,22 @@ export type BriefPriceSummary = {
   value: string
 }
 
-export function getBriefPriceSummary(outcome: CalculatorOutcome): BriefPriceSummary {
+export function getBriefPriceSummary(
+  outcome: CalculatorOutcome,
+  ui?: PricingUiLabels
+): BriefPriceSummary {
+  const labels = ui?.briefPrice
+
   if (outcome.pricingModel === "partnership") {
-    return { label: "Model", value: "Equity partnership" }
+    return {
+      label: labels?.model ?? "Model",
+      value: labels?.equityPartnership ?? "Equity partnership",
+    }
   }
 
   if (outcome.rate) {
     return {
-      label: "Hourly rate",
+      label: labels?.hourlyRate ?? "Hourly rate",
       value: `${formatHourlyRange(outcome.rate.rateMin, outcome.rate.rateMax)}/h`,
     }
   }
@@ -452,7 +526,7 @@ export function getBriefPriceSummary(outcome: CalculatorOutcome): BriefPriceSumm
     const min = Math.min(...mvpEstimates.map((estimate) => estimate.min))
     const max = Math.max(...mvpEstimates.map((estimate) => estimate.max))
     return {
-      label: "MVP estimate",
+      label: labels?.mvpEstimate ?? "MVP estimate",
       value: formatEuroRange(min, max),
     }
   }
@@ -461,7 +535,7 @@ export function getBriefPriceSummary(outcome: CalculatorOutcome): BriefPriceSumm
     const min = Math.min(...allEstimates.map((estimate) => estimate.min))
     const max = Math.max(...allEstimates.map((estimate) => estimate.max))
     return {
-      label: allEstimates.length === 1 ? allEstimates[0].label : "Price range",
+      label: allEstimates.length === 1 ? allEstimates[0].label : (labels?.priceRange ?? "Price range"),
       value: formatEuroRange(min, max),
     }
   }
@@ -475,12 +549,15 @@ export function getBriefPriceSummary(outcome: CalculatorOutcome): BriefPriceSumm
     const rateMin = Math.min(...allTeamMembers.map((member) => member.rateMin))
     const rateMax = Math.max(...allTeamMembers.map((member) => member.rateMax))
     return {
-      label: "Hourly rates",
+      label: labels?.hourlyRates ?? "Hourly rates",
       value: `${formatHourlyRange(rateMin, rateMax)}/h`,
     }
   }
 
-  return { label: "Pricing", value: "Contact for quote" }
+  return {
+    label: labels?.pricing ?? "Pricing",
+    value: labels?.contactForQuote ?? "Contact for quote",
+  }
 }
 
 export const OUTCOME_DISPLAY_ORDER: OutcomeId[] = [
@@ -498,9 +575,12 @@ export function sortOutcomesForDisplay(outcomes: CalculatorOutcome[]): Calculato
   )
 }
 
-export function getServiceGroupLabel(serviceGroupId: string | undefined): string | null {
+export function getServiceGroupLabel(
+  serviceGroupId: string | undefined,
+  config: CalculatorConfig = pricingCalculatorConfig
+): string | null {
   if (!serviceGroupId) return null
-  return pricingCalculatorConfig.serviceGroups?.[serviceGroupId]?.label ?? null
+  return config.serviceGroups?.[serviceGroupId]?.label ?? null
 }
 
 export function formatEuro(amount: number): string {
@@ -519,14 +599,17 @@ export function formatHourlyRange(min: number, max: number): string {
   return `${min} – ${max} €`
 }
 
-export function getPricingModelNote(pricingModel: PricingModel): string | null {
+export function getPricingModelNote(
+  pricingModel: PricingModel,
+  ui?: PricingUiLabels
+): string | null {
   switch (pricingModel) {
     case "hourly":
-      return "Hourly rates above. Project ranges shown as a reference where applicable."
+      return ui?.pricingNotes.hourly ?? "Hourly rates above. Project ranges shown as a reference where applicable."
     case "project":
-      return "Ranges based on our standard team configurations. Final pricing depends on scope and requirements."
+      return ui?.pricingNotes.project ?? "Ranges based on our standard team configurations. Final pricing depends on scope and requirements."
     case "partnership":
-      return "Betacode Ventures is an equity partnership—pricing is tailored to your stage and product."
+      return ui?.pricingNotes.partnership ?? "Betacode Ventures is an equity partnership—pricing is tailored to your stage and product."
     default:
       return null
   }

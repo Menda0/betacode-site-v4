@@ -1,8 +1,13 @@
-import Link from 'next/link'
+'use client'
+
+import { useTranslations } from 'next-intl'
+import { Link } from '@/i18n/navigation'
 import type { BlogPost } from '@/lib/blog-content'
 import { BlogAuthor } from '@/app/components/blog/blog-author'
 
 export function BlogCard({ post }: { post: BlogPost }) {
+  const t = useTranslations('blog')
+
   return (
     <article className="flex flex-col rounded-2xl border border-secondary-200/80 bg-white/95 p-6 shadow-sm backdrop-blur-sm transition-shadow hover:shadow-md dark:border-white/10 dark:bg-gray-900/90">
       <div className="flex items-center gap-x-3 text-xs font-medium">
@@ -20,7 +25,7 @@ export function BlogCard({ post }: { post: BlogPost }) {
       <div className="mt-6 flex items-center justify-between gap-4">
         <BlogAuthor author={post.author} size="sm" />
         <span className="shrink-0 text-sm text-gray-500 dark:text-gray-400">
-          {post.readingTimeMinutes} min read
+          {t('minRead', { minutes: post.readingTimeMinutes })}
         </span>
       </div>
     </article>

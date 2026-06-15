@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
+import { Link } from '@/i18n/navigation'
 import { notFound } from 'next/navigation'
 import { IconArrowLeft } from '@tabler/icons-react'
 import { blogPosts, getBlogPost, getNextBlogPost, getOtherBlogPosts } from '@/lib/blog-content'
@@ -14,7 +15,7 @@ import { VenturesPromo } from '@/app/components/ventures-promo'
 import { Footer } from '@/app/components/footer'
 
 type Props = {
-  params: Promise<{ slug: string }>
+  params: Promise<{ locale: string; slug: string }>
 }
 
 export async function generateStaticParams() {
@@ -22,11 +23,12 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params
+  const { locale, slug } = await params
   const post = getBlogPost(slug)
 
   if (!post) {
-    return { title: 'Post not found — Betacode' }
+    const t = await getTranslations({ locale, namespace: 'metadata.blogPostNotFound' })
+    return { title: t('title'), description: t('description') }
   }
 
   return {
@@ -36,13 +38,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: post.title,
       description: post.excerpt,
       images: '/images/betacode-facebook.png',
-      url: `/insights/${post.slug}`,
+      url: `/${locale}/insights/${post.slug}`,
     },
   }
 }
 
 export default async function InsightPostPage({ params }: Props) {
-  const { slug } = await params
+  const { locale, slug } = await params
+  setRequestLocale(locale)
+
+  const t = await getTranslations({ locale, namespace: 'blog' })
   const post = getBlogPost(slug)
 
   if (!post) {
@@ -61,7 +66,7 @@ export default async function InsightPostPage({ params }: Props) {
             className="inline-flex items-center gap-2 text-sm font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
           >
             <IconArrowLeft className="size-4" aria-hidden="true" />
-            Back to insights
+            {t('backToInsights')}
           </Link>
 
           <header className="mt-8">
@@ -70,7 +75,7 @@ export default async function InsightPostPage({ params }: Props) {
                 {post.category}
               </span>
               <span className="text-gray-500 dark:text-gray-400">
-                {post.readingTimeMinutes} min read
+                {t('minRead', { minutes: post.readingTimeMinutes })}
               </span>
             </div>
             <h1 className="mt-6 text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl dark:text-white">

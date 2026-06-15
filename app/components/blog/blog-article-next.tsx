@@ -1,12 +1,17 @@
-import Link from 'next/link'
+'use client'
+
+import { useTranslations } from 'next-intl'
+import { Link } from '@/i18n/navigation'
 import { IconArrowRight } from '@tabler/icons-react'
 import type { BlogPost } from '@/lib/blog-content'
 
 export function BlogArticleNext({ post }: { post: BlogPost }) {
+  const t = useTranslations('blog')
+
   return (
     <div className="mt-12 border-t border-gray-200 pt-8 dark:border-white/10">
       <p className="text-sm font-semibold text-secondary-600 uppercase dark:text-secondary-400">
-        Read next
+        {t('readNext')}
       </p>
       <Link
         href={`/insights/${post.slug}`}
@@ -20,7 +25,7 @@ export function BlogArticleNext({ post }: { post: BlogPost }) {
             <h2 className="mt-3 text-lg font-semibold text-gray-900 dark:text-white">{post.title}</h2>
             <p className="mt-2 line-clamp-2 text-sm text-gray-600 dark:text-gray-400">{post.excerpt}</p>
             <p className="mt-3 text-xs text-gray-500 dark:text-gray-400">
-              {post.readingTimeMinutes} min read
+              {t('minRead', { minutes: post.readingTimeMinutes })}
             </p>
           </div>
           <IconArrowRight

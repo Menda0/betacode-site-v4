@@ -1,7 +1,9 @@
 "use client"
 
 import { useMemo, useState } from "react"
-import Link from "next/link"
+import { useLocale, useTranslations } from "next-intl"
+import { Link } from "@/i18n/navigation"
+import type { Locale } from "@/i18n/routing"
 import { IconArrowLeft, IconArrowRight, IconCheck, IconChevronDown, IconRocket, IconSchool, IconTool, IconUserPlus, IconUsersGroup } from "@tabler/icons-react"
 import {
   clearBranchAnswers,
@@ -12,18 +14,20 @@ import {
   getOutcomeSummary,
   getPricingModelNote,
   getExpectedBranchingQuestionCount,
+  getPricingCalculatorConfig,
   getProductDescriptionQuestion,
   getQuestionPath,
   getServiceGroupLabel,
   getStartQuestion,
   isQuestionFlowComplete,
-  pricingCalculatorConfig,
   resolveOutcomes,
   sortOutcomesForDisplay,
   type CalculatorAnswers,
+  type CalculatorConfig,
   type CalculatorOutcome,
   type CalculatorQuestion,
   type OutcomeId,
+  type PricingUiLabels,
   type TeamConfiguration,
   type TeamMember,
 } from "@/lib/pricing-calculator"
@@ -32,25 +36,134 @@ import { cn } from "@/lib/utils"
 
 type Phase = "questions" | "results" | "product" | "contact" | "submitted"
 
-const productDescriptionQuestion = getProductDescriptionQuestion()
 const POST_BRANCHING_STEPS = 3
 
+type CalculatorCopy = {
+  back: string
+  continue: string
+  skip: string
+  submit: string
+  startOver: string
+  thankYou: string
+  thankYouMessage: string
+  bookCall: string
+  optional: string
+  selectOption: string
+  getEstimate: string
+  subtitle: string
+  title: string
+  description: string
+  noMatch: string
+  recommendedService: string
+  recommendedServices: string
+  basedOnAnswers: string
+  compareOptions: string
+  compareOptionsExpanded: string
+  talkToUs: string
+  seeFullPricing: string
+  hide: string
+  otherServices: string
+  teamConfiguration: string
+  profile: string
+  regime: string
+  rate: string
+  pricing: string
+  estimatedPrices: string
+  exploreVentures: string
+}
+
+function buildPricingUiLabels(t: ReturnType<typeof useTranslations<"pricing">>): PricingUiLabels {
+  return {
+    summaryLabels: {
+      businessStage: t("summaryLabels.businessStage"),
+      startupFunding: t("summaryLabels.startupFunding"),
+      teamDimensions: t("summaryLabels.teamDimensions"),
+      hasTechTeam: t("summaryLabels.hasTechTeam"),
+      productHelpStartup: t("summaryLabels.productHelpStartup"),
+      productHelpEstablished: t("summaryLabels.productHelpEstablished"),
+    },
+    fundingWith: t("summaryLabels.fundingWith"),
+    fundingWithout: t("summaryLabels.fundingWithout"),
+    hasTechTeamYes: t("summaryLabels.hasTechTeamYes"),
+    hasTechTeamNo: t("summaryLabels.hasTechTeamNo"),
+    briefPrice: {
+      model: t("briefPrice.model"),
+      equityPartnership: t("briefPrice.equityPartnership"),
+      hourlyRate: t("briefPrice.hourlyRate"),
+      mvpEstimate: t("briefPrice.mvpEstimate"),
+      priceRange: t("briefPrice.priceRange"),
+      hourlyRates: t("briefPrice.hourlyRates"),
+      contactForQuote: t("briefPrice.contactForQuote"),
+      pricing: t("briefPrice.pricing"),
+    },
+    pricingNotes: {
+      hourly: t("pricingNotes.hourly"),
+      project: t("pricingNotes.project"),
+      partnership: t("pricingNotes.partnership"),
+    },
+  }
+}
+
+function buildCalculatorCopy(t: ReturnType<typeof useTranslations<"pricing">>, tc: ReturnType<typeof useTranslations<"common">>): CalculatorCopy {
+  return {
+    back: t("back"),
+    continue: t("continue"),
+    skip: t("skip"),
+    submit: t("submit"),
+    startOver: t("startOver"),
+    thankYou: t("thankYou"),
+    thankYouMessage: t("thankYouMessage"),
+    bookCall: tc("bookCall"),
+    optional: tc("optional"),
+    selectOption: tc("selectOption"),
+    getEstimate: t("getEstimate"),
+    subtitle: t("subtitle"),
+    title: t("title"),
+    description: t("description"),
+    noMatch: t("noMatch"),
+    recommendedService: t("recommendedService"),
+    recommendedServices: t("recommendedServices"),
+    basedOnAnswers: t("basedOnAnswers"),
+    compareOptions: t("compareOptions"),
+    compareOptionsExpanded: t("compareOptionsExpanded"),
+    talkToUs: t("talkToUs"),
+    seeFullPricing: t("seeFullPricing"),
+    hide: t("hide"),
+    otherServices: t("otherServices"),
+    teamConfiguration: t("teamConfiguration"),
+    profile: t("profile"),
+    regime: t("regime"),
+    rate: t("rate"),
+    pricing: t("pricing"),
+    estimatedPrices: t("estimatedPrices"),
+    exploreVentures: t("exploreVentures"),
+  }
+}
+
 export function PriceCalculator() {
-  const startQuestion = getStartQuestion()
+  const locale = useLocale() as Locale
+  const t = useTranslations("pricing")
+  const tc = useTranslations("common")
+  const config = useMemo(() => getPricingCalculatorConfig(locale), [locale])
+  const uiLabels = useMemo(() => buildPricingUiLabels(t), [t])
+  const copy = useMemo(() => buildCalculatorCopy(t, tc), [t, tc])
+  const startQuestion = useMemo(() => getStartQuestion(config), [config])
+  const productDescriptionQuestion = useMemo(() => getProductDescriptionQuestion(config), [config])
+
   const [wizardStarted, setWizardStarted] = useState(false)
   const [phase, setPhase] = useState<Phase>("questions")
   const [answers, setAnswers] = useState<CalculatorAnswers>({})
   const [contactDetails, setContactDetails] = useState<CalculatorAnswers>({})
-  const [currentQuestionId, setCurrentQuestionId] = useState<string>(startQuestion.id)
+  const [currentQuestionId, setCurrentQuestionId] = useState<string>(config.startQuestionId)
   const [outcomes, setOutcomes] = useState<CalculatorOutcome[]>([])
 
-  const questionPath = useMemo(() => getQuestionPath(answers), [answers])
+  const questionPath = useMemo(() => getQuestionPath(answers, config), [answers, config])
   const currentQuestion =
-    pricingCalculatorConfig.questions.find((question) => question.id === currentQuestionId) ?? startQuestion
+    config.questions.find((question) => question.id === currentQuestionId) ?? startQuestion
 
   const branchingQuestionCount = useMemo(
-    () => getExpectedBranchingQuestionCount(answers),
-    [answers]
+    () => getExpectedBranchingQuestionCount(answers, config),
+    [answers, config]
   )
   const totalSteps = branchingQuestionCount + POST_BRANCHING_STEPS
   const currentQuestionIndex = questionPath.findIndex((question) => question.id === currentQuestionId)
@@ -77,8 +190,8 @@ export function PriceCalculator() {
       return
     }
 
-    if (isQuestionFlowComplete(nextAnswers)) {
-      setOutcomes(resolveOutcomes(nextAnswers))
+    if (isQuestionFlowComplete(nextAnswers, config)) {
+      setOutcomes(resolveOutcomes(nextAnswers, config))
       setPhase("results")
     }
   }
@@ -168,13 +281,13 @@ export function PriceCalculator() {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <h1 className="text-base/7 font-semibold text-primary-600 uppercase dark:text-primary-400">
-            Price Calculator
+            {copy.subtitle}
           </h1>
           <p className="mt-2 text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl dark:text-white">
-            Get an estimated price for your project
+            {copy.title}
           </p>
           <p className="mt-6 text-lg/8 text-gray-600 dark:text-gray-300">
-            Answer a few questions about your business and goals. Each option includes context so you can pick what fits—and we&apos;ll suggest the right services and price ranges.
+            {copy.description}
           </p>
         </div>
 
@@ -191,15 +304,15 @@ export function PriceCalculator() {
                 onClick={() => setWizardStarted(true)}
                 className="inline-flex items-center justify-center gap-2 rounded-md bg-primary-600 px-5 py-3 text-sm font-semibold text-white shadow-xs hover:bg-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:bg-primary-500 dark:hover:bg-primary-400"
               >
-                Get a price estimate
+                {copy.getEstimate}
                 <IconArrowRight className="size-4" aria-hidden="true" />
               </button>
-              <Link
+              <a
                 href={CALENDAR_URL}
                 className="inline-flex items-center justify-center rounded-md border border-gray-300 bg-white px-5 py-3 text-sm font-semibold text-gray-900 shadow-xs hover:bg-gray-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700"
               >
-                Book a call
-              </Link>
+                {copy.bookCall}
+              </a>
             </div>
           ) : (
             <>
@@ -210,6 +323,7 @@ export function PriceCalculator() {
                   <QuestionStep
                     question={currentQuestion}
                     answers={answers}
+                    copy={copy}
                     canGoBack={currentQuestionId !== startQuestion.id}
                     onBack={handleBack}
                     onChoiceSelect={handleChoiceSelect}
@@ -222,6 +336,9 @@ export function PriceCalculator() {
                   <ResultsStep
                     answers={answers}
                     outcomes={outcomes}
+                    config={config}
+                    uiLabels={uiLabels}
+                    copy={copy}
                     onBack={handleBack}
                     onContinue={() => setPhase("product")}
                     onReset={reset}
@@ -232,8 +349,8 @@ export function PriceCalculator() {
                   <QuestionStep
                     question={productDescriptionQuestion}
                     answers={answers}
+                    copy={copy}
                     canGoBack
-                    continueLabel="Continue"
                     onBack={handleBack}
                     onTextareaChange={handleProductDescriptionChange}
                     onTextareaContinue={handleProductDescriptionContinue}
@@ -244,6 +361,8 @@ export function PriceCalculator() {
                 {phase === "contact" && (
                   <ContactStep
                     contactDetails={contactDetails}
+                    config={config}
+                    copy={copy}
                     onBack={handleBack}
                     onChange={(fieldId, value) =>
                       setContactDetails((prev) => ({ ...prev, [fieldId]: value }))
@@ -258,16 +377,16 @@ export function PriceCalculator() {
                     <div className="mx-auto flex size-12 items-center justify-center rounded-full bg-primary-600/10 text-primary-600 dark:bg-primary-500/10 dark:text-primary-400">
                       <IconCheck className="size-6" aria-hidden="true" />
                     </div>
-                    <h2 className="mt-4 text-xl font-semibold text-gray-900 dark:text-white">Thank you</h2>
+                    <h2 className="mt-4 text-xl font-semibold text-gray-900 dark:text-white">{copy.thankYou}</h2>
                     <p className="mt-2 text-gray-600 dark:text-gray-300">
-                      We&apos;ve received your details. We&apos;ll review your project and get back to you soon.
+                      {copy.thankYouMessage}
                     </p>
                     <button
                       type="button"
                       onClick={reset}
                       className="mt-6 text-sm font-semibold text-primary-600 hover:text-primary-500 dark:text-primary-400"
                     >
-                      Start over
+                      {copy.startOver}
                     </button>
                   </div>
                 )}
@@ -312,8 +431,8 @@ function StepIndicator({ currentStep, totalSteps }: { currentStep: number; total
 function QuestionStep({
   question,
   answers,
+  copy,
   canGoBack,
-  continueLabel = "Continue",
   onBack,
   onChoiceSelect,
   onDropdownChange,
@@ -324,8 +443,8 @@ function QuestionStep({
 }: {
   question: CalculatorQuestion
   answers: CalculatorAnswers
+  copy: CalculatorCopy
   canGoBack: boolean
-  continueLabel?: string
   onBack: () => void
   onChoiceSelect?: (question: CalculatorQuestion, optionId: string) => void
   onDropdownChange?: (question: CalculatorQuestion, optionId: string) => void
@@ -343,7 +462,7 @@ function QuestionStep({
           className="mb-4 inline-flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
         >
           <IconArrowLeft className="size-4" aria-hidden="true" />
-          Back
+          {copy.back}
         </button>
       )}
 
@@ -388,7 +507,7 @@ function QuestionStep({
             onChange={(event) => onDropdownChange?.(question, event.target.value)}
             className="block w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-gray-900 shadow-xs focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
           >
-            <option value="" disabled>Select an option</option>
+            <option value="" disabled>{copy.selectOption}</option>
             {question.options.map((option) => (
               <option key={option.id} value={option.id}>{option.label}</option>
             ))}
@@ -399,7 +518,7 @@ function QuestionStep({
             onClick={() => onDropdownContinue?.(question)}
             className="inline-flex items-center gap-2 rounded-md bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-primary-500 disabled:pointer-events-none disabled:opacity-50 dark:bg-primary-500 dark:hover:bg-primary-400"
           >
-            Continue
+            {copy.continue}
             <IconArrowRight className="size-4" aria-hidden="true" />
           </button>
         </div>
@@ -421,7 +540,7 @@ function QuestionStep({
               onClick={onTextareaContinue}
               className="inline-flex items-center gap-2 rounded-md bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-primary-500 dark:bg-primary-500 dark:hover:bg-primary-400"
             >
-              {continueLabel}
+              {copy.continue}
               <IconArrowRight className="size-4" aria-hidden="true" />
             </button>
             {question.optional && (
@@ -430,7 +549,7 @@ function QuestionStep({
                 onClick={onTextareaSkip}
                 className="rounded-md px-4 py-2.5 text-sm font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
               >
-                Skip
+                {copy.skip}
               </button>
             )}
           </div>
@@ -443,19 +562,25 @@ function QuestionStep({
 function ResultsStep({
   answers,
   outcomes,
+  config,
+  uiLabels,
+  copy,
   onBack,
   onContinue,
   onReset,
 }: {
   answers: CalculatorAnswers
   outcomes: CalculatorOutcome[]
+  config: CalculatorConfig
+  uiLabels: PricingUiLabels
+  copy: CalculatorCopy
   onBack: () => void
   onContinue: () => void
   onReset: () => void
 }) {
   const [expandedId, setExpandedId] = useState<OutcomeId | null>(null)
   const sortedOutcomes = sortOutcomesForDisplay(outcomes)
-  const choiceSummary = getAnswersSummary(answers)
+  const choiceSummary = getAnswersSummary(answers, config, uiLabels)
   const expandedOutcome = expandedId
     ? sortedOutcomes.find((outcome) => outcome.id === expandedId)
     : null
@@ -464,14 +589,14 @@ function ResultsStep({
     return (
       <div className="text-center">
         <p className="text-gray-700 dark:text-gray-300">
-          We couldn&apos;t match your answers to a recommendation. Try adjusting your responses or book a call with us.
+          {copy.noMatch}
         </p>
         <button
           type="button"
           onClick={onReset}
           className="mt-6 text-sm font-semibold text-primary-600 hover:text-primary-500 dark:text-primary-400"
         >
-          Start over
+          {copy.startOver}
         </button>
       </div>
     )
@@ -485,23 +610,21 @@ function ResultsStep({
         className="mb-4 inline-flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
       >
         <IconArrowLeft className="size-4" aria-hidden="true" />
-        Back
+        {copy.back}
       </button>
 
       <div className="rounded-xl bg-primary-600/5 p-4 sm:p-5 dark:bg-primary-500/10">
         <p className="text-sm font-medium text-primary-700 uppercase dark:text-primary-300">
-          {sortedOutcomes.length > 1 ? "Recommended services" : "Recommended service"}
+          {sortedOutcomes.length > 1 ? copy.recommendedServices : copy.recommendedService}
         </p>
         <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
-          {expandedId
-            ? "View full pricing below. Switch services using the tabs on the right."
-            : "Compare options below. Tap any card for full pricing breakdowns."}
+          {expandedId ? copy.compareOptionsExpanded : copy.compareOptions}
         </p>
 
         {choiceSummary.length > 0 && (
           <div className="mt-4 border-t border-primary-200/60 pt-4 dark:border-primary-700/40">
             <p className="text-xs font-medium uppercase tracking-wide text-primary-700 dark:text-primary-300">
-              Based on your answers
+              {copy.basedOnAnswers}
             </p>
             <dl className="mt-2 flex flex-wrap gap-x-4 gap-y-2">
               {choiceSummary.map((item) => (
@@ -519,14 +642,20 @@ function ResultsStep({
         {expandedId && expandedOutcome ? (
           <div className="flex flex-col gap-3 lg:flex-row lg:items-stretch">
             <div className="min-w-0 flex-1 order-2 lg:order-1">
-              <ExpandedServicePanel outcome={expandedOutcome} onHide={() => setExpandedId(null)} />
+              <ExpandedServicePanel
+                outcome={expandedOutcome}
+                config={config}
+                uiLabels={uiLabels}
+                copy={copy}
+                onHide={() => setExpandedId(null)}
+              />
             </div>
 
             {sortedOutcomes.length > 1 && (
               <div
                 className="order-1 flex shrink-0 gap-2 overflow-x-auto pb-1 lg:order-2 lg:w-52 lg:flex-col lg:overflow-visible lg:pb-0"
                 role="tablist"
-                aria-label="Other services"
+                aria-label={copy.otherServices}
               >
                 {sortedOutcomes
                   .filter((outcome) => outcome.id !== expandedId)
@@ -534,6 +663,7 @@ function ResultsStep({
                     <ServiceTab
                       key={outcome.id}
                       outcome={outcome}
+                      uiLabels={uiLabels}
                       onClick={() => setExpandedId(outcome.id)}
                     />
                   ))}
@@ -546,6 +676,9 @@ function ResultsStep({
               <ServiceResultCard
                 key={outcome.id}
                 outcome={outcome}
+                config={config}
+                uiLabels={uiLabels}
+                copy={copy}
                 onSelect={() => setExpandedId(outcome.id)}
               />
             ))}
@@ -559,14 +692,14 @@ function ResultsStep({
           onClick={onReset}
           className="text-sm font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
         >
-          Start over
+          {copy.startOver}
         </button>
         <button
           type="button"
           onClick={onContinue}
           className="inline-flex items-center justify-center gap-2 rounded-md bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:bg-primary-500 dark:hover:bg-primary-400"
         >
-          Talk to us
+          {copy.talkToUs}
           <IconArrowRight className="size-4" aria-hidden="true" />
         </button>
       </div>
@@ -607,15 +740,21 @@ const OUTCOME_ICON_STYLES: Record<
 
 function ServiceResultCard({
   outcome,
+  config,
+  uiLabels,
+  copy,
   onSelect,
 }: {
   outcome: CalculatorOutcome
+  config: CalculatorConfig
+  uiLabels: PricingUiLabels
+  copy: CalculatorCopy
   onSelect: () => void
 }) {
   const iconStyle = OUTCOME_ICON_STYLES[outcome.id]
   const Icon = iconStyle.icon
-  const briefPrice = getBriefPriceSummary(outcome)
-  const groupLabel = getServiceGroupLabel(outcome.serviceGroup)
+  const briefPrice = getBriefPriceSummary(outcome, uiLabels)
+  const groupLabel = getServiceGroupLabel(outcome.serviceGroup, config)
 
   return (
     <button
@@ -654,7 +793,7 @@ function ServiceResultCard({
           {getOutcomeSummary(outcome)}
         </p>
         <span className="mt-2 inline-flex items-center gap-1 text-xs font-medium text-primary-600 dark:text-primary-400">
-          See full pricing
+          {copy.seeFullPricing}
           <IconChevronDown className="size-3.5 -rotate-90" aria-hidden="true" />
         </span>
       </div>
@@ -664,15 +803,21 @@ function ServiceResultCard({
 
 function ExpandedServicePanel({
   outcome,
+  config,
+  uiLabels,
+  copy,
   onHide,
 }: {
   outcome: CalculatorOutcome
+  config: CalculatorConfig
+  uiLabels: PricingUiLabels
+  copy: CalculatorCopy
   onHide: () => void
 }) {
   const iconStyle = OUTCOME_ICON_STYLES[outcome.id]
   const Icon = iconStyle.icon
-  const briefPrice = getBriefPriceSummary(outcome)
-  const groupLabel = getServiceGroupLabel(outcome.serviceGroup)
+  const briefPrice = getBriefPriceSummary(outcome, uiLabels)
+  const groupLabel = getServiceGroupLabel(outcome.serviceGroup, config)
 
   return (
     <div
@@ -707,12 +852,12 @@ function ExpandedServicePanel({
           onClick={onHide}
           className="shrink-0 rounded-md border border-gray-300 px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800"
         >
-          Hide
+          {copy.hide}
         </button>
       </div>
 
       <div className="mt-5 border-t border-gray-100 pt-5 dark:border-gray-800">
-        <OutcomePricingDetails outcome={outcome} />
+        <OutcomePricingDetails outcome={outcome} uiLabels={uiLabels} copy={copy} />
       </div>
     </div>
   )
@@ -720,14 +865,16 @@ function ExpandedServicePanel({
 
 function ServiceTab({
   outcome,
+  uiLabels,
   onClick,
 }: {
   outcome: CalculatorOutcome
+  uiLabels: PricingUiLabels
   onClick: () => void
 }) {
   const iconStyle = OUTCOME_ICON_STYLES[outcome.id]
   const Icon = iconStyle.icon
-  const briefPrice = getBriefPriceSummary(outcome)
+  const briefPrice = getBriefPriceSummary(outcome, uiLabels)
 
   return (
     <button
@@ -753,8 +900,16 @@ function ServiceTab({
   )
 }
 
-function OutcomePricingDetails({ outcome }: { outcome: CalculatorOutcome }) {
-  const pricingNote = getPricingModelNote(outcome.pricingModel)
+function OutcomePricingDetails({
+  outcome,
+  uiLabels,
+  copy,
+}: {
+  outcome: CalculatorOutcome
+  uiLabels: PricingUiLabels
+  copy: CalculatorCopy
+}) {
+  const pricingNote = getPricingModelNote(outcome.pricingModel, uiLabels)
   const teamConfigurations = outcome.teamConfigurations ?? []
   const showTeamConfigurations = teamConfigurations.length > 0
   const showTeamTable = outcome.teamComposition.length > 0
@@ -767,8 +922,8 @@ function OutcomePricingDetails({ outcome }: { outcome: CalculatorOutcome }) {
 
       {showTeamConfigurations && (
         <div className="mt-4 space-y-6">
-          {teamConfigurations.map((config) => (
-            <TeamConfigurationSection key={config.id} config={config} />
+          {teamConfigurations.map((configItem) => (
+            <TeamConfigurationSection key={configItem.id} config={configItem} copy={copy} />
           ))}
         </div>
       )}
@@ -776,12 +931,12 @@ function OutcomePricingDetails({ outcome }: { outcome: CalculatorOutcome }) {
       {(showTeamTable || showRate || showEstimates) && (
         <div className="mt-4 grid gap-4 sm:grid-cols-2">
           {showTeamTable && (
-            <TeamCompositionTable members={outcome.teamComposition} />
+            <TeamCompositionTable members={outcome.teamComposition} copy={copy} />
           )}
 
           {showRate && outcome.rate && (
             <div className="rounded-lg bg-gray-50 p-3 dark:bg-gray-800/50">
-              <p className="text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">Pricing</p>
+              <p className="text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">{copy.pricing}</p>
               <p className="mt-2 text-lg font-semibold text-gray-900 dark:text-white">
                 {formatHourlyRange(outcome.rate.rateMin, outcome.rate.rateMax)}/h
               </p>
@@ -792,7 +947,7 @@ function OutcomePricingDetails({ outcome }: { outcome: CalculatorOutcome }) {
           )}
 
           {showEstimates && (
-            <EstimatesGrid estimates={outcome.estimates} />
+            <EstimatesGrid estimates={outcome.estimates} copy={copy} />
           )}
         </div>
       )}
@@ -807,7 +962,7 @@ function OutcomePricingDetails({ outcome }: { outcome: CalculatorOutcome }) {
             href="/betacode-ventures"
             className="inline-flex items-center gap-2 rounded-md bg-primary-600 px-5 py-3 text-sm font-semibold text-white shadow-sm hover:bg-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:bg-white dark:text-purple-900 dark:hover:bg-purple-50 dark:focus-visible:outline-white"
           >
-            Explore Betacode Ventures
+            {copy.exploreVentures}
             <IconArrowRight className="size-4" aria-hidden="true" />
           </Link>
         </div>
@@ -816,7 +971,7 @@ function OutcomePricingDetails({ outcome }: { outcome: CalculatorOutcome }) {
   )
 }
 
-function TeamConfigurationSection({ config }: { config: TeamConfiguration }) {
+function TeamConfigurationSection({ config, copy }: { config: TeamConfiguration; copy: CalculatorCopy }) {
   return (
     <div className="rounded-lg border border-gray-200 bg-gray-50/50 p-4 dark:border-gray-700 dark:bg-gray-800/30">
       <h4 className="text-base font-semibold text-gray-900 dark:text-white">{config.label}</h4>
@@ -826,29 +981,29 @@ function TeamConfigurationSection({ config }: { config: TeamConfiguration }) {
 
       <div className="mt-4 grid gap-4 sm:grid-cols-2">
         {config.teamComposition.length > 0 && (
-          <TeamCompositionTable members={config.teamComposition} />
+          <TeamCompositionTable members={config.teamComposition} copy={copy} />
         )}
         {config.estimates.length > 0 && (
-          <EstimatesGrid estimates={config.estimates} />
+          <EstimatesGrid estimates={config.estimates} copy={copy} />
         )}
       </div>
     </div>
   )
 }
 
-function TeamCompositionTable({ members }: { members: TeamMember[] }) {
+function TeamCompositionTable({ members, copy }: { members: TeamMember[]; copy: CalculatorCopy }) {
   return (
     <div className="w-full rounded-lg bg-gray-50 p-3 sm:col-span-2 dark:bg-gray-800/50">
       <p className="text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">
-        Team configuration
+        {copy.teamConfiguration}
       </p>
       <div className="mt-2 w-full overflow-x-auto">
         <table className="w-full table-fixed text-sm">
           <thead>
             <tr className="border-b border-gray-200 text-left dark:border-gray-700">
-              <th className="w-[45%] pb-1.5 pr-3 font-semibold text-primary-600 dark:text-primary-400">Profile</th>
-              <th className="w-[30%] pb-1.5 pr-3 font-semibold text-primary-600 dark:text-primary-400">Regime</th>
-              <th className="w-[25%] pb-1.5 font-semibold text-primary-600 dark:text-primary-400">Rate</th>
+              <th className="w-[45%] pb-1.5 pr-3 font-semibold text-primary-600 dark:text-primary-400">{copy.profile}</th>
+              <th className="w-[30%] pb-1.5 pr-3 font-semibold text-primary-600 dark:text-primary-400">{copy.regime}</th>
+              <th className="w-[25%] pb-1.5 font-semibold text-primary-600 dark:text-primary-400">{copy.rate}</th>
             </tr>
           </thead>
           <tbody className="text-gray-700 dark:text-gray-300">
@@ -868,13 +1023,15 @@ function TeamCompositionTable({ members }: { members: TeamMember[] }) {
 
 function EstimatesGrid({
   estimates,
+  copy,
 }: {
   estimates: { label: string; min: number; max: number }[]
+  copy: CalculatorCopy
 }) {
   return (
     <div className="rounded-lg bg-gray-50 p-3 dark:bg-gray-800/50 sm:col-span-2">
       <p className="text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">
-        Estimated prices
+        {copy.estimatedPrices}
       </p>
       <div className="mt-2 grid gap-3 sm:grid-cols-2">
         {estimates.map((estimate) => (
@@ -892,18 +1049,22 @@ function EstimatesGrid({
 
 function ContactStep({
   contactDetails,
+  config,
+  copy,
   onBack,
   onChange,
   onSubmit,
   onReset,
 }: {
   contactDetails: CalculatorAnswers
+  config: CalculatorConfig
+  copy: CalculatorCopy
   onBack: () => void
   onChange: (fieldId: string, value: string) => void
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void
   onReset: () => void
 }) {
-  const contact = pricingCalculatorConfig.contact
+  const contact = config.contact
 
   return (
     <div>
@@ -913,7 +1074,7 @@ function ContactStep({
         className="mb-4 inline-flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
       >
         <IconArrowLeft className="size-4" aria-hidden="true" />
-        Back
+        {copy.back}
       </button>
 
       <h2 className="text-xl font-semibold text-gray-900 dark:text-white">{contact.title}</h2>
@@ -927,7 +1088,7 @@ function ContactStep({
             <label htmlFor={field.id} className="block text-sm font-medium text-gray-700 dark:text-gray-300">
               {field.label}
               {field.optional && (
-                <span className="ml-1 text-gray-400 dark:text-gray-500">(optional)</span>
+                <span className="ml-1 text-gray-400 dark:text-gray-500">({copy.optional})</span>
               )}
             </label>
             {field.description && (
@@ -951,20 +1112,20 @@ function ContactStep({
             onClick={onReset}
             className="text-sm font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
           >
-            Start over
+            {copy.startOver}
           </button>
           <div className="flex flex-col gap-3 sm:flex-row">
-            <Link
+            <a
               href={CALENDAR_URL}
               className="inline-flex items-center justify-center rounded-md bg-primary-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:bg-primary-500 dark:hover:bg-primary-400 animate-bounce"
             >
-              Book a call
-            </Link>
+              {copy.bookCall}
+            </a>
             <button
               type="submit"
               className="inline-flex items-center justify-center gap-2 rounded-md bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-primary-500 dark:bg-primary-500 dark:hover:bg-primary-400"
             >
-              Submit
+              {copy.submit}
             </button>
           </div>
         </div>

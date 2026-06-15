@@ -1,0 +1,411 @@
+{
+  "metadata": {
+    "home": {
+      "title": "Betacode — Equipas de software dedicadas para empresas e startups",
+      "description": "Software à medida, equipas de engenharia dedicadas e parcerias de co-fundador técnico. De MVPs em três meses a reforço de equipas a longo prazo."
+    },
+    "pricing": {
+      "title": "Calculadora de preços — Betacode",
+      "description": "Estime o custo do seu projeto de software. Selecione o tipo de negócio e o que pretende construir para obter um serviço recomendado e uma faixa de preços."
+    },
+    "insights": {
+      "title": "Insights — Betacode",
+      "description": "Reflexões sobre desenvolvimento de software, startups e criação de produtos — da equipa Betacode."
+    },
+    "ventures": {
+      "title": "Betacode Ventures — O seu co-fundador técnico",
+      "description": "A Betacode Ventures associa-se a startups como co-fundador técnico — da validação da ideia ao lançamento e escala. Conheça o nosso trabalho com a Coach ID e candidate-se."
+    },
+    "blogPostNotFound": {
+      "title": "Artigo não encontrado — Betacode",
+      "description": "O artigo que procura não foi encontrado."
+    }
+  },
+  "nav": {
+    "pricing": "Preços",
+    "insights": "Insights",
+    "betacodeVentures": "Betacode Ventures",
+    "openMenu": "Abrir menu principal",
+    "closeMenu": "Fechar menu",
+    "languageSelector": "Idioma",
+    "languages": {
+      "en": "English",
+      "pt": "Português"
+    }
+  },
+  "common": {
+    "bookCall": "Fale connosco",
+    "getPriceEstimate": "Obter estimativa de preço",
+    "seeHowWeCanHelp": "Ver como podemos ajudar",
+    "learnMore": "Saber mais",
+    "continue": "Continuar",
+    "back": "Voltar",
+    "skip": "Saltar",
+    "submit": "Enviar",
+    "startOver": "Recomeçar",
+    "thankYou": "Obrigado",
+    "optional": "opcional",
+    "selectOption": "Selecione uma opção",
+    "viewAllInsights": "Ver todos os insights",
+    "exploreVentures": "Explorar Betacode Ventures",
+    "seeFirstProject": "Ver o nosso primeiro projeto",
+    "copyright": "© {year} Betacode, Inc. Todos os direitos reservados.",
+    "euFunding": "Cofinanciado pela União Europeia",
+    "euFundingDetail": "Projeto financiado pelo Programa AVANÇAR, no âmbito do Portugal 2030, cofinanciado pelo Fundo Social Europeu Mais (FSE+)",
+    "cta": {
+      "headline": "Pronto para construir algo que faça a diferença?",
+      "description": "Conte-nos sobre o seu projeto — ajudamo-lo a encontrar a equipa, o calendário e o modelo de colaboração certos. Não precisa de pitch deck."
+    }
+  },
+  "hero": {
+    "slides": [
+      "A sua equipa dedicada para software à medida",
+      "Do MVP à produção em três meses",
+      "Escale a engenharia sem o risco de contratar",
+      "Parcerias tecnológicas que crescem com o seu negócio",
+      "Entregue produtos que chegam a utilizadores reais",
+      "Uma equipa, totalmente dedicada — não um banco rotativo"
+    ],
+    "subheadline": "Integramos engenheiros dedicados, líderes de produto e co-fundadores técnicos — para que possa entregar software à medida, validar ideias de startup e escalar sem montar um departamento do zero."
+  },
+  "services": {
+    "eyebrow": "O que fazemos",
+    "title": "A equipa certa, moldada ao seu negócio",
+    "description": "Quer esteja a modernizar operações, a escalar uma organização de engenharia ou a lançar uma startup — adaptamos a colaboração ao ponto em que se encontra hoje.",
+    "learnMore": "Saber mais",
+    "servicesLabel": "Serviços",
+    "traditionalBusiness": {
+      "name": "Empresas tradicionais",
+      "description": "Empresas estabelecidas a digitalizar — tornamo-nos a sua equipa técnica para que as operações continuem enquanto moderniza.",
+      "techTeam": "Sem equipa técnica",
+      "services": [
+        "Equipa técnica externa",
+        "Consultoria técnica",
+        "Suporte técnico",
+        "Formação técnica"
+      ]
+    },
+    "techCompanies": {
+      "name": "Empresas de tecnologia",
+      "description": "Equipas de produto que precisam de ir mais depressa — acrescente talento sénior quando precisar e contrate o melhor perfil quando estiver pronto.",
+      "techTeam": "Com equipa técnica",
+      "services": [
+        "Reforço de equipa",
+        "Internalização de equipa",
+        "Consultoria técnica",
+        "Formação técnica"
+      ]
+    },
+    "startups": {
+      "name": "Startups",
+      "description": "Fundadores com visão e plano — ajudamo-lo a validar, construir e lançar em meses, não em anos.",
+      "techTeam": "Equipa técnica opcional",
+      "services": [
+        "Equipa técnica externa",
+        "Internalização de equipa",
+        "Consultoria técnica",
+        "Desenvolvimento de MVP"
+      ]
+    },
+    "betacodeVentures": {
+      "name": "Betacode Ventures",
+      "description": "Parceria por equity para fundadores — integramo-nos como co-fundador técnico da ideia ao lançamento e além.",
+      "techTeam": "Co-fundador técnico",
+      "services": [
+        "Desenvolvimento de MVP",
+        "Estratégia de produto",
+        "Liderança técnica",
+        "Internalização de equipa"
+      ]
+    }
+  },
+  "homeServices": {
+    "externalTechTeam": {
+      "name": "Equipa técnica externa",
+      "description": "Uma equipa totalmente dedicada — programadores, designers e gestores de projeto — a trabalhar exclusivamente no seu produto. Sem atenção partilhada, sem freelancers rotativos."
+    },
+    "techConsulting": {
+      "name": "Consultoria técnica",
+      "description": "Transforme a sua ideia num plano concreto. Ajudamo-lo a escolher o stack, a arquitetura e a infraestrutura certos antes de escrever uma linha de código."
+    },
+    "techSupport": {
+      "name": "Suporte técnico",
+      "description": "Trabalho técnico pontual quando precisa: integrações, scripts, correção de bugs e manutenção de sistemas já em produção."
+    },
+    "techTraining": {
+      "name": "Formação técnica",
+      "description": "Desenvolva as competências da sua equipa nas linguagens, frameworks e práticas de que o produto depende — de coaching individual a workshops de equipa."
+    },
+    "teamAugmentation": {
+      "name": "Reforço de equipa",
+      "description": "Acrescente engenheiros séniores, product owners ou especialistas à sua equipa existente — alinhados com o seu stack e a trabalhar consigo desde o primeiro dia."
+    },
+    "teamInternalization": {
+      "name": "Internalização de equipa",
+      "description": "Experimente antes de contratar. Comece com os nossos profissionais integrados na sua equipa e traga o melhor perfil para dentro quando tiver a certeza de que é a escolha certa a longo prazo."
+    },
+    "mvpDevelopment": {
+      "name": "Desenvolvimento de MVP",
+      "description": "Um plano focado de 3 meses para colocar o produto nas mãos de utilizadores reais — definido, construído e entregue com uma equipa que se move à velocidade de uma startup."
+    }
+  },
+  "features": {
+    "traditionalBusiness": {
+      "title": "Empresas tradicionais",
+      "subtitle": "Modernize o negócio sem perturbar o que já funciona",
+      "description": "Conhece o seu setor — nós trazemos a engenharia. Integramo-nos como parceiro tecnológico, construindo software à medida em torno das suas operações para que a transformação digital não abrande o negócio.",
+      "benefits": [
+        "Uma equipa dedicada que aprende o seu negócio, não só o código",
+        "Software construído em torno dos seus fluxos de trabalho — e não o contrário",
+        "Modelos de colaboração flexíveis que se adaptam a orçamentos estabelecidos",
+        "Soluções que escalam à medida que as operações crescem",
+        "Um parceiro a longo prazo investido nos seus resultados, não em horas faturáveis"
+      ],
+      "servicesForStage": "Serviços para a sua fase",
+      "whyChooseUs": "Porque nos escolhem",
+      "bookCall": "Fale connosco"
+    },
+    "techCompanies": {
+      "title": "Empresas de tecnologia",
+      "subtitle": "Avance mais depressa sem comprometer a qualidade",
+      "description": "O roadmap do produto é ambicioso e contratar demora meses. Reforçamos a sua equipa com talento sénior que se integra desde o primeiro dia — e ajudamo-lo a internalizar as melhores pessoas quando chegar a altura.",
+      "benefits": [
+        "Engenheiros séniores e líderes de produto alinhados com o seu stack",
+        "Integração fluida com os processos e ferramentas existentes",
+        "Preços flexíveis que escalam com as suas necessidades",
+        "Um caminho de baixo risco para contratar — experimente antes de se comprometer",
+        "Mentoria e transferência de conhecimento que elevam o nível de toda a equipa"
+      ],
+      "servicesForStage": "Serviços para a sua fase",
+      "whyChooseUs": "Porque nos escolhem",
+      "bookCall": "Fale connosco"
+    },
+    "startups": {
+      "title": "Startups",
+      "subtitle": "Do zero a utilizadores em três meses",
+      "description": "Quer esteja a validar uma nova ideia ou a escalar o que já funciona, trazemos a equipa, a direção técnica e a velocidade para colocar o produto nas mãos de utilizadores reais — rapidamente.",
+      "benefits": [
+        "Uma equipa dedicada focada em entregar, não em reuniões de definição de âmbito",
+        "Um roadmap de 3 meses da ideia a um produto que pode colocar nas mãos dos utilizadores",
+        "Orientação técnica sobre stack, arquitetura e o que construir primeiro",
+        "Preços flexíveis pensados para orçamentos de fase inicial",
+        "Um caminho para a sua própria equipa de engenharia à medida que cresce"
+      ],
+      "servicesForStage": "Serviços para a sua fase",
+      "whyChooseUs": "Porque nos escolhem",
+      "bookCall": "Fale connosco"
+    }
+  },
+  "venturesPromo": {
+    "badge": "Betacode Ventures",
+    "title": "Tem a visão mas precisa de um co-fundador técnico?",
+    "description": "A Betacode Ventures associa-se a fundadores para construir MVPs em ~3 meses — sem taxas de desenvolvimento, equity em vez disso. Do zero a um produto que pode colocar nas mãos de utilizadores reais.",
+    "explore": "Explorar Betacode Ventures",
+    "seeProject": "Ver o nosso primeiro projeto →"
+  },
+  "ventures": {
+    "hero": {
+      "eyebrow": "Betacode Ventures",
+      "headline": "O seu co-fundador técnico, de 0 a 100%",
+      "subheadline": "Associamo-nos a fundadores que têm a visão mas precisam de um líder técnico para validar ideias, construir o produto e escalar — sem contratar uma equipa de engenharia completa no primeiro dia.",
+      "primaryCta": "Candidatar-se",
+      "secondaryCta": "Ver o nosso primeiro projeto"
+    },
+    "overview": {
+      "title": "Como funciona a Betacode Ventures",
+      "subtitle": "Mais do que outsourcing — uma verdadeira parceria técnica",
+      "description": "Integramo-nos como co-fundador técnico: definimos o roadmap, construímos o MVP e permanecemos após o lançamento e nas iterações.",
+      "steps": [
+        {
+          "title": "Validar e planear",
+          "description": "Trabalhamos consigo para testar a ideia, definir o âmbito e criar um roadmap de 3 meses para levar o produto ao mercado."
+        },
+        {
+          "title": "Construir e lançar",
+          "description": "Uma equipa full-stack dedicada trata da arquitetura, desenvolvimento e implementação — para se manter focado no negócio."
+        },
+        {
+          "title": "Iterar e escalar",
+          "description": "Após o lançamento, recolhemos feedback, entregamos melhorias e ajudamo-lo a crescer a equipa — incluindo contratar talento-chave internamente."
+        }
+      ]
+    },
+    "partnership": {
+      "title": "A parceria",
+      "subtitle": "Dois fundadores, um produto",
+      "description": "Investimos a nossa equipa; investe a sua visão, conhecimento de domínio e equity. Eis como a parceria se divide.",
+      "whatYouGet": {
+        "title": "O que recebe",
+        "subtitle": "Apresentamo-nos como co-fundador técnico — eis o que isso significa na prática.",
+        "items": [
+          "Um co-fundador técnico dedicado — não um banco rotativo de freelancers. Uma equipa, totalmente comprometida com o seu produto desde o primeiro dia.",
+          "MVP online em ~3 meses — do zero a um produto funcional que pode colocar nas mãos de utilizadores reais e começar a validar a proposta de valor.",
+          "Execução full-stack — arquitetura, backend, frontend, infraestrutura e implementação tratadas de ponta a ponta, para se manter focado no negócio.",
+          "Orientação técnica em que pode confiar — aconselhamos sobre stack, escalabilidade e trade-offs como donos, não como consultores a faturar por hora.",
+          "Fundações prontas para lançamento — pagamentos, painéis de administração, análise de dados e a infraestrutura que os primeiros clientes esperam — não um protótipo que falha sob pressão.",
+          "Um caminho para a sua própria equipa — quando chegar a altura, ajudamo-lo a contratar e internalizar o talento que já conhece o produto."
+        ]
+      },
+      "partnershipAsk": {
+        "title": "O que pedimos",
+        "subtitle": "Investimos a nossa equipa antecipadamente — eis o que precisamos de si para que funcione.",
+        "items": [
+          "Sem taxas nem faturas — não cobramos pelo desenvolvimento. O nosso retorno está ligado ao produto que construímos juntos.",
+          "Equity na sua empresa — uma participação que reflete o papel que desempenhamos como co-fundador técnico, não um fornecedor em regime de prestação continuada.",
+          "A sua experiência de domínio — conhece o mercado, os utilizadores e o problema. Precisamos de si na sala nas decisões que importam.",
+          "Compromisso para avançar depressa — uma construção de 3 meses só funciona com feedback rápido, prioridades claras e fundadores que nos desbloqueiem.",
+          "Transparência sobre tração — partilhe feedback de utilizadores, métricas e conversas com clientes para entregarmos o que o mercado realmente quer.",
+          "Ambição com substância — associamo-nos a ideias com um caminho real para utilizadores e receita, não a experiências sem fim."
+        ]
+      }
+    },
+    "coachid": {
+      "tagline": "O nosso primeiro projeto Betacode Ventures",
+      "headline": "A primeira plataforma que pensa como um treinador de futebol",
+      "description": "A Coach ID ajuda treinadores de futebol a planear, criar, executar e monitorizar o trabalho semanal da equipa — construída por treinadores, para treinadores. Após 8 anos no mercado e feedback de milhares de treinadores em clubes de todo o mundo, a equipa reconstruiu a plataforma de raiz como produto v2 moderno.",
+      "highlights": [
+        "8 anos de experiência no mercado",
+        "Construída por treinadores licenciados pela UEFA",
+        "Milhares de treinadores em clubes de todo o mundo",
+        "Progressive Web App — funciona em qualquer dispositivo"
+      ],
+      "whatWeBuilt": "O que construímos",
+      "built": [
+        "MVP de 0 a 100% em 3 meses",
+        "Co-fundador técnico que o aconselha nas melhores soluções técnicas",
+        "Gateway de pagamentos pronto e funcional",
+        "Painel de administração para monitorizar e receber feedback dos utilizadores",
+        "Progressive Web App para desktop, tablet e telemóvel",
+        "Assistente virtual com IA"
+      ],
+      "results": "Resultados",
+      "resultsItems": [
+        "Mais de 100 clientes na primeira semana",
+        "Feedback real de utilizadores",
+        "Mais de 10 clientes pagantes na primeira semana",
+        "Aplicação funcional que valida a proposta de valor",
+        "Editor de exercícios gratuito a gerar registos orgânicos sem anúncios pagos",
+        "Plataforma pronta para escalar com planos de subscrição e onboarding de equipas"
+      ]
+    },
+    "cta": {
+      "headline": "Pronto para construir a sua startup com um co-fundador técnico?",
+      "description": "Conte-nos a sua ideia e vamos explorar se a Betacode Ventures é a parceira certa. Fale connosco — sem compromisso.",
+      "buttonLabel": "Candidatar-se à Betacode Ventures"
+    },
+    "testimonials": [
+      {
+        "quote": "A Betacode Ventures pareceu ter um co-fundador técnico desde o primeiro dia. Ajudaram-nos a reconstruir a Coach ID v2 de raiz — uma plataforma moldada por 8 anos de feedback de treinadores, agora pronta para a próxima década.",
+        "name": "João Daniel Rico",
+        "role": "Co-fundador, Coach ID"
+      },
+      {
+        "quote": "Das sessões de planeamento ao monitorização da prontidão dos atletas com IA — precisávamos de uma equipa que entendesse tanto o domínio como a tecnologia. A Betacode entregou um produto que os treinadores conseguem usar todas as semanas.",
+        "name": "Acácio Santos",
+        "role": "Co-fundador, Coach ID"
+      }
+    ]
+  },
+  "insights": {
+    "eyebrow": "Insights",
+    "title": "Da equipa Betacode",
+    "description": "Conselhos práticos sobre construir software, lançar startups e escolher a tecnologia certa para o seu negócio."
+  },
+  "blog": {
+    "backToInsights": "Voltar aos insights",
+    "minRead": "{minutes} min de leitura",
+    "readNext": "Ler a seguir",
+    "keepReading": "Continuar a ler",
+    "moreInsights": "Mais insights da equipa",
+    "sidebar": {
+      "ariaLabel": "Explorar serviços Betacode",
+      "ventures": {
+        "badge": "Betacode Ventures",
+        "title": "Precisa de um co-fundador técnico?",
+        "description": "Associamo-nos a fundadores para construir MVPs em ~3 meses — por equity, sem taxas de desenvolvimento antecipadas.",
+        "link": "Explorar o programa"
+      },
+      "calculator": {
+        "badge": "Calculadora de preços",
+        "title": "Obter estimativa de preço",
+        "description": "Responda a algumas perguntas e sugerimos os serviços e faixas de preço certos para o seu projeto.",
+        "link": "Iniciar a calculadora"
+      },
+      "bookCall": {
+        "badge": "Fale connosco",
+        "title": "Falemos sobre o seu projeto",
+        "description": "Fale connosco gratuitamente para discutir objetivos, calendário e como podemos ajudar.",
+        "link": "Fale connosco"
+      }
+    },
+    "postNotFound": {
+      "title": "Artigo não encontrado",
+      "description": "O artigo que procura não foi encontrado.",
+      "backLink": "Voltar aos insights"
+    }
+  },
+  "clients": {
+    "title": "Com a confiança de equipas em toda a Europa e além"
+  },
+  "pricing": {
+    "pageTitle": "Calculadora de preços",
+    "title": "Obtenha um preço estimado para o seu projeto",
+    "subtitle": "Calculadora de preços",
+    "description": "Responda a algumas perguntas sobre o seu negócio e objetivos. Cada opção inclui contexto para escolher o que se adequa — e sugerimos os serviços e faixas de preço certos.",
+    "getEstimate": "Obter estimativa de preço",
+    "bookCall": "Fale connosco",
+    "back": "Voltar",
+    "continue": "Continuar",
+    "skip": "Saltar",
+    "submit": "Enviar",
+    "startOver": "Recomeçar",
+    "thankYou": "Obrigado",
+    "thankYouMessage": "Recebemos os seus dados. Vamos analisar o projeto e entrar em contacto em breve.",
+    "noMatch": "Não conseguimos corresponder as suas respostas a uma recomendação. Tente ajustar as respostas ou fale connosco.",
+    "recommendedService": "Serviço recomendado",
+    "recommendedServices": "Serviços recomendados",
+    "basedOnAnswers": "Com base nas suas respostas",
+    "compareOptions": "Compare as opções abaixo. Clique em qualquer cartão para ver o detalhe completo de preços.",
+    "compareOptionsExpanded": "Veja os preços completos abaixo. Mude de serviço usando os separadores à direita.",
+    "talkToUs": "Fale connosco",
+    "seeFullPricing": "Ver preços completos",
+    "hide": "Ocultar",
+    "otherServices": "Outros serviços",
+    "teamConfiguration": "Configuração da equipa",
+    "profile": "Perfil",
+    "regime": "Regime",
+    "rate": "Taxa",
+    "pricing": "Preços",
+    "estimatedPrices": "Preços estimados",
+    "exploreVentures": "Explorar Betacode Ventures",
+    "selectOption": "Selecione uma opção",
+    "optional": "opcional",
+    "summaryLabels": {
+      "businessStage": "Negócio",
+      "startupFunding": "Financiamento",
+      "teamDimensions": "Dimensão da empresa",
+      "hasTechTeam": "Equipa técnica",
+      "productHelpStartup": "Objetivo",
+      "productHelpEstablished": "Objetivo",
+      "fundingWith": "Com financiamento",
+      "fundingWithout": "Sem financiamento",
+      "hasTechTeamYes": "Com equipa técnica",
+      "hasTechTeamNo": "Sem equipa técnica"
+    },
+    "briefPrice": {
+      "model": "Modelo",
+      "equityPartnership": "Parceria por equity",
+      "hourlyRate": "Taxa horária",
+      "mvpEstimate": "Estimativa de MVP",
+      "priceRange": "Faixa de preço",
+      "hourlyRates": "Taxas horárias",
+      "contactForQuote": "Contacte-nos para orçamento",
+      "pricing": "Preços"
+    },
+    "pricingNotes": {
+      "hourly": "Taxas horárias acima. Faixas de projeto apresentadas como referência quando aplicável.",
+      "project": "Faixas baseadas nas nossas configurações de equipa habituais. O preço final depende do âmbito e dos requisitos.",
+      "partnership": "A Betacode Ventures é uma parceria por equity — o modelo de preços é adaptado à sua fase e produto."
+    }
+  }
+}

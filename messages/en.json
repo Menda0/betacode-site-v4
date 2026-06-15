@@ -1,0 +1,411 @@
+{
+  "metadata": {
+    "home": {
+      "title": "Betacode — Dedicated software teams for businesses and startups",
+      "description": "Custom software, dedicated engineering teams, and technical co-founder partnerships. From MVPs in three months to long-term team augmentation."
+    },
+    "pricing": {
+      "title": "Price Calculator — Betacode",
+      "description": "Estimate the cost of your software project. Select your business type and what you want to build to get a recommended service and price range."
+    },
+    "insights": {
+      "title": "Insights — Betacode",
+      "description": "Insights on software development, startups, and building products — from the Betacode team."
+    },
+    "ventures": {
+      "title": "Betacode Ventures — Your Technical Co-Founder",
+      "description": "Betacode Ventures partners with startups as a technical co-founder — from idea validation through launch and scale. See our work with Coachid and apply today."
+    },
+    "blogPostNotFound": {
+      "title": "Post not found — Betacode",
+      "description": "The insight you are looking for could not be found."
+    }
+  },
+  "nav": {
+    "pricing": "Pricing",
+    "insights": "Insights",
+    "betacodeVentures": "Betacode Ventures",
+    "openMenu": "Open main menu",
+    "closeMenu": "Close menu",
+    "languageSelector": "Language",
+    "languages": {
+      "en": "English",
+      "pt": "Português"
+    }
+  },
+  "common": {
+    "bookCall": "Book a call",
+    "getPriceEstimate": "Get a price estimate",
+    "seeHowWeCanHelp": "See how we can help",
+    "learnMore": "Learn more",
+    "continue": "Continue",
+    "back": "Back",
+    "skip": "Skip",
+    "submit": "Submit",
+    "startOver": "Start over",
+    "thankYou": "Thank you",
+    "optional": "optional",
+    "selectOption": "Select an option",
+    "viewAllInsights": "View all insights",
+    "exploreVentures": "Explore Betacode Ventures",
+    "seeFirstProject": "See our first project",
+    "copyright": "© {year} Betacode, Inc. All rights reserved.",
+    "euFunding": "Cofinanciado pela União Europeia",
+    "euFundingDetail": "Projeto financiado pelo Programa AVANÇAR, no âmbito do Portugal 2030, cofinanciado pelo Fundo Social Europeu Mais (FSE+)",
+    "cta": {
+      "headline": "Ready to build something that moves the needle?",
+      "description": "Tell us about your project — we'll help you find the right team, timeline, and engagement model. No pitch deck required."
+    }
+  },
+  "hero": {
+    "slides": [
+      "Your dedicated team for custom software",
+      "From MVP to production in three months",
+      "Scale engineering without the hiring gamble",
+      "Technology partnerships that grow with your business",
+      "Ship products that reach real users",
+      "One team, fully committed — not a rotating bench"
+    ],
+    "subheadline": "We embed dedicated engineers, product leads, and technical co-founders — so you can ship custom software, validate startup ideas, and scale without building a department from scratch."
+  },
+  "services": {
+    "eyebrow": "What we do",
+    "title": "The right team, shaped around your business",
+    "description": "Whether you're modernizing operations, scaling an engineering org, or launching a startup — we match the engagement to where you are today.",
+    "learnMore": "Learn more",
+    "servicesLabel": "Services",
+    "traditionalBusiness": {
+      "name": "Traditional Business",
+      "description": "Established companies going digital — we become your tech team so operations keep running while you modernize.",
+      "techTeam": "No Tech Team",
+      "services": [
+        "External Tech Team",
+        "Tech Consulting",
+        "Tech Support",
+        "Tech Training"
+      ]
+    },
+    "techCompanies": {
+      "name": "Tech Companies",
+      "description": "Product teams that need to move faster — add senior talent on demand and hire the best fit when you're ready.",
+      "techTeam": "Has Tech Team",
+      "services": [
+        "Team Augmentation",
+        "Team Internalization",
+        "Tech Consulting",
+        "Tech Training"
+      ]
+    },
+    "startups": {
+      "name": "Startups",
+      "description": "Founders with a vision and a plan — we help you validate, build, and launch in months, not years.",
+      "techTeam": "Tech team optional",
+      "services": [
+        "External Tech Team",
+        "Team Internalization",
+        "Tech Consulting",
+        "MVP Development"
+      ]
+    },
+    "betacodeVentures": {
+      "name": "Betacode Ventures",
+      "description": "Equity partnership for founders — we embed as your technical co-founder from idea to launch and beyond.",
+      "techTeam": "Technical Co-Founder",
+      "services": [
+        "MVP Development",
+        "Product Strategy",
+        "Technical Leadership",
+        "Team Internalization"
+      ]
+    }
+  },
+  "homeServices": {
+    "externalTechTeam": {
+      "name": "External Tech Team",
+      "description": "A fully dedicated team — developers, designers, and project managers — working exclusively on your product. No shared attention, no rotating freelancers."
+    },
+    "techConsulting": {
+      "name": "Tech Consulting",
+      "description": "Turn your idea into a concrete plan. We help you choose the right stack, architecture, and infrastructure before a single line of code is written."
+    },
+    "techSupport": {
+      "name": "Tech Support",
+      "description": "Targeted technical work when you need it: integrations, scripts, bug fixes, and maintenance for systems already in production."
+    },
+    "techTraining": {
+      "name": "Tech Training",
+      "description": "Upskill your team on the languages, frameworks, and practices your product depends on — from one-on-one coaching to team workshops."
+    },
+    "teamAugmentation": {
+      "name": "Team Augmentation",
+      "description": "Add senior engineers, product owners, or specialists to your existing team — matched to your stack and working alongside your people from day one."
+    },
+    "teamInternalization": {
+      "name": "Team Internalization",
+      "description": "Try before you hire. Start with our people embedded in your team, then bring the best fit in-house when you're confident they're the right long-term match."
+    },
+    "mvpDevelopment": {
+      "name": "MVP Development",
+      "description": "A focused 3-month plan to get your product in front of real users — scoped, built, and shipped with a team that moves at startup speed."
+    }
+  },
+  "features": {
+    "traditionalBusiness": {
+      "title": "Traditional Business",
+      "subtitle": "Modernize without disrupting what already works",
+      "description": "You know your industry — we bring the engineering. We embed as your technology partner, building custom software around your existing operations so digital transformation doesn't slow the business down.",
+      "benefits": [
+        "A dedicated team that learns your business, not just your codebase",
+        "Software built around your workflows — not the other way around",
+        "Flexible engagement models that fit established budgets",
+        "Solutions that scale as your operations grow",
+        "A long-term partner invested in your outcomes, not billable hours"
+      ],
+      "servicesForStage": "Services for your stage",
+      "whyChooseUs": "Why teams choose us",
+      "bookCall": "Book a call"
+    },
+    "techCompanies": {
+      "title": "Tech Companies",
+      "subtitle": "Move faster without compromising on quality",
+      "description": "Your product roadmap is ambitious and hiring takes months. We augment your team with senior talent who integrate from day one — and help you internalize the best people when the time is right.",
+      "benefits": [
+        "Senior engineers and product leads matched to your stack",
+        "Seamless integration with your existing processes and tools",
+        "Flexible pricing that scales with your needs",
+        "A low-risk path to hiring — try before you commit",
+        "Mentorship and knowledge transfer that raises the bar for your whole team"
+      ],
+      "servicesForStage": "Services for your stage",
+      "whyChooseUs": "Why teams choose us",
+      "bookCall": "Book a call"
+    },
+    "startups": {
+      "title": "Startups",
+      "subtitle": "From zero to users in three months",
+      "description": "Whether you're validating a new idea or scaling what already works, we bring the team, the technical direction, and the speed to get your product in front of real users — fast.",
+      "benefits": [
+        "A dedicated team focused on shipping, not scoping meetings",
+        "A 3-month roadmap from idea to a product you can put in users' hands",
+        "Technical guidance on stack, architecture, and what to build first",
+        "Flexible pricing designed for early-stage budgets",
+        "A path to your own engineering team as you grow"
+      ],
+      "servicesForStage": "Services for your stage",
+      "whyChooseUs": "Why teams choose us",
+      "bookCall": "Book a call"
+    }
+  },
+  "venturesPromo": {
+    "badge": "Betacode Ventures",
+    "title": "Have the vision but need a technical co-founder?",
+    "description": "Betacode Ventures partners with founders to build MVPs in ~3 months — no dev fees, equity instead. From zero to a product you can put in front of real users.",
+    "explore": "Explore Betacode Ventures",
+    "seeProject": "See our first project →"
+  },
+  "ventures": {
+    "hero": {
+      "eyebrow": "Betacode Ventures",
+      "headline": "Your technical co-founder, from 0 to 100%",
+      "subheadline": "We partner with founders who have the vision but need a technical leader to validate ideas, build the product, and scale — without hiring a full engineering team on day one.",
+      "primaryCta": "Apply now",
+      "secondaryCta": "See our first project"
+    },
+    "overview": {
+      "title": "How Betacode Ventures works",
+      "subtitle": "More than outsourcing — a true technical partnership",
+      "description": "We embed as your technical co-founder: shaping the roadmap, building the MVP, and staying through launch and iteration.",
+      "steps": [
+        {
+          "title": "Validate & plan",
+          "description": "We work with you to stress-test the idea, define scope, and create a 3-month roadmap to get your product to market."
+        },
+        {
+          "title": "Build & launch",
+          "description": "A dedicated full-stack team handles architecture, development, and deployment — you stay focused on the business."
+        },
+        {
+          "title": "Iterate & scale",
+          "description": "Post-launch, we gather feedback, ship improvements, and help you grow the team — including hiring key talent in-house."
+        }
+      ]
+    },
+    "partnership": {
+      "title": "The partnership",
+      "subtitle": "Two founders, one product",
+      "description": "We invest our team; you invest your vision, domain knowledge, and equity. Here's how the partnership breaks down.",
+      "whatYouGet": {
+        "title": "What you get",
+        "subtitle": "We show up as your technical co-founder — here's what that means in practice.",
+        "items": [
+          "A dedicated technical co-founder — not a rotating bench of freelancers. One team, fully committed to your product from day one.",
+          "MVP live in ~3 months — from zero to a functional product you can put in front of real users and start validating your value proposition.",
+          "Full-stack execution — architecture, backend, frontend, infrastructure, and deployment handled end to end, so you stay focused on the business.",
+          "Technical guidance you can trust — we advise on stack, scalability, and trade-offs as owners, not as consultants billing by the hour.",
+          "Launch-ready foundations — payments, admin dashboards, analytics, and the infrastructure early customers expect — not a prototype that breaks under pressure.",
+          "A path to your own team — when the time is right, we help you hire and internalize the talent that already knows your product."
+        ]
+      },
+      "partnershipAsk": {
+        "title": "What we ask",
+        "subtitle": "We invest our team upfront — here's what we need from you to make it work.",
+        "items": [
+          "No fees or invoices — we don't charge for development. Our upside is tied to the product we build together.",
+          "Equity in your company — a stake that reflects the role we play as your technical co-founder, not a vendor on retainer.",
+          "Your domain expertise — you know the market, the users, and the problem. We need you in the room for the decisions that matter.",
+          "Commitment to move fast — a 3-month build only works with quick feedback, clear priorities, and founders who can unblock us.",
+          "Transparency on traction — share user feedback, metrics, and customer conversations so we ship what the market actually wants.",
+          "Ambition with substance — we partner on ideas with a real path to users and revenue, not open-ended experiments."
+        ]
+      }
+    },
+    "coachid": {
+      "tagline": "Our first Betacode Ventures project",
+      "headline": "The first platform that thinks like a football coach",
+      "description": "Coach ID helps football coaches plan, create, execute, and monitor their team's weekly work — built by coaches, for coaches. After 8 years on the market and feedback from thousands of coaches at clubs worldwide, the team rebuilt the platform from scratch as a modern v2 product.",
+      "highlights": [
+        "8 years of market experience",
+        "Built by UEFA-licensed coaches",
+        "Thousands of coaches at clubs worldwide",
+        "Progressive Web App — works on any device"
+      ],
+      "whatWeBuilt": "What we built",
+      "built": [
+        "MVP 0–100% in 3 months",
+        "Technical co-founder that advises you on the best technical solutions",
+        "Payment gateway ready and functional",
+        "Admin dashboard to monitor and receive feedback from users",
+        "Progressive Web App for desktop, tablet, and mobile",
+        "AI virtual assistant"
+      ],
+      "results": "Results",
+      "resultsItems": [
+        "100+ clients in the first week",
+        "Real user feedback",
+        "10+ paying customers in the first week",
+        "Functional application that validates your value proposition",
+        "Free exercise editor driving organic sign-ups without paid ads",
+        "Platform ready to scale with subscription plans and team onboarding"
+      ]
+    },
+    "cta": {
+      "headline": "Ready to build your startup with a technical co-founder?",
+      "description": "Tell us about your idea and let's explore whether Betacode Ventures is the right fit. Book a call — no commitment required.",
+      "buttonLabel": "Apply for Betacode Ventures"
+    },
+    "testimonials": [
+      {
+        "quote": "Betacode Ventures felt like having a technical co-founder from day one. They helped us rebuild Coach ID v2 from scratch — a platform shaped by 8 years of coach feedback, now ready for the next decade.",
+        "name": "João Daniel Rico",
+        "role": "Co-founder, Coach ID"
+      },
+      {
+        "quote": "From planning sessions to monitoring athlete readiness with AI — we needed a team that understood both the domain and the technology. Betacode shipped a product coaches can actually use every week.",
+        "name": "Acácio Santos",
+        "role": "Co-founder, Coach ID"
+      }
+    ]
+  },
+  "insights": {
+    "eyebrow": "Insights",
+    "title": "From the Betacode team",
+    "description": "Practical advice on building software, launching startups, and choosing the right technology for your business."
+  },
+  "blog": {
+    "backToInsights": "Back to insights",
+    "minRead": "{minutes} min read",
+    "readNext": "Read next",
+    "keepReading": "Keep reading",
+    "moreInsights": "More insights from the team",
+    "sidebar": {
+      "ariaLabel": "Explore Betacode services",
+      "ventures": {
+        "badge": "Betacode Ventures",
+        "title": "Need a technical co-founder?",
+        "description": "We partner with founders to build MVPs in ~3 months — equity-based, no dev fees upfront.",
+        "link": "Explore the program"
+      },
+      "calculator": {
+        "badge": "Price calculator",
+        "title": "Get a price estimate",
+        "description": "Answer a few questions and we'll suggest the right services and price ranges for your project.",
+        "link": "Start the calculator"
+      },
+      "bookCall": {
+        "badge": "Book a call",
+        "title": "Let's talk about your project",
+        "description": "Schedule a free call to discuss your goals, timeline, and how we can help.",
+        "link": "Book a call"
+      }
+    },
+    "postNotFound": {
+      "title": "Post not found",
+      "description": "The insight you are looking for could not be found.",
+      "backLink": "Back to insights"
+    }
+  },
+  "clients": {
+    "title": "Trusted by teams across Europe and beyond"
+  },
+  "pricing": {
+    "pageTitle": "Price Calculator",
+    "title": "Get an estimated price for your project",
+    "subtitle": "Price Calculator",
+    "description": "Answer a few questions about your business and goals. Each option includes context so you can pick what fits—and we'll suggest the right services and price ranges.",
+    "getEstimate": "Get a price estimate",
+    "bookCall": "Book a call",
+    "back": "Back",
+    "continue": "Continue",
+    "skip": "Skip",
+    "submit": "Submit",
+    "startOver": "Start over",
+    "thankYou": "Thank you",
+    "thankYouMessage": "We've received your details. We'll review your project and get back to you soon.",
+    "noMatch": "We couldn't match your answers to a recommendation. Try adjusting your responses or book a call with us.",
+    "recommendedService": "Recommended service",
+    "recommendedServices": "Recommended services",
+    "basedOnAnswers": "Based on your answers",
+    "compareOptions": "Compare options below. Tap any card for full pricing breakdowns.",
+    "compareOptionsExpanded": "View full pricing below. Switch services using the tabs on the right.",
+    "talkToUs": "Talk to us",
+    "seeFullPricing": "See full pricing",
+    "hide": "Hide",
+    "otherServices": "Other services",
+    "teamConfiguration": "Team configuration",
+    "profile": "Profile",
+    "regime": "Regime",
+    "rate": "Rate",
+    "pricing": "Pricing",
+    "estimatedPrices": "Estimated prices",
+    "exploreVentures": "Explore Betacode Ventures",
+    "selectOption": "Select an option",
+    "optional": "optional",
+    "summaryLabels": {
+      "businessStage": "Business",
+      "startupFunding": "Funding",
+      "teamDimensions": "Company size",
+      "hasTechTeam": "Tech team",
+      "productHelpStartup": "Goal",
+      "productHelpEstablished": "Goal",
+      "fundingWith": "With funding",
+      "fundingWithout": "Without funding",
+      "hasTechTeamYes": "Has a tech team",
+      "hasTechTeamNo": "No tech team"
+    },
+    "briefPrice": {
+      "model": "Model",
+      "equityPartnership": "Equity partnership",
+      "hourlyRate": "Hourly rate",
+      "mvpEstimate": "MVP estimate",
+      "priceRange": "Price range",
+      "hourlyRates": "Hourly rates",
+      "contactForQuote": "Contact for quote",
+      "pricing": "Pricing"
+    },
+    "pricingNotes": {
+      "hourly": "Hourly rates above. Project ranges shown as a reference where applicable.",
+      "project": "Ranges based on our standard team configurations. Final pricing depends on scope and requirements.",
+      "partnership": "Betacode Ventures is an equity partnership—pricing is tailored to your stage and product."
+    }
+  }
+}
