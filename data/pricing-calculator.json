@@ -2,42 +2,45 @@
   "version": 2,
   "startQuestionId": "business-stage",
   "outcomes": {
-    "small-team": {
-      "id": "small-team",
-      "label": "Small Team",
-      "serviceGroup": "self-managed-tech-teams",
-      "summary": "Lean dedicated team—junior dev plus part-time PO. Best for MVPs and focused builds.",
-      "description": "A lean dedicated team with a junior developer and a part-time product owner—ideal for MVPs and focused builds.",
+    "self-managed-tech-teams": {
+      "id": "self-managed-tech-teams",
+      "label": "Self managed tech teams",
+      "summary": "Dedicated teams that own your product—from lean MVP builds to full multi-developer setups.",
+      "description": "Dedicated teams that own your product delivery—from planning, development, and release—without you managing individual freelancers. Pick a lean small team or a fuller base team depending on scope and complexity.",
       "pricingModel": "project",
-      "teamComposition": [
-        { "profile": "Junior Developer", "regime": "Full-time", "rateMin": 20, "rateMax": 30 },
-        { "profile": "Product Owner", "regime": "Part-time", "rateMin": 50, "rateMax": 60 }
+      "teamComposition": [],
+      "teamConfigurations": [
+        {
+          "id": "small-team",
+          "label": "Small Team",
+          "summary": "Lean dedicated team—junior dev plus part-time PO. Best for MVPs and focused builds.",
+          "description": "A lean dedicated team with a junior developer and a part-time product owner—ideal for MVPs and focused builds.",
+          "teamComposition": [
+            { "profile": "Junior Developer", "regime": "Full-time", "rateMin": 20, "rateMax": 30 },
+            { "profile": "Product Owner", "regime": "Part-time", "rateMin": 50, "rateMax": 60 }
+          ],
+          "estimates": [
+            { "label": "MVP (3 months)", "min": 20000, "max": 30000 },
+            { "label": "First Year", "min": 85000, "max": 120000 }
+          ]
+        },
+        {
+          "id": "base-team",
+          "label": "Base Team",
+          "summary": "Full team with junior and senior developers. For larger or more complex products.",
+          "description": "A full dedicated team with junior and mid/senior developers plus a part-time product owner—for larger or more complex products.",
+          "teamComposition": [
+            { "profile": "Junior Developer", "regime": "Full-time", "rateMin": 20, "rateMax": 30 },
+            { "profile": "Mid/Senior Developer", "regime": "Full-time", "rateMin": 30, "rateMax": 50 },
+            { "profile": "Product Owner", "regime": "Part-time", "rateMin": 50, "rateMax": 60 }
+          ],
+          "estimates": [
+            { "label": "MVP (3 months)", "min": 30000, "max": 45000 },
+            { "label": "First Year", "min": 120000, "max": 180000 }
+          ]
+        }
       ],
-      "estimates": [
-        { "label": "MVP (3 months)", "min": 20000, "max": 30000 },
-        { "label": "First Year", "min": 85000, "max": 120000 }
-      ],
-      "cta": {
-        "label": "Book a call for a detailed quote",
-        "href": "https://calendar.app.google/1kXGjsszjPB3eFGr7"
-      }
-    },
-    "base-team": {
-      "id": "base-team",
-      "label": "Base Team",
-      "serviceGroup": "self-managed-tech-teams",
-      "summary": "Full team with junior and senior developers. For larger or more complex products.",
-      "description": "A full dedicated team with junior and mid/senior developers plus a part-time product owner—for larger or more complex products.",
-      "pricingModel": "project",
-      "teamComposition": [
-        { "profile": "Junior Developer", "regime": "Full-time", "rateMin": 20, "rateMax": 30 },
-        { "profile": "Mid/Senior Developer", "regime": "Full-time", "rateMin": 30, "rateMax": 50 },
-        { "profile": "Product Owner", "regime": "Part-time", "rateMin": 50, "rateMax": 60 }
-      ],
-      "estimates": [
-        { "label": "MVP (3 months)", "min": 30000, "max": 45000 },
-        { "label": "First Year", "min": 120000, "max": 180000 }
-      ],
+      "estimates": [],
       "cta": {
         "label": "Book a call for a detailed quote",
         "href": "https://calendar.app.google/1kXGjsszjPB3eFGr7"
@@ -108,12 +111,6 @@
         "label": "Apply to Betacode Ventures",
         "href": "/betacode-ventures"
       }
-    }
-  },
-  "serviceGroups": {
-    "self-managed-tech-teams": {
-      "label": "Self managed tech teams",
-      "description": "Dedicated teams that own your product delivery—from planning, development, and release—without you managing individual freelancers."
     }
   },
   "questions": [
@@ -218,26 +215,22 @@
         {
           "id": "develop-mvp",
           "label": "Develop an MVP",
-          "description": "Ship a first working version in months—not years. Ideal when you need to validate your idea with real users quickly.",
-          "nextQuestionId": "product-description"
+          "description": "Ship a first working version in months—not years. Ideal when you need to validate your idea with real users quickly."
         },
         {
           "id": "create-tech-team",
           "label": "Create a tech team",
-          "description": "Build a dedicated team that owns your product long-term—a self-managed team we set up and run for you.",
-          "nextQuestionId": "product-description"
+          "description": "Build a dedicated team that owns your product long-term—a self-managed team we set up and run for you."
         },
         {
           "id": "technical-support",
           "label": "Technical support",
-          "description": "Scoped help: integrations, bug fixes, scripts, or maintenance on something you already have.",
-          "nextQuestionId": "product-description"
+          "description": "Scoped help: integrations, bug fixes, scripts, or maintenance on something you already have."
         },
         {
           "id": "help-me-decide",
           "label": "I don't know — help me decide",
-          "description": "We'll recommend based on your funding and goals—not just the type of project.",
-          "nextQuestionId": "product-description"
+          "description": "We'll recommend based on your funding and goals—not just the type of project."
         }
       ]
     },
@@ -250,32 +243,27 @@
         {
           "id": "new-product",
           "label": "Developing a new product",
-          "description": "Build something new—a SaaS platform, customer portal, internal tool, or mobile-first product from scratch.",
-          "nextQuestionId": "product-description"
+          "description": "Build something new—a SaaS platform, customer portal, internal tool, or mobile-first product from scratch."
         },
         {
           "id": "modernize",
           "label": "Modernize old application",
-          "description": "Upgrade legacy software: improve UX, refactor code, replatform, or move to a modern stack without a risky big-bang rewrite.",
-          "nextQuestionId": "product-description"
+          "description": "Upgrade legacy software: improve UX, refactor code, replatform, or move to a modern stack without a risky big-bang rewrite."
         },
         {
           "id": "team-augmentation",
           "label": "Team augmentation (outsourcing)",
-          "description": "Add developers, product owners, or specialists to your existing team—flexible capacity on your roadmap and processes.",
-          "nextQuestionId": "product-description"
+          "description": "Add developers, product owners, or specialists to your existing team—flexible capacity on your roadmap and processes."
         },
         {
           "id": "technical-support",
           "label": "Technical support",
-          "description": "Short, scoped work: API integrations, bug fixes, scripts, or maintenance—without a long-term team commitment.",
-          "nextQuestionId": "product-description"
+          "description": "Short, scoped work: API integrations, bug fixes, scripts, or maintenance—without a long-term team commitment."
         },
         {
           "id": "help-me-decide",
           "label": "I don't know — help me decide",
-          "description": "We'll recommend based on your company size, tech team, and goals.",
-          "nextQuestionId": "product-description"
+          "description": "We'll recommend based on your company size, tech team, and goals."
         }
       ]
     },
@@ -283,7 +271,7 @@
       "id": "product-description",
       "type": "textarea",
       "title": "Talk a bit about your product",
-      "description": "Optional—but the more context you share, the more accurate our recommendation. Mention your industry, users, timeline, or tech stack if you know it.",
+      "description": "Optional—but the more context you share, the better we can tailor our follow-up. Mention your industry, users, timeline, or tech stack if you know it.",
       "optional": true,
       "placeholder": "E.g. We're a logistics company building a customer portal. We need integrations with our ERP and a mobile-friendly UI by Q3..."
     }

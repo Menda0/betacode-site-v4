@@ -1,8 +1,7 @@
 import calculatorData from "@/data/pricing-calculator.json"
 
 export type OutcomeId =
-  | "small-team"
-  | "base-team"
+  | "self-managed-tech-teams"
   | "team-augmentation"
   | "support"
   | "training"
@@ -37,6 +36,15 @@ export type OutcomeRate = {
   rateMax: number
 }
 
+export type TeamConfiguration = {
+  id: string
+  label: string
+  summary?: string
+  description?: string
+  teamComposition: TeamMember[]
+  estimates: PriceEstimate[]
+}
+
 export type CalculatorOutcome = {
   id: OutcomeId
   label: string
@@ -45,6 +53,7 @@ export type CalculatorOutcome = {
   serviceGroup?: string
   pricingModel: PricingModel
   teamComposition: TeamMember[]
+  teamConfigurations?: TeamConfiguration[]
   rate?: OutcomeRate
   estimates: PriceEstimate[]
   cta: OutcomeCta
@@ -116,7 +125,7 @@ export type CalculatorAnswers = Record<string, string>
 
 export const pricingCalculatorConfig = calculatorData as unknown as CalculatorConfig
 
-const SELF_MANAGED_TEAM_IDS: OutcomeId[] = ["small-team", "base-team"]
+const SELF_MANAGED_TEAM_ID: OutcomeId = "self-managed-tech-teams"
 
 function getProductHelpAnswer(answers: CalculatorAnswers): string | undefined {
   if (answers["business-stage"] === "startup") {
@@ -139,28 +148,28 @@ function resolveEstablishedOutcomeIds(answers: CalculatorAnswers, productHelp: s
     if (hasTechTeam === "yes") {
       return ["team-augmentation", "training"]
     }
-    return [...SELF_MANAGED_TEAM_IDS, "team-augmentation"]
+    return [SELF_MANAGED_TEAM_ID, "team-augmentation"]
   }
 
   if (productHelp === "modernize") {
     if (hasTechTeam === "yes") {
-      return [...SELF_MANAGED_TEAM_IDS, "team-augmentation", "training"]
+      return [SELF_MANAGED_TEAM_ID, "team-augmentation", "training"]
     }
-    return [...SELF_MANAGED_TEAM_IDS]
+    return [SELF_MANAGED_TEAM_ID]
   }
 
   if (productHelp === "new-product") {
     if (hasTechTeam === "yes") {
-      return [...SELF_MANAGED_TEAM_IDS, "team-augmentation"]
+      return [SELF_MANAGED_TEAM_ID, "team-augmentation"]
     }
-    return [...SELF_MANAGED_TEAM_IDS]
+    return [SELF_MANAGED_TEAM_ID]
   }
 
   if (productHelp === "help-me-decide") {
     if (hasTechTeam === "no") {
-      return [...SELF_MANAGED_TEAM_IDS]
+      return [SELF_MANAGED_TEAM_ID]
     }
-    return [...SELF_MANAGED_TEAM_IDS, "team-augmentation", "training"]
+    return [SELF_MANAGED_TEAM_ID, "team-augmentation", "training"]
   }
 
   return []
@@ -175,23 +184,23 @@ function resolveStartupOutcomeIds(answers: CalculatorAnswers, productHelp: strin
 
   if (productHelp === "develop-mvp") {
     if (hasFunding === "no") {
-      return ["betacode-ventures", "small-team"]
+      return ["betacode-ventures", SELF_MANAGED_TEAM_ID]
     }
-    return ["small-team"]
+    return [SELF_MANAGED_TEAM_ID]
   }
 
   if (productHelp === "create-tech-team") {
     if (hasFunding === "no") {
-      return ["betacode-ventures", ...SELF_MANAGED_TEAM_IDS]
+      return ["betacode-ventures", SELF_MANAGED_TEAM_ID]
     }
-    return ["betacode-ventures", ...SELF_MANAGED_TEAM_IDS, "team-augmentation"]
+    return ["betacode-ventures", SELF_MANAGED_TEAM_ID, "team-augmentation"]
   }
 
   if (productHelp === "help-me-decide") {
     if (hasFunding === "no") {
       return ["betacode-ventures"]
     }
-    return ["betacode-ventures", ...SELF_MANAGED_TEAM_IDS, "training", "team-augmentation"]
+    return ["betacode-ventures", SELF_MANAGED_TEAM_ID, "training", "team-augmentation"]
   }
 
   return []
@@ -215,35 +224,12 @@ export function resolveOutcomeIds(answers: CalculatorAnswers): OutcomeId[] {
 }
 
 export function groupOutcomesForDisplay(outcomes: CalculatorOutcome[]): ServiceDisplayGroup[] {
-  const groups: ServiceDisplayGroup[] = []
-  const serviceGroups = pricingCalculatorConfig.serviceGroups ?? {}
-
-  const selfManagedOutcomes = outcomes.filter(
-    (outcome) => outcome.serviceGroup === "self-managed-tech-teams"
-  )
-  if (selfManagedOutcomes.length > 0) {
-    const groupMeta = serviceGroups["self-managed-tech-teams"]
-    groups.push({
-      id: "self-managed-tech-teams",
-      label: groupMeta?.label ?? "Self managed tech teams",
-      description: groupMeta?.description,
-      outcomes: selfManagedOutcomes,
-    })
-  }
-
-  const standaloneOutcomes = outcomes.filter(
-    (outcome) => outcome.serviceGroup !== "self-managed-tech-teams"
-  )
-  for (const outcome of standaloneOutcomes) {
-    groups.push({
-      id: outcome.id,
-      label: outcome.label,
-      description: outcome.description,
-      outcomes: [outcome],
-    })
-  }
-
-  return groups
+  return outcomes.map((outcome) => ({
+    id: outcome.id,
+    label: outcome.label,
+    description: outcome.description,
+    outcomes: [outcome],
+  }))
 }
 
 export function getQuestionById(questionId: string): CalculatorQuestion | undefined {
@@ -263,6 +249,73 @@ function getNextQuestionIdForAnswer(question: CalculatorQuestion, optionId: stri
   if (selectedOption?.nextQuestionId) return selectedOption.nextQuestionId
   if (question.nextQuestionId) return question.nextQuestionId
   return undefined
+}
+
+export type AnswerSummaryItem = {
+  questionId: string
+  label: string
+  value: string
+}
+
+const QUESTION_SUMMARY_LABELS: Record<string, string> = {
+  "business-stage": "Business",
+  "startup-funding": "Funding",
+  "team-dimensions": "Company size",
+  "has-tech-team": "Tech team",
+  "product-help-startup": "Goal",
+  "product-help-established": "Goal",
+}
+
+function formatSummaryAnswerLabel(questionId: string, optionId: string, optionLabel: string): string {
+  if (questionId === "startup-funding") {
+    return optionId === "yes" ? "With funding" : "Without funding"
+  }
+
+  if (questionId === "has-tech-team") {
+    return optionId === "yes" ? "Has a tech team" : "No tech team"
+  }
+
+  return optionLabel
+}
+
+export function getAnswersSummary(answers: CalculatorAnswers): AnswerSummaryItem[] {
+  const path = getQuestionPath(answers)
+
+  return path
+    .filter((question) => question.type !== "textarea")
+    .map((question) => {
+      const selectedOptionId = answers[question.id]
+      if (!selectedOptionId) return null
+
+      const selectedOption = question.options.find((option) => option.id === selectedOptionId)
+      if (!selectedOption) return null
+
+      return {
+        questionId: question.id,
+        label: QUESTION_SUMMARY_LABELS[question.id] ?? question.title,
+        value: formatSummaryAnswerLabel(question.id, selectedOption.id, selectedOption.label),
+      }
+    })
+    .filter((item): item is AnswerSummaryItem => item !== null)
+}
+
+export function getProductDescriptionQuestion(): CalculatorQuestion {
+  const question = getQuestionById("product-description")
+  if (!question) {
+    throw new Error("Question \"product-description\" not found")
+  }
+  return question
+}
+
+export function getExpectedBranchingQuestionCount(answers: CalculatorAnswers): number {
+  if (isQuestionFlowComplete(answers)) {
+    return getQuestionPath(answers).length
+  }
+
+  const stage = answers["business-stage"]
+  if (stage === "startup") return 3
+  if (stage === "established") return 4
+  return 1
 }
 
 export function getQuestionPath(answers: CalculatorAnswers): CalculatorQuestion[] {
@@ -288,14 +341,7 @@ export function getQuestionPath(answers: CalculatorAnswers): CalculatorQuestion[
 
 export function isQuestionFlowComplete(answers: CalculatorAnswers): boolean {
   const path = getQuestionPath(answers)
-  const lastQuestion = path[path.length - 1]
-  if (!lastQuestion) return false
-
-  if (lastQuestion.type === "textarea") {
-    return path.slice(0, -1).every((question) => Boolean(answers[question.id]))
-  }
-
-  return path.every((question) => Boolean(answers[question.id]))
+  return path.length > 0 && path.every((question) => Boolean(answers[question.id]))
 }
 
 export function resolveOutcomes(answers: CalculatorAnswers): CalculatorOutcome[] {
@@ -368,6 +414,7 @@ export function clearBranchAnswers(
   }
 
   delete nextAnswers["product-help"]
+  delete nextAnswers["product-description"]
 
   return nextAnswers
 }
@@ -393,27 +440,40 @@ export function getBriefPriceSummary(outcome: CalculatorOutcome): BriefPriceSumm
     }
   }
 
-  const mvpEstimate = outcome.estimates.find((estimate) =>
+  const allEstimates = [
+    ...outcome.estimates,
+    ...(outcome.teamConfigurations?.flatMap((config) => config.estimates) ?? []),
+  ]
+
+  const mvpEstimates = allEstimates.filter((estimate) =>
     estimate.label.toLowerCase().includes("mvp")
   )
-  if (mvpEstimate) {
+  if (mvpEstimates.length > 0) {
+    const min = Math.min(...mvpEstimates.map((estimate) => estimate.min))
+    const max = Math.max(...mvpEstimates.map((estimate) => estimate.max))
     return {
       label: "MVP estimate",
-      value: formatEuroRange(mvpEstimate.min, mvpEstimate.max),
+      value: formatEuroRange(min, max),
     }
   }
 
-  if (outcome.estimates.length > 0) {
-    const estimate = outcome.estimates[0]
+  if (allEstimates.length > 0) {
+    const min = Math.min(...allEstimates.map((estimate) => estimate.min))
+    const max = Math.max(...allEstimates.map((estimate) => estimate.max))
     return {
-      label: estimate.label,
-      value: formatEuroRange(estimate.min, estimate.max),
+      label: allEstimates.length === 1 ? allEstimates[0].label : "Price range",
+      value: formatEuroRange(min, max),
     }
   }
 
-  if (outcome.teamComposition.length > 0) {
-    const rateMin = Math.min(...outcome.teamComposition.map((member) => member.rateMin))
-    const rateMax = Math.max(...outcome.teamComposition.map((member) => member.rateMax))
+  const allTeamMembers = [
+    ...outcome.teamComposition,
+    ...(outcome.teamConfigurations?.flatMap((config) => config.teamComposition) ?? []),
+  ]
+
+  if (allTeamMembers.length > 0) {
+    const rateMin = Math.min(...allTeamMembers.map((member) => member.rateMin))
+    const rateMax = Math.max(...allTeamMembers.map((member) => member.rateMax))
     return {
       label: "Hourly rates",
       value: `${formatHourlyRange(rateMin, rateMax)}/h`,
@@ -425,8 +485,7 @@ export function getBriefPriceSummary(outcome: CalculatorOutcome): BriefPriceSumm
 
 export const OUTCOME_DISPLAY_ORDER: OutcomeId[] = [
   "betacode-ventures",
-  "small-team",
-  "base-team",
+  "self-managed-tech-teams",
   "team-augmentation",
   "training",
   "support",
