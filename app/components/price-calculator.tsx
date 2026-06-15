@@ -37,6 +37,7 @@ const POST_BRANCHING_STEPS = 3
 
 export function PriceCalculator() {
   const startQuestion = getStartQuestion()
+  const [wizardStarted, setWizardStarted] = useState(false)
   const [phase, setPhase] = useState<Phase>("questions")
   const [answers, setAnswers] = useState<CalculatorAnswers>({})
   const [contactDetails, setContactDetails] = useState<CalculatorAnswers>({})
@@ -154,6 +155,7 @@ export function PriceCalculator() {
     setContactDetails({})
     setCurrentQuestionId(startQuestion.id)
     setOutcomes([])
+    setWizardStarted(false)
   }
 
   function handleContactSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -179,78 +181,99 @@ export function PriceCalculator() {
         <div
           className={cn(
             "mx-auto mt-12",
-            phase === "results" ? "max-w-5xl" : "max-w-3xl"
+            wizardStarted && phase === "results" ? "max-w-5xl" : wizardStarted ? "max-w-3xl" : "max-w-2xl"
           )}
         >
-          <StepIndicator currentStep={questionStep} totalSteps={totalSteps} />
+          {!wizardStarted ? (
+            <div className="flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-6">
+              <button
+                type="button"
+                onClick={() => setWizardStarted(true)}
+                className="inline-flex items-center justify-center gap-2 rounded-md bg-primary-600 px-5 py-3 text-sm font-semibold text-white shadow-xs hover:bg-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:bg-primary-500 dark:hover:bg-primary-400"
+              >
+                Get a price estimate
+                <IconArrowRight className="size-4" aria-hidden="true" />
+              </button>
+              <Link
+                href={CALENDAR_URL}
+                className="inline-flex items-center justify-center rounded-md border border-gray-300 bg-white px-5 py-3 text-sm font-semibold text-gray-900 shadow-xs hover:bg-gray-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700"
+              >
+                Book a call
+              </Link>
+            </div>
+          ) : (
+            <>
+              <StepIndicator currentStep={questionStep} totalSteps={totalSteps} />
 
-          <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm sm:p-8 dark:border-gray-800 dark:bg-gray-900">
-            {phase === "questions" && (
-              <QuestionStep
-                question={currentQuestion}
-                answers={answers}
-                canGoBack={currentQuestionId !== startQuestion.id}
-                onBack={handleBack}
-                onChoiceSelect={handleChoiceSelect}
-                onDropdownChange={handleDropdownChange}
-                onDropdownContinue={handleDropdownContinue}
-              />
-            )}
+              <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm sm:p-8 dark:border-gray-800 dark:bg-gray-900">
+                {phase === "questions" && (
+                  <QuestionStep
+                    question={currentQuestion}
+                    answers={answers}
+                    canGoBack={currentQuestionId !== startQuestion.id}
+                    onBack={handleBack}
+                    onChoiceSelect={handleChoiceSelect}
+                    onDropdownChange={handleDropdownChange}
+                    onDropdownContinue={handleDropdownContinue}
+                  />
+                )}
 
-            {phase === "results" && (
-              <ResultsStep
-                answers={answers}
-                outcomes={outcomes}
-                onBack={handleBack}
-                onContinue={() => setPhase("product")}
-                onReset={reset}
-              />
-            )}
+                {phase === "results" && (
+                  <ResultsStep
+                    answers={answers}
+                    outcomes={outcomes}
+                    onBack={handleBack}
+                    onContinue={() => setPhase("product")}
+                    onReset={reset}
+                  />
+                )}
 
-            {phase === "product" && (
-              <QuestionStep
-                question={productDescriptionQuestion}
-                answers={answers}
-                canGoBack
-                continueLabel="Continue"
-                onBack={handleBack}
-                onTextareaChange={handleProductDescriptionChange}
-                onTextareaContinue={handleProductDescriptionContinue}
-                onTextareaSkip={handleProductDescriptionSkip}
-              />
-            )}
+                {phase === "product" && (
+                  <QuestionStep
+                    question={productDescriptionQuestion}
+                    answers={answers}
+                    canGoBack
+                    continueLabel="Continue"
+                    onBack={handleBack}
+                    onTextareaChange={handleProductDescriptionChange}
+                    onTextareaContinue={handleProductDescriptionContinue}
+                    onTextareaSkip={handleProductDescriptionSkip}
+                  />
+                )}
 
-            {phase === "contact" && (
-              <ContactStep
-                contactDetails={contactDetails}
-                onBack={handleBack}
-                onChange={(fieldId, value) =>
-                  setContactDetails((prev) => ({ ...prev, [fieldId]: value }))
-                }
-                onSubmit={handleContactSubmit}
-                onReset={reset}
-              />
-            )}
+                {phase === "contact" && (
+                  <ContactStep
+                    contactDetails={contactDetails}
+                    onBack={handleBack}
+                    onChange={(fieldId, value) =>
+                      setContactDetails((prev) => ({ ...prev, [fieldId]: value }))
+                    }
+                    onSubmit={handleContactSubmit}
+                    onReset={reset}
+                  />
+                )}
 
-            {phase === "submitted" && (
-              <div className="text-center">
-                <div className="mx-auto flex size-12 items-center justify-center rounded-full bg-primary-600/10 text-primary-600 dark:bg-primary-500/10 dark:text-primary-400">
-                  <IconCheck className="size-6" aria-hidden="true" />
-                </div>
-                <h2 className="mt-4 text-xl font-semibold text-gray-900 dark:text-white">Thank you</h2>
-                <p className="mt-2 text-gray-600 dark:text-gray-300">
-                  We&apos;ve received your details. We&apos;ll review your project and get back to you soon.
-                </p>
-                <button
-                  type="button"
-                  onClick={reset}
-                  className="mt-6 text-sm font-semibold text-primary-600 hover:text-primary-500 dark:text-primary-400"
-                >
-                  Start over
-                </button>
+                {phase === "submitted" && (
+                  <div className="text-center">
+                    <div className="mx-auto flex size-12 items-center justify-center rounded-full bg-primary-600/10 text-primary-600 dark:bg-primary-500/10 dark:text-primary-400">
+                      <IconCheck className="size-6" aria-hidden="true" />
+                    </div>
+                    <h2 className="mt-4 text-xl font-semibold text-gray-900 dark:text-white">Thank you</h2>
+                    <p className="mt-2 text-gray-600 dark:text-gray-300">
+                      We&apos;ve received your details. We&apos;ll review your project and get back to you soon.
+                    </p>
+                    <button
+                      type="button"
+                      onClick={reset}
+                      className="mt-6 text-sm font-semibold text-primary-600 hover:text-primary-500 dark:text-primary-400"
+                    >
+                      Start over
+                    </button>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
+            </>
+          )}
         </div>
       </div>
     </section>
@@ -543,7 +566,7 @@ function ResultsStep({
           onClick={onContinue}
           className="inline-flex items-center justify-center gap-2 rounded-md bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:bg-primary-500 dark:hover:bg-primary-400"
         >
-          Continue
+          Talk to us
           <IconArrowRight className="size-4" aria-hidden="true" />
         </button>
       </div>
@@ -778,8 +801,8 @@ function OutcomePricingDetails({ outcome }: { outcome: CalculatorOutcome }) {
         <p className="mt-3 text-xs text-gray-500 dark:text-gray-400">{pricingNote}</p>
       )}
 
-      <div className="mt-6">
-        {outcome.pricingModel === "partnership" ? (
+      {outcome.pricingModel === "partnership" && (
+        <div className="mt-6">
           <Link
             href="/betacode-ventures"
             className="inline-flex items-center gap-2 rounded-md bg-primary-600 px-5 py-3 text-sm font-semibold text-white shadow-sm hover:bg-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:bg-white dark:text-purple-900 dark:hover:bg-purple-50 dark:focus-visible:outline-white"
@@ -787,15 +810,8 @@ function OutcomePricingDetails({ outcome }: { outcome: CalculatorOutcome }) {
             Explore Betacode Ventures
             <IconArrowRight className="size-4" aria-hidden="true" />
           </Link>
-        ) : (
-          <Link
-            href={CALENDAR_URL}
-            className="inline-flex items-center justify-center rounded-md bg-primary-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:bg-primary-500 dark:hover:bg-primary-400 animate-bounce"
-          >
-            Book a call
-          </Link>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   )
 }
