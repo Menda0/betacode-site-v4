@@ -5,6 +5,7 @@
     "small-team": {
       "id": "small-team",
       "label": "Small Team",
+      "serviceGroup": "self-managed-tech-teams",
       "description": "A lean dedicated team with a junior developer and a part-time product owner—ideal for MVPs and focused builds.",
       "pricingModel": "project",
       "teamComposition": [
@@ -23,6 +24,7 @@
     "base-team": {
       "id": "base-team",
       "label": "Base Team",
+      "serviceGroup": "self-managed-tech-teams",
       "description": "A full dedicated team with junior and mid/senior developers plus a part-time product owner—for larger or more complex products.",
       "pricingModel": "project",
       "teamComposition": [
@@ -102,6 +104,12 @@
       }
     }
   },
+  "serviceGroups": {
+    "self-managed-tech-teams": {
+      "label": "Self managed tech teams",
+      "description": "Dedicated teams that own your product delivery—from planning, development, and release—without you managing individual freelancers."
+    }
+  },
   "questions": [
     {
       "id": "business-stage",
@@ -133,33 +141,13 @@
           "id": "yes",
           "label": "Yes",
           "description": "You've raised capital or have a dedicated budget for product development. We can plan a fuller team and a clear delivery timeline.",
-          "nextQuestionId": "startup-mvp"
+          "nextQuestionId": "product-help-startup"
         },
         {
           "id": "no",
           "label": "No",
           "description": "You're bootstrapping or still securing investment. We'll lean toward cost-efficient builds or equity partnerships to get you started.",
-          "nextQuestionId": "startup-mvp"
-        }
-      ]
-    },
-    {
-      "id": "startup-mvp",
-      "type": "choice",
-      "title": "Do you already have an MVP?",
-      "description": "An MVP is a first working version—something users can try, even if it's limited.",
-      "options": [
-        {
-          "id": "yes",
-          "label": "Yes",
-          "description": "You have a live product, beta, or demo with real feedback. We'll focus on iteration, scaling, and hardening—not starting from scratch.",
-          "nextQuestionId": "product-help"
-        },
-        {
-          "id": "no",
-          "label": "No",
-          "description": "You're still at idea or early prototype stage. We'll recommend a path to ship a first version quickly and validate with users.",
-          "nextQuestionId": "product-help"
+          "nextQuestionId": "product-help-startup"
         }
       ]
     },
@@ -205,21 +193,53 @@
           "id": "yes",
           "label": "Yes",
           "description": "You have developers, engineers, or a technical lead. Augmentation, consulting, and targeted support often fit best.",
-          "nextQuestionId": "product-help"
+          "nextQuestionId": "product-help-established"
         },
         {
           "id": "no",
           "label": "No",
           "description": "Technology isn't your core strength yet. A dedicated external team or full-service build is usually the right starting point.",
-          "nextQuestionId": "product-help"
+          "nextQuestionId": "product-help-established"
         }
       ]
     },
     {
-      "id": "product-help",
+      "id": "product-help-startup",
       "type": "choice",
       "title": "What kind of product or help do you need?",
-      "description": "Pick the option closest to your main goal. We'll still suggest additional services when they make sense.",
+      "description": "Pick what you're trying to achieve right now. We'll combine this with your funding situation to recommend the right services.",
+      "options": [
+        {
+          "id": "develop-mvp",
+          "label": "Develop an MVP",
+          "description": "Ship a first working version in months—not years. Ideal when you need to validate your idea with real users quickly.",
+          "nextQuestionId": "product-description"
+        },
+        {
+          "id": "create-tech-team",
+          "label": "Create a tech team",
+          "description": "Build a dedicated team that owns your product long-term—a self-managed team we set up and run for you.",
+          "nextQuestionId": "product-description"
+        },
+        {
+          "id": "technical-support",
+          "label": "Technical support",
+          "description": "Scoped help: integrations, bug fixes, scripts, or maintenance on something you already have.",
+          "nextQuestionId": "product-description"
+        },
+        {
+          "id": "help-me-decide",
+          "label": "I don't know — help me decide",
+          "description": "We'll recommend based on your funding and goals—not just the type of project.",
+          "nextQuestionId": "product-description"
+        }
+      ]
+    },
+    {
+      "id": "product-help-established",
+      "type": "choice",
+      "title": "What kind of product or help do you need?",
+      "description": "Pick the option closest to your main goal. We'll factor in whether you have a tech team when suggesting services.",
       "options": [
         {
           "id": "new-product",
@@ -240,9 +260,15 @@
           "nextQuestionId": "product-description"
         },
         {
-          "id": "punctual-support",
-          "label": "Punctual technical support",
+          "id": "technical-support",
+          "label": "Technical support",
           "description": "Short, scoped work: API integrations, bug fixes, scripts, or maintenance—without a long-term team commitment.",
+          "nextQuestionId": "product-description"
+        },
+        {
+          "id": "help-me-decide",
+          "label": "I don't know — help me decide",
+          "description": "We'll recommend based on your company size, tech team, and goals.",
           "nextQuestionId": "product-description"
         }
       ]
@@ -258,7 +284,7 @@
   ],
   "contact": {
     "title": "Talk to us",
-    "description": "All fields are optional. Share what you're comfortable with—we'll follow up with a tailored proposal, not a generic pitch.",
+    "description": "Share your name and email so we can follow up with a tailored proposal. Website is optional.",
     "fields": [
       {
         "id": "website",
@@ -274,126 +300,17 @@
         "description": "So we know who to address when we reach out.",
         "type": "text",
         "placeholder": "Your name",
-        "optional": true
+        "optional": false
       },
       {
         "id": "email",
         "label": "Email",
-        "description": "We'll use this to send your estimate summary and schedule a follow-up if you want one.",
+        "description": "We'll use this to send your estimate summary and schedule a follow-up.",
         "type": "email",
         "placeholder": "you@company.com",
-        "optional": true
+        "optional": false
       }
     ]
   },
-  "rules": [
-    {
-      "id": "help-punctual-support",
-      "conditions": { "product-help": "punctual-support" },
-      "outcomeIds": ["support"]
-    },
-    {
-      "id": "help-team-augmentation",
-      "conditions": { "product-help": "team-augmentation" },
-      "outcomeIds": ["team-augmentation"]
-    },
-    {
-      "id": "help-modernize-established-no-tech",
-      "conditions": {
-        "business-stage": "established",
-        "has-tech-team": "no",
-        "product-help": "modernize"
-      },
-      "outcomeIds": ["base-team"]
-    },
-    {
-      "id": "help-modernize-established-tech",
-      "conditions": {
-        "business-stage": "established",
-        "has-tech-team": "yes",
-        "product-help": "modernize"
-      },
-      "outcomeIds": ["team-augmentation", "base-team"]
-    },
-    {
-      "id": "help-modernize-startup",
-      "conditions": { "business-stage": "startup", "product-help": "modernize" },
-      "outcomeIds": ["small-team", "base-team"]
-    },
-    {
-      "id": "help-new-product-established-no-tech",
-      "conditions": {
-        "business-stage": "established",
-        "has-tech-team": "no",
-        "product-help": "new-product"
-      },
-      "outcomeIds": ["base-team"]
-    },
-    {
-      "id": "help-new-product-established-tech",
-      "conditions": {
-        "business-stage": "established",
-        "has-tech-team": "yes",
-        "product-help": "new-product"
-      },
-      "outcomeIds": ["team-augmentation", "base-team"]
-    },
-    {
-      "id": "help-new-product-startup-no-funding-no-mvp",
-      "conditions": {
-        "business-stage": "startup",
-        "startup-funding": "no",
-        "startup-mvp": "no",
-        "product-help": "new-product"
-      },
-      "outcomeIds": ["betacode-ventures", "small-team"]
-    },
-    {
-      "id": "help-new-product-startup-funded-no-mvp",
-      "conditions": {
-        "business-stage": "startup",
-        "startup-funding": "yes",
-        "startup-mvp": "no",
-        "product-help": "new-product"
-      },
-      "outcomeIds": ["small-team"]
-    },
-    {
-      "id": "help-new-product-startup-has-mvp",
-      "conditions": {
-        "business-stage": "startup",
-        "startup-mvp": "yes",
-        "product-help": "new-product"
-      },
-      "outcomeIds": ["small-team", "base-team"]
-    },
-    {
-      "id": "help-new-product-startup-funded",
-      "conditions": {
-        "business-stage": "startup",
-        "startup-funding": "yes",
-        "product-help": "new-product"
-      },
-      "outcomeIds": ["small-team"]
-    },
-    {
-      "id": "established-large-team-augmentation",
-      "conditions": {
-        "business-stage": "established",
-        "team-dimensions": "200-plus",
-        "has-tech-team": "yes",
-        "product-help": "team-augmentation"
-      },
-      "outcomeIds": ["team-augmentation", "base-team"]
-    },
-    {
-      "id": "established-tech-training-modernize",
-      "conditions": {
-        "business-stage": "established",
-        "has-tech-team": "yes",
-        "product-help": "modernize"
-      },
-      "outcomeIds": ["training"]
-    }
-  ]
+  "rules": []
 }

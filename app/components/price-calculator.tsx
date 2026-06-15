@@ -10,12 +10,14 @@ import {
   getPricingModelNote,
   getQuestionPath,
   getStartQuestion,
+  groupOutcomesForDisplay,
   isQuestionFlowComplete,
   pricingCalculatorConfig,
   resolveOutcomes,
   type CalculatorAnswers,
   type CalculatorOutcome,
   type CalculatorQuestion,
+  type ServiceDisplayGroup,
 } from "@/lib/pricing-calculator"
 import { cn } from "@/lib/utils"
 
@@ -310,13 +312,13 @@ function QuestionStep({
               className={cn(
                 "rounded-xl border p-4 text-left transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600",
                 answers[question.id] === option.id
-                  ? "border-primary-400 bg-primary-50/70 dark:border-primary-600 dark:bg-primary-950/40"
-                  : "border-gray-200 hover:border-primary-300 hover:bg-primary-50/50 dark:border-gray-700 dark:hover:border-primary-700 dark:hover:bg-primary-950/30"
+                  ? "border-primary-400 bg-primary-50/70 dark:border-primary-500 dark:bg-primary-800/50"
+                  : "border-gray-200 hover:border-primary-300 hover:bg-primary-50/70 dark:border-gray-700 dark:hover:border-primary-500 dark:hover:bg-primary-800/40"
               )}
             >
               <span className="text-base font-semibold text-gray-900 dark:text-white">{option.label}</span>
               {option.description && (
-                <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">{option.description}</p>
+                <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">{option.description}</p>
               )}
             </button>
           ))}
@@ -394,6 +396,8 @@ function ResultsStep({
   onContinue: () => void
   onReset: () => void
 }) {
+  const serviceGroups = groupOutcomesForDisplay(outcomes)
+
   if (outcomes.length === 0) {
     return (
       <div className="text-center">
@@ -431,9 +435,9 @@ function ResultsStep({
         </p>
       </div>
 
-      <div className="mt-8 space-y-6">
-        {outcomes.map((outcome) => (
-          <OutcomeCard key={outcome.id} outcome={outcome} />
+      <div className="mt-8 space-y-8">
+        {serviceGroups.map((group) => (
+          <ServiceGroupSection key={group.id} group={group} />
         ))}
       </div>
 
@@ -458,19 +462,71 @@ function ResultsStep({
   )
 }
 
-function OutcomeCard({ outcome }: { outcome: CalculatorOutcome }) {
+function ServiceGroupSection({ group }: { group: ServiceDisplayGroup }) {
+  const isSelfManaged = group.id === "self-managed-tech-teams"
+
+  return (
+    <div className="rounded-xl border border-gray-200 p-5 dark:border-gray-700">
+      <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{group.label}</h3>
+      {group.description && (
+        <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">{group.description}</p>
+      )}
+
+      <div className={cn("space-y-4", isSelfManaged && "mt-6")}>
+        {group.outcomes.map((outcome) => (
+          <OutcomeCard
+            key={outcome.id}
+            outcome={outcome}
+            showServiceHeader={isSelfManaged}
+            compact={!isSelfManaged}
+          />
+        ))}
+      </div>
+
+      {!isSelfManaged && group.outcomes[0] && (
+        <div className="mt-4">
+          <Link
+            href={group.outcomes[0].cta.href}
+            className="text-sm font-semibold text-primary-600 hover:text-primary-500 dark:text-primary-400"
+          >
+            {group.outcomes[0].cta.label} →
+          </Link>
+        </div>
+      )}
+    </div>
+  )
+}
+
+function OutcomeCard({
+  outcome,
+  showServiceHeader = true,
+  compact = false,
+}: {
+  outcome: CalculatorOutcome
+  showServiceHeader?: boolean
+  compact?: boolean
+}) {
   const pricingNote = getPricingModelNote(outcome.pricingModel)
   const showTeamTable = outcome.teamComposition.length > 0
   const showRate = Boolean(outcome.rate)
   const showEstimates = outcome.estimates.length > 0
 
   return (
-    <div className="rounded-xl border border-gray-200 p-5 dark:border-gray-700">
-      <h3 className="text-xl font-semibold text-gray-900 dark:text-white">{outcome.label}</h3>
-      <p className="mt-2 text-gray-600 dark:text-gray-300">{outcome.description}</p>
+    <div
+      className={cn(
+        compact ? "" : "rounded-xl border border-gray-200 p-5 dark:border-gray-700",
+        showServiceHeader && !compact && "rounded-lg border border-gray-100 bg-gray-50/50 p-4 dark:border-gray-800 dark:bg-gray-800/40"
+      )}
+    >
+      {showServiceHeader && (
+        <>
+          <h4 className="text-base font-semibold text-gray-900 dark:text-white">{outcome.label}</h4>
+          <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">{outcome.description}</p>
+        </>
+      )}
 
       {(showTeamTable || showRate || showEstimates) && (
-        <div className="mt-6 grid gap-4 sm:grid-cols-2">
+        <div className={cn("grid gap-4 sm:grid-cols-2", showServiceHeader && "mt-4")}>
           {showTeamTable && (
             <div>
               <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Team configuration</p>
@@ -529,17 +585,21 @@ function OutcomeCard({ outcome }: { outcome: CalculatorOutcome }) {
       )}
 
       {pricingNote && (
-        <p className="mt-4 text-xs text-gray-500 dark:text-gray-400">{pricingNote}</p>
+        <p className={cn("text-xs text-gray-500 dark:text-gray-400", showServiceHeader ? "mt-4" : "mt-3")}>
+          {pricingNote}
+        </p>
       )}
 
-      <div className="mt-4">
-        <Link
-          href={outcome.cta.href}
-          className="text-sm font-semibold text-primary-600 hover:text-primary-500 dark:text-primary-400"
-        >
-          {outcome.cta.label} →
-        </Link>
-      </div>
+      {showServiceHeader && !compact && (
+        <div className="mt-4">
+          <Link
+            href={outcome.cta.href}
+            className="text-sm font-semibold text-primary-600 hover:text-primary-500 dark:text-primary-400"
+          >
+            {outcome.cta.label} →
+          </Link>
+        </div>
+      )}
     </div>
   )
 }
@@ -593,6 +653,7 @@ function ContactStep({
               value={contactDetails[field.id] ?? ""}
               onChange={(event) => onChange(field.id, event.target.value)}
               placeholder={field.placeholder}
+              required={!field.optional}
               className="mt-1.5 block w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-gray-900 shadow-xs placeholder:text-gray-400 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-500"
             />
           </div>

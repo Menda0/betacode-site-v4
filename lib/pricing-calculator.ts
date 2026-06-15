@@ -41,11 +41,24 @@ export type CalculatorOutcome = {
   id: OutcomeId
   label: string
   description: string
+  serviceGroup?: string
   pricingModel: PricingModel
   teamComposition: TeamMember[]
   rate?: OutcomeRate
   estimates: PriceEstimate[]
   cta: OutcomeCta
+}
+
+export type ServiceGroup = {
+  label: string
+  description?: string
+}
+
+export type ServiceDisplayGroup = {
+  id: string
+  label: string
+  description?: string
+  outcomes: CalculatorOutcome[]
 }
 
 export type CalculatorOption = {
@@ -92,6 +105,7 @@ export type CalculatorConfig = {
   version: number
   startQuestionId: string
   outcomes: Record<OutcomeId, CalculatorOutcome>
+  serviceGroups?: Record<string, ServiceGroup>
   questions: CalculatorQuestion[]
   contact: ContactConfig
   rules: CalculatorRule[]
@@ -100,6 +114,136 @@ export type CalculatorConfig = {
 export type CalculatorAnswers = Record<string, string>
 
 export const pricingCalculatorConfig = calculatorData as unknown as CalculatorConfig
+
+const SELF_MANAGED_TEAM_IDS: OutcomeId[] = ["small-team", "base-team"]
+
+function getProductHelpAnswer(answers: CalculatorAnswers): string | undefined {
+  if (answers["business-stage"] === "startup") {
+    return answers["product-help-startup"]
+  }
+  if (answers["business-stage"] === "established") {
+    return answers["product-help-established"]
+  }
+  return undefined
+}
+
+function resolveEstablishedOutcomeIds(answers: CalculatorAnswers, productHelp: string): OutcomeId[] {
+  const hasTechTeam = answers["has-tech-team"]
+
+  if (productHelp === "technical-support") {
+    return ["support"]
+  }
+
+  if (productHelp === "team-augmentation") {
+    if (hasTechTeam === "yes") {
+      return ["team-augmentation", "training"]
+    }
+    return [...SELF_MANAGED_TEAM_IDS, "team-augmentation"]
+  }
+
+  if (productHelp === "modernize") {
+    if (hasTechTeam === "yes") {
+      return [...SELF_MANAGED_TEAM_IDS, "team-augmentation", "training"]
+    }
+    return [...SELF_MANAGED_TEAM_IDS]
+  }
+
+  if (productHelp === "new-product") {
+    if (hasTechTeam === "yes") {
+      return [...SELF_MANAGED_TEAM_IDS, "team-augmentation"]
+    }
+    return [...SELF_MANAGED_TEAM_IDS]
+  }
+
+  if (productHelp === "help-me-decide") {
+    if (hasTechTeam === "no") {
+      return [...SELF_MANAGED_TEAM_IDS]
+    }
+    return [...SELF_MANAGED_TEAM_IDS, "team-augmentation", "training"]
+  }
+
+  return []
+}
+
+function resolveStartupOutcomeIds(answers: CalculatorAnswers, productHelp: string): OutcomeId[] {
+  const hasFunding = answers["startup-funding"]
+
+  if (productHelp === "technical-support") {
+    return ["support"]
+  }
+
+  if (productHelp === "develop-mvp") {
+    if (hasFunding === "no") {
+      return ["betacode-ventures", "small-team"]
+    }
+    return ["small-team"]
+  }
+
+  if (productHelp === "create-tech-team") {
+    if (hasFunding === "no") {
+      return ["betacode-ventures", ...SELF_MANAGED_TEAM_IDS]
+    }
+    return ["betacode-ventures", ...SELF_MANAGED_TEAM_IDS, "team-augmentation"]
+  }
+
+  if (productHelp === "help-me-decide") {
+    if (hasFunding === "no") {
+      return ["betacode-ventures"]
+    }
+    return ["betacode-ventures", ...SELF_MANAGED_TEAM_IDS, "training", "team-augmentation"]
+  }
+
+  return []
+}
+
+export function resolveOutcomeIds(answers: CalculatorAnswers): OutcomeId[] {
+  const productHelp = getProductHelpAnswer(answers)
+  if (!productHelp) return []
+
+  const businessStage = answers["business-stage"]
+
+  if (businessStage === "established") {
+    return resolveEstablishedOutcomeIds(answers, productHelp)
+  }
+
+  if (businessStage === "startup") {
+    return resolveStartupOutcomeIds(answers, productHelp)
+  }
+
+  return []
+}
+
+export function groupOutcomesForDisplay(outcomes: CalculatorOutcome[]): ServiceDisplayGroup[] {
+  const groups: ServiceDisplayGroup[] = []
+  const serviceGroups = pricingCalculatorConfig.serviceGroups ?? {}
+
+  const selfManagedOutcomes = outcomes.filter(
+    (outcome) => outcome.serviceGroup === "self-managed-tech-teams"
+  )
+  if (selfManagedOutcomes.length > 0) {
+    const groupMeta = serviceGroups["self-managed-tech-teams"]
+    groups.push({
+      id: "self-managed-tech-teams",
+      label: groupMeta?.label ?? "Self managed tech teams",
+      description: groupMeta?.description,
+      outcomes: selfManagedOutcomes,
+    })
+  }
+
+  const standaloneOutcomes = outcomes.filter(
+    (outcome) => outcome.serviceGroup !== "self-managed-tech-teams"
+  )
+  for (const outcome of standaloneOutcomes) {
+    groups.push({
+      id: outcome.id,
+      label: outcome.label,
+      description: outcome.description,
+      outcomes: [outcome],
+    })
+  }
+
+  return groups
+}
 
 export function getQuestionById(questionId: string): CalculatorQuestion | undefined {
   return pricingCalculatorConfig.questions.find((question) => question.id === questionId)
@@ -160,7 +304,7 @@ export function resolveOutcomes(answers: CalculatorAnswers): CalculatorOutcome[]
     return outcome ? [outcome] : []
   }
 
-  const matchedOutcomeIds = new Set<OutcomeId>()
+  const matchedOutcomeIds = new Set<OutcomeId>(resolveOutcomeIds(answers))
 
   for (const rule of pricingCalculatorConfig.rules) {
     const matches = Object.entries(rule.conditions).every(
@@ -173,32 +317,9 @@ export function resolveOutcomes(answers: CalculatorAnswers): CalculatorOutcome[]
     }
   }
 
-  if (matchedOutcomeIds.size === 0) {
-    const fallback = getFallbackOutcomeIds(answers)
-    for (const outcomeId of fallback) {
-      matchedOutcomeIds.add(outcomeId)
-    }
-  }
-
   return Array.from(matchedOutcomeIds)
     .map((outcomeId) => pricingCalculatorConfig.outcomes[outcomeId])
     .filter(Boolean)
-}
-
-function getFallbackOutcomeIds(answers: CalculatorAnswers): OutcomeId[] {
-  const productHelp = answers["product-help"]
-  switch (productHelp) {
-    case "punctual-support":
-      return ["support"]
-    case "team-augmentation":
-      return ["team-augmentation"]
-    case "modernize":
-      return answers["business-stage"] === "startup" ? ["small-team"] : ["base-team"]
-    case "new-product":
-      return answers["business-stage"] === "startup" ? ["small-team"] : ["base-team"]
-    default:
-      return []
-  }
 }
 
 function findDirectOutcomeId(answers: CalculatorAnswers): OutcomeId | null {
@@ -217,7 +338,7 @@ function findDirectOutcomeId(answers: CalculatorAnswers): OutcomeId | null {
 
 export function getBranchQuestionIds(businessStage: string | undefined): string[] {
   if (businessStage === "startup") {
-    return ["startup-funding", "startup-mvp"]
+    return ["startup-funding"]
   }
   if (businessStage === "established") {
     return ["team-dimensions", "has-tech-team"]
@@ -239,10 +360,13 @@ export function clearBranchAnswers(
   if (businessStage === "startup") {
     delete nextAnswers["team-dimensions"]
     delete nextAnswers["has-tech-team"]
+    delete nextAnswers["product-help-established"]
   } else if (businessStage === "established") {
     delete nextAnswers["startup-funding"]
-    delete nextAnswers["startup-mvp"]
+    delete nextAnswers["product-help-startup"]
   }
+
+  delete nextAnswers["product-help"]
 
   return nextAnswers
 }
