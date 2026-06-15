@@ -47,7 +47,7 @@ export default function RootLayout({
     <html className="scroll-smooth" lang="en" suppressHydrationWarning>
 
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} overflow-x-hidden antialiased`}
       >
         <Google />
         <Script id="theme-init" strategy="beforeInteractive">

@@ -24,7 +24,7 @@ export function InsightsPreview({ posts }: { posts: BlogPost[] }) {
   if (posts.length === 0) return null
 
   return (
-    <section className="bg-white py-16 sm:py-24 dark:bg-gray-900">
+    <section className="overflow-x-hidden bg-white py-16 sm:py-24 dark:bg-gray-900">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
           <div className="max-w-2xl">
@@ -47,9 +47,9 @@ export function InsightsPreview({ posts }: { posts: BlogPost[] }) {
           </Link>
         </div>
 
-        <div className="mt-12">
+        <div className="mt-12 overflow-hidden">
           <Carousel
-            className="flex items-center gap-3 sm:gap-4"
+            className="w-full max-w-full"
             opts={{ align: 'start', loop: true }}
             plugins={[
               Autoplay({
@@ -57,24 +57,30 @@ export function InsightsPreview({ posts }: { posts: BlogPost[] }) {
               }),
             ]}
           >
-            {shuffledPosts.length > 1 && (
-              <CarouselPrevious className="static top-auto left-auto shrink-0 translate-x-0 translate-y-0 border-gray-200 bg-white dark:border-white/10 dark:bg-gray-800" />
-            )}
-            <div className="min-w-0 flex-1">
-              <CarouselContent className="-ml-4">
-                {shuffledPosts.map((post) => (
-                  <CarouselItem
-                    key={post.slug}
-                    className="pl-4 basis-full md:basis-1/2 lg:basis-1/3"
-                  >
-                    <BlogCard post={post} />
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
+            <div className="flex items-center gap-2 sm:gap-3">
+              {shuffledPosts.length > 1 && (
+                <CarouselPrevious
+                  className="static top-auto left-auto shrink-0 translate-x-0 translate-y-0 border-gray-200 bg-white dark:border-white/10 dark:bg-gray-800"
+                />
+              )}
+              <div className="min-w-0 flex-1 overflow-hidden">
+                <CarouselContent className="-ml-4">
+                  {shuffledPosts.map((post) => (
+                    <CarouselItem
+                      key={post.slug}
+                      className="pl-4 basis-full md:basis-1/2 lg:basis-1/3"
+                    >
+                      <BlogCard post={post} />
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+              </div>
+              {shuffledPosts.length > 1 && (
+                <CarouselNext
+                  className="static top-auto right-auto shrink-0 translate-x-0 translate-y-0 border-gray-200 bg-white dark:border-white/10 dark:bg-gray-800"
+                />
+              )}
             </div>
-            {shuffledPosts.length > 1 && (
-              <CarouselNext className="static top-auto right-auto shrink-0 translate-x-0 translate-y-0 border-gray-200 bg-white dark:border-white/10 dark:bg-gray-800" />
-            )}
           </Carousel>
         </div>
       </div>

@@ -9,7 +9,7 @@ function TestimonialCard({ item }: { item: Testimonial }) {
     return (
       <section className="relative isolate overflow-hidden bg-white px-6 py-24 sm:py-32 lg:px-8 dark:bg-gray-900">
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(45rem_50rem_at_top,var(--color-indigo-100),white)] opacity-20 dark:bg-[radial-gradient(45rem_50rem_at_top,var(--color-indigo-500),transparent)] dark:opacity-10" />
-        <div className="absolute inset-y-0 right-1/2 -z-10 mr-16 w-[200%] origin-bottom-left skew-x-[-30deg] bg-white shadow-xl ring-1 shadow-indigo-600/10 ring-indigo-50 sm:mr-28 lg:mr-0 xl:mr-16 xl:origin-center dark:bg-gray-900 dark:shadow-indigo-500/5 dark:ring-white/5" />
+        <div className="pointer-events-none absolute inset-y-0 right-1/2 -z-10 mr-16 w-[200%] max-w-none origin-bottom-left skew-x-[-30deg] bg-white shadow-xl ring-1 shadow-indigo-600/10 ring-indigo-50 sm:mr-28 lg:mr-0 xl:mr-16 xl:origin-center dark:bg-gray-900 dark:shadow-indigo-500/5 dark:ring-white/5" />
         <div className="mx-auto max-w-2xl lg:max-w-4xl">
           {item.companyLogo && (
             item.companyLogo.includes('coachid') ? (
@@ -58,24 +58,39 @@ export function Testimonials({ items }: { items: Testimonial[] }) {
   if (items.length === 0) return null;
 
   return (
-    <Carousel className="w-full bg-white dark:bg-gray-900" plugins={[
-        Autoplay({
-          delay: 4000,
-        }),
-      ]}>
-      <CarouselContent>
-          {items.map((item, index) => (
-            <CarouselItem key={`${item.name}-${index}`}>
-              <TestimonialCard item={item} />
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        {items.length > 1 && (
-          <>
-            <CarouselPrevious />
-            <CarouselNext />
-          </>
-        )}
-      </Carousel>
+    <div className="overflow-x-hidden bg-white dark:bg-gray-900">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <Carousel
+          className="w-full max-w-full"
+          plugins={[
+            Autoplay({
+              delay: 4000,
+            }),
+          ]}
+        >
+          <div className="flex items-center gap-2 sm:gap-3">
+            {items.length > 1 && (
+              <CarouselPrevious
+                className="static top-auto left-auto shrink-0 translate-x-0 translate-y-0 border-gray-200 bg-white dark:border-white/10 dark:bg-gray-800"
+              />
+            )}
+            <div className="min-w-0 flex-1 overflow-hidden">
+              <CarouselContent className="-ml-0">
+                {items.map((item, index) => (
+                  <CarouselItem key={`${item.name}-${index}`} className="overflow-hidden">
+                    <TestimonialCard item={item} />
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </div>
+            {items.length > 1 && (
+              <CarouselNext
+                className="static top-auto right-auto shrink-0 translate-x-0 translate-y-0 border-gray-200 bg-white dark:border-white/10 dark:bg-gray-800"
+              />
+            )}
+          </div>
+        </Carousel>
+      </div>
+    </div>
   )
 }
