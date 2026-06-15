@@ -9,7 +9,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 const navigation = [
-  { name: 'Blog', href: '/blog' },
+  { name: 'Insights', href: '/insights' },
   { name: 'Betacode Ventures', href: '/betacode-ventures' },
 ]
 
