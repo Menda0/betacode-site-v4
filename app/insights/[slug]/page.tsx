@@ -2,11 +2,13 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { IconArrowLeft } from '@tabler/icons-react'
-import { blogPosts, getBlogPost } from '@/lib/blog-content'
+import { blogPosts, getBlogPost, getNextBlogPost, getOtherBlogPosts } from '@/lib/blog-content'
 import { BlogContent } from '@/app/components/blog/blog-content'
 import { BlogBackground } from '@/app/components/blog/blog-background'
 import { BlogAuthor } from '@/app/components/blog/blog-author'
 import { BlogArticleSidebar } from '@/app/components/blog/blog-article-sidebar'
+import { BlogArticleNext } from '@/app/components/blog/blog-article-next'
+import { BlogMoreInsights } from '@/app/components/blog/blog-more-insights'
 import { CTA } from '@/app/components/cta'
 import { VenturesPromo } from '@/app/components/ventures-promo'
 import { Footer } from '@/app/components/footer'
@@ -47,6 +49,9 @@ export default async function InsightPostPage({ params }: Props) {
     notFound()
   }
 
+  const nextPost = getNextBlogPost(slug)
+  const otherPosts = getOtherBlogPosts(slug)
+
   return (
     <>
       <BlogBackground variant="article" sidebar={<BlogArticleSidebar />}>
@@ -80,8 +85,11 @@ export default async function InsightPostPage({ params }: Props) {
           <div className="mt-12">
             <BlogContent blocks={post.content} />
           </div>
+
+          {nextPost && <BlogArticleNext post={nextPost} />}
         </article>
       </BlogBackground>
+      <BlogMoreInsights posts={otherPosts} />
       <VenturesPromo />
       <CTA />
       <Footer />

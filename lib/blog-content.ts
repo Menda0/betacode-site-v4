@@ -1358,3 +1358,17 @@ export function getBlogPosts(): BlogPost[] {
 export function getBlogPost(slug: string): BlogPost | undefined {
   return blogPosts.find((post) => post.slug === slug)
 }
+
+export function getNextBlogPost(slug: string): BlogPost | undefined {
+  const posts = getBlogPosts()
+  if (posts.length <= 1) return undefined
+
+  const index = posts.findIndex((post) => post.slug === slug)
+  if (index === -1) return undefined
+
+  return posts[(index + 1) % posts.length]
+}
+
+export function getOtherBlogPosts(slug: string): BlogPost[] {
+  return getBlogPosts().filter((post) => post.slug !== slug)
+}
