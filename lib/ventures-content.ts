@@ -39,12 +39,30 @@ export const venturesOverview = {
         'Post-launch, we gather feedback, ship improvements, and help you grow the team — including hiring key talent in-house.',
     },
   ],
-  benefits: [
-    'Technical co-founder partnership, not just a dev shop',
-    'Dedicated team from MVP to market in ~3 months',
-    'Full-stack coverage: architecture, build, and iterate',
-    'Path to internalize the best talent onto your team',
-  ],
+  whatYouGet: {
+    title: 'What you get',
+    subtitle: 'We show up as your technical co-founder — here\'s what that means in practice.',
+    items: [
+      'A dedicated technical co-founder — not a rotating bench of freelancers. One team, fully committed to your product from day one.',
+      'MVP live in ~3 months — from zero to a functional product you can put in front of real users and start validating your value proposition.',
+      'Full-stack execution — architecture, backend, frontend, infrastructure, and deployment handled end to end, so you stay focused on the business.',
+      'Technical guidance you can trust — we advise on stack, scalability, and trade-offs as owners, not as consultants billing by the hour.',
+      'Launch-ready foundations — payments, admin dashboards, analytics, and the infrastructure early customers expect — not a prototype that breaks under pressure.',
+      'A path to your own team — when the time is right, we help you hire and internalize the talent that already knows your product.',
+    ],
+  },
+  partnershipAsk: {
+    title: 'What we ask',
+    subtitle: 'We invest our team upfront — here\'s what we need from you to make it work.',
+    items: [
+      'No fees or invoices — we don\'t charge for development. Our upside is tied to the product we build together.',
+      'Equity in your company — a stake that reflects the role we play as your technical co-founder, not a vendor on retainer.',
+      'Your domain expertise — you know the market, the users, and the problem. We need you in the room for the decisions that matter.',
+      'Commitment to move fast — a 3-month build only works with quick feedback, clear priorities, and founders who can unblock us.',
+      'Transparency on traction — share user feedback, metrics, and customer conversations so we ship what the market actually wants.',
+      'Ambition with substance — we partner on ideas with a real path to users and revenue, not open-ended experiments.',
+    ],
+  },
 }
 
 export const coachidCaseStudy = {
