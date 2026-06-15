@@ -1,58 +1,25 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useMemo } from 'react'
 import Link from 'next/link'
+import Autoplay from 'embla-carousel-autoplay'
 import { IconArrowRight } from '@tabler/icons-react'
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/carousel'
 import type { BlogPost } from '@/lib/blog-content'
 import { BlogCard } from '@/app/components/blog/blog-card'
 
-const ROTATE_INTERVAL_MS = 8000
-const FEATURED_COUNT = 3
-
-function pickRandomPosts(posts: BlogPost[], count: number, excludeSlugs: string[] = []): BlogPost[] {
-  if (posts.length <= count) {
-    return [...posts].sort(() => Math.random() - 0.5)
-  }
-
-  let pool = posts.filter((post) => !excludeSlugs.includes(post.slug))
-  if (pool.length < count) {
-    pool = [...posts]
-  }
-
-  return [...pool].sort(() => Math.random() - 0.5).slice(0, count)
+function shufflePosts(posts: BlogPost[]): BlogPost[] {
+  return [...posts].sort(() => Math.random() - 0.5)
 }
 
 export function InsightsPreview({ posts }: { posts: BlogPost[] }) {
-  const [featured, setFeatured] = useState<BlogPost[]>(() =>
-    pickRandomPosts(posts, FEATURED_COUNT)
-  )
-  const [visible, setVisible] = useState(true)
-
-  useEffect(() => {
-    if (posts.length <= FEATURED_COUNT) return
-
-    let fadeTimeout: ReturnType<typeof setTimeout> | undefined
-
-    const interval = setInterval(() => {
-      setVisible(false)
-
-      fadeTimeout = setTimeout(() => {
-        setFeatured((current) =>
-          pickRandomPosts(
-            posts,
-            FEATURED_COUNT,
-            current.map((post) => post.slug)
-          )
-        )
-        setVisible(true)
-      }, 300)
-    }, ROTATE_INTERVAL_MS)
-
-    return () => {
-      clearInterval(interval)
-      if (fadeTimeout) clearTimeout(fadeTimeout)
-    }
-  }, [posts])
+  const shuffledPosts = useMemo(() => shufflePosts(posts), [posts])
 
   if (posts.length === 0) return null
 
@@ -80,16 +47,35 @@ export function InsightsPreview({ posts }: { posts: BlogPost[] }) {
           </Link>
         </div>
 
-        <div
-          className={`mt-12 grid grid-cols-1 gap-8 transition-opacity duration-300 lg:grid-cols-3 ${
-            visible ? 'opacity-100' : 'opacity-0'
-          }`}
-        >
-          {featured.map((post) => (
-            <div key={post.slug} className="relative">
-              <BlogCard post={post} />
+        <div className="mt-12">
+          <Carousel
+            className="flex items-center gap-3 sm:gap-4"
+            opts={{ align: 'start', loop: true }}
+            plugins={[
+              Autoplay({
+                delay: 3000,
+              }),
+            ]}
+          >
+            {shuffledPosts.length > 1 && (
+              <CarouselPrevious className="static top-auto left-auto shrink-0 translate-x-0 translate-y-0 border-gray-200 bg-white dark:border-white/10 dark:bg-gray-800" />
+            )}
+            <div className="min-w-0 flex-1">
+              <CarouselContent className="-ml-4">
+                {shuffledPosts.map((post) => (
+                  <CarouselItem
+                    key={post.slug}
+                    className="pl-4 basis-full md:basis-1/2 lg:basis-1/3"
+                  >
+                    <BlogCard post={post} />
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
             </div>
-          ))}
+            {shuffledPosts.length > 1 && (
+              <CarouselNext className="static top-auto right-auto shrink-0 translate-x-0 translate-y-0 border-gray-200 bg-white dark:border-white/10 dark:bg-gray-800" />
+            )}
+          </Carousel>
         </div>
       </div>
     </section>
