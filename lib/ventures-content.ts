@@ -47,13 +47,6 @@ export const venturesOverview = {
   ],
 }
 
-export type ProductPreview = {
-  number: string
-  title: string
-  description: string
-  highlight?: string
-}
-
 export const coachidCaseStudy = {
   id: 'coachid',
   name: 'Coach ID',
@@ -68,47 +61,21 @@ export const coachidCaseStudy = {
     'Thousands of coaches at clubs worldwide',
     'Progressive Web App — works on any device',
   ],
-  productAreas: [
-    {
-      number: '01',
-      title: 'Plan',
-      description:
-        'Organise the training week with daily, weekly, or monthly views. See session focus, intensity, game phases, and upcoming opponents on one page — with automatic period summaries for tactical validation.',
-    },
-    {
-      number: '02',
-      title: 'Create',
-      description:
-        'Full exercise editor to design training tasks — static or animated. Categorise by game phase, define space, equipment, and player count. Save to a filterable library, or use the editor as a free tactical board.',
-      highlight: 'The exercise editor is free today, and always will be.',
-    },
-    {
-      number: '03',
-      title: 'Execute',
-      description:
-        'Build training sessions from your exercise library with duration, recovery, and repetitions per drill. Track player availability with automatic attendance charts, and generate PSE and Well-Being questionnaires.',
-    },
-    {
-      number: '04',
-      title: 'Monitor',
-      description:
-        'Collect Subjective Perception of Effort (PSE) and player readiness data via validated scientific questionnaires. Correlate all metrics with an AI virtual assistant so nothing slips through on athlete condition.',
-    },
-  ] satisfies ProductPreview[],
   built: [
-    'Coach ID v2 — rebuilt from the ground up as a modern SaaS platform',
-    'Training calendar, exercise editor, and session builder',
-    'Player monitoring with PSE and Well-Being questionnaires',
-    'AI virtual assistant for athlete metrics correlation',
-    'Subscription billing with Stripe (Individual & Organisation plans)',
+    'MVP 0–100% in 3 months',
+    'Technical co-founder that advises you on the best technical solutions',
+    'Payment gateway ready and functional',
+    'Admin dashboard to monitor and receive feedback from users',
     'Progressive Web App for desktop, tablet, and mobile',
+    'AI virtual assistant',
   ],
   results: [
-    'Launched a full v2 platform with four integrated product areas',
-    'Free exercise editor available without registration',
-    '7-day trial with full platform access, no credit card required',
-    'Early adopter pricing for the first 500 subscribers',
-    'GDPR-compliant data hosted on European servers',
+    '100+ clients in the first week',
+    'Real user feedback',
+    '10+ paying customers in the first week',
+    'Functional application that validates your value proposition',
+    'Free exercise editor driving organic sign-ups without paid ads',
+    'Platform ready to scale with subscription plans and team onboarding',
   ],
   logo: '/images/clients/coachid.png',
 }

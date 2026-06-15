@@ -3,6 +3,7 @@ import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext
 import Autoplay from "embla-carousel-autoplay";
 import Image from 'next/image';
 import type { Testimonial } from '@/lib/ventures-content';
+import { CoachidLogo } from './coachid-logo';
 
 function TestimonialCard({ item }: { item: Testimonial }) {
     return (
@@ -11,13 +12,17 @@ function TestimonialCard({ item }: { item: Testimonial }) {
         <div className="absolute inset-y-0 right-1/2 -z-10 mr-16 w-[200%] origin-bottom-left skew-x-[-30deg] bg-white shadow-xl ring-1 shadow-indigo-600/10 ring-indigo-50 sm:mr-28 lg:mr-0 xl:mr-16 xl:origin-center dark:bg-gray-900 dark:shadow-indigo-500/5 dark:ring-white/5" />
         <div className="mx-auto max-w-2xl lg:max-w-4xl">
           {item.companyLogo && (
-            <Image
-              src={item.companyLogo}
-              alt=""
-              width={160}
-              height={40}
-              className="mx-auto h-12 w-auto"
-            />
+            item.companyLogo.includes('coachid') ? (
+              <CoachidLogo className="mx-auto h-12 w-auto" width={160} height={40} />
+            ) : (
+              <Image
+                src={item.companyLogo}
+                alt=""
+                width={160}
+                height={40}
+                className="mx-auto h-12 w-auto"
+              />
+            )
           )}
           <figure className="mt-10">
             <blockquote className="text-center text-xl/8 font-semibold text-gray-900 sm:text-2xl/9 dark:text-white">

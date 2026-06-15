@@ -1,30 +1,7 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import { IconCircleCheck, IconExternalLink } from '@tabler/icons-react'
 import { coachidCaseStudy } from '@/lib/ventures-content'
-
-function ProductPreviewCard({
-  number,
-  title,
-  description,
-  highlight,
-}: {
-  number: string
-  title: string
-  description: string
-  highlight?: string
-}) {
-  return (
-    <div className="flex flex-col rounded-xl border border-purple-100 bg-white p-6 shadow-sm dark:border-purple-900/50 dark:bg-gray-900">
-      <span className="text-sm font-semibold text-purple-700 dark:text-purple-300">{number}</span>
-      <h4 className="mt-2 text-lg font-semibold text-gray-900 dark:text-white">{title}</h4>
-      <p className="mt-3 flex-auto text-sm/6 text-gray-700 dark:text-gray-300">{description}</p>
-      {highlight && (
-        <p className="mt-4 text-sm font-medium text-purple-800 dark:text-purple-200">{highlight}</p>
-      )}
-    </div>
-  )
-}
+import { CoachidLogo } from '../coachid-logo'
 
 export function CoachidCaseStudy() {
   return (
@@ -43,15 +20,7 @@ export function CoachidCaseStudy() {
             {coachidCaseStudy.tagline}
           </p>
           <div className="mt-4 flex flex-wrap items-center gap-4">
-            <div className="rounded-lg bg-gray-50 px-4 py-2 dark:bg-gray-800">
-              <Image
-                src={coachidCaseStudy.logo}
-                alt={coachidCaseStudy.name}
-                width={140}
-                height={48}
-                className="h-10 w-auto"
-              />
-            </div>
+            <CoachidLogo />
             <Link
               href={coachidCaseStudy.website}
               target="_blank"
@@ -79,17 +48,6 @@ export function CoachidCaseStudy() {
               </li>
             ))}
           </ul>
-        </div>
-
-        <div className="mx-auto mt-16 lg:max-w-none">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-            Four integrated areas that cover a coach&apos;s entire weekly workflow
-          </h3>
-          <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {coachidCaseStudy.productAreas.map((area) => (
-              <ProductPreviewCard key={area.title} {...area} />
-            ))}
-          </div>
         </div>
 
         <div className="mx-auto mt-16 grid grid-cols-1 gap-8 rounded-2xl bg-white p-8 ring-1 ring-purple-100 lg:max-w-none lg:grid-cols-2 dark:bg-gray-900 dark:ring-purple-900/40 sm:p-10">
