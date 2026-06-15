@@ -9,8 +9,14 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 const navigation = [
+  { name: 'Blog', href: '/blog' },
   { name: 'Betacode Ventures', href: '/betacode-ventures' },
 ]
+
+function isNavActive(pathname: string, href: string) {
+  if (href === '/') return pathname === '/'
+  return pathname === href || pathname.startsWith(`${href}/`)
+}
 
 export function SiteHeader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -31,7 +37,7 @@ export function SiteHeader() {
               key={item.name}
               href={item.href}
               className={`text-sm/6 font-semibold ${
-                pathname === item.href
+                isNavActive(pathname, item.href)
                   ? 'text-primary-600 dark:text-primary-400'
                   : 'text-gray-900 dark:text-white'
               }`}
@@ -82,7 +88,7 @@ export function SiteHeader() {
                     href={item.href}
                     onClick={() => setMobileMenuOpen(false)}
                     className={`-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold hover:bg-gray-50 dark:hover:bg-white/5 ${
-                      pathname === item.href
+                      isNavActive(pathname, item.href)
                         ? 'text-primary-600 dark:text-primary-400'
                         : 'text-gray-900 dark:text-white'
                     }`}
