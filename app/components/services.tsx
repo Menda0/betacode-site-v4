@@ -1,5 +1,5 @@
 import { ArrowPathIcon, CloudArrowUpIcon, LockClosedIcon } from '@heroicons/react/20/solid'
-import { Icon, IconBuilding, IconCheck, IconDeviceLaptop, IconHelp, IconRocket, IconX, IconSquareX, IconSquareCheck, IconInfoSquareRounded, IconPoint } from '@tabler/icons-react'
+import { Icon, IconBuilding, IconCheck, IconDeviceLaptop, IconHelp, IconRocket, IconX, IconSquareX, IconSquareCheck, IconInfoSquareRounded, IconPoint, IconUsers } from '@tabler/icons-react'
 import { TraditionalBusinessIcon, TechCocampaniesIcon, StartupsIcon } from './icons';
 import Link from 'next/link';
 const features = [
@@ -61,6 +61,25 @@ const features = [
             "MVP Development",
         ],
     },
+    {
+        name: 'Betacode Ventures',
+        description:
+            'Technical co-founder for startups — we partner from idea to launch and help you go from 0 to 100%',
+        href: '/betacode-ventures',
+        icon: IconUsers,
+        color: 'purple',
+        techTeam: {
+            label: "Technical Co-Founder",
+            color: "bg-purple-900/10 text-purple-900 inset-ring inset-ring-purple-200 dark:text-white dark:inset-ring-purple-800 dark:bg-purple-200/10",
+            icon: IconRocket,
+        },
+        services: [
+            "MVP Development",
+            "Product Strategy",
+            "Technical Leadership",
+            "Team Internalization",
+        ],
+    },
 ]
 
 const styles = {
@@ -111,6 +130,14 @@ const styles = {
         IconBgColor: 'bg-indigo-800/50 dark:bg-indigo-200',
         IconColor: 'text-indigo-200 dark:text-indigo-800',
         textColor: 'group-hover:text-indigo-600 dark:group-hover:text-indigo-400',
+    },
+    purple: {
+        color: 'text-purple-400',
+        icon: IconUsers,
+        borderColor: 'bg-gray-100/40 dark:bg-gray-800/80 border-gray-200 dark:border-gray-800 hover:border-purple-200 dark:hover:border-purple-800',
+        IconBgColor: 'bg-purple-800/50 dark:bg-purple-200',
+        IconColor: 'text-purple-200 dark:text-purple-800',
+        textColor: 'group-hover:text-purple-600 dark:group-hover:text-purple-400',
     },
 }
 
@@ -172,7 +199,7 @@ export function Services() {
                     </p>
                 </div>
                 <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
-                    <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-3 ">
+                    <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-2 xl:grid-cols-4 ">
                         {features.map((feature) => (
                             <ServiceCard key={feature.name} feature={feature} />
                         ))}
