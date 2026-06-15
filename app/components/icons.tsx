@@ -1,4 +1,4 @@
-import { IconBuilding, IconDeviceLaptop, IconRocket 
+import { IconBuilding, IconDeviceLaptop, IconRocket, IconUsers 
  } from "@tabler/icons-react";
 
 export function TraditionalBusinessIcon() {
@@ -21,6 +21,14 @@ export function StartupsIcon() {
     return (
         <div className="p-2 rounded-md bg-green-100/40 dark:bg-green-800/40 w-fit">
             <IconRocket aria-hidden="true" className={`size-10 flex-none text-green-600 dark:text-green-600`} />
+        </div>
+    )
+}
+
+export function BetacodeVenturesIcon() {
+    return (
+        <div className="p-2 rounded-md bg-purple-100/40 dark:bg-purple-800/40 w-fit">
+            <IconUsers aria-hidden="true" className={`size-10 flex-none text-purple-600 dark:text-purple-600`} />
         </div>
     )
 }

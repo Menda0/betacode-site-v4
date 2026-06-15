@@ -1,6 +1,6 @@
 import { ArrowPathIcon, CloudArrowUpIcon, LockClosedIcon } from '@heroicons/react/20/solid'
 import { Icon, IconBuilding, IconCheck, IconDeviceLaptop, IconHelp, IconRocket, IconX, IconSquareX, IconSquareCheck, IconInfoSquareRounded, IconPoint, IconUsers } from '@tabler/icons-react'
-import { TraditionalBusinessIcon, TechCocampaniesIcon, StartupsIcon } from './icons';
+import { TraditionalBusinessIcon, TechCocampaniesIcon, StartupsIcon, BetacodeVenturesIcon } from './icons';
 import Link from 'next/link';
 const features = [
     {
@@ -66,7 +66,7 @@ const features = [
         description:
             'Technical co-founder for startups — we partner from idea to launch and help you go from 0 to 100%',
         href: '/betacode-ventures',
-        icon: IconUsers,
+        icon: BetacodeVenturesIcon,
         color: 'purple',
         techTeam: {
             label: "Technical Co-Founder",
