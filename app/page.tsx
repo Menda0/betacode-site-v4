@@ -1,5 +1,6 @@
 import Hero from "./components/hero";
 import { Services } from "./components/services";
+import { VenturesPromo } from "./components/ventures-promo";
 import { Feature } from "./components/feature";
 import { CTA } from "./components/cta";
 import { TraditionalBusinessIcon, TechCocampaniesIcon, StartupsIcon } from "./components/icons";
@@ -111,10 +112,11 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <Services /> 
+      <Services />
       {features.map((feature) => (
         <Feature key={feature.title} feature={feature} />
       ))}
+      <VenturesPromo />
       {/* <Testimonials /> */}
       <Clients />
       
