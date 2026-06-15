@@ -6,7 +6,8 @@ import { CTA } from "./components/cta";
 import { TraditionalBusinessIcon, TechCocampaniesIcon, StartupsIcon } from "./components/icons";
 import { Clients } from "./components/clients";
 import { Footer } from "./components/footer";
-import { Testimonials } from "./components/testimonials";
+import { InsightsPreview } from "./components/insights-preview";
+import { getBlogPosts } from "@/lib/blog-content";
 
 const services = {
   "external-tech-team": {
@@ -109,6 +110,8 @@ const features = [
   },
 ]
 export default function Home() {
+  const insightPosts = getBlogPosts()
+
   return (
     <>
       <Hero />
@@ -117,6 +120,7 @@ export default function Home() {
         <Feature key={feature.title} feature={feature} />
       ))}
       <VenturesPromo />
+      <InsightsPreview posts={insightPosts} />
       {/* <Testimonials /> */}
       <Clients />
       
