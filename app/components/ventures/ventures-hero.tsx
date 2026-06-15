@@ -1,12 +1,10 @@
 import Link from 'next/link'
 import { IconArrowBigDown } from '@tabler/icons-react'
-import { SiteHeader } from '../site-header'
 import { CALENDAR_URL, venturesHero } from '@/lib/ventures-content'
 
 export function VenturesHero() {
   return (
     <div className="bg-white dark:bg-gray-900">
-      <SiteHeader activePath="/betacode-ventures" />
       <div className="relative isolate">
         <svg
           aria-hidden="true"
@@ -44,7 +42,7 @@ export function VenturesHero() {
             className="aspect-801/1036 w-200.25 bg-linear-to-tr from-[#9d4edd] to-[#c77dff] opacity-30"
           />
         </div>
-        <div className="mx-auto max-w-7xl px-6 pt-36 pb-24 sm:pt-48 lg:px-8 lg:pt-40">
+        <div className="mx-auto max-w-7xl px-6 pt-16 pb-24 sm:pt-20 lg:px-8 lg:pt-24">
           <div className="mx-auto max-w-3xl text-center">
             <p className="text-base/7 font-semibold text-purple-600 uppercase dark:text-purple-400">
               {venturesHero.eyebrow}

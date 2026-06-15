@@ -4,13 +4,11 @@ import { HeroCarousel } from './hero-carousel'
 import Image from 'next/image'
 import { IconArrowBigDown } from '@tabler/icons-react'
 import Link from 'next/link'
-import { SiteHeader } from './site-header'
 import { CALENDAR_URL } from '@/lib/ventures-content'
 
 export default function Example() {
   return (
     <div className="bg-white dark:bg-gray-900">
-      <SiteHeader />
       <main>
         <div className="relative isolate">
           <svg
@@ -50,7 +48,7 @@ export default function Example() {
             />
           </div>
           <div className="overflow-hidden">
-            <div className="mx-auto max-w-7xl px-6 pt-36 pb-32 sm:pt-60 lg:px-8 lg:pt-32">
+            <div className="mx-auto max-w-7xl px-6 pt-16 pb-32 sm:pt-20 lg:px-8 lg:pt-24">
               <div className="mx-auto max-w-2xl gap-x-14 lg:mx-0 lg:flex lg:max-w-none lg:items-center">
                 <div className="relative w-full lg:max-w-xl lg:shrink-0 xl:max-w-2xl">
                   {/* <h1 className="text-5xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-7xl dark:text-white">

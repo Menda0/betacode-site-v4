@@ -6,46 +6,32 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { ThemeToggle } from './theme-toggle'
 import Image from 'next/image'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 const navigation = [
   { name: 'Betacode Ventures', href: '/betacode-ventures' },
 ]
 
-type SiteHeaderProps = {
-  activePath?: string
-}
-
-export function SiteHeader({ activePath }: SiteHeaderProps) {
+export function SiteHeader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const pathname = usePathname()
 
   return (
-    <header className="absolute inset-x-0 top-0 z-50">
-      <nav aria-label="Global" className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
-        <div className="flex lg:flex-1">
-          <Link href="/" className="-m-1.5 p-1.5">
-            <span className="sr-only">Betacode</span>
-            <Image src="/images/logo-light.svg" alt="Betacode" width={200} height={200} className="h-8 w-auto dark:hidden" />
-            <Image src="/images/logo-dark.svg" alt="Betacode" width={200} height={200} className="h-8 w-auto not-dark:hidden" />
-          </Link>
-        </div>
-        <div className="flex lg:hidden">
-          <ThemeToggle />
-          <button
-            type="button"
-            onClick={() => setMobileMenuOpen(true)}
-            className="-m-2.5 ml-2 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700 dark:text-gray-200"
-          >
-            <span className="sr-only">Open main menu</span>
-            <Bars3Icon aria-hidden="true" className="size-6" />
-          </button>
-        </div>
-        <div className="hidden lg:flex lg:gap-x-12">
+    <header className="sticky top-0 z-50 border-b border-gray-200/60 bg-white/75 backdrop-blur-lg dark:border-white/10 dark:bg-gray-900/75">
+      <nav aria-label="Global" className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 lg:px-8">
+        <Link href="/" className="flex shrink-0 items-center">
+          <span className="sr-only">Betacode</span>
+          <Image src="/images/logo-light.svg" alt="Betacode" width={200} height={200} className="h-8 w-auto dark:hidden" />
+          <Image src="/images/logo-dark.svg" alt="Betacode" width={200} height={200} className="h-8 w-auto not-dark:hidden" />
+        </Link>
+
+        <div className="hidden items-center gap-8 lg:flex">
           {navigation.map((item) => (
             <Link
               key={item.name}
               href={item.href}
               className={`text-sm/6 font-semibold ${
-                activePath === item.href
+                pathname === item.href
                   ? 'text-primary-600 dark:text-primary-400'
                   : 'text-gray-900 dark:text-white'
               }`}
@@ -53,16 +39,27 @@ export function SiteHeader({ activePath }: SiteHeaderProps) {
               {item.name}
             </Link>
           ))}
-        </div>
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <ThemeToggle />
         </div>
+
+        <div className="flex items-center gap-2 lg:hidden">
+          <ThemeToggle />
+          <button
+            type="button"
+            onClick={() => setMobileMenuOpen(true)}
+            className="inline-flex items-center justify-center rounded-md p-2 text-gray-700 dark:text-gray-200"
+          >
+            <span className="sr-only">Open main menu</span>
+            <Bars3Icon aria-hidden="true" className="size-6" />
+          </button>
+        </div>
       </nav>
+
       <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
-        <div className="fixed inset-0 z-50" />
-        <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white p-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 dark:bg-gray-900 dark:sm:ring-gray-100/10">
+        <div className="fixed inset-0 z-50 bg-gray-900/20 backdrop-blur-sm dark:bg-black/40" />
+        <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white/95 p-6 backdrop-blur-lg sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 dark:bg-gray-900/95 dark:sm:ring-gray-100/10">
           <div className="flex items-center justify-between">
-            <Link href="/" className="-m-1.5 p-1.5" onClick={() => setMobileMenuOpen(false)}>
+            <Link href="/" className="flex items-center" onClick={() => setMobileMenuOpen(false)}>
               <span className="sr-only">Betacode</span>
               <Image src="/images/logo-light.svg" alt="Betacode" width={200} height={200} className="h-8 w-auto dark:hidden" />
               <Image src="/images/logo-dark.svg" alt="Betacode" width={200} height={200} className="h-8 w-auto not-dark:hidden" />
@@ -70,7 +67,7 @@ export function SiteHeader({ activePath }: SiteHeaderProps) {
             <button
               type="button"
               onClick={() => setMobileMenuOpen(false)}
-              className="-m-2.5 rounded-md p-2.5 text-gray-700 dark:text-gray-200"
+              className="inline-flex items-center justify-center rounded-md p-2 text-gray-700 dark:text-gray-200"
             >
               <span className="sr-only">Close menu</span>
               <XMarkIcon aria-hidden="true" className="size-6" />
@@ -85,7 +82,7 @@ export function SiteHeader({ activePath }: SiteHeaderProps) {
                     href={item.href}
                     onClick={() => setMobileMenuOpen(false)}
                     className={`-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold hover:bg-gray-50 dark:hover:bg-white/5 ${
-                      activePath === item.href
+                      pathname === item.href
                         ? 'text-primary-600 dark:text-primary-400'
                         : 'text-gray-900 dark:text-white'
                     }`}

@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import { ThemeProvider } from "./components/theme-provider";
+import { SiteHeader } from "./components/site-header";
 import { Google } from "./components/google";
 import { GoogleAnalytics } from '@next/third-parties/google'
 
@@ -52,7 +53,10 @@ export default function RootLayout({
         <Script id="theme-init" strategy="beforeInteractive">
           {themeScript}
         </Script>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <SiteHeader />
+          {children}
+        </ThemeProvider>
       </body>
       <GoogleAnalytics gaId='G-TTP70YDXYR' />
     </html>
