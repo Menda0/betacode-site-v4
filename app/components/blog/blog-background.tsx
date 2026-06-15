@@ -1,9 +1,10 @@
 type BlogBackgroundProps = {
   children: React.ReactNode
+  sidebar?: React.ReactNode
   variant?: 'listing' | 'article'
 }
 
-export function BlogBackground({ children, variant = 'listing' }: BlogBackgroundProps) {
+export function BlogBackground({ children, sidebar, variant = 'listing' }: BlogBackgroundProps) {
   return (
     <div className="relative isolate min-h-[50vh] bg-secondary-50 dark:bg-[#0c1222]">
       <div
@@ -26,13 +27,22 @@ export function BlogBackground({ children, variant = 'listing' }: BlogBackground
       <div
         className={
           variant === 'article'
-            ? 'relative mx-auto max-w-3xl px-6 py-12 lg:px-8 lg:py-16'
+            ? 'relative mx-auto max-w-7xl px-6 py-12 lg:px-8 lg:py-16'
             : 'relative'
         }
       >
         {variant === 'article' ? (
-          <div className="rounded-2xl border border-secondary-200/80 bg-white/90 p-8 shadow-sm backdrop-blur-sm sm:p-10 dark:border-white/10 dark:bg-gray-900/80">
-            {children}
+          <div className="flex flex-col items-center gap-8 lg:flex-row lg:items-start lg:justify-center lg:gap-10">
+            <div className="w-full min-w-0 max-w-3xl">
+              <div className="rounded-2xl border border-secondary-200/80 bg-white/90 p-8 shadow-sm backdrop-blur-sm sm:p-10 dark:border-white/10 dark:bg-gray-900/80">
+                {children}
+              </div>
+            </div>
+            {sidebar && (
+              <div className="w-full shrink-0 lg:sticky lg:top-20 lg:w-72">
+                {sidebar}
+              </div>
+            )}
           </div>
         ) : (
           children

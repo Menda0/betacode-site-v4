@@ -6,6 +6,7 @@ import { blogPosts, getBlogPost } from '@/lib/blog-content'
 import { BlogContent } from '@/app/components/blog/blog-content'
 import { BlogBackground } from '@/app/components/blog/blog-background'
 import { BlogAuthor } from '@/app/components/blog/blog-author'
+import { BlogArticleSidebar } from '@/app/components/blog/blog-article-sidebar'
 import { CTA } from '@/app/components/cta'
 import { VenturesPromo } from '@/app/components/ventures-promo'
 import { Footer } from '@/app/components/footer'
@@ -48,7 +49,7 @@ export default async function InsightPostPage({ params }: Props) {
 
   return (
     <>
-      <BlogBackground variant="article">
+      <BlogBackground variant="article" sidebar={<BlogArticleSidebar />}>
         <article>
           <Link
             href="/insights"
