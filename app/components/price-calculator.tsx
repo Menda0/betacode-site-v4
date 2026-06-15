@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react"
 import Link from "next/link"
-import { IconArrowLeft, IconArrowRight, IconCalculator, IconCheck, IconChevronDown, IconRocket, IconSchool, IconTool, IconUserPlus, IconUsersGroup } from "@tabler/icons-react"
+import { IconArrowLeft, IconArrowRight, IconCheck, IconChevronDown, IconRocket, IconSchool, IconTool, IconUserPlus, IconUsersGroup } from "@tabler/icons-react"
 import {
   clearBranchAnswers,
   formatEuroRange,
@@ -162,13 +162,10 @@ export function PriceCalculator() {
   }
 
   return (
-    <section id="price-calculator" className="bg-gray-50 py-24 sm:py-32 dark:bg-gray-950">
+    <section id="price-calculator" className="py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
-          <div className="mx-auto flex size-12 items-center justify-center rounded-full bg-primary-600/10 text-primary-600 dark:bg-primary-500/10 dark:text-primary-400">
-            <IconCalculator className="size-6" aria-hidden="true" />
-          </div>
-          <h1 className="mt-4 text-base/7 font-semibold text-primary-600 uppercase dark:text-primary-400">
+          <h1 className="text-base/7 font-semibold text-primary-600 uppercase dark:text-primary-400">
             Price Calculator
           </h1>
           <p className="mt-2 text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl dark:text-white">

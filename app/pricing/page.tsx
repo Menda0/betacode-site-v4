@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { PriceCalculator } from "../components/price-calculator"
+import { PricingBackground } from "../components/pricing-background"
 import { InsightsPreview } from "../components/insights-preview"
 import { Clients } from "../components/clients"
 import { CTA } from "../components/cta"
@@ -25,7 +26,9 @@ export default function PricingPage() {
 
   return (
     <>
-      <PriceCalculator />
+      <PricingBackground>
+        <PriceCalculator />
+      </PricingBackground>
       <InsightsPreview posts={insightPosts} />
       <Clients />
       <VenturesPromo />

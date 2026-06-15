@@ -1,6 +1,7 @@
 import { CloudArrowUpIcon, LockClosedIcon, ServerIcon } from '@heroicons/react/20/solid'
 import { IconCheck, IconCircleCheck } from '@tabler/icons-react'
 import Link from 'next/link'
+import { cn } from '@/lib/utils'
 
 const styles = {
     yellow: {
@@ -219,14 +220,22 @@ function Background({ style, side }: { style: typeof styles[keyof typeof styles]
     }
 }
 
-export function Feature({ feature }: FeatureProps) {
+export function Feature({
+    feature,
+    variant = "light",
+}: FeatureProps & { variant?: "light" | "muted" }) {
     const style = styles[feature.color as keyof typeof styles]
     return (
         <div className="grid">
             {/* Background */}
             <Background style={style} side={feature.side} />
             {/* Content */}
-            <div className="col-start-1 row-start-1 bg-white py-24 sm:py-32 dark:bg-gray-900">
+            <div
+                className={cn(
+                    "col-start-1 row-start-1 py-24 sm:py-32 dark:bg-gray-900",
+                    variant === "muted" ? "bg-gray-50 dark:bg-gray-950" : "bg-white"
+                )}
+            >
                 <div className="mx-auto max-w-7xl md:px-6 lg:px-8">
                     <div className="grid grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:grid-cols-2 lg:items-start">
                         {feature.side === "left" && <Description feature={feature} />}

@@ -116,8 +116,8 @@ export default function Home() {
     <>
       <Hero />
       <Services />
-      {features.map((feature) => (
-        <Feature key={feature.title} feature={feature} />
+      {features.map((feature, index) => (
+        <Feature key={feature.title} feature={feature} variant={index % 2 === 0 ? "light" : "muted"} />
       ))}
       <VenturesPromo />
       <InsightsPreview posts={insightPosts} />

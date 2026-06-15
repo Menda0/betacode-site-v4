@@ -186,7 +186,7 @@ function ServiceCard({ feature }: { feature: any }) {
 
 export function Services() {
     return (
-        <div id="services" className="bg-white py-24 sm:py-32 dark:bg-gray-900">
+        <div id="services" className="bg-gray-50 py-24 sm:py-32 dark:bg-gray-950">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
                 <div className="mx-auto max-w-2xl lg:text-center">
                     <h2 className="text-base/7 font-semibold text-indigo-400 uppercase">What we do</h2>
