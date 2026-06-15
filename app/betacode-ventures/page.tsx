@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { VenturesHero } from '../components/ventures/ventures-hero'
 import { VenturesOverview } from '../components/ventures/ventures-overview'
+import { VenturesPartnership } from '../components/ventures/ventures-partnership'
 import { CoachidCaseStudy } from '../components/ventures/coachid-case-study'
 import { VenturesCTA } from '../components/ventures/ventures-cta'
 import { Testimonials } from '../components/testimonials'
@@ -25,6 +26,7 @@ export default function BetacodeVenturesPage() {
     <>
       <VenturesHero />
       <VenturesOverview />
+      <VenturesPartnership />
       <CoachidCaseStudy />
       <Testimonials items={coachidTestimonials} />
       <VenturesCTA />

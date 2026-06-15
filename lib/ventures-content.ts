@@ -39,6 +39,13 @@ export const venturesOverview = {
         'Post-launch, we gather feedback, ship improvements, and help you grow the team — including hiring key talent in-house.',
     },
   ],
+}
+
+export const venturesPartnership = {
+  title: 'The partnership',
+  subtitle: 'Two founders, one product',
+  description:
+    'We invest our team; you invest your vision, domain knowledge, and equity. Here\'s how the partnership breaks down.',
   whatYouGet: {
     title: 'What you get',
     subtitle: 'We show up as your technical co-founder — here\'s what that means in practice.',
