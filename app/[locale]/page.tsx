@@ -37,7 +37,7 @@ export default async function Home({ params }: Props) {
 
   const t = await getTranslations({ locale, namespace: "homeServices" });
   const tf = await getTranslations({ locale, namespace: "features" });
-  const insightPosts = getBlogPosts();
+  const insightPosts = getBlogPosts(locale);
 
   const services = {
     "external-tech-team": {

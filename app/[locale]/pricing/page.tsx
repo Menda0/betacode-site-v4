@@ -33,7 +33,7 @@ export default async function PricingPage({ params }: Props) {
   const { locale } = await params
   setRequestLocale(locale)
 
-  const insightPosts = getBlogPosts()
+  const insightPosts = getBlogPosts(locale)
 
   return (
     <>

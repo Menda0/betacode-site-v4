@@ -3,7 +3,9 @@ import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { Link } from '@/i18n/navigation'
 import { notFound } from 'next/navigation'
 import { IconArrowLeft } from '@tabler/icons-react'
-import { blogPosts, getBlogPost, getNextBlogPost, getOtherBlogPosts } from '@/lib/blog-content'
+import { blogPostsEn } from '@/lib/blog-posts/en'
+import { getBlogPost, getNextBlogPost, getOtherBlogPosts } from '@/lib/blog-content'
+import { routing } from '@/i18n/routing'
 import { BlogContent } from '@/app/components/blog/blog-content'
 import { BlogBackground } from '@/app/components/blog/blog-background'
 import { BlogAuthor } from '@/app/components/blog/blog-author'
@@ -19,12 +21,14 @@ type Props = {
 }
 
 export async function generateStaticParams() {
-  return blogPosts.map((post) => ({ slug: post.slug }))
+  return routing.locales.flatMap((locale) =>
+    blogPostsEn.map((post) => ({ locale, slug: post.slug }))
+  )
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, slug } = await params
-  const post = getBlogPost(slug)
+  const post = getBlogPost(slug, locale)
 
   if (!post) {
     const t = await getTranslations({ locale, namespace: 'metadata.blogPostNotFound' })
@@ -48,14 +52,14 @@ export default async function InsightPostPage({ params }: Props) {
   setRequestLocale(locale)
 
   const t = await getTranslations({ locale, namespace: 'blog' })
-  const post = getBlogPost(slug)
+  const post = getBlogPost(slug, locale)
 
   if (!post) {
     notFound()
   }
 
-  const nextPost = getNextBlogPost(slug)
-  const otherPosts = getOtherBlogPosts(slug)
+  const nextPost = getNextBlogPost(slug, locale)
+  const otherPosts = getOtherBlogPosts(slug, locale)
 
   return (
     <>

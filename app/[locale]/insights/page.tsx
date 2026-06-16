@@ -32,7 +32,7 @@ export default async function InsightsPage({ params }: Props) {
   setRequestLocale(locale)
 
   const t = await getTranslations({ locale, namespace: 'insights' })
-  const posts = getBlogPosts()
+  const posts = getBlogPosts(locale)
 
   return (
     <>
