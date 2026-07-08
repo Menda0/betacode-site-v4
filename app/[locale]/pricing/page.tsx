@@ -1,7 +1,6 @@
 import type { Metadata } from "next"
 import { getTranslations, setRequestLocale } from "next-intl/server"
 import { PriceCalculator } from "@/app/components/price-calculator"
-import { PricingBackground } from "@/app/components/pricing-background"
 import { InsightsPreview } from "@/app/components/insights-preview"
 import { Clients } from "@/app/components/clients"
 import { CTA } from "@/app/components/cta"
@@ -37,9 +36,7 @@ export default async function PricingPage({ params }: Props) {
 
   return (
     <>
-      <PricingBackground>
-        <PriceCalculator />
-      </PricingBackground>
+      <PriceCalculator />
       <InsightsPreview posts={insightPosts} />
       <Clients />
       <VenturesPromo />

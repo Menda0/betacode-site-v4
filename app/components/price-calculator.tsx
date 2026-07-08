@@ -1,10 +1,9 @@
 "use client"
 
-import { useMemo, useState } from "react"
-import { useLocale, useTranslations } from "next-intl"
-import { Link } from "@/i18n/navigation"
-import type { Locale } from "@/i18n/routing"
-import { IconArrowLeft, IconArrowRight, IconCheck, IconChevronDown, IconRocket, IconSchool, IconTool, IconUserPlus, IconUsersGroup } from "@tabler/icons-react"
+import { useMemo, useRef, useState } from "react"
+import Link from "next/link"
+import { useTranslations } from "next-intl"
+import { IconArrowLeft, IconArrowRight, IconCalculator, IconCheck, IconChevronDown, IconRocket, IconSchool, IconTool, IconUserPlus, IconUsersGroup } from "@tabler/icons-react"
 import {
   clearBranchAnswers,
   formatEuroRange,
@@ -14,20 +13,18 @@ import {
   getOutcomeSummary,
   getPricingModelNote,
   getExpectedBranchingQuestionCount,
-  getPricingCalculatorConfig,
   getProductDescriptionQuestion,
   getQuestionPath,
   getServiceGroupLabel,
   getStartQuestion,
   isQuestionFlowComplete,
+  pricingCalculatorConfig,
   resolveOutcomes,
   sortOutcomesForDisplay,
   type CalculatorAnswers,
-  type CalculatorConfig,
   type CalculatorOutcome,
   type CalculatorQuestion,
   type OutcomeId,
-  type PricingUiLabels,
   type TeamConfiguration,
   type TeamMember,
 } from "@/lib/pricing-calculator"
@@ -36,134 +33,35 @@ import { cn } from "@/lib/utils"
 
 type Phase = "questions" | "results" | "product" | "contact" | "submitted"
 
+const productDescriptionQuestion = getProductDescriptionQuestion()
 const POST_BRANCHING_STEPS = 3
 
-type CalculatorCopy = {
-  back: string
-  continue: string
-  skip: string
-  submit: string
-  startOver: string
-  thankYou: string
-  thankYouMessage: string
-  bookCall: string
-  optional: string
-  selectOption: string
-  getEstimate: string
-  subtitle: string
-  title: string
-  description: string
-  noMatch: string
-  recommendedService: string
-  recommendedServices: string
-  basedOnAnswers: string
-  compareOptions: string
-  compareOptionsExpanded: string
-  talkToUs: string
-  seeFullPricing: string
-  hide: string
-  otherServices: string
-  teamConfiguration: string
-  profile: string
-  regime: string
-  rate: string
-  pricing: string
-  estimatedPrices: string
-  exploreVentures: string
-}
+const CARD_HEIGHT_CLASS = "h-[min(36rem,calc(100dvh-14rem))]"
+const CARD_INNER_MIN_HEIGHT_CLASS = "min-h-[min(36rem,calc(100dvh-14rem))]"
+const PRODUCT_HELP_QUESTION_IDS = new Set(["product-help-startup", "product-help-established"])
 
-function buildPricingUiLabels(t: ReturnType<typeof useTranslations<"pricing">>): PricingUiLabels {
-  return {
-    summaryLabels: {
-      businessStage: t("summaryLabels.businessStage"),
-      startupFunding: t("summaryLabels.startupFunding"),
-      teamDimensions: t("summaryLabels.teamDimensions"),
-      hasTechTeam: t("summaryLabels.hasTechTeam"),
-      productHelpStartup: t("summaryLabels.productHelpStartup"),
-      productHelpEstablished: t("summaryLabels.productHelpEstablished"),
-    },
-    fundingWith: t("summaryLabels.fundingWith"),
-    fundingWithout: t("summaryLabels.fundingWithout"),
-    hasTechTeamYes: t("summaryLabels.hasTechTeamYes"),
-    hasTechTeamNo: t("summaryLabels.hasTechTeamNo"),
-    briefPrice: {
-      model: t("briefPrice.model"),
-      equityPartnership: t("briefPrice.equityPartnership"),
-      hourlyRate: t("briefPrice.hourlyRate"),
-      mvpEstimate: t("briefPrice.mvpEstimate"),
-      priceRange: t("briefPrice.priceRange"),
-      hourlyRates: t("briefPrice.hourlyRates"),
-      contactForQuote: t("briefPrice.contactForQuote"),
-      pricing: t("briefPrice.pricing"),
-    },
-    pricingNotes: {
-      hourly: t("pricingNotes.hourly"),
-      project: t("pricingNotes.project"),
-      partnership: t("pricingNotes.partnership"),
-    },
-  }
-}
-
-function buildCalculatorCopy(t: ReturnType<typeof useTranslations<"pricing">>, tc: ReturnType<typeof useTranslations<"common">>): CalculatorCopy {
-  return {
-    back: t("back"),
-    continue: t("continue"),
-    skip: t("skip"),
-    submit: t("submit"),
-    startOver: t("startOver"),
-    thankYou: t("thankYou"),
-    thankYouMessage: t("thankYouMessage"),
-    bookCall: tc("bookCall"),
-    optional: tc("optional"),
-    selectOption: tc("selectOption"),
-    getEstimate: t("getEstimate"),
-    subtitle: t("subtitle"),
-    title: t("title"),
-    description: t("description"),
-    noMatch: t("noMatch"),
-    recommendedService: t("recommendedService"),
-    recommendedServices: t("recommendedServices"),
-    basedOnAnswers: t("basedOnAnswers"),
-    compareOptions: t("compareOptions"),
-    compareOptionsExpanded: t("compareOptionsExpanded"),
-    talkToUs: t("talkToUs"),
-    seeFullPricing: t("seeFullPricing"),
-    hide: t("hide"),
-    otherServices: t("otherServices"),
-    teamConfiguration: t("teamConfiguration"),
-    profile: t("profile"),
-    regime: t("regime"),
-    rate: t("rate"),
-    pricing: t("pricing"),
-    estimatedPrices: t("estimatedPrices"),
-    exploreVentures: t("exploreVentures"),
-  }
+function isProductHelpQuestion(questionId: string) {
+  return PRODUCT_HELP_QUESTION_IDS.has(questionId)
 }
 
 export function PriceCalculator() {
-  const locale = useLocale() as Locale
   const t = useTranslations("pricing")
-  const tc = useTranslations("common")
-  const config = useMemo(() => getPricingCalculatorConfig(locale), [locale])
-  const uiLabels = useMemo(() => buildPricingUiLabels(t), [t])
-  const copy = useMemo(() => buildCalculatorCopy(t, tc), [t, tc])
-  const startQuestion = useMemo(() => getStartQuestion(config), [config])
-  const productDescriptionQuestion = useMemo(() => getProductDescriptionQuestion(config), [config])
-
-  const [wizardStarted, setWizardStarted] = useState(false)
+  const startQuestion = getStartQuestion()
+  const wizardRef = useRef<HTMLDivElement>(null)
+  const [showWizard, setShowWizard] = useState(false)
   const [phase, setPhase] = useState<Phase>("questions")
   const [answers, setAnswers] = useState<CalculatorAnswers>({})
   const [contactDetails, setContactDetails] = useState<CalculatorAnswers>({})
-  const [currentQuestionId, setCurrentQuestionId] = useState<string>(config.startQuestionId)
+  const [currentQuestionId, setCurrentQuestionId] = useState<string>(startQuestion.id)
   const [outcomes, setOutcomes] = useState<CalculatorOutcome[]>([])
 
-  const questionPath = useMemo(() => getQuestionPath(answers, config), [answers, config])
+  const questionPath = useMemo(() => getQuestionPath(answers), [answers])
   const currentQuestion =
-    config.questions.find((question) => question.id === currentQuestionId) ?? startQuestion
+    pricingCalculatorConfig.questions.find((question) => question.id === currentQuestionId) ?? startQuestion
 
   const branchingQuestionCount = useMemo(
-    () => getExpectedBranchingQuestionCount(answers, config),
-    [answers, config]
+    () => getExpectedBranchingQuestionCount(answers),
+    [answers]
   )
   const totalSteps = branchingQuestionCount + POST_BRANCHING_STEPS
   const currentQuestionIndex = questionPath.findIndex((question) => question.id === currentQuestionId)
@@ -178,6 +76,11 @@ export function PriceCalculator() {
             ? branchingQuestionCount + 3
             : totalSteps
 
+  const isCompactQuestionStep =
+    phase === "questions" && isProductHelpQuestion(currentQuestionId)
+
+  const hasCardFooter = phase === "results" || phase === "contact"
+
   function advanceFromQuestion(question: CalculatorQuestion, nextAnswers: CalculatorAnswers) {
     const answer = nextAnswers[question.id]
     if (!answer) return
@@ -190,8 +93,8 @@ export function PriceCalculator() {
       return
     }
 
-    if (isQuestionFlowComplete(nextAnswers, config)) {
-      setOutcomes(resolveOutcomes(nextAnswers, config))
+    if (isQuestionFlowComplete(nextAnswers)) {
+      setOutcomes(resolveOutcomes(nextAnswers))
       setPhase("results")
     }
   }
@@ -268,7 +171,6 @@ export function PriceCalculator() {
     setContactDetails({})
     setCurrentQuestionId(startQuestion.id)
     setOutcomes([])
-    setWizardStarted(false)
   }
 
   function handleContactSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -276,132 +178,207 @@ export function PriceCalculator() {
     setPhase("submitted")
   }
 
-  return (
-    <section id="price-calculator" className="py-24 sm:py-32">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl text-center">
-          <h1 className="text-base/7 font-semibold text-primary-600 uppercase dark:text-primary-400">
-            {copy.subtitle}
-          </h1>
-          <p className="mt-2 text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl dark:text-white">
-            {copy.title}
-          </p>
-          <p className="mt-6 text-lg/8 text-gray-600 dark:text-gray-300">
-            {copy.description}
-          </p>
-        </div>
+  function handleStartWizard() {
+    setShowWizard(true)
+    requestAnimationFrame(() => {
+      wizardRef.current?.focus()
+    })
+  }
 
-        <div
-          className={cn(
-            "mx-auto mt-12",
-            wizardStarted && phase === "results" ? "max-w-5xl" : wizardStarted ? "max-w-3xl" : "max-w-2xl"
-          )}
-        >
-          {!wizardStarted ? (
-            <div className="flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-6">
-              <button
-                type="button"
-                onClick={() => setWizardStarted(true)}
-                className="inline-flex items-center justify-center gap-2 rounded-md bg-primary-600 px-5 py-3 text-sm font-semibold text-white shadow-xs hover:bg-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:bg-primary-500 dark:hover:bg-primary-400"
-              >
-                {copy.getEstimate}
-                <IconArrowRight className="size-4" aria-hidden="true" />
-              </button>
-              <a
-                href={CALENDAR_URL}
-                className="inline-flex items-center justify-center rounded-md border border-gray-300 bg-white px-5 py-3 text-sm font-semibold text-gray-900 shadow-xs hover:bg-gray-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700"
-              >
-                {copy.bookCall}
-              </a>
+  return (
+    <section
+      id="price-calculator"
+      className="flex min-h-[calc(100dvh-4rem)] flex-col bg-gray-50 dark:bg-gray-950"
+    >
+      <div className="mx-auto flex w-full max-w-7xl flex-1 items-center justify-center px-6 py-8 lg:px-8">
+        {!showWizard ? (
+          <div className="mx-auto w-full max-w-2xl text-center">
+            <div className="mx-auto flex size-14 items-center justify-center rounded-2xl bg-primary-600/10 text-primary-600 ring-1 ring-primary-600/20 dark:bg-primary-500/10 dark:text-primary-400 dark:ring-primary-500/20">
+              <IconCalculator className="size-7" aria-hidden="true" />
             </div>
-          ) : (
-            <>
+            <p className="mt-6 text-base/7 font-semibold text-primary-600 uppercase dark:text-primary-400">
+              {t("subtitle")}
+            </p>
+            <h1 className="mt-3 text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl dark:text-white">
+              {t("title")}
+            </h1>
+            <p className="mt-6 text-lg/8 text-gray-600 dark:text-gray-300">
+              {t("description")}
+            </p>
+            <button
+              type="button"
+              onClick={handleStartWizard}
+              className="mt-10 inline-flex items-center gap-2 rounded-xl bg-primary-600 px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-primary-600/20 transition hover:bg-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:bg-primary-500 dark:shadow-primary-500/20 dark:hover:bg-primary-400"
+            >
+              {t("getEstimate")}
+              <IconArrowRight className="size-5" aria-hidden="true" />
+            </button>
+          </div>
+        ) : (
+          <div
+            ref={wizardRef}
+            tabIndex={-1}
+            className="flex w-full max-w-5xl animate-in fade-in slide-in-from-bottom-3 fill-mode-both duration-500 focus:outline-none"
+          >
+            <div className="flex w-full flex-col">
               <StepIndicator currentStep={questionStep} totalSteps={totalSteps} />
 
-              <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm sm:p-8 dark:border-gray-800 dark:bg-gray-900">
-                {phase === "questions" && (
-                  <QuestionStep
-                    question={currentQuestion}
-                    answers={answers}
-                    copy={copy}
-                    canGoBack={currentQuestionId !== startQuestion.id}
-                    onBack={handleBack}
-                    onChoiceSelect={handleChoiceSelect}
-                    onDropdownChange={handleDropdownChange}
-                    onDropdownContinue={handleDropdownContinue}
-                  />
+              <div
+                className={cn(
+                  "flex flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900",
+                  CARD_HEIGHT_CLASS
                 )}
+              >
+                <div className="min-h-0 flex-1 overflow-y-auto">
+                  <div
+                    className={cn(
+                      "mx-auto flex w-full flex-col",
+                      !hasCardFooter && "justify-center",
+                      isCompactQuestionStep ? "p-4 sm:p-5" : "p-6 sm:p-8",
+                      !hasCardFooter && CARD_INNER_MIN_HEIGHT_CLASS,
+                      phase !== "results" && "max-w-3xl"
+                    )}
+                  >
+                  {phase === "questions" && (
+                    <QuestionStep
+                      question={currentQuestion}
+                      answers={answers}
+                      compact={isCompactQuestionStep}
+                      canGoBack={currentQuestionId !== startQuestion.id}
+                      onBack={handleBack}
+                      onChoiceSelect={handleChoiceSelect}
+                      onDropdownChange={handleDropdownChange}
+                      onDropdownContinue={handleDropdownContinue}
+                    />
+                  )}
 
-                {phase === "results" && (
-                  <ResultsStep
-                    answers={answers}
-                    outcomes={outcomes}
-                    config={config}
-                    uiLabels={uiLabels}
-                    copy={copy}
-                    onBack={handleBack}
-                    onContinue={() => setPhase("product")}
-                    onReset={reset}
-                  />
-                )}
+                  {phase === "results" && (
+                    <ResultsStep
+                      answers={answers}
+                      outcomes={outcomes}
+                      onBack={handleBack}
+                    />
+                  )}
 
-                {phase === "product" && (
-                  <QuestionStep
-                    question={productDescriptionQuestion}
-                    answers={answers}
-                    copy={copy}
-                    canGoBack
-                    onBack={handleBack}
-                    onTextareaChange={handleProductDescriptionChange}
-                    onTextareaContinue={handleProductDescriptionContinue}
-                    onTextareaSkip={handleProductDescriptionSkip}
-                  />
-                )}
+                  {phase === "product" && (
+                    <QuestionStep
+                      question={productDescriptionQuestion}
+                      answers={answers}
+                      canGoBack
+                      continueLabel={t("continue")}
+                      onBack={handleBack}
+                      onTextareaChange={handleProductDescriptionChange}
+                      onTextareaContinue={handleProductDescriptionContinue}
+                      onTextareaSkip={handleProductDescriptionSkip}
+                    />
+                  )}
 
-                {phase === "contact" && (
-                  <ContactStep
-                    contactDetails={contactDetails}
-                    config={config}
-                    copy={copy}
-                    onBack={handleBack}
-                    onChange={(fieldId, value) =>
-                      setContactDetails((prev) => ({ ...prev, [fieldId]: value }))
-                    }
-                    onSubmit={handleContactSubmit}
-                    onReset={reset}
-                  />
-                )}
+                  {phase === "contact" && (
+                    <ContactStep
+                      contactDetails={contactDetails}
+                      onBack={handleBack}
+                      onChange={(fieldId, value) =>
+                        setContactDetails((prev) => ({ ...prev, [fieldId]: value }))
+                      }
+                      onSubmit={handleContactSubmit}
+                    />
+                  )}
 
-                {phase === "submitted" && (
-                  <div className="text-center">
-                    <div className="mx-auto flex size-12 items-center justify-center rounded-full bg-primary-600/10 text-primary-600 dark:bg-primary-500/10 dark:text-primary-400">
-                      <IconCheck className="size-6" aria-hidden="true" />
+                  {phase === "submitted" && (
+                    <div className="text-center">
+                      <div className="mx-auto flex size-12 items-center justify-center rounded-full bg-primary-600/10 text-primary-600 dark:bg-primary-500/10 dark:text-primary-400">
+                        <IconCheck className="size-6" aria-hidden="true" />
+                      </div>
+                      <h2 className="mt-4 text-xl font-semibold text-gray-900 dark:text-white">
+                        {t("thankYou")}
+                      </h2>
+                      <p className="mt-2 max-w-sm text-gray-600 dark:text-gray-300">
+                        {t("thankYouMessage")}
+                      </p>
+                      <button
+                        type="button"
+                        onClick={reset}
+                        className="mt-6 text-sm font-semibold text-primary-600 hover:text-primary-500 dark:text-primary-400"
+                      >
+                        {t("startOver")}
+                      </button>
                     </div>
-                    <h2 className="mt-4 text-xl font-semibold text-gray-900 dark:text-white">{copy.thankYou}</h2>
-                    <p className="mt-2 text-gray-600 dark:text-gray-300">
-                      {copy.thankYouMessage}
-                    </p>
+                  )}
+                  </div>
+                </div>
+
+                {phase === "results" && outcomes.length > 0 && (
+                  <CardFooter>
                     <button
                       type="button"
                       onClick={reset}
-                      className="mt-6 text-sm font-semibold text-primary-600 hover:text-primary-500 dark:text-primary-400"
+                      className="text-sm font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
                     >
-                      {copy.startOver}
+                      {t("startOver")}
                     </button>
-                  </div>
+                    <button
+                      type="button"
+                      onClick={() => setPhase("product")}
+                      className="inline-flex items-center justify-center gap-2 rounded-md bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:bg-primary-500 dark:hover:bg-primary-400"
+                    >
+                      {t("continue")}
+                      <IconArrowRight className="size-4" aria-hidden="true" />
+                    </button>
+                  </CardFooter>
+                )}
+
+                {phase === "results" && outcomes.length === 0 && (
+                  <CardFooter>
+                    <button
+                      type="button"
+                      onClick={reset}
+                      className="ml-auto text-sm font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                    >
+                      {t("startOver")}
+                    </button>
+                  </CardFooter>
+                )}
+
+                {phase === "contact" && (
+                  <CardFooter>
+                    <button
+                      type="button"
+                      onClick={reset}
+                      className="text-sm font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                    >
+                      {t("startOver")}
+                    </button>
+                    <button
+                      type="submit"
+                      form="price-calculator-contact-form"
+                      className="inline-flex items-center justify-center gap-2 rounded-md bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:bg-primary-500 dark:hover:bg-primary-400"
+                    >
+                      {t("submit")}
+                    </button>
+                  </CardFooter>
                 )}
               </div>
-            </>
-          )}
-        </div>
+            </div>
+          </div>
+        )}
       </div>
     </section>
   )
 }
 
+function CardFooter({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="sticky bottom-0 z-10 shrink-0 border-t border-gray-200/80 bg-white/75 p-4 backdrop-blur-md dark:border-gray-700/80 dark:bg-gray-900/75 sm:px-6">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        {children}
+      </div>
+    </div>
+  )
+}
+
 function StepIndicator({ currentStep, totalSteps }: { currentStep: number; totalSteps: number }) {
   return (
-    <div className="mb-8 flex items-center justify-center gap-2 sm:gap-4">
+    <div className="mb-6 flex shrink-0 items-center justify-center gap-2 sm:gap-4">
       {Array.from({ length: totalSteps }, (_, index) => index + 1).map((value) => (
         <div key={value} className="flex items-center gap-2 sm:gap-4">
           <div
@@ -431,8 +408,9 @@ function StepIndicator({ currentStep, totalSteps }: { currentStep: number; total
 function QuestionStep({
   question,
   answers,
-  copy,
   canGoBack,
+  compact = false,
+  continueLabel = "Continue",
   onBack,
   onChoiceSelect,
   onDropdownChange,
@@ -443,8 +421,9 @@ function QuestionStep({
 }: {
   question: CalculatorQuestion
   answers: CalculatorAnswers
-  copy: CalculatorCopy
   canGoBack: boolean
+  compact?: boolean
+  continueLabel?: string
   onBack: () => void
   onChoiceSelect?: (question: CalculatorQuestion, optionId: string) => void
   onDropdownChange?: (question: CalculatorQuestion, optionId: string) => void
@@ -459,23 +438,39 @@ function QuestionStep({
         <button
           type="button"
           onClick={onBack}
-          className="mb-4 inline-flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+          className="mb-3 inline-flex shrink-0 items-center gap-1 text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
         >
           <IconArrowLeft className="size-4" aria-hidden="true" />
-          {copy.back}
+          Back
         </button>
       )}
 
-      <h2 className="text-xl font-semibold text-gray-900 dark:text-white">{question.title}</h2>
-      {question.description && (
-        <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">{question.description}</p>
-      )}
+      <div className="shrink-0">
+        <h2
+          className={cn(
+            "font-semibold text-gray-900 dark:text-white",
+            compact ? "text-lg" : "text-xl"
+          )}
+        >
+          {question.title}
+        </h2>
+        {question.description && (
+          <p
+            className={cn(
+              "text-gray-600 dark:text-gray-400",
+              compact ? "mt-1 text-xs leading-relaxed" : "mt-2 text-sm"
+            )}
+          >
+            {question.description}
+          </p>
+        )}
+      </div>
 
       {question.type === "choice" && (
         <div
           className={cn(
-            "mt-6 grid gap-4",
-            question.options.length === 2 ? "sm:grid-cols-2" : "sm:grid-cols-2"
+            "grid sm:grid-cols-2",
+            compact ? "mt-4 gap-2.5" : "mt-6 gap-4"
           )}
         >
           {question.options.map((option) => (
@@ -484,15 +479,31 @@ function QuestionStep({
               type="button"
               onClick={() => onChoiceSelect?.(question, option.id)}
               className={cn(
-                "rounded-xl border p-4 text-left transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600",
+                "rounded-xl border text-left transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600",
+                compact ? "rounded-lg p-3" : "p-4",
+                option.id === "help-me-decide" && "sm:col-span-2",
                 answers[question.id] === option.id
                   ? "border-primary-400 bg-primary-50/70 dark:border-primary-500 dark:bg-primary-800/50"
                   : "border-gray-200 hover:border-primary-300 hover:bg-primary-50/70 dark:border-gray-700 dark:hover:border-primary-500 dark:hover:bg-primary-800/40"
               )}
             >
-              <span className="text-base font-semibold text-gray-900 dark:text-white">{option.label}</span>
+              <span
+                className={cn(
+                  "font-semibold text-gray-900 dark:text-white",
+                  compact ? "text-sm" : "text-base"
+                )}
+              >
+                {option.label}
+              </span>
               {option.description && (
-                <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">{option.description}</p>
+                <p
+                  className={cn(
+                    "text-gray-600 dark:text-gray-300",
+                    compact ? "mt-1 text-xs leading-relaxed" : "mt-2 text-sm"
+                  )}
+                >
+                  {option.description}
+                </p>
               )}
             </button>
           ))}
@@ -507,7 +518,7 @@ function QuestionStep({
             onChange={(event) => onDropdownChange?.(question, event.target.value)}
             className="block w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-gray-900 shadow-xs focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
           >
-            <option value="" disabled>{copy.selectOption}</option>
+            <option value="" disabled>Select an option</option>
             {question.options.map((option) => (
               <option key={option.id} value={option.id}>{option.label}</option>
             ))}
@@ -518,7 +529,7 @@ function QuestionStep({
             onClick={() => onDropdownContinue?.(question)}
             className="inline-flex items-center gap-2 rounded-md bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-primary-500 disabled:pointer-events-none disabled:opacity-50 dark:bg-primary-500 dark:hover:bg-primary-400"
           >
-            {copy.continue}
+            Continue
             <IconArrowRight className="size-4" aria-hidden="true" />
           </button>
         </div>
@@ -540,7 +551,7 @@ function QuestionStep({
               onClick={onTextareaContinue}
               className="inline-flex items-center gap-2 rounded-md bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-primary-500 dark:bg-primary-500 dark:hover:bg-primary-400"
             >
-              {copy.continue}
+              {continueLabel}
               <IconArrowRight className="size-4" aria-hidden="true" />
             </button>
             {question.optional && (
@@ -549,7 +560,7 @@ function QuestionStep({
                 onClick={onTextareaSkip}
                 className="rounded-md px-4 py-2.5 text-sm font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
               >
-                {copy.skip}
+                Skip
               </button>
             )}
           </div>
@@ -562,25 +573,15 @@ function QuestionStep({
 function ResultsStep({
   answers,
   outcomes,
-  config,
-  uiLabels,
-  copy,
   onBack,
-  onContinue,
-  onReset,
 }: {
   answers: CalculatorAnswers
   outcomes: CalculatorOutcome[]
-  config: CalculatorConfig
-  uiLabels: PricingUiLabels
-  copy: CalculatorCopy
   onBack: () => void
-  onContinue: () => void
-  onReset: () => void
 }) {
   const [expandedId, setExpandedId] = useState<OutcomeId | null>(null)
   const sortedOutcomes = sortOutcomesForDisplay(outcomes)
-  const choiceSummary = getAnswersSummary(answers, config, uiLabels)
+  const choiceSummary = getAnswersSummary(answers)
   const expandedOutcome = expandedId
     ? sortedOutcomes.find((outcome) => outcome.id === expandedId)
     : null
@@ -589,15 +590,8 @@ function ResultsStep({
     return (
       <div className="text-center">
         <p className="text-gray-700 dark:text-gray-300">
-          {copy.noMatch}
+          We couldn&apos;t match your answers to a recommendation. Try adjusting your responses or book a call with us.
         </p>
-        <button
-          type="button"
-          onClick={onReset}
-          className="mt-6 text-sm font-semibold text-primary-600 hover:text-primary-500 dark:text-primary-400"
-        >
-          {copy.startOver}
-        </button>
       </div>
     )
   }
@@ -610,52 +604,37 @@ function ResultsStep({
         className="mb-4 inline-flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
       >
         <IconArrowLeft className="size-4" aria-hidden="true" />
-        {copy.back}
+        Back
       </button>
 
-      <div className="rounded-xl bg-primary-600/5 p-4 sm:p-5 dark:bg-primary-500/10">
-        <p className="text-sm font-medium text-primary-700 uppercase dark:text-primary-300">
-          {sortedOutcomes.length > 1 ? copy.recommendedServices : copy.recommendedService}
-        </p>
-        <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
-          {expandedId ? copy.compareOptionsExpanded : copy.compareOptions}
-        </p>
+      {choiceSummary.length > 0 && (
+        <div className="rounded-xl bg-primary-600/5 p-4 sm:p-5 dark:bg-primary-500/10">
+          <p className="text-xs font-medium uppercase tracking-wide text-primary-700 dark:text-primary-300">
+            Based on your answers
+          </p>
+          <dl className="mt-2 flex flex-wrap gap-x-4 gap-y-2">
+            {choiceSummary.map((item) => (
+              <div key={item.questionId} className="flex gap-1.5 text-sm">
+                <dt className="text-gray-500 dark:text-gray-400">{item.label}:</dt>
+                <dd className="font-medium text-gray-900 dark:text-white">{item.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      )}
 
-        {choiceSummary.length > 0 && (
-          <div className="mt-4 border-t border-primary-200/60 pt-4 dark:border-primary-700/40">
-            <p className="text-xs font-medium uppercase tracking-wide text-primary-700 dark:text-primary-300">
-              {copy.basedOnAnswers}
-            </p>
-            <dl className="mt-2 flex flex-wrap gap-x-4 gap-y-2">
-              {choiceSummary.map((item) => (
-                <div key={item.questionId} className="flex gap-1.5 text-sm">
-                  <dt className="text-gray-500 dark:text-gray-400">{item.label}:</dt>
-                  <dd className="font-medium text-gray-900 dark:text-white">{item.value}</dd>
-                </div>
-              ))}
-            </dl>
-          </div>
-        )}
-      </div>
-
-      <div className="mt-6">
+      <div className={cn(choiceSummary.length > 0 && "mt-6")}>
         {expandedId && expandedOutcome ? (
           <div className="flex flex-col gap-3 lg:flex-row lg:items-stretch">
             <div className="min-w-0 flex-1 order-2 lg:order-1">
-              <ExpandedServicePanel
-                outcome={expandedOutcome}
-                config={config}
-                uiLabels={uiLabels}
-                copy={copy}
-                onHide={() => setExpandedId(null)}
-              />
+              <ExpandedServicePanel outcome={expandedOutcome} onHide={() => setExpandedId(null)} />
             </div>
 
             {sortedOutcomes.length > 1 && (
               <div
                 className="order-1 flex shrink-0 gap-2 overflow-x-auto pb-1 lg:order-2 lg:w-52 lg:flex-col lg:overflow-visible lg:pb-0"
                 role="tablist"
-                aria-label={copy.otherServices}
+                aria-label="Other services"
               >
                 {sortedOutcomes
                   .filter((outcome) => outcome.id !== expandedId)
@@ -663,7 +642,6 @@ function ResultsStep({
                     <ServiceTab
                       key={outcome.id}
                       outcome={outcome}
-                      uiLabels={uiLabels}
                       onClick={() => setExpandedId(outcome.id)}
                     />
                   ))}
@@ -676,32 +654,11 @@ function ResultsStep({
               <ServiceResultCard
                 key={outcome.id}
                 outcome={outcome}
-                config={config}
-                uiLabels={uiLabels}
-                copy={copy}
                 onSelect={() => setExpandedId(outcome.id)}
               />
             ))}
           </div>
         )}
-      </div>
-
-      <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <button
-          type="button"
-          onClick={onReset}
-          className="text-sm font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
-        >
-          {copy.startOver}
-        </button>
-        <button
-          type="button"
-          onClick={onContinue}
-          className="inline-flex items-center justify-center gap-2 rounded-md bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:bg-primary-500 dark:hover:bg-primary-400"
-        >
-          {copy.talkToUs}
-          <IconArrowRight className="size-4" aria-hidden="true" />
-        </button>
       </div>
     </div>
   )
@@ -740,21 +697,15 @@ const OUTCOME_ICON_STYLES: Record<
 
 function ServiceResultCard({
   outcome,
-  config,
-  uiLabels,
-  copy,
   onSelect,
 }: {
   outcome: CalculatorOutcome
-  config: CalculatorConfig
-  uiLabels: PricingUiLabels
-  copy: CalculatorCopy
   onSelect: () => void
 }) {
   const iconStyle = OUTCOME_ICON_STYLES[outcome.id]
   const Icon = iconStyle.icon
-  const briefPrice = getBriefPriceSummary(outcome, uiLabels)
-  const groupLabel = getServiceGroupLabel(outcome.serviceGroup, config)
+  const briefPrice = getBriefPriceSummary(outcome)
+  const groupLabel = getServiceGroupLabel(outcome.serviceGroup)
 
   return (
     <button
@@ -793,7 +744,7 @@ function ServiceResultCard({
           {getOutcomeSummary(outcome)}
         </p>
         <span className="mt-2 inline-flex items-center gap-1 text-xs font-medium text-primary-600 dark:text-primary-400">
-          {copy.seeFullPricing}
+          See full pricing
           <IconChevronDown className="size-3.5 -rotate-90" aria-hidden="true" />
         </span>
       </div>
@@ -803,21 +754,15 @@ function ServiceResultCard({
 
 function ExpandedServicePanel({
   outcome,
-  config,
-  uiLabels,
-  copy,
   onHide,
 }: {
   outcome: CalculatorOutcome
-  config: CalculatorConfig
-  uiLabels: PricingUiLabels
-  copy: CalculatorCopy
   onHide: () => void
 }) {
   const iconStyle = OUTCOME_ICON_STYLES[outcome.id]
   const Icon = iconStyle.icon
-  const briefPrice = getBriefPriceSummary(outcome, uiLabels)
-  const groupLabel = getServiceGroupLabel(outcome.serviceGroup, config)
+  const briefPrice = getBriefPriceSummary(outcome)
+  const groupLabel = getServiceGroupLabel(outcome.serviceGroup)
 
   return (
     <div
@@ -852,12 +797,12 @@ function ExpandedServicePanel({
           onClick={onHide}
           className="shrink-0 rounded-md border border-gray-300 px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800"
         >
-          {copy.hide}
+          Hide
         </button>
       </div>
 
       <div className="mt-5 border-t border-gray-100 pt-5 dark:border-gray-800">
-        <OutcomePricingDetails outcome={outcome} uiLabels={uiLabels} copy={copy} />
+        <OutcomePricingDetails outcome={outcome} />
       </div>
     </div>
   )
@@ -865,16 +810,14 @@ function ExpandedServicePanel({
 
 function ServiceTab({
   outcome,
-  uiLabels,
   onClick,
 }: {
   outcome: CalculatorOutcome
-  uiLabels: PricingUiLabels
   onClick: () => void
 }) {
   const iconStyle = OUTCOME_ICON_STYLES[outcome.id]
   const Icon = iconStyle.icon
-  const briefPrice = getBriefPriceSummary(outcome, uiLabels)
+  const briefPrice = getBriefPriceSummary(outcome)
 
   return (
     <button
@@ -900,16 +843,8 @@ function ServiceTab({
   )
 }
 
-function OutcomePricingDetails({
-  outcome,
-  uiLabels,
-  copy,
-}: {
-  outcome: CalculatorOutcome
-  uiLabels: PricingUiLabels
-  copy: CalculatorCopy
-}) {
-  const pricingNote = getPricingModelNote(outcome.pricingModel, uiLabels)
+function OutcomePricingDetails({ outcome }: { outcome: CalculatorOutcome }) {
+  const pricingNote = getPricingModelNote(outcome.pricingModel)
   const teamConfigurations = outcome.teamConfigurations ?? []
   const showTeamConfigurations = teamConfigurations.length > 0
   const showTeamTable = outcome.teamComposition.length > 0
@@ -922,8 +857,8 @@ function OutcomePricingDetails({
 
       {showTeamConfigurations && (
         <div className="mt-4 space-y-6">
-          {teamConfigurations.map((configItem) => (
-            <TeamConfigurationSection key={configItem.id} config={configItem} copy={copy} />
+          {teamConfigurations.map((config) => (
+            <TeamConfigurationSection key={config.id} config={config} />
           ))}
         </div>
       )}
@@ -931,12 +866,12 @@ function OutcomePricingDetails({
       {(showTeamTable || showRate || showEstimates) && (
         <div className="mt-4 grid gap-4 sm:grid-cols-2">
           {showTeamTable && (
-            <TeamCompositionTable members={outcome.teamComposition} copy={copy} />
+            <TeamCompositionTable members={outcome.teamComposition} />
           )}
 
           {showRate && outcome.rate && (
             <div className="rounded-lg bg-gray-50 p-3 dark:bg-gray-800/50">
-              <p className="text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">{copy.pricing}</p>
+              <p className="text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">Pricing</p>
               <p className="mt-2 text-lg font-semibold text-gray-900 dark:text-white">
                 {formatHourlyRange(outcome.rate.rateMin, outcome.rate.rateMax)}/h
               </p>
@@ -947,7 +882,7 @@ function OutcomePricingDetails({
           )}
 
           {showEstimates && (
-            <EstimatesGrid estimates={outcome.estimates} copy={copy} />
+            <EstimatesGrid estimates={outcome.estimates} />
           )}
         </div>
       )}
@@ -956,22 +891,29 @@ function OutcomePricingDetails({
         <p className="mt-3 text-xs text-gray-500 dark:text-gray-400">{pricingNote}</p>
       )}
 
-      {outcome.pricingModel === "partnership" && (
-        <div className="mt-6">
+      <div className="mt-6">
+        {outcome.pricingModel === "partnership" ? (
           <Link
             href="/betacode-ventures"
             className="inline-flex items-center gap-2 rounded-md bg-primary-600 px-5 py-3 text-sm font-semibold text-white shadow-sm hover:bg-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:bg-white dark:text-purple-900 dark:hover:bg-purple-50 dark:focus-visible:outline-white"
           >
-            {copy.exploreVentures}
+            Explore Betacode Ventures
             <IconArrowRight className="size-4" aria-hidden="true" />
           </Link>
-        </div>
-      )}
+        ) : (
+          <Link
+            href={CALENDAR_URL}
+            className="inline-flex items-center justify-center rounded-md bg-primary-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:bg-primary-500 dark:hover:bg-primary-400 animate-bounce"
+          >
+            Book a call
+          </Link>
+        )}
+      </div>
     </div>
   )
 }
 
-function TeamConfigurationSection({ config, copy }: { config: TeamConfiguration; copy: CalculatorCopy }) {
+function TeamConfigurationSection({ config }: { config: TeamConfiguration }) {
   return (
     <div className="rounded-lg border border-gray-200 bg-gray-50/50 p-4 dark:border-gray-700 dark:bg-gray-800/30">
       <h4 className="text-base font-semibold text-gray-900 dark:text-white">{config.label}</h4>
@@ -981,29 +923,29 @@ function TeamConfigurationSection({ config, copy }: { config: TeamConfiguration;
 
       <div className="mt-4 grid gap-4 sm:grid-cols-2">
         {config.teamComposition.length > 0 && (
-          <TeamCompositionTable members={config.teamComposition} copy={copy} />
+          <TeamCompositionTable members={config.teamComposition} />
         )}
         {config.estimates.length > 0 && (
-          <EstimatesGrid estimates={config.estimates} copy={copy} />
+          <EstimatesGrid estimates={config.estimates} />
         )}
       </div>
     </div>
   )
 }
 
-function TeamCompositionTable({ members, copy }: { members: TeamMember[]; copy: CalculatorCopy }) {
+function TeamCompositionTable({ members }: { members: TeamMember[] }) {
   return (
     <div className="w-full rounded-lg bg-gray-50 p-3 sm:col-span-2 dark:bg-gray-800/50">
       <p className="text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">
-        {copy.teamConfiguration}
+        Team configuration
       </p>
       <div className="mt-2 w-full overflow-x-auto">
         <table className="w-full table-fixed text-sm">
           <thead>
             <tr className="border-b border-gray-200 text-left dark:border-gray-700">
-              <th className="w-[45%] pb-1.5 pr-3 font-semibold text-primary-600 dark:text-primary-400">{copy.profile}</th>
-              <th className="w-[30%] pb-1.5 pr-3 font-semibold text-primary-600 dark:text-primary-400">{copy.regime}</th>
-              <th className="w-[25%] pb-1.5 font-semibold text-primary-600 dark:text-primary-400">{copy.rate}</th>
+              <th className="w-[45%] pb-1.5 pr-3 font-semibold text-primary-600 dark:text-primary-400">Profile</th>
+              <th className="w-[30%] pb-1.5 pr-3 font-semibold text-primary-600 dark:text-primary-400">Regime</th>
+              <th className="w-[25%] pb-1.5 font-semibold text-primary-600 dark:text-primary-400">Rate</th>
             </tr>
           </thead>
           <tbody className="text-gray-700 dark:text-gray-300">
@@ -1023,15 +965,13 @@ function TeamCompositionTable({ members, copy }: { members: TeamMember[]; copy: 
 
 function EstimatesGrid({
   estimates,
-  copy,
 }: {
   estimates: { label: string; min: number; max: number }[]
-  copy: CalculatorCopy
 }) {
   return (
     <div className="rounded-lg bg-gray-50 p-3 dark:bg-gray-800/50 sm:col-span-2">
       <p className="text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">
-        {copy.estimatedPrices}
+        Estimated prices
       </p>
       <div className="mt-2 grid gap-3 sm:grid-cols-2">
         {estimates.map((estimate) => (
@@ -1049,22 +989,16 @@ function EstimatesGrid({
 
 function ContactStep({
   contactDetails,
-  config,
-  copy,
   onBack,
   onChange,
   onSubmit,
-  onReset,
 }: {
   contactDetails: CalculatorAnswers
-  config: CalculatorConfig
-  copy: CalculatorCopy
   onBack: () => void
   onChange: (fieldId: string, value: string) => void
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void
-  onReset: () => void
 }) {
-  const contact = config.contact
+  const contact = pricingCalculatorConfig.contact
 
   return (
     <div>
@@ -1074,26 +1008,36 @@ function ContactStep({
         className="mb-4 inline-flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
       >
         <IconArrowLeft className="size-4" aria-hidden="true" />
-        {copy.back}
+        Back
       </button>
 
-      <h2 className="text-xl font-semibold text-gray-900 dark:text-white">{contact.title}</h2>
+      <h2 className="text-xl font-semibold text-foreground">{contact.title}</h2>
       {contact.description && (
-        <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">{contact.description}</p>
+        <p className="mt-2 text-sm text-muted-foreground">{contact.description}</p>
       )}
 
-      <form onSubmit={onSubmit} className="mt-6 space-y-4">
+      <form id="price-calculator-contact-form" onSubmit={onSubmit} className="mt-6 space-y-4">
         {contact.fields.map((field) => (
-          <div key={field.id}>
-            <label htmlFor={field.id} className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-              {field.label}
-              {field.optional && (
-                <span className="ml-1 text-gray-400 dark:text-gray-500">({copy.optional})</span>
+          <div key={field.id} className="space-y-2">
+            <div className="space-y-1">
+              <label
+                htmlFor={field.id}
+                className="block text-sm font-medium leading-none text-foreground"
+              >
+                {field.label}
+                {field.optional && (
+                  <span className="ml-1 font-normal text-muted-foreground">(optional)</span>
+                )}
+              </label>
+              {field.description && (
+                <p
+                  id={`${field.id}-description`}
+                  className="text-xs leading-normal text-muted-foreground"
+                >
+                  {field.description}
+                </p>
               )}
-            </label>
-            {field.description && (
-              <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">{field.description}</p>
-            )}
+            </div>
             <input
               id={field.id}
               type={field.type}
@@ -1101,34 +1045,11 @@ function ContactStep({
               onChange={(event) => onChange(field.id, event.target.value)}
               placeholder={field.placeholder}
               required={!field.optional}
-              className="mt-1.5 block w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-gray-900 shadow-xs placeholder:text-gray-400 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-500"
+              aria-describedby={field.description ? `${field.id}-description` : undefined}
+              className="block w-full rounded-lg border border-input bg-background px-3 py-2.5 text-sm text-foreground shadow-xs placeholder:text-muted-foreground focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20"
             />
           </div>
         ))}
-
-        <div className="flex flex-col gap-3 pt-2 sm:flex-row sm:items-center sm:justify-between">
-          <button
-            type="button"
-            onClick={onReset}
-            className="text-sm font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
-          >
-            {copy.startOver}
-          </button>
-          <div className="flex flex-col gap-3 sm:flex-row">
-            <a
-              href={CALENDAR_URL}
-              className="inline-flex items-center justify-center rounded-md bg-primary-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:bg-primary-500 dark:hover:bg-primary-400 animate-bounce"
-            >
-              {copy.bookCall}
-            </a>
-            <button
-              type="submit"
-              className="inline-flex items-center justify-center gap-2 rounded-md bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-primary-500 dark:bg-primary-500 dark:hover:bg-primary-400"
-            >
-              {copy.submit}
-            </button>
-          </div>
-        </div>
       </form>
     </div>
   )

@@ -207,13 +207,13 @@
     "hero": {
       "eyebrow": "Betacode Ventures",
       "headline": "O seu co-fundador técnico, de 0 a 100%",
-      "subheadline": "Associamo-nos a fundadores que têm a visão mas precisam de um líder técnico para validar ideias, construir o produto e escalar — sem contratar uma equipa de engenharia completa no primeiro dia.",
+      "subheadline": "Associamo-nos a fundadores que têm a visão mas precisam de um líder técnico para validar ideias, construir o produto e escalar.",
       "primaryCta": "Candidatar-se",
       "secondaryCta": "Ver o nosso primeiro projeto"
     },
     "overview": {
       "title": "Como funciona a Betacode Ventures",
-      "subtitle": "Mais do que outsourcing — uma verdadeira parceria técnica",
+      "subtitle": "Mais do que desenvolvimento de software — uma verdadeira parceria técnica",
       "description": "Integramo-nos como co-fundador técnico: definimos o roadmap, construímos o MVP e permanecemos após o lançamento e nas iterações.",
       "steps": [
         {

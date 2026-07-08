@@ -12,7 +12,7 @@ export const venturesHero = {
   eyebrow: 'Betacode Ventures',
   headline: 'Your technical co-founder, from 0 to 100%',
   subheadline:
-    'We partner with founders who have the vision but need a technical leader to validate ideas, build the product, and scale — without hiring a full engineering team on day one.',
+    'We partner with founders who have the vision but need a technical leader to validate ideas, build the product, and scale.',
   primaryCta: 'Apply now',
   secondaryCta: 'See our first project',
 }
