@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import Link from "next/link"
 import { useTranslations } from "next-intl"
-import { IconArrowLeft, IconArrowRight, IconBuilding, IconCalculator, IconCheck, IconChevronDown, IconRocket, IconSchool, IconTool, IconUserPlus, IconUsersGroup } from "@tabler/icons-react"
+import { IconArrowLeft, IconArrowRight, IconBox, IconBuilding, IconCalculator, IconCheck, IconChevronDown, IconCompass, IconRefresh, IconRocket, IconSchool, IconTool, IconUserPlus, IconUsersGroup } from "@tabler/icons-react"
 import {
   clearBranchAnswers,
   formatEuroRange,
@@ -83,10 +83,59 @@ const CHOICE_OPTION_ICONS: Record<
     bg: "bg-amber-100 dark:bg-amber-900/40",
     text: "text-amber-600 dark:text-amber-400",
   },
+  "product-help-startup:develop-mvp": {
+    icon: IconRocket,
+    bg: "bg-primary-100 dark:bg-primary-900/40",
+    text: "text-primary-600 dark:text-primary-400",
+  },
+  "product-help-startup:create-tech-team": {
+    icon: IconUsersGroup,
+    bg: "bg-primary-100 dark:bg-primary-900/40",
+    text: "text-primary-600 dark:text-primary-400",
+  },
+  "product-help-startup:technical-support": {
+    icon: IconTool,
+    bg: "bg-sky-100 dark:bg-sky-900/40",
+    text: "text-sky-600 dark:text-sky-400",
+  },
+  "product-help-startup:help-me-decide": {
+    icon: IconCompass,
+    bg: "bg-gray-100 dark:bg-gray-800/60",
+    text: "text-gray-600 dark:text-gray-400",
+  },
+  "product-help-established:new-product": {
+    icon: IconBox,
+    bg: "bg-purple-100 dark:bg-purple-900/40",
+    text: "text-purple-600 dark:text-purple-400",
+  },
+  "product-help-established:modernize": {
+    icon: IconRefresh,
+    bg: "bg-indigo-100 dark:bg-indigo-900/40",
+    text: "text-indigo-600 dark:text-indigo-400",
+  },
+  "product-help-established:team-augmentation": {
+    icon: IconUserPlus,
+    bg: "bg-indigo-100 dark:bg-indigo-900/40",
+    text: "text-indigo-600 dark:text-indigo-400",
+  },
+  "product-help-established:technical-support": {
+    icon: IconTool,
+    bg: "bg-sky-100 dark:bg-sky-900/40",
+    text: "text-sky-600 dark:text-sky-400",
+  },
+  "product-help-established:help-me-decide": {
+    icon: IconCompass,
+    bg: "bg-gray-100 dark:bg-gray-800/60",
+    text: "text-gray-600 dark:text-gray-400",
+  },
 }
 
 function getChoiceOptionIcon(questionId: string, optionId: string) {
   return CHOICE_OPTION_ICONS[`${questionId}:${optionId}`]
+}
+
+function getDefaultExpandedOutcomeId(outcomes: CalculatorOutcome[]): OutcomeId | null {
+  return sortOutcomesForDisplay(outcomes)[0]?.id ?? null
 }
 
 export function PriceCalculator() {
@@ -127,12 +176,7 @@ export function PriceCalculator() {
 
   const hasCardFooter = phase === "results" || phase === "contact" || phase === "product"
   const shouldCenterCardContent = !hasCardFooter || phase === "product"
-  const resultsExpandedId =
-    expandedOutcomeId ??
-    (phase === "results" && outcomes.length === 1
-      ? sortOutcomesForDisplay(outcomes)[0]?.id ?? null
-      : null)
-  const showResultsScrollFade = phase === "results" && resultsExpandedId !== null
+  const showResultsScrollFade = phase === "results" && expandedOutcomeId !== null
   const { scrollRef: cardScrollRef, showFade: showCardScrollFade, onScroll: onCardScroll } =
     useScrollFade(showResultsScrollFade)
 
@@ -150,9 +194,8 @@ export function PriceCalculator() {
 
     if (isQuestionFlowComplete(nextAnswers)) {
       const resolvedOutcomes = resolveOutcomes(nextAnswers)
-      const sorted = sortOutcomesForDisplay(resolvedOutcomes)
       setOutcomes(resolvedOutcomes)
-      setExpandedOutcomeId(sorted.length === 1 ? sorted[0].id : null)
+      setExpandedOutcomeId(getDefaultExpandedOutcomeId(resolvedOutcomes))
       setPhase("results")
     }
   }
@@ -203,10 +246,7 @@ export function PriceCalculator() {
 
     if (phase === "product") {
       setPhase("results")
-      if (outcomes.length === 1) {
-        const sorted = sortOutcomesForDisplay(outcomes)
-        setExpandedOutcomeId(sorted[0]?.id ?? null)
-      }
+      setExpandedOutcomeId(getDefaultExpandedOutcomeId(outcomes))
       return
     }
 
@@ -762,7 +802,7 @@ function ResultsStep({
   const sortedOutcomes = sortOutcomesForDisplay(outcomes)
   const choiceSummary = getAnswersSummary(answers)
   const isSingleOutcome = sortedOutcomes.length === 1
-  const activeExpandedId = expandedId ?? (isSingleOutcome ? sortedOutcomes[0]?.id ?? null : null)
+  const activeExpandedId = expandedId
   const expandedOutcome = activeExpandedId
     ? sortedOutcomes.find((outcome) => outcome.id === activeExpandedId)
     : null
