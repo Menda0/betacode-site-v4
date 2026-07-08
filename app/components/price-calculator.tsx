@@ -1,9 +1,10 @@
 "use client"
 
+import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import Link from "next/link"
 import { useTranslations } from "next-intl"
-import { IconArrowLeft, IconArrowRight, IconBox, IconBuilding, IconCalculator, IconCheck, IconChevronDown, IconCompass, IconRefresh, IconRocket, IconSchool, IconTool, IconUserPlus, IconUsersGroup } from "@tabler/icons-react"
+import { IconArrowLeft, IconArrowRight, IconBox, IconBuilding, IconCalculator, IconCheck, IconChevronDown, IconCompass, IconListDetails, IconPlayerSkipForward, IconRefresh, IconRocket, IconSchool, IconTool, IconUserPlus, IconUsersGroup } from "@tabler/icons-react"
 import {
   clearBranchAnswers,
   formatEuroRange,
@@ -21,6 +22,7 @@ import {
   pricingCalculatorConfig,
   resolveOutcomes,
   sortOutcomesForDisplay,
+  type AnswerSummaryItem,
   type CalculatorAnswers,
   type CalculatorOutcome,
   type CalculatorQuestion,
@@ -35,8 +37,10 @@ type Phase = "questions" | "results" | "product" | "contact" | "submitted"
 const productDescriptionQuestion = getProductDescriptionQuestion()
 const POST_BRANCHING_STEPS = 3
 
-const CARD_HEIGHT_CLASS = "h-[min(36rem,calc(100dvh-14rem))]"
-const CARD_INNER_MIN_HEIGHT_CLASS = "min-h-[min(36rem,calc(100dvh-14rem))]"
+const CARD_HEIGHT_CLASS =
+  "h-[min(36rem,calc(100dvh-8rem))] sm:h-[min(36rem,calc(100dvh-11rem))] lg:h-[min(36rem,calc(100dvh-14rem))]"
+const CARD_INNER_MIN_HEIGHT_CLASS =
+  "min-h-[min(36rem,calc(100dvh-8rem))] sm:min-h-[min(36rem,calc(100dvh-11rem))] lg:min-h-[min(36rem,calc(100dvh-14rem))]"
 const PRODUCT_HELP_QUESTION_IDS = new Set(["product-help-startup", "product-help-established"])
 
 function isProductHelpQuestion(questionId: string) {
@@ -219,9 +223,10 @@ export function PriceCalculator() {
 
   const hasCardFooter = phase === "results" || phase === "contact" || phase === "product"
   const shouldCenterCardContent = !hasCardFooter || phase === "product"
-  const showResultsScrollFade = phase === "results" && expandedOutcomeId !== null
+  const enableCardScrollFade =
+    (phase === "results" && expandedOutcomeId !== null) || isCompactQuestionStep
   const { scrollRef: cardScrollRef, showFade: showCardScrollFade, onScroll: onCardScroll } =
-    useScrollFade(showResultsScrollFade)
+    useScrollFade(enableCardScrollFade)
 
   function advanceFromQuestion(question: CalculatorQuestion, nextAnswers: CalculatorAnswers) {
     const answer = nextAnswers[question.id]
@@ -342,7 +347,14 @@ export function PriceCalculator() {
     >
       {!showWizard && <PricingHeroBackground />}
 
-      <div className="relative mx-auto flex w-full max-w-7xl flex-1 items-center justify-center px-6 py-8 lg:px-8">
+      <div
+        className={cn(
+          "relative mx-auto flex w-full max-w-7xl flex-1 justify-center",
+          showWizard
+            ? "items-start px-4 pt-12 pb-3 sm:items-center sm:px-6 sm:py-6 lg:px-8 lg:py-8"
+            : "items-center px-6 py-6 sm:py-8 lg:px-8"
+        )}
+      >
         {!showWizard ? (
           <div className="mx-auto w-full max-w-2xl text-center">
             <div className="mx-auto flex size-14 items-center justify-center rounded-2xl bg-primary-600/10 text-primary-600 ring-1 ring-primary-600/20 dark:bg-primary-500/10 dark:text-primary-400 dark:ring-primary-500/20">
@@ -472,82 +484,52 @@ export function PriceCalculator() {
 
                 {phase === "results" && outcomes.length > 0 && (
                   <CardFooter>
-                    <button
-                      type="button"
-                      onClick={reset}
-                      className="text-sm font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
-                    >
-                      {t("startOver")}
-                    </button>
-                    <button
-                      type="button"
+                    <FooterResetButton label={t("startOver")} onClick={reset} />
+                    <FooterPrimaryButton
+                      label={t("continue")}
                       onClick={() => setPhase("product")}
-                      className="inline-flex items-center justify-center gap-2 rounded-md bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:bg-primary-500 dark:hover:bg-primary-400"
-                    >
-                      {t("continue")}
-                      <IconArrowRight className="size-4" aria-hidden="true" />
-                    </button>
+                      showArrowOnDesktop
+                    />
                   </CardFooter>
                 )}
 
                 {phase === "results" && outcomes.length === 0 && (
                   <CardFooter>
-                    <button
-                      type="button"
+                    <FooterResetButton
+                      label={t("startOver")}
                       onClick={reset}
-                      className="ml-auto text-sm font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
-                    >
-                      {t("startOver")}
-                    </button>
+                      className="ml-auto"
+                    />
                   </CardFooter>
                 )}
 
                 {phase === "contact" && (
                   <CardFooter>
-                    <button
-                      type="button"
-                      onClick={reset}
-                      className="text-sm font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
-                    >
-                      {t("startOver")}
-                    </button>
-                    <button
+                    <FooterResetButton label={t("startOver")} onClick={reset} />
+                    <FooterPrimaryButton
+                      label={t("submit")}
                       type="submit"
                       form="price-calculator-contact-form"
-                      className="inline-flex items-center justify-center gap-2 rounded-md bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:bg-primary-500 dark:hover:bg-primary-400"
-                    >
-                      {t("submit")}
-                    </button>
+                      icon={IconCheck}
+                    />
                   </CardFooter>
                 )}
 
                 {phase === "product" && (
                   <CardFooter>
-                    <button
-                      type="button"
-                      onClick={reset}
-                      className="text-sm font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
-                    >
-                      {t("startOver")}
-                    </button>
-                    <div className="flex flex-wrap items-center justify-end gap-3">
+                    <FooterResetButton label={t("startOver")} onClick={reset} />
+                    <div className="flex items-center gap-2">
                       {productDescriptionQuestion.optional && (
-                        <button
-                          type="button"
+                        <FooterSecondaryButton
+                          label={t("skip")}
                           onClick={handleProductDescriptionSkip}
-                          className="text-sm font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
-                        >
-                          {t("skip")}
-                        </button>
+                        />
                       )}
-                      <button
-                        type="button"
+                      <FooterPrimaryButton
+                        label={t("continue")}
                         onClick={handleProductDescriptionContinue}
-                        className="inline-flex items-center justify-center gap-2 rounded-md bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:bg-primary-500 dark:hover:bg-primary-400"
-                      >
-                        {t("continue")}
-                        <IconArrowRight className="size-4" aria-hidden="true" />
-                      </button>
+                        showArrowOnDesktop
+                      />
                     </div>
                   </CardFooter>
                 )}
@@ -607,17 +589,99 @@ function ScrollBottomFade({ visible }: { visible: boolean }) {
 
 function CardFooter({ children }: { children: React.ReactNode }) {
   return (
-    <div className="sticky bottom-0 z-10 shrink-0 border-t border-gray-200/80 bg-white/75 p-4 backdrop-blur-md dark:border-gray-700/80 dark:bg-gray-900/75 sm:px-6">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+    <div className="sticky bottom-0 z-10 shrink-0 border-t border-gray-200/80 bg-white/75 p-3 backdrop-blur-md dark:border-gray-700/80 dark:bg-gray-900/75 sm:p-4 sm:px-6">
+      <div className="flex items-center justify-between gap-2">
         {children}
       </div>
     </div>
   )
 }
 
+function FooterResetButton({
+  label,
+  onClick,
+  className,
+}: {
+  label: string
+  onClick: () => void
+  className?: string
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={label}
+      title={label}
+      className={cn(
+        "inline-flex size-9 shrink-0 items-center justify-center rounded-md text-gray-600 hover:bg-gray-100 hover:text-gray-900 sm:size-auto sm:px-0 sm:py-0 sm:text-sm sm:font-semibold sm:hover:bg-transparent dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white sm:dark:hover:bg-transparent",
+        className
+      )}
+    >
+      <IconRefresh className="size-4 sm:hidden" aria-hidden="true" />
+      <span className="hidden sm:inline">{label}</span>
+    </button>
+  )
+}
+
+function FooterSecondaryButton({
+  label,
+  onClick,
+  icon: Icon = IconPlayerSkipForward,
+}: {
+  label: string
+  onClick: () => void
+  icon?: typeof IconPlayerSkipForward
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={label}
+      title={label}
+      className="inline-flex size-9 shrink-0 items-center justify-center rounded-md text-gray-600 hover:bg-gray-100 hover:text-gray-900 sm:size-auto sm:px-0 sm:py-0 sm:text-sm sm:font-semibold sm:hover:bg-transparent dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white sm:dark:hover:bg-transparent"
+    >
+      <Icon className="size-4 sm:hidden" aria-hidden="true" />
+      <span className="hidden sm:inline">{label}</span>
+    </button>
+  )
+}
+
+function FooterPrimaryButton({
+  label,
+  onClick,
+  type = "button",
+  form,
+  icon: MobileIcon = IconArrowRight,
+  showArrowOnDesktop = false,
+}: {
+  label: string
+  onClick?: () => void
+  type?: "button" | "submit"
+  form?: string
+  icon?: typeof IconArrowRight
+  showArrowOnDesktop?: boolean
+}) {
+  return (
+    <button
+      type={type}
+      form={form}
+      onClick={onClick}
+      aria-label={label}
+      title={label}
+      className="inline-flex size-9 shrink-0 items-center justify-center rounded-md bg-primary-600 text-white shadow-xs hover:bg-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 sm:size-auto sm:gap-2 sm:px-4 sm:py-2.5 sm:text-sm sm:font-semibold dark:bg-primary-500 dark:hover:bg-primary-400"
+    >
+      <MobileIcon className="size-4 sm:hidden" aria-hidden="true" />
+      <span className="hidden sm:inline">{label}</span>
+      {showArrowOnDesktop && (
+        <IconArrowRight className="hidden size-4 sm:block" aria-hidden="true" />
+      )}
+    </button>
+  )
+}
+
 function StepIndicator({ currentStep, totalSteps }: { currentStep: number; totalSteps: number }) {
   return (
-    <div className="mb-6 flex shrink-0 items-center justify-center gap-2 sm:gap-4">
+    <div className="mb-3 flex shrink-0 items-center justify-center gap-1.5 sm:mb-6 sm:gap-4">
       {Array.from({ length: totalSteps }, (_, index) => index + 1).map((value) => (
         <div key={value} className="flex items-center gap-2 sm:gap-4">
           <div
@@ -847,6 +911,7 @@ function ResultsStep({
   onExpandedChange: (id: OutcomeId | null) => void
   onBack: () => void
 }) {
+  const t = useTranslations("pricing")
   const sortedOutcomes = sortOutcomesForDisplay(outcomes)
   const choiceSummary = getAnswersSummary(answers)
   const isSingleOutcome = sortedOutcomes.length === 1
@@ -866,32 +931,35 @@ function ResultsStep({
   }
 
   return (
-    <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-8">
-      <aside className="w-full shrink-0 lg:sticky lg:top-6 lg:w-52 xl:w-56">
+    <div className="flex flex-col gap-4 lg:gap-8 lg:flex-row lg:items-start">
+      <div className="flex items-center justify-between lg:hidden">
         <button
           type="button"
           onClick={onBack}
           className="inline-flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
         >
           <IconArrowLeft className="size-4" aria-hidden="true" />
-          Back
+          {t("back")}
+        </button>
+
+        {choiceSummary.length > 0 && (
+          <AnswersSummaryPopover items={choiceSummary} title={t("basedOnAnswers")} />
+        )}
+      </div>
+
+      <aside className="hidden w-52 shrink-0 lg:sticky lg:top-6 lg:block xl:w-56">
+        <button
+          type="button"
+          onClick={onBack}
+          className="inline-flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+        >
+          <IconArrowLeft className="size-4" aria-hidden="true" />
+          {t("back")}
         </button>
 
         {choiceSummary.length > 0 && (
           <div className="mt-4 rounded-xl bg-primary-600/5 p-4 sm:p-5 dark:bg-primary-500/10">
-            <p className="text-xs font-medium uppercase tracking-wide text-primary-700 dark:text-primary-300">
-              Based on your answers
-            </p>
-            <dl className="mt-3 space-y-3">
-              {choiceSummary.map((item) => (
-                <div key={item.questionId}>
-                  <dt className="text-xs text-gray-500 dark:text-gray-400">{item.label}</dt>
-                  <dd className="mt-0.5 text-sm font-medium text-gray-900 dark:text-white">
-                    {item.value}
-                  </dd>
-                </div>
-              ))}
-            </dl>
+            <AnswersSummaryContent items={choiceSummary} title={t("basedOnAnswers")} />
           </div>
         )}
       </aside>
@@ -901,7 +969,7 @@ function ResultsStep({
           <div className="flex flex-col gap-3">
             {sortedOutcomes.length > 1 && (
               <div
-                className="flex flex-wrap gap-2"
+                className="flex flex-wrap items-center gap-2"
                 role="tablist"
                 aria-label="Suggested services"
               >
@@ -935,6 +1003,58 @@ function ResultsStep({
         )}
       </div>
     </div>
+  )
+}
+
+function AnswersSummaryContent({
+  items,
+  title,
+}: {
+  items: AnswerSummaryItem[]
+  title: string
+}) {
+  return (
+    <>
+      <p className="text-xs font-medium uppercase tracking-wide text-primary-700 dark:text-primary-300">
+        {title}
+      </p>
+      <dl className="mt-3 space-y-3">
+        {items.map((item) => (
+          <div key={item.questionId}>
+            <dt className="text-xs text-gray-500 dark:text-gray-400">{item.label}</dt>
+            <dd className="mt-0.5 text-sm font-medium text-gray-900 dark:text-white">
+              {item.value}
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </>
+  )
+}
+
+function AnswersSummaryPopover({
+  items,
+  title,
+}: {
+  items: AnswerSummaryItem[]
+  title: string
+}) {
+  return (
+    <Popover className="relative">
+      <PopoverButton
+        type="button"
+        aria-label={title}
+        className="inline-flex size-9 items-center justify-center rounded-lg border border-gray-200 bg-white text-primary-600 shadow-xs transition hover:bg-primary-50/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:border-gray-700 dark:bg-gray-900 dark:text-primary-400 dark:hover:bg-primary-950/30"
+      >
+        <IconListDetails className="size-5" aria-hidden="true" />
+      </PopoverButton>
+      <PopoverPanel
+        anchor="bottom end"
+        className="z-30 mt-2 w-72 rounded-xl border border-gray-200 bg-white p-4 shadow-lg [--anchor-gap:0.5rem] dark:border-gray-700 dark:bg-gray-900"
+      >
+        <AnswersSummaryContent items={items} title={title} />
+      </PopoverPanel>
+    </Popover>
   )
 }
 
@@ -1104,27 +1224,32 @@ function ServiceTab({
       type="button"
       role="tab"
       aria-selected={isActive}
+      aria-label={outcome.label}
+      title={outcome.label}
       onClick={onClick}
       className={cn(
-        "flex shrink-0 items-center gap-2 rounded-lg border p-3 text-left transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600",
+        "flex shrink-0 items-center rounded-lg border text-left transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600",
         isActive
-          ? "border-primary-400 bg-primary-50/70 dark:border-primary-500 dark:bg-primary-800/50"
-          : "border-gray-200 bg-white hover:border-primary-300 hover:bg-primary-50/50 dark:border-gray-700 dark:bg-gray-900/50 dark:hover:border-primary-700 dark:hover:bg-primary-950/30"
+          ? "gap-2 border-primary-400 bg-primary-50/70 p-3 dark:border-primary-500 dark:bg-primary-800/50"
+          : "size-9 justify-center border-gray-200 bg-white hover:border-primary-300 hover:bg-primary-50/50 dark:border-gray-700 dark:bg-gray-900/50 dark:hover:border-primary-700 dark:hover:bg-primary-950/30"
       )}
     >
       <div
         className={cn(
-          "flex size-8 shrink-0 items-center justify-center rounded-md",
+          "flex shrink-0 items-center justify-center rounded-md",
+          isActive ? "size-8" : "size-7",
           iconStyle.bg,
           iconStyle.text
         )}
       >
-        <Icon className="size-4" aria-hidden="true" />
+        <Icon className={isActive ? "size-4" : "size-4"} aria-hidden="true" />
       </div>
-      <div className="min-w-0">
-        <p className="truncate text-sm font-semibold text-gray-900 dark:text-white">{outcome.label}</p>
-        <p className="truncate text-xs text-primary-600 dark:text-primary-400">{briefPrice.value}</p>
-      </div>
+      {isActive && (
+        <div className="min-w-0">
+          <p className="truncate text-sm font-semibold text-gray-900 dark:text-white">{outcome.label}</p>
+          <p className="truncate text-xs text-primary-600 dark:text-primary-400">{briefPrice.value}</p>
+        </div>
+      )}
     </button>
   )
 }
