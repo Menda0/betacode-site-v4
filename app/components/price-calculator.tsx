@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo, useRef, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import Link from "next/link"
 import { useTranslations } from "next-intl"
 import { IconArrowLeft, IconArrowRight, IconCalculator, IconCheck, IconChevronDown, IconRocket, IconSchool, IconTool, IconUserPlus, IconUsersGroup } from "@tabler/icons-react"
@@ -54,6 +54,7 @@ export function PriceCalculator() {
   const [contactDetails, setContactDetails] = useState<CalculatorAnswers>({})
   const [currentQuestionId, setCurrentQuestionId] = useState<string>(startQuestion.id)
   const [outcomes, setOutcomes] = useState<CalculatorOutcome[]>([])
+  const [expandedOutcomeId, setExpandedOutcomeId] = useState<OutcomeId | null>(null)
 
   const questionPath = useMemo(() => getQuestionPath(answers), [answers])
   const currentQuestion =
@@ -80,6 +81,9 @@ export function PriceCalculator() {
     phase === "questions" && isProductHelpQuestion(currentQuestionId)
 
   const hasCardFooter = phase === "results" || phase === "contact"
+  const showResultsScrollFade = phase === "results" && expandedOutcomeId !== null
+  const { scrollRef: cardScrollRef, showFade: showCardScrollFade, onScroll: onCardScroll } =
+    useScrollFade(showResultsScrollFade)
 
   function advanceFromQuestion(question: CalculatorQuestion, nextAnswers: CalculatorAnswers) {
     const answer = nextAnswers[question.id]
@@ -95,6 +99,7 @@ export function PriceCalculator() {
 
     if (isQuestionFlowComplete(nextAnswers)) {
       setOutcomes(resolveOutcomes(nextAnswers))
+      setExpandedOutcomeId(null)
       setPhase("results")
     }
   }
@@ -150,6 +155,7 @@ export function PriceCalculator() {
 
     if (phase === "results") {
       setPhase("questions")
+      setExpandedOutcomeId(null)
       const lastQuestion = questionPath[questionPath.length - 1]
       if (lastQuestion) setCurrentQuestionId(lastQuestion.id)
       return
@@ -171,6 +177,7 @@ export function PriceCalculator() {
     setContactDetails({})
     setCurrentQuestionId(startQuestion.id)
     setOutcomes([])
+    setExpandedOutcomeId(null)
   }
 
   function handleContactSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -229,7 +236,12 @@ export function PriceCalculator() {
                   CARD_HEIGHT_CLASS
                 )}
               >
-                <div className="min-h-0 flex-1 overflow-y-auto">
+                <div className="relative min-h-0 flex-1">
+                  <div
+                    ref={cardScrollRef}
+                    onScroll={onCardScroll}
+                    className="h-full overflow-y-auto"
+                  >
                   <div
                     className={cn(
                       "mx-auto flex w-full flex-col",
@@ -256,6 +268,8 @@ export function PriceCalculator() {
                     <ResultsStep
                       answers={answers}
                       outcomes={outcomes}
+                      expandedId={expandedOutcomeId}
+                      onExpandedChange={setExpandedOutcomeId}
                       onBack={handleBack}
                     />
                   )}
@@ -305,6 +319,9 @@ export function PriceCalculator() {
                     </div>
                   )}
                   </div>
+                  </div>
+
+                  <ScrollBottomFade visible={showCardScrollFade} />
                 </div>
 
                 {phase === "results" && outcomes.length > 0 && (
@@ -363,6 +380,51 @@ export function PriceCalculator() {
         )}
       </div>
     </section>
+  )
+}
+
+function useScrollFade(active: boolean) {
+  const scrollRef = useRef<HTMLDivElement>(null)
+  const [showFade, setShowFade] = useState(false)
+
+  const update = useCallback(() => {
+    const element = scrollRef.current
+    if (!element || !active) {
+      setShowFade(false)
+      return
+    }
+
+    const hasOverflow = element.scrollHeight > element.clientHeight + 1
+    const atBottom = element.scrollTop + element.clientHeight >= element.scrollHeight - 8
+    setShowFade(hasOverflow && !atBottom)
+  }, [active])
+
+  useEffect(() => {
+    update()
+    const element = scrollRef.current
+    if (!element) return
+
+    const observer = new ResizeObserver(update)
+    observer.observe(element)
+
+    const content = element.firstElementChild
+    if (content) observer.observe(content)
+
+    return () => observer.disconnect()
+  }, [update])
+
+  return { scrollRef, showFade, onScroll: update }
+}
+
+function ScrollBottomFade({ visible }: { visible: boolean }) {
+  return (
+    <div
+      aria-hidden="true"
+      className={cn(
+        "pointer-events-none absolute inset-x-0 bottom-0 z-10 h-20 bg-linear-to-t from-white via-white/80 to-transparent transition-opacity duration-300 dark:from-gray-900 dark:via-gray-900/80",
+        visible ? "opacity-100" : "opacity-0"
+      )}
+    />
   )
 }
 
@@ -573,13 +635,16 @@ function QuestionStep({
 function ResultsStep({
   answers,
   outcomes,
+  expandedId,
+  onExpandedChange,
   onBack,
 }: {
   answers: CalculatorAnswers
   outcomes: CalculatorOutcome[]
+  expandedId: OutcomeId | null
+  onExpandedChange: (id: OutcomeId | null) => void
   onBack: () => void
 }) {
-  const [expandedId, setExpandedId] = useState<OutcomeId | null>(null)
   const sortedOutcomes = sortOutcomesForDisplay(outcomes)
   const choiceSummary = getAnswersSummary(answers)
   const expandedOutcome = expandedId
@@ -627,7 +692,7 @@ function ResultsStep({
         {expandedId && expandedOutcome ? (
           <div className="flex flex-col gap-3 lg:flex-row lg:items-stretch">
             <div className="min-w-0 flex-1 order-2 lg:order-1">
-              <ExpandedServicePanel outcome={expandedOutcome} onHide={() => setExpandedId(null)} />
+              <ExpandedServicePanel outcome={expandedOutcome} onHide={() => onExpandedChange(null)} />
             </div>
 
             {sortedOutcomes.length > 1 && (
@@ -642,7 +707,7 @@ function ResultsStep({
                     <ServiceTab
                       key={outcome.id}
                       outcome={outcome}
-                      onClick={() => setExpandedId(outcome.id)}
+                      onClick={() => onExpandedChange(outcome.id)}
                     />
                   ))}
               </div>
@@ -654,7 +719,7 @@ function ResultsStep({
               <ServiceResultCard
                 key={outcome.id}
                 outcome={outcome}
-                onSelect={() => setExpandedId(outcome.id)}
+                onSelect={() => onExpandedChange(outcome.id)}
               />
             ))}
           </div>
