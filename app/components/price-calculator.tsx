@@ -28,7 +28,6 @@ import {
   type TeamConfiguration,
   type TeamMember,
 } from "@/lib/pricing-calculator"
-import { CALENDAR_URL } from "@/lib/ventures-content"
 import { cn } from "@/lib/utils"
 
 type Phase = "questions" | "results" | "product" | "contact" | "submitted"
@@ -42,6 +41,32 @@ const PRODUCT_HELP_QUESTION_IDS = new Set(["product-help-startup", "product-help
 
 function isProductHelpQuestion(questionId: string) {
   return PRODUCT_HELP_QUESTION_IDS.has(questionId)
+}
+
+const FULL_WIDTH_CHOICE_OPTION_IDS = new Set(["help-me-decide"])
+
+function getChoiceOptionColSpan(
+  options: CalculatorQuestion["options"],
+  optionId: string
+) {
+  if (FULL_WIDTH_CHOICE_OPTION_IDS.has(optionId)) {
+    return "sm:col-span-2"
+  }
+
+  const regularOptions = options.filter(
+    (option) => !FULL_WIDTH_CHOICE_OPTION_IDS.has(option.id)
+  )
+  const regularIndex = regularOptions.findIndex((option) => option.id === optionId)
+  if (regularIndex === -1) return undefined
+
+  const isLastRegular = regularIndex === regularOptions.length - 1
+  const hasOddRegularCount = regularOptions.length % 2 === 1
+
+  if (isLastRegular && hasOddRegularCount) {
+    return "sm:col-span-2"
+  }
+
+  return undefined
 }
 
 export function PriceCalculator() {
@@ -80,8 +105,14 @@ export function PriceCalculator() {
   const isCompactQuestionStep =
     phase === "questions" && isProductHelpQuestion(currentQuestionId)
 
-  const hasCardFooter = phase === "results" || phase === "contact"
-  const showResultsScrollFade = phase === "results" && expandedOutcomeId !== null
+  const hasCardFooter = phase === "results" || phase === "contact" || phase === "product"
+  const shouldCenterCardContent = !hasCardFooter || phase === "product"
+  const resultsExpandedId =
+    expandedOutcomeId ??
+    (phase === "results" && outcomes.length === 1
+      ? sortOutcomesForDisplay(outcomes)[0]?.id ?? null
+      : null)
+  const showResultsScrollFade = phase === "results" && resultsExpandedId !== null
   const { scrollRef: cardScrollRef, showFade: showCardScrollFade, onScroll: onCardScroll } =
     useScrollFade(showResultsScrollFade)
 
@@ -98,8 +129,10 @@ export function PriceCalculator() {
     }
 
     if (isQuestionFlowComplete(nextAnswers)) {
-      setOutcomes(resolveOutcomes(nextAnswers))
-      setExpandedOutcomeId(null)
+      const resolvedOutcomes = resolveOutcomes(nextAnswers)
+      const sorted = sortOutcomesForDisplay(resolvedOutcomes)
+      setOutcomes(resolvedOutcomes)
+      setExpandedOutcomeId(sorted.length === 1 ? sorted[0].id : null)
       setPhase("results")
     }
   }
@@ -150,6 +183,10 @@ export function PriceCalculator() {
 
     if (phase === "product") {
       setPhase("results")
+      if (outcomes.length === 1) {
+        const sorted = sortOutcomesForDisplay(outcomes)
+        setExpandedOutcomeId(sorted[0]?.id ?? null)
+      }
       return
     }
 
@@ -245,9 +282,12 @@ export function PriceCalculator() {
                   <div
                     className={cn(
                       "mx-auto flex w-full flex-col",
-                      !hasCardFooter && "justify-center",
+                      shouldCenterCardContent && "justify-center",
                       isCompactQuestionStep ? "p-4 sm:p-5" : "p-6 sm:p-8",
-                      !hasCardFooter && CARD_INNER_MIN_HEIGHT_CLASS,
+                      shouldCenterCardContent &&
+                        (hasCardFooter && phase === "product"
+                          ? "min-h-full"
+                          : CARD_INNER_MIN_HEIGHT_CLASS),
                       phase !== "results" && "max-w-3xl"
                     )}
                   >
@@ -279,11 +319,9 @@ export function PriceCalculator() {
                       question={productDescriptionQuestion}
                       answers={answers}
                       canGoBack
-                      continueLabel={t("continue")}
+                      actionsInFooter
                       onBack={handleBack}
                       onTextareaChange={handleProductDescriptionChange}
-                      onTextareaContinue={handleProductDescriptionContinue}
-                      onTextareaSkip={handleProductDescriptionSkip}
                     />
                   )}
 
@@ -372,6 +410,37 @@ export function PriceCalculator() {
                     >
                       {t("submit")}
                     </button>
+                  </CardFooter>
+                )}
+
+                {phase === "product" && (
+                  <CardFooter>
+                    <button
+                      type="button"
+                      onClick={reset}
+                      className="text-sm font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                    >
+                      {t("startOver")}
+                    </button>
+                    <div className="flex flex-wrap items-center justify-end gap-3">
+                      {productDescriptionQuestion.optional && (
+                        <button
+                          type="button"
+                          onClick={handleProductDescriptionSkip}
+                          className="text-sm font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                        >
+                          {t("skip")}
+                        </button>
+                      )}
+                      <button
+                        type="button"
+                        onClick={handleProductDescriptionContinue}
+                        className="inline-flex items-center justify-center gap-2 rounded-md bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:bg-primary-500 dark:hover:bg-primary-400"
+                      >
+                        {t("continue")}
+                        <IconArrowRight className="size-4" aria-hidden="true" />
+                      </button>
+                    </div>
                   </CardFooter>
                 )}
               </div>
@@ -472,6 +541,7 @@ function QuestionStep({
   answers,
   canGoBack,
   compact = false,
+  actionsInFooter = false,
   continueLabel = "Continue",
   onBack,
   onChoiceSelect,
@@ -485,6 +555,7 @@ function QuestionStep({
   answers: CalculatorAnswers
   canGoBack: boolean
   compact?: boolean
+  actionsInFooter?: boolean
   continueLabel?: string
   onBack: () => void
   onChoiceSelect?: (question: CalculatorQuestion, optionId: string) => void
@@ -543,7 +614,7 @@ function QuestionStep({
               className={cn(
                 "rounded-xl border text-left transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600",
                 compact ? "rounded-lg p-3" : "p-4",
-                option.id === "help-me-decide" && "sm:col-span-2",
+                getChoiceOptionColSpan(question.options, option.id),
                 answers[question.id] === option.id
                   ? "border-primary-400 bg-primary-50/70 dark:border-primary-500 dark:bg-primary-800/50"
                   : "border-gray-200 hover:border-primary-300 hover:bg-primary-50/70 dark:border-gray-700 dark:hover:border-primary-500 dark:hover:bg-primary-800/40"
@@ -598,7 +669,7 @@ function QuestionStep({
       )}
 
       {question.type === "textarea" && (
-        <div className="mt-6 space-y-4">
+        <div className="mt-6">
           <textarea
             id={question.id}
             rows={5}
@@ -607,25 +678,27 @@ function QuestionStep({
             placeholder={question.placeholder}
             className="block w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-gray-900 shadow-xs placeholder:text-gray-400 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-500"
           />
-          <div className="flex flex-wrap gap-3">
-            <button
-              type="button"
-              onClick={onTextareaContinue}
-              className="inline-flex items-center gap-2 rounded-md bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-primary-500 dark:bg-primary-500 dark:hover:bg-primary-400"
-            >
-              {continueLabel}
-              <IconArrowRight className="size-4" aria-hidden="true" />
-            </button>
-            {question.optional && (
+          {!actionsInFooter && (
+            <div className="mt-4 flex flex-wrap gap-3">
               <button
                 type="button"
-                onClick={onTextareaSkip}
-                className="rounded-md px-4 py-2.5 text-sm font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                onClick={onTextareaContinue}
+                className="inline-flex items-center gap-2 rounded-md bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-primary-500 dark:bg-primary-500 dark:hover:bg-primary-400"
               >
-                Skip
+                {continueLabel}
+                <IconArrowRight className="size-4" aria-hidden="true" />
               </button>
-            )}
-          </div>
+              {question.optional && (
+                <button
+                  type="button"
+                  onClick={onTextareaSkip}
+                  className="rounded-md px-4 py-2.5 text-sm font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                >
+                  Skip
+                </button>
+              )}
+            </div>
+          )}
         </div>
       )}
     </div>
@@ -647,8 +720,10 @@ function ResultsStep({
 }) {
   const sortedOutcomes = sortOutcomesForDisplay(outcomes)
   const choiceSummary = getAnswersSummary(answers)
-  const expandedOutcome = expandedId
-    ? sortedOutcomes.find((outcome) => outcome.id === expandedId)
+  const isSingleOutcome = sortedOutcomes.length === 1
+  const activeExpandedId = expandedId ?? (isSingleOutcome ? sortedOutcomes[0]?.id ?? null : null)
+  const expandedOutcome = activeExpandedId
+    ? sortedOutcomes.find((outcome) => outcome.id === activeExpandedId)
     : null
 
   if (outcomes.length === 0) {
@@ -662,59 +737,64 @@ function ResultsStep({
   }
 
   return (
-    <div>
-      <button
-        type="button"
-        onClick={onBack}
-        className="mb-4 inline-flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
-      >
-        <IconArrowLeft className="size-4" aria-hidden="true" />
-        Back
-      </button>
+    <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-8">
+      <aside className="w-full shrink-0 lg:sticky lg:top-6 lg:w-52 xl:w-56">
+        <button
+          type="button"
+          onClick={onBack}
+          className="inline-flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+        >
+          <IconArrowLeft className="size-4" aria-hidden="true" />
+          Back
+        </button>
 
-      {choiceSummary.length > 0 && (
-        <div className="rounded-xl bg-primary-600/5 p-4 sm:p-5 dark:bg-primary-500/10">
-          <p className="text-xs font-medium uppercase tracking-wide text-primary-700 dark:text-primary-300">
-            Based on your answers
-          </p>
-          <dl className="mt-2 flex flex-wrap gap-x-4 gap-y-2">
-            {choiceSummary.map((item) => (
-              <div key={item.questionId} className="flex gap-1.5 text-sm">
-                <dt className="text-gray-500 dark:text-gray-400">{item.label}:</dt>
-                <dd className="font-medium text-gray-900 dark:text-white">{item.value}</dd>
-              </div>
-            ))}
-          </dl>
-        </div>
-      )}
+        {choiceSummary.length > 0 && (
+          <div className="mt-4 rounded-xl bg-primary-600/5 p-4 sm:p-5 dark:bg-primary-500/10">
+            <p className="text-xs font-medium uppercase tracking-wide text-primary-700 dark:text-primary-300">
+              Based on your answers
+            </p>
+            <dl className="mt-3 space-y-3">
+              {choiceSummary.map((item) => (
+                <div key={item.questionId}>
+                  <dt className="text-xs text-gray-500 dark:text-gray-400">{item.label}</dt>
+                  <dd className="mt-0.5 text-sm font-medium text-gray-900 dark:text-white">
+                    {item.value}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        )}
+      </aside>
 
-      <div className={cn(choiceSummary.length > 0 && "mt-6")}>
-        {expandedId && expandedOutcome ? (
-          <div className="flex flex-col gap-3 lg:flex-row lg:items-stretch">
-            <div className="min-w-0 flex-1 order-2 lg:order-1">
-              <ExpandedServicePanel outcome={expandedOutcome} onHide={() => onExpandedChange(null)} />
-            </div>
-
+      <div className="min-w-0 flex-1">
+        {activeExpandedId && expandedOutcome ? (
+          <div className="flex flex-col gap-3">
             {sortedOutcomes.length > 1 && (
               <div
-                className="order-1 flex shrink-0 gap-2 overflow-x-auto pb-1 lg:order-2 lg:w-52 lg:flex-col lg:overflow-visible lg:pb-0"
+                className="flex flex-wrap gap-2"
                 role="tablist"
-                aria-label="Other services"
+                aria-label="Suggested services"
               >
-                {sortedOutcomes
-                  .filter((outcome) => outcome.id !== expandedId)
-                  .map((outcome) => (
-                    <ServiceTab
-                      key={outcome.id}
-                      outcome={outcome}
-                      onClick={() => onExpandedChange(outcome.id)}
-                    />
-                  ))}
+                {sortedOutcomes.map((outcome) => (
+                  <ServiceTab
+                    key={outcome.id}
+                    outcome={outcome}
+                    isActive={outcome.id === activeExpandedId}
+                    onClick={() => onExpandedChange(outcome.id)}
+                  />
+                ))}
               </div>
             )}
+
+            <ExpandedServicePanel
+              outcome={expandedOutcome}
+              showHide={!isSingleOutcome}
+              onHide={() => onExpandedChange(null)}
+            />
           </div>
         ) : (
-          <div className={cn("grid gap-3", sortedOutcomes.length > 1 && "sm:grid-cols-2")}>
+          <div className="flex flex-col gap-3">
             {sortedOutcomes.map((outcome) => (
               <ServiceResultCard
                 key={outcome.id}
@@ -819,9 +899,11 @@ function ServiceResultCard({
 
 function ExpandedServicePanel({
   outcome,
+  showHide = true,
   onHide,
 }: {
   outcome: CalculatorOutcome
+  showHide?: boolean
   onHide: () => void
 }) {
   const iconStyle = OUTCOME_ICON_STYLES[outcome.id]
@@ -857,13 +939,15 @@ function ExpandedServicePanel({
             </p>
           </div>
         </div>
-        <button
-          type="button"
-          onClick={onHide}
-          className="shrink-0 rounded-md border border-gray-300 px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800"
-        >
-          Hide
-        </button>
+        {showHide && (
+          <button
+            type="button"
+            onClick={onHide}
+            className="shrink-0 rounded-md border border-gray-300 px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800"
+          >
+            Hide
+          </button>
+        )}
       </div>
 
       <div className="mt-5 border-t border-gray-100 pt-5 dark:border-gray-800">
@@ -875,9 +959,11 @@ function ExpandedServicePanel({
 
 function ServiceTab({
   outcome,
+  isActive = false,
   onClick,
 }: {
   outcome: CalculatorOutcome
+  isActive?: boolean
   onClick: () => void
 }) {
   const iconStyle = OUTCOME_ICON_STYLES[outcome.id]
@@ -888,8 +974,14 @@ function ServiceTab({
     <button
       type="button"
       role="tab"
+      aria-selected={isActive}
       onClick={onClick}
-      className="flex min-w-[9rem] shrink-0 items-center gap-2 rounded-lg border border-gray-200 bg-white p-3 text-left transition-all hover:border-primary-300 hover:bg-primary-50/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:border-gray-700 dark:bg-gray-900/50 dark:hover:border-primary-700 dark:hover:bg-primary-950/30 lg:min-w-0 lg:w-full"
+      className={cn(
+        "flex shrink-0 items-center gap-2 rounded-lg border p-3 text-left transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600",
+        isActive
+          ? "border-primary-400 bg-primary-50/70 dark:border-primary-500 dark:bg-primary-800/50"
+          : "border-gray-200 bg-white hover:border-primary-300 hover:bg-primary-50/50 dark:border-gray-700 dark:bg-gray-900/50 dark:hover:border-primary-700 dark:hover:bg-primary-950/30"
+      )}
     >
       <div
         className={cn(
@@ -956,8 +1048,8 @@ function OutcomePricingDetails({ outcome }: { outcome: CalculatorOutcome }) {
         <p className="mt-3 text-xs text-gray-500 dark:text-gray-400">{pricingNote}</p>
       )}
 
-      <div className="mt-6">
-        {outcome.pricingModel === "partnership" ? (
+      {outcome.pricingModel === "partnership" && (
+        <div className="mt-6">
           <Link
             href="/betacode-ventures"
             className="inline-flex items-center gap-2 rounded-md bg-primary-600 px-5 py-3 text-sm font-semibold text-white shadow-sm hover:bg-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:bg-white dark:text-purple-900 dark:hover:bg-purple-50 dark:focus-visible:outline-white"
@@ -965,15 +1057,8 @@ function OutcomePricingDetails({ outcome }: { outcome: CalculatorOutcome }) {
             Explore Betacode Ventures
             <IconArrowRight className="size-4" aria-hidden="true" />
           </Link>
-        ) : (
-          <Link
-            href={CALENDAR_URL}
-            className="inline-flex items-center justify-center rounded-md bg-primary-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:bg-primary-500 dark:hover:bg-primary-400 animate-bounce"
-          >
-            Book a call
-          </Link>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   )
 }
@@ -1076,9 +1161,9 @@ function ContactStep({
         Back
       </button>
 
-      <h2 className="text-xl font-semibold text-foreground">{contact.title}</h2>
+      <h2 className="text-xl font-semibold text-gray-900 dark:text-white">{contact.title}</h2>
       {contact.description && (
-        <p className="mt-2 text-sm text-muted-foreground">{contact.description}</p>
+        <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">{contact.description}</p>
       )}
 
       <form id="price-calculator-contact-form" onSubmit={onSubmit} className="mt-6 space-y-4">
@@ -1087,17 +1172,17 @@ function ContactStep({
             <div className="space-y-1">
               <label
                 htmlFor={field.id}
-                className="block text-sm font-medium leading-none text-foreground"
+                className="block text-sm font-medium leading-none text-gray-900 dark:text-white"
               >
                 {field.label}
                 {field.optional && (
-                  <span className="ml-1 font-normal text-muted-foreground">(optional)</span>
+                  <span className="ml-1 font-normal text-gray-500 dark:text-gray-400">(optional)</span>
                 )}
               </label>
               {field.description && (
                 <p
                   id={`${field.id}-description`}
-                  className="text-xs leading-normal text-muted-foreground"
+                  className="text-xs leading-normal text-gray-500 dark:text-gray-400"
                 >
                   {field.description}
                 </p>
@@ -1111,7 +1196,7 @@ function ContactStep({
               placeholder={field.placeholder}
               required={!field.optional}
               aria-describedby={field.description ? `${field.id}-description` : undefined}
-              className="block w-full rounded-lg border border-input bg-background px-3 py-2.5 text-sm text-foreground shadow-xs placeholder:text-muted-foreground focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20"
+              className="block w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm text-gray-900 shadow-xs placeholder:text-gray-400 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-500"
             />
           </div>
         ))}
