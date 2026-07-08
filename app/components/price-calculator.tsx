@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import Link from "next/link"
 import { useTranslations } from "next-intl"
-import { IconArrowLeft, IconArrowRight, IconCalculator, IconCheck, IconChevronDown, IconRocket, IconSchool, IconTool, IconUserPlus, IconUsersGroup } from "@tabler/icons-react"
+import { IconArrowLeft, IconArrowRight, IconBuilding, IconCalculator, IconCheck, IconChevronDown, IconRocket, IconSchool, IconTool, IconUserPlus, IconUsersGroup } from "@tabler/icons-react"
 import {
   clearBranchAnswers,
   formatEuroRange,
@@ -67,6 +67,26 @@ function getChoiceOptionColSpan(
   }
 
   return undefined
+}
+
+const CHOICE_OPTION_ICONS: Record<
+  string,
+  { icon: typeof IconRocket; bg: string; text: string }
+> = {
+  "business-stage:startup": {
+    icon: IconRocket,
+    bg: "bg-emerald-100 dark:bg-emerald-900/40",
+    text: "text-emerald-600 dark:text-emerald-400",
+  },
+  "business-stage:established": {
+    icon: IconBuilding,
+    bg: "bg-amber-100 dark:bg-amber-900/40",
+    text: "text-amber-600 dark:text-amber-400",
+  },
+}
+
+function getChoiceOptionIcon(questionId: string, optionId: string) {
+  return CHOICE_OPTION_ICONS[`${questionId}:${optionId}`]
 }
 
 export function PriceCalculator() {
@@ -606,7 +626,11 @@ function QuestionStep({
             compact ? "mt-4 gap-2.5" : "mt-6 gap-4"
           )}
         >
-          {question.options.map((option) => (
+          {question.options.map((option) => {
+            const iconStyle = getChoiceOptionIcon(question.id, option.id)
+            const Icon = iconStyle?.icon
+
+            return (
             <button
               key={option.id}
               type="button"
@@ -614,12 +638,27 @@ function QuestionStep({
               className={cn(
                 "rounded-xl border text-left transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600",
                 compact ? "rounded-lg p-3" : "p-4",
+                iconStyle && "flex items-start gap-3",
                 getChoiceOptionColSpan(question.options, option.id),
                 answers[question.id] === option.id
                   ? "border-primary-400 bg-primary-50/70 dark:border-primary-500 dark:bg-primary-800/50"
                   : "border-gray-200 hover:border-primary-300 hover:bg-primary-50/70 dark:border-gray-700 dark:hover:border-primary-500 dark:hover:bg-primary-800/40"
               )}
             >
+              {Icon && iconStyle && (
+                <div
+                  className={cn(
+                    "flex shrink-0 items-center justify-center rounded-lg",
+                    compact ? "size-9" : "size-10",
+                    iconStyle.bg,
+                    iconStyle.text
+                  )}
+                >
+                  <Icon className={compact ? "size-4" : "size-5"} aria-hidden="true" />
+                </div>
+              )}
+
+              <div className="min-w-0 flex-1">
               <span
                 className={cn(
                   "font-semibold text-gray-900 dark:text-white",
@@ -638,8 +677,10 @@ function QuestionStep({
                   {option.description}
                 </p>
               )}
+              </div>
             </button>
-          ))}
+            )
+          })}
         </div>
       )}
 
