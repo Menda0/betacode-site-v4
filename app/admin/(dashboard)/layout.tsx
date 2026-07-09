@@ -14,6 +14,8 @@ export default async function AdminDashboardLayout({
   }
 
   return (
-    <AdminShell userEmail={session.user.email}>{children}</AdminShell>
+    <AdminShell userName={session.user.name} userEmail={session.user.email}>
+      {children}
+    </AdminShell>
   )
 }

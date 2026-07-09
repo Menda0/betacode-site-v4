@@ -44,7 +44,7 @@ export function ContactsTable({ contacts }: { contacts: ContactRow[] }) {
 
   if (contacts.length === 0) {
     return (
-      <div className="rounded-lg border border-dashed p-10 text-center text-sm text-muted-foreground">
+      <div className="rounded-xl border border-dashed border-gray-300 bg-white p-10 text-center text-sm text-gray-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-400">
         No contacts yet. Submissions from the pricing calculator will appear here.
       </div>
     )
@@ -52,7 +52,7 @@ export function ContactsTable({ contacts }: { contacts: ContactRow[] }) {
 
   return (
     <>
-      <div className="rounded-lg border">
+      <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-xs dark:border-gray-800 dark:bg-gray-900">
         <Table>
           <TableHeader>
             <TableRow>

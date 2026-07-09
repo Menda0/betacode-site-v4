@@ -22,10 +22,10 @@ export default async function AdminDashboardPage() {
   }))
 
   return (
-    <div className="space-y-4">
-      <div>
-        <h1 className="text-2xl font-semibold tracking-tight">Contacts</h1>
-        <p className="text-sm text-muted-foreground">
+    <div className="space-y-6">
+      <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-xs dark:border-gray-800 dark:bg-gray-900">
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Contacts</h2>
+        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
           {rows.length} submission{rows.length === 1 ? "" : "s"} from the pricing calculator.
         </p>
       </div>

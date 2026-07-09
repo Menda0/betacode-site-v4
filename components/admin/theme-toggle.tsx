@@ -1,23 +1,25 @@
 "use client"
 
-import { Moon, Sun } from "lucide-react"
+import { IconMoon, IconSun } from "@tabler/icons-react"
 import { useTheme } from "@/app/components/theme-provider"
-import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 
 export function AdminThemeToggle() {
   const { theme, toggleTheme } = useTheme()
 
   return (
-    <Button
+    <button
       type="button"
-      variant="ghost"
-      size="icon"
       onClick={toggleTheme}
       aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
       title={theme === "dark" ? "Light mode" : "Dark mode"}
+      className={cn(
+        "rounded-md p-2 transition-colors",
+        "text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-white"
+      )}
     >
-      <Sun className="size-4 dark:hidden" />
-      <Moon className="hidden size-4 dark:block" />
-    </Button>
+      <IconSun className="size-5 dark:hidden" aria-hidden="true" />
+      <IconMoon className="hidden size-5 dark:block" aria-hidden="true" />
+    </button>
   )
 }

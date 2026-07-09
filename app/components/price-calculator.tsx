@@ -1,7 +1,7 @@
 "use client"
 
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react"
-import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState, type RefObject } from "react"
 import Link from "next/link"
 import { useTranslations, useLocale } from "next-intl"
 import { IconArrowLeft, IconArrowRight, IconBox, IconBuilding, IconCalculator, IconCheck, IconChevronDown, IconCompass, IconListDetails, IconPlayerSkipForward, IconRefresh, IconRocket, IconSchool, IconTool, IconUserPlus, IconUsersGroup } from "@tabler/icons-react"
@@ -487,15 +487,19 @@ export function PriceCalculator() {
               >
                 <div className="relative min-h-0 flex-1">
                   <div
-                    ref={cardScrollRef}
-                    onScroll={onCardScroll}
-                    className="flex h-full flex-col overflow-y-auto"
+                    ref={phase === "results" ? undefined : cardScrollRef}
+                    onScroll={phase === "results" ? undefined : onCardScroll}
+                    className={cn(
+                      "flex h-full flex-col",
+                      phase === "results" ? "overflow-hidden" : "overflow-y-auto"
+                    )}
                   >
                   <div
                     className={cn(
                       "mx-auto flex w-full flex-col",
                       shouldCenterCardContent && "justify-center",
-                      isCompactQuestionStep ? "p-4 sm:p-5" : "p-6 sm:p-8",
+                      phase !== "results" &&
+                        (isCompactQuestionStep ? "p-4 sm:p-5" : "p-6 sm:p-8"),
                       shouldCenterCardContent &&
                         (hasCardFooter && phase === "product"
                           ? "min-h-full"
@@ -524,6 +528,9 @@ export function PriceCalculator() {
                       expandedId={expandedOutcomeId}
                       onExpandedChange={setExpandedOutcomeId}
                       onBack={handleBack}
+                      scrollRef={cardScrollRef}
+                      onScroll={onCardScroll}
+                      showScrollFade={showCardScrollFade}
                     />
                   )}
 
@@ -574,7 +581,7 @@ export function PriceCalculator() {
                   </div>
                   </div>
 
-                  <ScrollBottomFade visible={showCardScrollFade} />
+                  <ScrollBottomFade visible={phase !== "results" && showCardScrollFade} />
                 </div>
 
                 {phase === "results" && outcomes.length > 0 && (
@@ -1010,12 +1017,18 @@ function ResultsStep({
   expandedId,
   onExpandedChange,
   onBack,
+  scrollRef,
+  onScroll,
+  showScrollFade = false,
 }: {
   answers: CalculatorAnswers
   outcomes: CalculatorOutcome[]
   expandedId: OutcomeId | null
   onExpandedChange: (id: OutcomeId | null) => void
   onBack: () => void
+  scrollRef?: RefObject<HTMLDivElement | null>
+  onScroll?: () => void
+  showScrollFade?: boolean
 }) {
   const t = useTranslations("pricing")
   const sortedOutcomes = sortOutcomesForDisplay(outcomes)
@@ -1037,23 +1050,8 @@ function ResultsStep({
   }
 
   return (
-    <div className="flex min-h-full flex-1 flex-col gap-4 lg:flex-row lg:items-stretch lg:gap-8">
-      <div className="flex items-center justify-between lg:hidden">
-        <button
-          type="button"
-          onClick={onBack}
-          className="inline-flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
-        >
-          <IconArrowLeft className="size-4" aria-hidden="true" />
-          {t("back")}
-        </button>
-
-        {choiceSummary.length > 0 && (
-          <AnswersSummaryPopover items={choiceSummary} title={t("basedOnAnswers")} />
-        )}
-      </div>
-
-      <aside className="hidden w-52 shrink-0 lg:sticky lg:top-6 lg:block lg:self-start xl:w-56">
+    <div className="flex min-h-full flex-1 flex-col lg:min-h-0 lg:flex-row">
+      <aside className="hidden w-56 shrink-0 p-6 pl-8 pt-8 lg:block xl:w-74">
         <button
           type="button"
           onClick={onBack}
@@ -1070,44 +1068,71 @@ function ResultsStep({
         )}
       </aside>
 
-      <div className="flex min-w-0 flex-1 flex-col self-stretch">
-        {activeExpandedId && expandedOutcome ? (
-          <div className="flex flex-1 flex-col gap-3 self-stretch">
-            {sortedOutcomes.length > 1 && (
-              <div
-                className="flex flex-wrap items-center gap-2"
-                role="tablist"
-                aria-label="Suggested services"
+      <div className="relative flex min-h-0 flex-1 flex-col">
+        <div
+          ref={scrollRef}
+          onScroll={onScroll}
+          className="flex flex-1 flex-col overflow-y-auto p-6 sm:p-8 lg:px-8 lg:pb-6 lg:pl-0 lg:pt-8"
+        >
+          <div className="flex min-h-full flex-1 flex-col gap-4">
+            <div className="flex items-center justify-between lg:hidden">
+              <button
+                type="button"
+                onClick={onBack}
+                className="inline-flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
               >
-                {sortedOutcomes.map((outcome) => (
-                  <ServiceTab
-                    key={outcome.id}
-                    outcome={outcome}
-                    isActive={outcome.id === activeExpandedId}
-                    onClick={() => onExpandedChange(outcome.id)}
-                  />
-                ))}
-              </div>
-            )}
+                <IconArrowLeft className="size-4" aria-hidden="true" />
+                {t("back")}
+              </button>
 
-            <ExpandedServicePanel
-              className="flex-1"
-              outcome={expandedOutcome}
-              showHide={!isSingleOutcome}
-              onHide={() => onExpandedChange(null)}
-            />
+              {choiceSummary.length > 0 && (
+                <AnswersSummaryPopover items={choiceSummary} title={t("basedOnAnswers")} />
+              )}
+            </div>
+
+            <div className="flex min-w-0 flex-1 flex-col self-stretch">
+              {activeExpandedId && expandedOutcome ? (
+                <div className="flex flex-1 flex-col gap-3 self-stretch">
+                  {sortedOutcomes.length > 1 && (
+                    <div
+                      className="flex flex-wrap items-center gap-2"
+                      role="tablist"
+                      aria-label="Suggested services"
+                    >
+                      {sortedOutcomes.map((outcome) => (
+                        <ServiceTab
+                          key={outcome.id}
+                          outcome={outcome}
+                          isActive={outcome.id === activeExpandedId}
+                          onClick={() => onExpandedChange(outcome.id)}
+                        />
+                      ))}
+                    </div>
+                  )}
+
+                  <ExpandedServicePanel
+                    className="flex-1"
+                    outcome={expandedOutcome}
+                    showHide={!isSingleOutcome}
+                    onHide={() => onExpandedChange(null)}
+                  />
+                </div>
+              ) : (
+                <div className="flex flex-col gap-3">
+                  {sortedOutcomes.map((outcome) => (
+                    <ServiceResultCard
+                      key={outcome.id}
+                      outcome={outcome}
+                      onSelect={() => onExpandedChange(outcome.id)}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
-        ) : (
-          <div className="flex flex-col gap-3">
-            {sortedOutcomes.map((outcome) => (
-              <ServiceResultCard
-                key={outcome.id}
-                outcome={outcome}
-                onSelect={() => onExpandedChange(outcome.id)}
-              />
-            ))}
-          </div>
-        )}
+        </div>
+
+        <ScrollBottomFade visible={showScrollFade} />
       </div>
     </div>
   )

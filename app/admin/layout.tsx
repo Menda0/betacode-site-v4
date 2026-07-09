@@ -28,9 +28,9 @@ export default function AdminRootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className="h-full" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} min-h-dvh bg-background font-sans text-foreground antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} h-full min-h-dvh bg-gray-50 font-sans text-foreground antialiased dark:bg-gray-950`}
       >
         <Script id="admin-theme-init" strategy="beforeInteractive">
           {themeScript}
