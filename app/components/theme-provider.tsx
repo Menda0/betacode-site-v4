@@ -13,18 +13,27 @@ const ThemeContext = createContext<{
 const STORAGE_KEY = 'betacode-theme'
 
 function getInitialTheme(): Theme {
-  if (typeof document === 'undefined') return 'dark'
+  if (typeof document === 'undefined') return 'light'
   const stored = localStorage.getItem(STORAGE_KEY) as Theme | null
   if (stored === 'light' || stored === 'dark') return stored
   return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
 }
 
+function applyTheme(theme: Theme) {
+  const root = document.documentElement
+  root.classList.toggle('dark', theme === 'dark')
+  root.classList.toggle('light', theme === 'light')
+  root.style.colorScheme = theme
+}
+
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>('dark')
+  const [theme, setThemeState] = useState<Theme>('light')
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    setThemeState(getInitialTheme())
+    const initial = getInitialTheme()
+    setThemeState(initial)
+    applyTheme(initial)
     setMounted(true)
   }, [])
 
@@ -32,13 +41,13 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     setThemeState(next)
     if (typeof window !== 'undefined') {
       localStorage.setItem(STORAGE_KEY, next)
-      document.documentElement.classList.toggle('dark', next === 'dark')
+      applyTheme(next)
     }
   }, [])
 
   useEffect(() => {
     if (!mounted) return
-    document.documentElement.classList.toggle('dark', theme === 'dark')
+    applyTheme(theme)
   }, [mounted, theme])
 
   const toggleTheme = useCallback(() => {

@@ -1,5 +1,6 @@
 import { getContactModel } from "@/lib/models/contact"
-import { ContactsTable, type ContactRow } from "@/components/admin/contacts-table"
+import { ContactsDataTable, type ContactRow } from "@/components/admin/contacts-data-table"
+import { ContactsSectionCards } from "@/components/admin/contacts-section-cards"
 import type { OutcomeId } from "@/lib/pricing-calculator"
 import type { AnswerSummaryItem } from "@/lib/pricing-calculator"
 
@@ -21,15 +22,19 @@ export default async function AdminDashboardPage() {
     createdAt: contact.createdAt.toISOString(),
   }))
 
+  const enCount = rows.filter((row) => row.locale === "en").length
+  const ptCount = rows.filter((row) => row.locale === "pt").length
+  const withWebsiteCount = rows.filter((row) => row.website).length
+
   return (
-    <div className="space-y-6">
-      <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-xs dark:border-gray-800 dark:bg-gray-900">
-        <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Contacts</h2>
-        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-          {rows.length} submission{rows.length === 1 ? "" : "s"} from the pricing calculator.
-        </p>
-      </div>
-      <ContactsTable contacts={rows} />
-    </div>
+    <>
+      <ContactsSectionCards
+        total={rows.length}
+        enCount={enCount}
+        ptCount={ptCount}
+        withWebsiteCount={withWebsiteCount}
+      />
+      <ContactsDataTable data={rows} />
+    </>
   )
 }

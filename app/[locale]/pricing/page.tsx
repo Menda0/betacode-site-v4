@@ -36,7 +36,7 @@ export default async function PricingPage({ params }: Props) {
 
   return (
     <>
-      <PriceCalculator />
+      <PriceCalculator suggestedPosts={insightPosts.slice(0, 3)} />
       <InsightsPreview posts={insightPosts} />
       <Clients />
       <VenturesPromo />

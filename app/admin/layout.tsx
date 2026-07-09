@@ -12,8 +12,16 @@ const themeScript = `
   const key = 'betacode-theme';
   const stored = localStorage.getItem(key);
   const dark = stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches);
-  if (dark) document.documentElement.classList.add('dark');
-  else document.documentElement.classList.remove('dark');
+  const root = document.documentElement;
+  if (dark) {
+    root.classList.add('dark');
+    root.classList.remove('light');
+    root.style.colorScheme = 'dark';
+  } else {
+    root.classList.remove('dark');
+    root.classList.add('light');
+    root.style.colorScheme = 'light';
+  }
 })();
 `
 
@@ -30,7 +38,7 @@ export default function AdminRootLayout({
   return (
     <html lang="en" className="h-full" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} h-full min-h-dvh bg-gray-50 font-sans text-foreground antialiased dark:bg-gray-950`}
+        className={`${geistSans.variable} ${geistMono.variable} h-full min-h-dvh bg-background font-sans text-foreground antialiased`}
       >
         <Script id="admin-theme-init" strategy="beforeInteractive">
           {themeScript}

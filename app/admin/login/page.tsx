@@ -3,7 +3,7 @@ import { AdminThemeToggle } from "@/components/admin/theme-toggle"
 
 export default function AdminLoginPage() {
   return (
-    <div className="relative flex min-h-dvh items-center justify-center p-6">
+    <div className="relative flex min-h-dvh items-center justify-center bg-background p-6">
       <div className="absolute top-4 right-4">
         <AdminThemeToggle />
       </div>

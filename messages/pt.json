@@ -386,6 +386,8 @@
     "submitErrorFailed": "Não foi possível enviar os seus dados. Por favor tente novamente.",
     "successTitle": "Obrigado!",
     "successMessage": "Recebemos os seus dados e entraremos em contacto consigo em breve.",
+    "successSuggestedArticles": "Leitura sugerida",
+    "backToHome": "Voltar à página inicial",
     "validation": {
       "nameRequired": "Por favor introduza o seu nome.",
       "emailRequired": "Por favor introduza o seu email.",

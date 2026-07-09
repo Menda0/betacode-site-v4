@@ -9,6 +9,7 @@ import { Link } from "@/i18n/navigation"
 import { useTranslations, useLocale } from "next-intl"
 import { IconArrowLeft, IconArrowRight, IconBox, IconBuilding, IconCalculator, IconCheck, IconChevronDown, IconCompass, IconInfoCircle, IconListDetails, IconPlayerSkipForward, IconRefresh, IconRocket, IconSchool, IconTool, IconUserPlus, IconUsersGroup } from "@tabler/icons-react"
 import type { Locale } from "@/i18n/routing"
+import type { BlogPost } from "@/lib/blog-content"
 import {
   clearBranchAnswers,
   createPricingUiLabels,
@@ -262,7 +263,7 @@ function PricingIntroContent({
   )
 }
 
-export function PriceCalculator() {
+export function PriceCalculator({ suggestedPosts = [] }: { suggestedPosts?: BlogPost[] }) {
   const { config, uiLabels, t } = usePricingCalculatorLabels()
   const startQuestion = useMemo(() => getStartQuestion(config), [config])
   const productDescriptionQuestion = useMemo(
@@ -571,6 +572,7 @@ export function PriceCalculator() {
                     <ContactStep
                       contact={config.contact}
                       isSuccess={phase === "submitted"}
+                      suggestedPosts={suggestedPosts}
                       submitError={submitError}
                       isSubmitting={isSubmitting}
                       onBack={handleBack}
@@ -1600,6 +1602,7 @@ function isValidOptionalWebsite(value: string) {
 function ContactStep({
   contact,
   isSuccess,
+  suggestedPosts,
   submitError,
   isSubmitting,
   onBack,
@@ -1608,6 +1611,7 @@ function ContactStep({
 }: {
   contact: CalculatorConfig["contact"]
   isSuccess: boolean
+  suggestedPosts: BlogPost[]
   submitError: string | null
   isSubmitting: boolean
   onBack: () => void
@@ -1649,24 +1653,10 @@ function ContactStep({
 
   if (isSuccess) {
     return (
-      <div className="text-center">
-        <div className="mx-auto flex size-12 items-center justify-center rounded-full bg-primary-600/10 text-primary-600 dark:bg-primary-500/10 dark:text-primary-400">
-          <IconCheck className="size-6" aria-hidden="true" />
-        </div>
-        <h2 className="mt-4 text-xl font-semibold text-gray-900 dark:text-white">
-          {t("successTitle")}
-        </h2>
-        <p className="mx-auto mt-2 max-w-sm text-sm text-gray-600 dark:text-gray-300">
-          {t("successMessage")}
-        </p>
-        <button
-          type="button"
-          onClick={onStartOver}
-          className="mt-6 text-sm font-semibold text-primary-600 hover:text-primary-500 dark:text-primary-400"
-        >
-          {t("startOver")}
-        </button>
-      </div>
+      <ContactSuccessView
+        suggestedPosts={suggestedPosts}
+        onStartOver={onStartOver}
+      />
     )
   }
 
@@ -1788,4 +1778,77 @@ type ContactFormValues = {
   name: string
   email: string
   website: string
+}
+
+function ContactSuccessView({
+  suggestedPosts,
+  onStartOver,
+}: {
+  suggestedPosts: BlogPost[]
+  onStartOver: () => void
+}) {
+  const t = useTranslations("pricing")
+  const tBlog = useTranslations("blog")
+  const articles = suggestedPosts.slice(0, 3)
+
+  return (
+    <div>
+      <div className="text-center">
+        <div className="mx-auto flex size-12 items-center justify-center rounded-full bg-primary-600/10 text-primary-600 dark:bg-primary-500/10 dark:text-primary-400">
+          <IconCheck className="size-6" aria-hidden="true" />
+        </div>
+        <h2 className="mt-4 text-xl font-semibold text-gray-900 dark:text-white">
+          {t("successTitle")}
+        </h2>
+        <p className="mx-auto mt-2 max-w-md text-sm text-gray-600 dark:text-gray-300">
+          {t("successMessage")}
+        </p>
+      </div>
+
+      {articles.length > 0 && (
+        <div className="mt-6">
+          <h3 className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
+            {t("successSuggestedArticles")}
+          </h3>
+          <ul className="mt-3 space-y-2">
+            {articles.map((post) => (
+              <li key={post.slug}>
+                <Link
+                  href={`/insights/${post.slug}`}
+                  className="group flex flex-col rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-left transition-colors hover:border-primary-200 hover:bg-primary-50/40 dark:border-gray-700 dark:bg-gray-900/50 dark:hover:border-primary-800 dark:hover:bg-primary-950/20"
+                >
+                  <span className="text-xs font-medium text-secondary-600 dark:text-secondary-400">
+                    {post.category}
+                  </span>
+                  <span className="mt-1 text-sm font-semibold text-gray-900 group-hover:text-primary-600 dark:text-white dark:group-hover:text-primary-400">
+                    {post.title}
+                  </span>
+                  <span className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                    {tBlog("minRead", { minutes: post.readingTimeMinutes })}
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      <div className="mt-6 flex flex-col items-stretch gap-3 sm:flex-row sm:justify-center">
+        <Link
+          href="/"
+          className="inline-flex items-center justify-center gap-2 rounded-md bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:bg-primary-500 dark:hover:bg-primary-400"
+        >
+          {t("backToHome")}
+          <IconArrowRight className="size-4" aria-hidden="true" />
+        </Link>
+        <button
+          type="button"
+          onClick={onStartOver}
+          className="inline-flex items-center justify-center rounded-md px-4 py-2.5 text-sm font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+        >
+          {t("startOver")}
+        </button>
+      </div>
+    </div>
+  )
 }

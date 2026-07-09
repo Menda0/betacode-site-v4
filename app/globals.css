@@ -5,7 +5,7 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 .dark {
-  --background: #111828;
+  --background: #111827;
   --foreground: #f9fafb;
   --card: #111827;
   --card-foreground: #f9fafb;
@@ -28,7 +28,7 @@
   --chart-3: #ef786d;
   --chart-4: #4041eb;
   --chart-5: #bc453a;
-  --sidebar: #111827;
+  --sidebar: #111828;
   --sidebar-foreground: #f9fafb;
   --sidebar-primary: #eb5648;
   --sidebar-primary-foreground: #ffffff;
@@ -129,7 +129,7 @@
   --chart-3: #ef786d;
   --chart-4: #4041eb;
   --chart-5: #8d342b;
-  --sidebar: #ffffff;
+  --sidebar: #f9fafb;
   --sidebar-foreground: #111827;
   --sidebar-primary: #bc453a;
   --sidebar-primary-foreground: #ffffff;
@@ -142,6 +142,15 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+  }
+  html {
+    @apply scroll-smooth;
+  }
+  html.light {
+    color-scheme: light;
+  }
+  html.dark {
+    color-scheme: dark;
   }
   body {
     @apply bg-background text-foreground;

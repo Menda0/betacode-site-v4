@@ -386,6 +386,8 @@
     "submitErrorFailed": "Failed to submit your details. Please try again.",
     "successTitle": "Thank you!",
     "successMessage": "We've received your details and will get back to you soon.",
+    "successSuggestedArticles": "Suggested reading",
+    "backToHome": "Back to homepage",
     "validation": {
       "nameRequired": "Please enter your name.",
       "emailRequired": "Please enter your email.",

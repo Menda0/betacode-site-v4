@@ -25,7 +25,7 @@ export function HeroCarousel() {
       <CarouselContent>
         {slides.map((slide) => (
           <CarouselItem key={slide}>
-            <h1 className="text-5xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-7xl dark:text-white">
+            <h1 className="text-center text-5xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-7xl lg:text-left dark:text-white">
               {slide}
             </h1>
           </CarouselItem>
