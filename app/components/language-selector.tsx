@@ -24,11 +24,11 @@ export function LanguageSelector() {
         id="language-select"
         value={locale}
         onChange={(event) => handleChange(event.target.value)}
-        className="rounded-md border border-gray-300 bg-white py-1.5 pl-2 pr-8 text-sm font-semibold text-gray-900 shadow-xs focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+        className="rounded-md border border-gray-300 bg-white py-1.5 pl-2 pr-7 text-sm font-semibold uppercase text-gray-900 shadow-xs focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
       >
         {routing.locales.map((code) => (
           <option key={code} value={code}>
-            {t(`languages.${code}`)}
+            {code.toUpperCase()}
           </option>
         ))}
       </select>

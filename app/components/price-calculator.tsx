@@ -3,7 +3,7 @@
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import Link from "next/link"
-import { useTranslations } from "next-intl"
+import { useTranslations, useLocale } from "next-intl"
 import { IconArrowLeft, IconArrowRight, IconBox, IconBuilding, IconCalculator, IconCheck, IconChevronDown, IconCompass, IconListDetails, IconPlayerSkipForward, IconRefresh, IconRocket, IconSchool, IconTool, IconUserPlus, IconUsersGroup } from "@tabler/icons-react"
 import {
   clearBranchAnswers,
@@ -185,6 +185,62 @@ function PricingHeroBackground() {
   )
 }
 
+function PricingIntroContent({
+  variant = "hero",
+  onStart,
+}: {
+  variant?: "hero" | "below"
+  onStart?: () => void
+}) {
+  const t = useTranslations("pricing")
+  const isHero = variant === "hero"
+
+  return (
+    <div className="mx-auto w-full max-w-2xl text-center">
+      {isHero && (
+        <div className="mx-auto flex size-14 items-center justify-center rounded-2xl bg-primary-600/10 text-primary-600 ring-1 ring-primary-600/20 dark:bg-primary-500/10 dark:text-primary-400 dark:ring-primary-500/20">
+          <IconCalculator className="size-7" aria-hidden="true" />
+        </div>
+      )}
+      <p
+        className={cn(
+          "font-semibold text-primary-600 uppercase dark:text-primary-400",
+          isHero ? "mt-6 text-base/7" : "text-sm/6"
+        )}
+      >
+        {t("subtitle")}
+      </p>
+      {isHero ? (
+        <h1 className="mt-3 text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl dark:text-white">
+          {t("title")}
+        </h1>
+      ) : (
+        <h2 className="mt-2 text-2xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-3xl dark:text-white">
+          {t("title")}
+        </h2>
+      )}
+      <p
+        className={cn(
+          "text-gray-600 dark:text-gray-300",
+          isHero ? "mt-6 text-lg/8" : "mt-3 text-base/7"
+        )}
+      >
+        {t("description")}
+      </p>
+      {isHero && onStart && (
+        <button
+          type="button"
+          onClick={onStart}
+          className="mt-10 inline-flex items-center gap-2 rounded-xl bg-primary-600 px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-primary-600/20 transition hover:bg-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:bg-primary-500 dark:shadow-primary-500/20 dark:hover:bg-primary-400"
+        >
+          {t("getEstimate")}
+          <IconArrowRight className="size-5" aria-hidden="true" />
+        </button>
+      )}
+    </div>
+  )
+}
+
 export function PriceCalculator() {
   const t = useTranslations("pricing")
   const startQuestion = getStartQuestion()
@@ -196,6 +252,9 @@ export function PriceCalculator() {
   const [currentQuestionId, setCurrentQuestionId] = useState<string>(startQuestion.id)
   const [outcomes, setOutcomes] = useState<CalculatorOutcome[]>([])
   const [expandedOutcomeId, setExpandedOutcomeId] = useState<OutcomeId | null>(null)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
+  const locale = useLocale()
 
   const questionPath = useMemo(() => getQuestionPath(answers), [answers])
   const currentQuestion =
@@ -323,11 +382,65 @@ export function PriceCalculator() {
     setCurrentQuestionId(startQuestion.id)
     setOutcomes([])
     setExpandedOutcomeId(null)
+    setIsSubmitting(false)
+    setSubmitError(null)
   }
 
-  function handleContactSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleContactSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    setPhase("submitted")
+    setSubmitError(null)
+    setIsSubmitting(true)
+
+    const name = contactDetails.name?.trim()
+    const email = contactDetails.email?.trim()
+    const website = contactDetails.website?.trim()
+
+    if (!name || !email) {
+      setSubmitError("Please fill in your name and email.")
+      setIsSubmitting(false)
+      return
+    }
+
+    const priceSummary = outcomes
+      .map((outcome) => {
+        const brief = getBriefPriceSummary(outcome)
+        return `${getOutcomeSummary(outcome)} — ${brief.label}: ${brief.value}`
+      })
+      .join(" | ")
+
+    try {
+      const response = await fetch("/api/contacts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contact: {
+            name,
+            email,
+            website: website || undefined,
+          },
+          answers,
+          outcomes: outcomes.map((outcome) => outcome.id),
+          answerSummary: getAnswersSummary(answers),
+          priceSummary,
+          locale,
+        }),
+      })
+
+      if (!response.ok) {
+        const data = (await response.json().catch(() => null)) as { error?: string } | null
+        throw new Error(data?.error ?? "Failed to submit your details. Please try again.")
+      }
+
+      setPhase("submitted")
+    } catch (error) {
+      setSubmitError(
+        error instanceof Error
+          ? error.message
+          : "Failed to submit your details. Please try again."
+      )
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   function handleStartWizard() {
@@ -341,8 +454,8 @@ export function PriceCalculator() {
     <section
       id="price-calculator"
       className={cn(
-        "relative isolate flex min-h-[calc(100dvh-4rem)] flex-col",
-        showWizard ? "bg-gray-50 dark:bg-gray-950" : "bg-white dark:bg-gray-900"
+        "relative isolate flex flex-col",
+        showWizard ? "bg-gray-50 dark:bg-gray-950" : "min-h-[calc(100dvh-4rem)] bg-white dark:bg-gray-900"
       )}
     >
       {!showWizard && <PricingHeroBackground />}
@@ -351,38 +464,17 @@ export function PriceCalculator() {
         className={cn(
           "relative mx-auto flex w-full max-w-7xl flex-1 justify-center",
           showWizard
-            ? "items-start px-4 pt-12 pb-3 sm:items-center sm:px-6 sm:py-6 lg:px-8 lg:py-8"
+            ? "flex-col items-center px-4 pt-4 pb-8 sm:px-6 sm:pt-6 lg:px-8"
             : "items-center px-6 py-6 sm:py-8 lg:px-8"
         )}
       >
         {!showWizard ? (
-          <div className="mx-auto w-full max-w-2xl text-center">
-            <div className="mx-auto flex size-14 items-center justify-center rounded-2xl bg-primary-600/10 text-primary-600 ring-1 ring-primary-600/20 dark:bg-primary-500/10 dark:text-primary-400 dark:ring-primary-500/20">
-              <IconCalculator className="size-7" aria-hidden="true" />
-            </div>
-            <p className="mt-6 text-base/7 font-semibold text-primary-600 uppercase dark:text-primary-400">
-              {t("subtitle")}
-            </p>
-            <h1 className="mt-3 text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl dark:text-white">
-              {t("title")}
-            </h1>
-            <p className="mt-6 text-lg/8 text-gray-600 dark:text-gray-300">
-              {t("description")}
-            </p>
-            <button
-              type="button"
-              onClick={handleStartWizard}
-              className="mt-10 inline-flex items-center gap-2 rounded-xl bg-primary-600 px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-primary-600/20 transition hover:bg-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:bg-primary-500 dark:shadow-primary-500/20 dark:hover:bg-primary-400"
-            >
-              {t("getEstimate")}
-              <IconArrowRight className="size-5" aria-hidden="true" />
-            </button>
-          </div>
+          <PricingIntroContent variant="hero" onStart={handleStartWizard} />
         ) : (
           <div
             ref={wizardRef}
             tabIndex={-1}
-            className="flex w-full max-w-5xl animate-in fade-in slide-in-from-bottom-3 fill-mode-both duration-500 focus:outline-none"
+            className="flex w-full max-w-5xl flex-col animate-in fade-in slide-in-from-bottom-3 fill-mode-both duration-500 focus:outline-none"
           >
             <div className="flex w-full flex-col">
               <StepIndicator currentStep={questionStep} totalSteps={totalSteps} />
@@ -397,7 +489,7 @@ export function PriceCalculator() {
                   <div
                     ref={cardScrollRef}
                     onScroll={onCardScroll}
-                    className="h-full overflow-y-auto"
+                    className="flex h-full flex-col overflow-y-auto"
                   >
                   <div
                     className={cn(
@@ -408,6 +500,7 @@ export function PriceCalculator() {
                         (hasCardFooter && phase === "product"
                           ? "min-h-full"
                           : CARD_INNER_MIN_HEIGHT_CLASS),
+                      phase === "results" && "min-h-full flex-1",
                       phase !== "results" && "max-w-3xl"
                     )}
                   >
@@ -448,6 +541,8 @@ export function PriceCalculator() {
                   {phase === "contact" && (
                     <ContactStep
                       contactDetails={contactDetails}
+                      submitError={submitError}
+                      isSubmitting={isSubmitting}
                       onBack={handleBack}
                       onChange={(fieldId, value) =>
                         setContactDetails((prev) => ({ ...prev, [fieldId]: value }))
@@ -505,12 +600,13 @@ export function PriceCalculator() {
 
                 {phase === "contact" && (
                   <CardFooter>
-                    <FooterResetButton label={t("startOver")} onClick={reset} />
+                    <FooterResetButton label={t("startOver")} onClick={reset} disabled={isSubmitting} />
                     <FooterPrimaryButton
-                      label={t("submit")}
+                      label={isSubmitting ? t("submitting") : t("submit")}
                       type="submit"
                       form="price-calculator-contact-form"
                       icon={IconCheck}
+                      disabled={isSubmitting}
                     />
                   </CardFooter>
                 )}
@@ -534,6 +630,10 @@ export function PriceCalculator() {
                   </CardFooter>
                 )}
               </div>
+            </div>
+
+            <div className="mt-8 sm:mt-10">
+              <PricingIntroContent variant="below" />
             </div>
           </div>
         )}
@@ -601,15 +701,18 @@ function FooterResetButton({
   label,
   onClick,
   className,
+  disabled = false,
 }: {
   label: string
   onClick: () => void
   className?: string
+  disabled?: boolean
 }) {
   return (
     <button
       type="button"
       onClick={onClick}
+      disabled={disabled}
       aria-label={label}
       title={label}
       className={cn(
@@ -653,6 +756,7 @@ function FooterPrimaryButton({
   form,
   icon: MobileIcon = IconArrowRight,
   showArrowOnDesktop = false,
+  disabled = false,
 }: {
   label: string
   onClick?: () => void
@@ -660,12 +764,14 @@ function FooterPrimaryButton({
   form?: string
   icon?: typeof IconArrowRight
   showArrowOnDesktop?: boolean
+  disabled?: boolean
 }) {
   return (
     <button
       type={type}
       form={form}
       onClick={onClick}
+      disabled={disabled}
       aria-label={label}
       title={label}
       className="inline-flex size-9 shrink-0 items-center justify-center rounded-md bg-primary-600 text-white shadow-xs hover:bg-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 sm:size-auto sm:gap-2 sm:px-4 sm:py-2.5 sm:text-sm sm:font-semibold dark:bg-primary-500 dark:hover:bg-primary-400"
@@ -931,7 +1037,7 @@ function ResultsStep({
   }
 
   return (
-    <div className="flex flex-col gap-4 lg:gap-8 lg:flex-row lg:items-start">
+    <div className="flex min-h-full flex-1 flex-col gap-4 lg:flex-row lg:items-stretch lg:gap-8">
       <div className="flex items-center justify-between lg:hidden">
         <button
           type="button"
@@ -947,7 +1053,7 @@ function ResultsStep({
         )}
       </div>
 
-      <aside className="hidden w-52 shrink-0 lg:sticky lg:top-6 lg:block xl:w-56">
+      <aside className="hidden w-52 shrink-0 lg:sticky lg:top-6 lg:block lg:self-start xl:w-56">
         <button
           type="button"
           onClick={onBack}
@@ -964,9 +1070,9 @@ function ResultsStep({
         )}
       </aside>
 
-      <div className="min-w-0 flex-1">
+      <div className="flex min-w-0 flex-1 flex-col self-stretch">
         {activeExpandedId && expandedOutcome ? (
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-1 flex-col gap-3 self-stretch">
             {sortedOutcomes.length > 1 && (
               <div
                 className="flex flex-wrap items-center gap-2"
@@ -985,6 +1091,7 @@ function ResultsStep({
             )}
 
             <ExpandedServicePanel
+              className="flex-1"
               outcome={expandedOutcome}
               showHide={!isSingleOutcome}
               onHide={() => onExpandedChange(null)}
@@ -1150,10 +1257,12 @@ function ExpandedServicePanel({
   outcome,
   showHide = true,
   onHide,
+  className,
 }: {
   outcome: CalculatorOutcome
   showHide?: boolean
   onHide: () => void
+  className?: string
 }) {
   const iconStyle = OUTCOME_ICON_STYLES[outcome.id]
   const Icon = iconStyle.icon
@@ -1162,9 +1271,12 @@ function ExpandedServicePanel({
 
   return (
     <div
-      className="w-full rounded-xl border border-primary-300 bg-white p-4 shadow-sm ring-1 ring-primary-200 sm:p-5 dark:border-primary-600 dark:bg-gray-900/50 dark:ring-primary-800"
+      className={cn(
+        "mb-3 flex w-full flex-1 flex-col rounded-xl border border-primary-300 bg-white p-4 shadow-sm ring-1 ring-primary-200 sm:mb-4 sm:p-5 dark:border-primary-600 dark:bg-gray-900/50 dark:ring-primary-800",
+        className
+      )}
     >
-      <div className="flex items-start justify-between gap-4">
+      <div className="flex shrink-0 items-start justify-between gap-4">
         <div className="flex min-w-0 items-start gap-3">
           <div
             className={cn(
@@ -1199,7 +1311,7 @@ function ExpandedServicePanel({
         )}
       </div>
 
-      <div className="mt-5 border-t border-gray-100 pt-5 dark:border-gray-800">
+      <div className="mt-5 flex flex-1 flex-col border-t border-gray-100 pt-5 dark:border-gray-800">
         <OutcomePricingDetails outcome={outcome} />
       </div>
     </div>
@@ -1393,14 +1505,18 @@ function EstimatesGrid({
 
 function ContactStep({
   contactDetails,
+  submitError,
+  isSubmitting,
   onBack,
   onChange,
   onSubmit,
 }: {
   contactDetails: CalculatorAnswers
+  submitError: string | null
+  isSubmitting: boolean
   onBack: () => void
   onChange: (fieldId: string, value: string) => void
-  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void
+  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void | Promise<void>
 }) {
   const contact = pricingCalculatorConfig.contact
 
@@ -1409,6 +1525,7 @@ function ContactStep({
       <button
         type="button"
         onClick={onBack}
+        disabled={isSubmitting}
         className="mb-4 inline-flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
       >
         <IconArrowLeft className="size-4" aria-hidden="true" />
@@ -1421,6 +1538,11 @@ function ContactStep({
       )}
 
       <form id="price-calculator-contact-form" onSubmit={onSubmit} className="mt-6 space-y-4">
+        {submitError && (
+          <p className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700 dark:border-red-900/50 dark:bg-red-950/40 dark:text-red-300" role="alert">
+            {submitError}
+          </p>
+        )}
         {contact.fields.map((field) => (
           <div key={field.id} className="space-y-2">
             <div className="space-y-1">
@@ -1449,6 +1571,7 @@ function ContactStep({
               onChange={(event) => onChange(field.id, event.target.value)}
               placeholder={field.placeholder}
               required={!field.optional}
+              disabled={isSubmitting}
               aria-describedby={field.description ? `${field.id}-description` : undefined}
               className="block w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm text-gray-900 shadow-xs placeholder:text-gray-400 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-500"
             />
