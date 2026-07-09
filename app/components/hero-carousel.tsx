@@ -16,16 +16,20 @@ export function HeroCarousel() {
   return (
     <Carousel
       className="w-full"
+      opts={{ align: 'center' }}
       plugins={[
         Autoplay({
           delay: 4000,
         }),
       ]}
     >
-      <CarouselContent>
+      <CarouselContent className="-ml-0">
         {slides.map((slide) => (
-          <CarouselItem key={slide}>
-            <h1 className="text-center text-5xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-7xl lg:text-left dark:text-white">
+          <CarouselItem
+            key={slide}
+            className="flex min-h-40 items-center justify-center pl-0 sm:min-h-48 lg:min-h-52"
+          >
+            <h1 className="w-full text-center text-5xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-7xl dark:text-white">
               {slide}
             </h1>
           </CarouselItem>
