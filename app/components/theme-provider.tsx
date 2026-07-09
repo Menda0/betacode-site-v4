@@ -1,6 +1,17 @@
 'use client'
 
-import { createContext, useCallback, useContext, useEffect, useState } from 'react'
+import {
+  ThemeProvider as NextThemesProvider,
+  useTheme as useNextTheme,
+} from 'next-themes'
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 
 type Theme = 'light' | 'dark'
 
@@ -10,54 +21,50 @@ const ThemeContext = createContext<{
   toggleTheme: () => void
 } | null>(null)
 
-const STORAGE_KEY = 'betacode-theme'
-
-function getInitialTheme(): Theme {
-  if (typeof document === 'undefined') return 'light'
-  const stored = localStorage.getItem(STORAGE_KEY) as Theme | null
-  if (stored === 'light' || stored === 'dark') return stored
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-}
-
-function applyTheme(theme: Theme) {
-  const root = document.documentElement
-  root.classList.toggle('dark', theme === 'dark')
-  root.classList.toggle('light', theme === 'light')
-  root.style.colorScheme = theme
-}
-
-export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>('light')
+function ThemeBridge({ children }: { children: React.ReactNode }) {
+  const { theme, resolvedTheme, setTheme } = useNextTheme()
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    const initial = getInitialTheme()
-    setThemeState(initial)
-    applyTheme(initial)
     setMounted(true)
   }, [])
 
-  const setTheme = useCallback((next: Theme) => {
-    setThemeState(next)
-    if (typeof window !== 'undefined') {
-      localStorage.setItem(STORAGE_KEY, next)
-      applyTheme(next)
-    }
-  }, [])
+  const currentTheme = (mounted ? (resolvedTheme ?? theme) : 'light') as Theme
 
-  useEffect(() => {
-    if (!mounted) return
-    applyTheme(theme)
-  }, [mounted, theme])
+  const setCurrentTheme = useCallback(
+    (next: Theme) => {
+      setTheme(next)
+    },
+    [setTheme]
+  )
 
   const toggleTheme = useCallback(() => {
-    setTheme(theme === 'dark' ? 'light' : 'dark')
-  }, [theme, setTheme])
+    setTheme(currentTheme === 'dark' ? 'light' : 'dark')
+  }, [currentTheme, setTheme])
 
+  const value = useMemo(
+    () => ({
+      theme: currentTheme,
+      setTheme: setCurrentTheme,
+      toggleTheme,
+    }),
+    [currentTheme, setCurrentTheme, toggleTheme]
+  )
+
+  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
+}
+
+export function ThemeProvider({ children }: { children: React.ReactNode }) {
   return (
-    <ThemeContext.Provider value={{ theme, setTheme, toggleTheme }}>
-      {children}
-    </ThemeContext.Provider>
+    <NextThemesProvider
+      attribute="class"
+      defaultTheme="light"
+      enableSystem={false}
+      storageKey="betacode-theme"
+      disableTransitionOnChange
+    >
+      <ThemeBridge>{children}</ThemeBridge>
+    </NextThemesProvider>
   )
 }
 

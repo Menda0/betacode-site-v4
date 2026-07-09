@@ -14,7 +14,7 @@ export function AdminHeader() {
         <div>
           <h1 className="text-base font-medium">Contacts</h1>
           <p className="text-xs text-muted-foreground">
-            Pricing calculator submissions
+            Contact submissions
           </p>
         </div>
         <div className="ml-auto">

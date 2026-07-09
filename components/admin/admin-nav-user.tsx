@@ -89,11 +89,11 @@ export function AdminNavUser({
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => setTheme("light")}>
+            <DropdownMenuItem onSelect={() => setTheme("light")}>
               <IconSun />
               Light theme
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setTheme("dark")}>
+            <DropdownMenuItem onSelect={() => setTheme("dark")}>
               <IconMoon />
               Dark theme
             </DropdownMenuItem>

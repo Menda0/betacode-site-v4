@@ -1,34 +1,62 @@
 import { NextResponse } from "next/server"
-import { z } from "zod"
+import { contactSubmissionSchema } from "@/lib/contact-validation"
 import { getContactModel } from "@/lib/models/contact"
 import { getUserModel } from "@/lib/models/user"
 import { sendContactNotificationEmail } from "@/lib/email/contact-notification"
 import type { OutcomeId } from "@/lib/pricing-calculator"
 import type { AnswerSummaryItem } from "@/lib/pricing-calculator"
+import type { ContactRecord, ContactSource } from "@/lib/types/contact"
 
-const contactSchema = z.object({
-  contact: z.object({
-    name: z.string().min(1),
-    email: z.email(),
-    website: z.string().optional(),
-  }),
-  answers: z.record(z.string(), z.string()),
-  outcomes: z.array(z.string()),
-  answerSummary: z.array(
-    z.object({
-      questionId: z.string(),
-      label: z.string(),
-      value: z.string(),
-    })
-  ),
-  priceSummary: z.string(),
-  locale: z.enum(["en", "pt"]),
-})
+function buildContactRecord(
+  data: ReturnType<typeof contactSubmissionSchema.parse>
+): Omit<ContactRecord, "createdAt"> {
+  if (data.source === "price-calculator") {
+    return {
+      name: data.contact.name.trim(),
+      email: data.contact.email.trim().toLowerCase(),
+      website: data.contact.website?.trim() || undefined,
+      source: "price-calculator",
+      answers: data.answers,
+      outcomes: data.outcomes as OutcomeId[],
+      answerSummary: data.answerSummary as AnswerSummaryItem[],
+      priceSummary: data.priceSummary,
+      locale: data.locale,
+    }
+  }
+
+  if (data.source === "general") {
+    return {
+      name: data.contact.name.trim(),
+      email: data.contact.email.trim().toLowerCase(),
+      phone: data.contact.phone?.trim() || undefined,
+      message: data.contact.message.trim(),
+      source: "general",
+      answers: {},
+      outcomes: [],
+      answerSummary: [],
+      priceSummary: "",
+      locale: data.locale,
+    }
+  }
+
+  return {
+    name: data.contact.name.trim(),
+    email: data.contact.email.trim().toLowerCase(),
+    website: data.contact.website?.trim() || undefined,
+    message: data.contact.message.trim(),
+    source: "betacode-ventures",
+    answers: {},
+    outcomes: [],
+    answerSummary: [],
+    priceSummary: "",
+    locale: data.locale,
+  }
+}
 
 export async function POST(request: Request) {
   try {
     const body = await request.json()
-    const parsed = contactSchema.safeParse(body)
+    const parsed = contactSubmissionSchema.safeParse(body)
 
     if (!parsed.success) {
       return NextResponse.json(
@@ -37,19 +65,10 @@ export async function POST(request: Request) {
       )
     }
 
-    const { contact, answers, outcomes, answerSummary, priceSummary, locale } =
-      parsed.data
-
+    const contactData = buildContactRecord(parsed.data)
     const Contact = await getContactModel()
     const contactDoc = await Contact.create({
-      name: contact.name.trim(),
-      email: contact.email.trim().toLowerCase(),
-      website: contact.website?.trim() || undefined,
-      answers,
-      outcomes: outcomes as OutcomeId[],
-      answerSummary: answerSummary as AnswerSummaryItem[],
-      priceSummary,
-      locale,
+      ...contactData,
       createdAt: new Date(),
     })
 
@@ -59,14 +78,8 @@ export async function POST(request: Request) {
 
     const emailResult = await sendContactNotificationEmail(
       {
-        name: contactDoc.name,
-        email: contactDoc.email,
-        website: contactDoc.website,
-        answers,
-        outcomes: outcomes as OutcomeId[],
-        answerSummary: answerSummary as AnswerSummaryItem[],
-        priceSummary,
-        locale,
+        ...contactData,
+        source: contactData.source as ContactSource,
         createdAt: contactDoc.createdAt,
       },
       adminEmails

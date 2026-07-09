@@ -1,4 +1,5 @@
 import { getContactModel } from "@/lib/models/contact"
+import { normalizeContactSource } from "@/lib/contact-source"
 import { ContactsDataTable, type ContactRow } from "@/components/admin/contacts-data-table"
 import { ContactsSectionCards } from "@/components/admin/contacts-section-cards"
 import type { OutcomeId } from "@/lib/pricing-calculator"
@@ -15,6 +16,9 @@ export default async function AdminDashboardPage() {
     name: contact.name,
     email: contact.email,
     website: contact.website,
+    phone: contact.phone,
+    message: contact.message,
+    source: normalizeContactSource(contact.source),
     locale: contact.locale,
     outcomes: contact.outcomes as OutcomeId[],
     answerSummary: contact.answerSummary as AnswerSummaryItem[],
@@ -22,17 +26,17 @@ export default async function AdminDashboardPage() {
     createdAt: contact.createdAt.toISOString(),
   }))
 
-  const enCount = rows.filter((row) => row.locale === "en").length
-  const ptCount = rows.filter((row) => row.locale === "pt").length
-  const withWebsiteCount = rows.filter((row) => row.website).length
+  const generalCount = rows.filter((row) => row.source === "general").length
+  const venturesCount = rows.filter((row) => row.source === "betacode-ventures").length
+  const priceCalculatorCount = rows.filter((row) => row.source === "price-calculator").length
 
   return (
     <>
       <ContactsSectionCards
         total={rows.length}
-        enCount={enCount}
-        ptCount={ptCount}
-        withWebsiteCount={withWebsiteCount}
+        generalCount={generalCount}
+        venturesCount={venturesCount}
+        priceCalculatorCount={priceCalculatorCount}
       />
       <ContactsDataTable data={rows} />
     </>

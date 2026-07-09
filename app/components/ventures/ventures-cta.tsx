@@ -1,10 +1,39 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { CALENDAR_URL } from '@/lib/ventures-content'
+import { ContactForm } from '@/app/components/contact-form'
 
 export function VenturesCTA() {
   const t = useTranslations('ventures.cta')
+  const formT = useTranslations('ventures.contactForm')
+
+  const fields = [
+    {
+      id: 'name',
+      type: 'text' as const,
+      label: formT('name'),
+      placeholder: formT('namePlaceholder'),
+    },
+    {
+      id: 'email',
+      type: 'email' as const,
+      label: formT('email'),
+      placeholder: formT('emailPlaceholder'),
+    },
+    {
+      id: 'website',
+      type: 'url' as const,
+      label: formT('website'),
+      placeholder: formT('websitePlaceholder'),
+      optional: true,
+    },
+    {
+      id: 'message',
+      type: 'textarea' as const,
+      label: formT('message'),
+      placeholder: formT('messagePlaceholder'),
+    },
+  ]
 
   return (
     <div className="bg-primary-600">
@@ -16,13 +45,13 @@ export function VenturesCTA() {
           <p className="mx-auto mt-6 max-w-xl text-lg/8 text-pretty text-primary-200">
             {t('description')}
           </p>
-          <div className="mt-10 flex items-center justify-center gap-x-6">
-            <a
-              href={CALENDAR_URL}
-              className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-primary-600 shadow-xs hover:bg-primary-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white dark:shadow-none animate-bounce"
-            >
-              {t('buttonLabel')}
-            </a>
+          <div className="mx-auto mt-10 max-w-lg text-left">
+            <ContactForm
+              source="betacode-ventures"
+              fields={fields}
+              submitLabel={t('buttonLabel')}
+              variant="ventures"
+            />
           </div>
         </div>
       </div>

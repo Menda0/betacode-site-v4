@@ -33,12 +33,12 @@ export function AdminThemeToggle({ className }: AdminThemeToggleProps) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme("light")}>
+        <DropdownMenuItem onSelect={() => setTheme("light")}>
           <IconSun className="size-4" />
           Light
           {theme === "light" && <span className="ml-auto text-xs text-muted-foreground">Active</span>}
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>
+        <DropdownMenuItem onSelect={() => setTheme("dark")}>
           <IconMoon className="size-4" />
           Dark
           {theme === "dark" && <span className="ml-auto text-xs text-muted-foreground">Active</span>}

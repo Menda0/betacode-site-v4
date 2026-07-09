@@ -430,6 +430,7 @@ export function PriceCalculator({ suggestedPosts = [] }: { suggestedPosts?: Blog
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          source: "price-calculator",
           contact: {
             name,
             email,

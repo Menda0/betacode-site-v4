@@ -16,6 +16,10 @@
       "title": "Betacode Ventures — O seu co-fundador técnico",
       "description": "A Betacode Ventures associa-se a startups como co-fundador técnico — da validação da ideia ao lançamento e escala. Conheça o nosso trabalho com a Coach ID e candidate-se."
     },
+    "contact": {
+      "title": "Contacto — Betacode",
+      "description": "Entre em contacto com a equipa Betacode. Envie-nos uma mensagem e responderemos o mais breve possível."
+    },
     "blogPostNotFound": {
       "title": "Artigo não encontrado — Betacode",
       "description": "O artigo que procura não foi encontrado."
@@ -25,6 +29,7 @@
     "pricing": "Preços",
     "insights": "Insights",
     "betacodeVentures": "Betacode Ventures",
+    "contact": "Contacto",
     "openMenu": "Abrir menu principal",
     "closeMenu": "Fechar menu",
     "languageSelector": "Idioma",
@@ -298,8 +303,18 @@
     },
     "cta": {
       "headline": "Pronto para construir a sua startup com um co-fundador técnico?",
-      "description": "Conte-nos a sua ideia e vamos explorar se a Betacode Ventures é a parceira certa. Fale connosco — sem compromisso.",
+      "description": "Conte-nos a sua ideia e vamos explorar se a Betacode Ventures é a parceira certa.",
       "buttonLabel": "Candidatar-se à Betacode Ventures"
+    },
+    "contactForm": {
+      "name": "Nome",
+      "namePlaceholder": "O seu nome",
+      "email": "Email",
+      "emailPlaceholder": "voce@startup.com",
+      "website": "Website",
+      "websitePlaceholder": "https://sua-startup.com",
+      "message": "Conte-nos sobre a sua venture",
+      "messagePlaceholder": "Descreva a sua ideia, fase e o que procura num co-fundador técnico."
     },
     "testimonials": [
       {
@@ -428,6 +443,60 @@
       "hourly": "Taxas horárias acima. Faixas de projeto apresentadas como referência quando aplicável.",
       "project": "Faixas baseadas nas nossas configurações de equipa habituais. O preço final depende do âmbito e dos requisitos.",
       "partnership": "A Betacode Ventures é uma parceria por equity — o modelo de preços é adaptado à sua fase e produto."
+    }
+  },
+  "contact": {
+    "title": "Entre em contacto",
+    "eyebrow": "Contacto",
+    "description": "Tem uma questão ou quer discutir um projeto? Envie-nos uma mensagem e responderemos em breve.",
+    "form": {
+      "title": "Envie-nos uma mensagem",
+      "description": "Preencha o formulário abaixo e a nossa equipa responderá o mais breve possível.",
+      "name": "Nome",
+      "namePlaceholder": "O seu nome",
+      "email": "Email",
+      "emailPlaceholder": "voce@empresa.com",
+      "phone": "Telefone",
+      "phonePlaceholder": "+351 000 000 000",
+      "message": "Mensagem",
+      "messagePlaceholder": "Como podemos ajudar?",
+      "submit": "Enviar mensagem"
+    },
+    "info": {
+      "title": "Informações de contacto",
+      "description": "Prefere contactar-nos diretamente? Use qualquer um dos dados abaixo.",
+      "email": "Email",
+      "phone": "Telefone",
+      "address": "Morada"
+    },
+    "ctas": {
+      "title": "À procura de algo específico?",
+      "description": "Explore outras formas de trabalhar connosco.",
+      "ventures": {
+        "title": "Betacode Ventures",
+        "description": "Associe-se a nós como co-fundador técnico, da ideia ao lançamento.",
+        "link": "Explorar Ventures"
+      },
+      "pricing": {
+        "title": "Calculadora de preços",
+        "description": "Obtenha uma estimativa personalizada com base no seu projeto e fase do negócio.",
+        "link": "Obter estimativa"
+      }
+    }
+  },
+  "contactForm": {
+    "optional": "opcional",
+    "submitting": "A enviar...",
+    "submitError": "Algo correu mal. Por favor tente novamente.",
+    "successTitle": "Obrigado!",
+    "successDescription": "Recebemos a sua mensagem e responderemos em breve.",
+    "sendAnother": "Enviar outra mensagem",
+    "validation": {
+      "nameRequired": "Por favor introduza o seu nome.",
+      "emailRequired": "Por favor introduza o seu email.",
+      "emailInvalid": "Por favor introduza um endereço de email válido.",
+      "websiteInvalid": "Por favor introduza um endereço de website válido.",
+      "messageRequired": "Por favor introduza uma mensagem."
     }
   }
 }

@@ -13,6 +13,7 @@ const navigation = [
   { key: 'pricing' as const, href: '/pricing' },
   { key: 'insights' as const, href: '/insights' },
   { key: 'betacodeVentures' as const, href: '/betacode-ventures' },
+  { key: 'contact' as const, href: '/contact' },
 ]
 
 function isNavActive(pathname: string, href: string) {
