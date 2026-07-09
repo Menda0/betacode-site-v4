@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
+import { createPageMetadata } from '@/lib/metadata'
 import { getBlogPosts } from '@/lib/blog-content'
 import { BlogCard } from '@/app/components/blog/blog-card'
 import { BlogBackground } from '@/app/components/blog/blog-background'
@@ -15,16 +16,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'metadata.insights' })
 
-  return {
+  return createPageMetadata({
+    locale,
+    path: '/insights',
     title: t('title'),
     description: t('description'),
-    openGraph: {
-      title: t('title'),
-      description: t('description'),
-      images: '/images/betacode-facebook.png',
-      url: `/${locale}/insights`,
-    },
-  }
+  })
 }
 
 export default async function InsightsPage({ params }: Props) {

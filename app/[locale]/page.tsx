@@ -10,6 +10,7 @@ import { InsightsPreview } from "../components/insights-preview";
 import { getBlogPosts } from "@/lib/blog-content";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
+import { createPageMetadata } from "@/lib/metadata";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -19,16 +20,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "metadata.home" });
 
-  return {
+  return createPageMetadata({
+    locale,
+    path: "",
     title: t("title"),
     description: t("description"),
-    openGraph: {
-      title: "Betacode",
-      description: t("description"),
-      images: "/images/betacode-facebook.png",
-      url: `/${locale}`,
-    },
-  };
+    ogTitle: "Betacode",
+  });
 }
 
 export default async function Home({ params }: Props) {

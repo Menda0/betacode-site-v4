@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
+import { createPageMetadata } from '@/lib/metadata'
 import { Link } from '@/i18n/navigation'
 import { notFound } from 'next/navigation'
 import { IconArrowLeft } from '@tabler/icons-react'
@@ -32,19 +33,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!post) {
     const t = await getTranslations({ locale, namespace: 'metadata.blogPostNotFound' })
-    return { title: t('title'), description: t('description') }
+    return createPageMetadata({
+      locale,
+      path: `/insights/${slug}`,
+      title: t('title'),
+      description: t('description'),
+    })
   }
 
-  return {
+  return createPageMetadata({
+    locale,
+    path: `/insights/${post.slug}`,
     title: `${post.title} — Betacode Insights`,
     description: post.excerpt,
-    openGraph: {
-      title: post.title,
-      description: post.excerpt,
-      images: '/images/betacode-facebook.png',
-      url: `/${locale}/insights/${post.slug}`,
-    },
-  }
+    ogType: 'article',
+    publishedTime: post.publishedAt,
+    authors: [post.author.name],
+  })
 }
 
 export default async function InsightPostPage({ params }: Props) {

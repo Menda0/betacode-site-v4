@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
+import { createPageMetadata } from '@/lib/metadata'
 import { VenturesHero } from '@/app/components/ventures/ventures-hero'
+import { VenturesOverview } from '@/app/components/ventures/ventures-overview'
 import { VenturesPartnership } from '@/app/components/ventures/ventures-partnership'
 import { CoachidCaseStudy } from '@/app/components/ventures/coachid-case-study'
 import { VenturesCTA } from '@/app/components/ventures/ventures-cta'
@@ -14,16 +16,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'metadata.ventures' })
 
-  return {
+  return createPageMetadata({
+    locale,
+    path: '/betacode-ventures',
     title: t('title'),
     description: t('description'),
-    openGraph: {
-      title: t('title'),
-      description: t('description'),
-      images: '/images/betacode-facebook.png',
-      url: `/${locale}/betacode-ventures`,
-    },
-  }
+  })
 }
 
 export default async function BetacodeVenturesPage({ params }: Props) {
@@ -33,6 +31,7 @@ export default async function BetacodeVenturesPage({ params }: Props) {
   return (
     <>
       <VenturesHero />
+      <VenturesOverview />
       <VenturesPartnership />
       <CoachidCaseStudy />
       <VenturesCTA />

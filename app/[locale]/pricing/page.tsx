@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { getTranslations, setRequestLocale } from "next-intl/server"
+import { createPageMetadata } from "@/lib/metadata"
 import { PriceCalculator } from "@/app/components/price-calculator"
 import { InsightsPreview } from "@/app/components/insights-preview"
 import { Clients } from "@/app/components/clients"
@@ -16,16 +17,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: "metadata.pricing" })
 
-  return {
+  return createPageMetadata({
+    locale,
+    path: "/pricing",
     title: t("title"),
     description: t("description"),
-    openGraph: {
-      title: t("title"),
-      description: t("description"),
-      images: "/images/betacode-facebook.png",
-      url: `/${locale}/pricing`,
-    },
-  }
+  })
 }
 
 export default async function PricingPage({ params }: Props) {
