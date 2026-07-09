@@ -13,8 +13,8 @@ const navigation = [
   { key: 'home' as const, href: '/' },
   { key: 'pricing' as const, href: '/pricing' },
   { key: 'betacodeVentures' as const, href: '/betacode-ventures' },
-  { key: 'contact' as const, href: '/contact' },
   { key: 'insights' as const, href: '/insights' },
+  { key: 'contact' as const, href: '/contact' },
 ]
 
 function isNavActive(pathname: string, href: string) {

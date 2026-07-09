@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { VenturesHero } from '@/app/components/ventures/ventures-hero'
-import { VenturesOverview } from '@/app/components/ventures/ventures-overview'
 import { VenturesPartnership } from '@/app/components/ventures/ventures-partnership'
 import { CoachidCaseStudy } from '@/app/components/ventures/coachid-case-study'
 import { VenturesCTA } from '@/app/components/ventures/ventures-cta'
@@ -34,7 +33,6 @@ export default async function BetacodeVenturesPage({ params }: Props) {
   return (
     <>
       <VenturesHero />
-      <VenturesOverview />
       <VenturesPartnership />
       <CoachidCaseStudy />
       <VenturesCTA />
