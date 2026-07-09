@@ -5,8 +5,15 @@ import { Link } from '@/i18n/navigation'
 import { notFound } from 'next/navigation'
 import { IconArrowLeft } from '@tabler/icons-react'
 import { blogPostsEn } from '@/lib/blog-posts/en'
-import { getBlogPost, getNextBlogPost, getOtherBlogPosts } from '@/lib/blog-content'
+import {
+  getBlogPost,
+  getNextBlogPost,
+  getOtherBlogPosts,
+  resolveBlogLocale,
+} from '@/lib/blog-content'
 import { routing } from '@/i18n/routing'
+import { JsonLd } from '@/app/components/json-ld'
+import { createBlogPostSchema } from '@/lib/structured-data'
 import { BlogContent } from '@/app/components/blog/blog-content'
 import { BlogBackground } from '@/app/components/blog/blog-background'
 import { BlogAuthor } from '@/app/components/blog/blog-author'
@@ -49,6 +56,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ogType: 'article',
     publishedTime: post.publishedAt,
     authors: [post.author.name],
+    section: post.category,
+    ...(post.ogImage ? { image: post.ogImage } : {}),
   })
 }
 
@@ -65,9 +74,16 @@ export default async function InsightPostPage({ params }: Props) {
 
   const nextPost = getNextBlogPost(slug, locale)
   const otherPosts = getOtherBlogPosts(slug, locale)
+  const resolvedLocale = resolveBlogLocale(locale)
+  const formattedDate = new Intl.DateTimeFormat(resolvedLocale, {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }).format(new Date(post.publishedAt))
 
   return (
     <>
+      <JsonLd data={createBlogPostSchema(resolvedLocale, post)} />
       <BlogBackground variant="article" sidebar={<BlogArticleSidebar />}>
         <article>
           <Link
@@ -86,6 +102,12 @@ export default async function InsightPostPage({ params }: Props) {
               <span className="text-gray-500 dark:text-gray-400">
                 {t('minRead', { minutes: post.readingTimeMinutes })}
               </span>
+              <time
+                dateTime={post.publishedAt}
+                className="text-gray-500 dark:text-gray-400"
+              >
+                {formattedDate}
+              </time>
             </div>
             <h1 className="mt-6 text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl dark:text-white">
               {post.title}

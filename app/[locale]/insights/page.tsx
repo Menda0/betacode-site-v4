@@ -1,7 +1,9 @@
 import type { Metadata } from 'next'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { createPageMetadata } from '@/lib/metadata'
-import { getBlogPosts } from '@/lib/blog-content'
+import { getBlogPosts, resolveBlogLocale } from '@/lib/blog-content'
+import { JsonLd } from '@/app/components/json-ld'
+import { createBlogSchema } from '@/lib/structured-data'
 import { BlogCard } from '@/app/components/blog/blog-card'
 import { BlogBackground } from '@/app/components/blog/blog-background'
 import { CTA } from '@/app/components/cta'
@@ -33,6 +35,7 @@ export default async function InsightsPage({ params }: Props) {
 
   return (
     <>
+      <JsonLd data={createBlogSchema(resolveBlogLocale(locale), posts)} />
       <BlogBackground>
         <div className="relative isolate">
           <div className="mx-auto max-w-7xl px-6 pt-16 pb-12 sm:pt-20 lg:px-8 lg:pt-24">

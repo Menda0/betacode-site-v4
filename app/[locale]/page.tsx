@@ -7,10 +7,12 @@ import { TraditionalBusinessIcon, TechCocampaniesIcon, StartupsIcon } from "../c
 import { Clients } from "../components/clients";
 import { Footer } from "../components/footer";
 import { InsightsPreview } from "../components/insights-preview";
-import { getBlogPosts } from "@/lib/blog-content";
+import { getBlogPosts, resolveBlogLocale } from "@/lib/blog-content";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
 import { createPageMetadata } from "@/lib/metadata";
+import { JsonLd } from "@/app/components/json-ld";
+import { createWebsiteSchema } from "@/lib/structured-data";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -121,6 +123,7 @@ export default async function Home({ params }: Props) {
 
   return (
     <>
+      <JsonLd data={createWebsiteSchema(resolveBlogLocale(locale))} />
       <Hero />
       <Services />
       {features.map((feature, index) => (

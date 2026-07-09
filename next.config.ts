@@ -8,17 +8,32 @@ const nextConfig: NextConfig = {
     return [
       {
         source: '/blog',
-        destination: '/insights',
+        destination: '/en/insights',
         permanent: true,
       },
       {
         source: '/blog/:slug',
-        destination: '/insights/:slug',
+        destination: '/en/insights/:slug',
+        permanent: true,
+      },
+      {
+        source: '/:locale(en|pt)/blog',
+        destination: '/:locale/insights',
+        permanent: true,
+      },
+      {
+        source: '/:locale(en|pt)/blog/:slug',
+        destination: '/:locale/insights/:slug',
         permanent: true,
       },
       {
         source: '/insights/choosing-the-right-tech-stack',
-        destination: '/insights/how-ai-can-help-you-create-your-next-project',
+        destination: '/en/insights/how-ai-can-help-you-create-your-next-project',
+        permanent: true,
+      },
+      {
+        source: '/:locale(en|pt)/insights/choosing-the-right-tech-stack',
+        destination: '/:locale/insights/how-ai-can-help-you-create-your-next-project',
         permanent: true,
       },
     ]

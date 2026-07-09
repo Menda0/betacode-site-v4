@@ -14,4 +14,5 @@ export type BlogPost = {
   category: string
   readingTimeMinutes: number
   content: ContentBlock[]
+  ogImage?: string
 }

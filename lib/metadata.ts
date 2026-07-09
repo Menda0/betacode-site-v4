@@ -27,9 +27,12 @@ function resolveLocale(locale: string): Locale {
 }
 
 function getAlternateLanguages(path: string): Record<string, string> {
-  return Object.fromEntries(
-    routing.locales.map((locale) => [locale, `/${locale}${path}`])
-  )
+  return {
+    'x-default': `/${routing.defaultLocale}${path}`,
+    ...Object.fromEntries(
+      routing.locales.map((locale) => [locale, `/${locale}${path}`])
+    ),
+  }
 }
 
 function getTwitterImages(
@@ -66,6 +69,7 @@ type CreatePageMetadataOptions = {
   ogType?: 'website' | 'article'
   publishedTime?: string
   authors?: string[]
+  section?: string
 }
 
 export function createPageMetadata({
@@ -78,6 +82,7 @@ export function createPageMetadata({
   ogType = 'website',
   publishedTime,
   authors,
+  section,
 }: CreatePageMetadataOptions): Metadata {
   const resolvedLocale = resolveLocale(locale)
   const canonicalPath = `/${resolvedLocale}${path}`
@@ -106,6 +111,7 @@ export function createPageMetadata({
         ? {
             publishedTime,
             authors,
+            ...(section ? { section } : {}),
           }
         : {}),
     },
@@ -175,4 +181,11 @@ export const rootMetadata: Metadata = {
       'max-snippet': -1,
     },
   },
+  ...(process.env.GOOGLE_SITE_VERIFICATION
+    ? {
+        verification: {
+          google: process.env.GOOGLE_SITE_VERIFICATION,
+        },
+      }
+    : {}),
 }

@@ -25,6 +25,12 @@
       "description": "O artigo que procura não foi encontrado."
     }
   },
+  "notFound": {
+    "title": "Página não encontrada",
+    "description": "Lamentamos, mas não conseguimos encontrar a página que procura.",
+    "home": "Voltar ao início",
+    "insights": "Ver insights"
+  },
   "nav": {
     "home": "Início",
     "pricing": "Preços",

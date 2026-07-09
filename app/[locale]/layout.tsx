@@ -6,7 +6,6 @@ import { hasLocale } from "next-intl";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { ThemeProvider } from "../components/theme-provider";
 import { SiteHeader } from "../components/site-header";
-import { Google } from "../components/google";
 import { geistMono, geistSans } from "../layout";
 import { routing } from "@/i18n/routing";
 
@@ -52,7 +51,6 @@ export default async function LocaleLayout({ children, params }: Props) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} overflow-x-hidden antialiased`}
       >
-        <Google />
         <Script id="theme-init" strategy="beforeInteractive">
           {themeScript}
         </Script>
