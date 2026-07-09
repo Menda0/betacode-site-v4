@@ -43,7 +43,7 @@
       "estimates": [],
       "cta": {
         "label": "Fale connosco para orçamento detalhado",
-        "href": "https://calendar.app.google/1kXGjsszjPB3eFGr7"
+        "href": "/contact#contact-form"
       }
     },
     "team-augmentation": {
@@ -62,7 +62,7 @@
       ],
       "cta": {
         "label": "Fale connosco para orçamento detalhado",
-        "href": "https://calendar.app.google/1kXGjsszjPB3eFGr7"
+        "href": "/contact#contact-form"
       }
     },
     "support": {
@@ -81,7 +81,7 @@
       "estimates": [],
       "cta": {
         "label": "Fale connosco para orçamento detalhado",
-        "href": "https://calendar.app.google/1kXGjsszjPB3eFGr7"
+        "href": "/contact#contact-form"
       }
     },
     "training": {
@@ -96,7 +96,7 @@
       "estimates": [],
       "cta": {
         "label": "Fale connosco para orçamento detalhado",
-        "href": "https://calendar.app.google/1kXGjsszjPB3eFGr7"
+        "href": "/contact#contact-form"
       }
     },
     "betacode-ventures": {
@@ -109,7 +109,7 @@
       "estimates": [],
       "cta": {
         "label": "Candidatar-se à Betacode Ventures",
-        "href": "/betacode-ventures"
+        "href": "/betacode-ventures#apply"
       }
     }
   },

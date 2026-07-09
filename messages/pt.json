@@ -26,6 +26,7 @@
     }
   },
   "nav": {
+    "home": "Início",
     "pricing": "Preços",
     "insights": "Insights",
     "betacodeVentures": "Betacode Ventures",

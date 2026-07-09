@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { Link } from "@/i18n/navigation"
 import { useTranslations, useLocale } from "next-intl"
+import { VENTURES_APPLY_HREF } from "@/lib/site-routes"
 import { IconArrowLeft, IconArrowRight, IconBox, IconBuilding, IconCalculator, IconCheck, IconChevronDown, IconCompass, IconInfoCircle, IconListDetails, IconPlayerSkipForward, IconRefresh, IconRocket, IconSchool, IconTool, IconUserPlus, IconUsersGroup } from "@tabler/icons-react"
 import type { Locale } from "@/i18n/routing"
 import type { BlogPost } from "@/lib/blog-content"
@@ -1498,7 +1499,7 @@ function OutcomePricingDetails({
       {outcome.pricingModel === "partnership" && (
         <div className="mt-6">
           <Link
-            href="/betacode-ventures"
+            href={VENTURES_APPLY_HREF}
             className="inline-flex items-center gap-2 rounded-md bg-primary-600 px-5 py-3 text-sm font-semibold text-white shadow-sm hover:bg-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:bg-white dark:text-purple-900 dark:hover:bg-purple-50 dark:focus-visible:outline-white"
           >
             {t("exploreVentures")}

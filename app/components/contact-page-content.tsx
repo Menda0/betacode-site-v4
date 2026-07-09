@@ -60,12 +60,15 @@ function ContactHeroBackground() {
 function ContactCard({
   children,
   className,
+  id,
 }: {
   children: ReactNode
   className?: string
+  id?: string
 }) {
   return (
     <div
+      id={id}
       className={`flex h-full flex-col rounded-2xl border border-gray-200/80 bg-white/80 p-6 shadow-sm backdrop-blur-sm sm:p-8 dark:border-white/10 dark:bg-gray-900/80 ${className ?? ""}`}
     >
       {children}
@@ -122,11 +125,11 @@ export function ContactPageContent() {
             </p>
           </div>
 
-          <div className="mx-auto mt-16 grid max-w-5xl gap-8 lg:grid-cols-2 lg:items-stretch">
-            <ContactCard>
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
-                {t("form.title")}
-              </h2>
+        <div className="mx-auto mt-16 grid max-w-5xl gap-8 lg:grid-cols-2 lg:items-stretch">
+          <ContactCard id="contact-form" className="scroll-mt-24">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+              {t("form.title")}
+            </h2>
               <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
                 {t("form.description")}
               </p>
@@ -146,7 +149,7 @@ export function ContactPageContent() {
                 {t("info.description")}
               </p>
 
-              <dl className="mt-6 flex flex-1 flex-col justify-center space-y-6">
+              <dl className="mt-6 space-y-6">
                 <div className="flex gap-3">
                   <IconMail
                     className="mt-0.5 size-5 shrink-0 text-primary-600 dark:text-primary-400"

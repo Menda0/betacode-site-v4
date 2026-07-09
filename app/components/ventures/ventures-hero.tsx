@@ -3,7 +3,7 @@
 import { useTranslations } from 'next-intl'
 import { IconArrowBigDown } from '@tabler/icons-react'
 import { Link } from '@/i18n/navigation'
-import { CALENDAR_URL } from '@/lib/ventures-content'
+import { VENTURES_APPLY_HREF } from '@/lib/site-routes'
 
 export function VenturesHero() {
   const t = useTranslations('ventures.hero')
@@ -59,12 +59,12 @@ export function VenturesHero() {
               {t('subheadline')}
             </p>
             <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-6">
-              <a
-                href={CALENDAR_URL}
+              <Link
+                href={VENTURES_APPLY_HREF}
                 className="rounded-md bg-primary-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:bg-primary-500 dark:hover:bg-primary-400 dark:focus-visible:outline-primary-500"
               >
                 {t('primaryCta')}
-              </a>
+              </Link>
               <Link
                 href="#coachid"
                 className="text-sm/6 font-semibold text-gray-900 dark:text-white flex items-center gap-2"

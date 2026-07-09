@@ -5,7 +5,7 @@ import { HeroCarousel } from './hero-carousel'
 import Image from 'next/image'
 import { IconArrowBigDown } from '@tabler/icons-react'
 import { Link } from '@/i18n/navigation'
-import { CALENDAR_URL } from '@/lib/ventures-content'
+import { CONTACT_FORM_HREF } from '@/lib/site-routes'
 
 export default function Example() {
   const tHero = useTranslations('hero')
@@ -60,12 +60,12 @@ export default function Example() {
                     {tHero('subheadline')}
                   </p>
                   <div className="mt-10 flex flex-col items-center gap-4 md:flex-row md:gap-6">
-                    <a
-                      href={CALENDAR_URL}
+                    <Link
+                      href={CONTACT_FORM_HREF}
                       className="rounded-md bg-primary-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:bg-primary-500 dark:hover:bg-primary-400 dark:focus-visible:outline-primary-500"
                     >
                       {t('bookCall')}
-                    </a>
+                    </Link>
                     <Link
                       href="/pricing"
                       className="rounded-md border border-gray-300 bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-xs hover:bg-gray-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:focus-visible:outline-primary-500"

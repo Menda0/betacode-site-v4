@@ -1,7 +1,8 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { CALENDAR_URL } from '@/lib/ventures-content'
+import { Link } from '@/i18n/navigation'
+import { CONTACT_FORM_HREF } from '@/lib/site-routes'
 
 export function CTA() {
   const t = useTranslations('common')
@@ -17,12 +18,12 @@ export function CTA() {
             {t('cta.description')}
           </p>
           <div className="mt-10 flex items-center justify-center gap-x-6">
-            <a
-              href={CALENDAR_URL}
+            <Link
+              href={CONTACT_FORM_HREF}
               className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-primary-600 shadow-xs hover:bg-primary-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white dark:shadow-none animate-bounce"
             >
               {t('bookCall')}
-            </a>
+            </Link>
           </div>
         </div>
       </div>

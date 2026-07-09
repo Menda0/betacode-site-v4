@@ -3,7 +3,8 @@
 import { IconCircleCheck } from '@tabler/icons-react'
 import { useTranslations } from 'next-intl'
 import { cn } from '@/lib/utils'
-import { CALENDAR_URL } from '@/lib/ventures-content'
+import { Link } from '@/i18n/navigation'
+import { CONTACT_FORM_HREF } from '@/lib/site-routes'
 
 const featureTranslationKeys: Record<string, 'traditionalBusiness' | 'techCompanies' | 'startups'> = {
   'traditional-business': 'traditionalBusiness',
@@ -131,12 +132,12 @@ function Description({ feature }: FeatureProps) {
                     {feature.description}
                 </p>
                 <div className="mt-4 flex flex-col md:flex-row-reverse items-center gap-6">
-                    <a
-                        href={CALENDAR_URL}
+                    <Link
+                        href={CONTACT_FORM_HREF}
                         className="rounded-md bg-primary-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:bg-primary-500 dark:hover:bg-primary-400 dark:focus-visible:outline-primary-500 z-10"
                     >
                         {tCommon('bookCall')}
-                    </a>
+                    </Link>
                 </div>
                 <dl className="mt-10 max-w-xl space-y-8 text-base/7 text-gray-600 lg:max-w-none dark:text-gray-400">
                     <h3 className="text-lg font-semibold text-gray-900 dark:text-white">

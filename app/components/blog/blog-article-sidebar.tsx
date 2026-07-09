@@ -3,7 +3,7 @@
 import { useTranslations } from 'next-intl'
 import { Link } from '@/i18n/navigation'
 import { IconArrowRight, IconCalculator, IconPhone, IconRocket } from '@tabler/icons-react'
-import { CALENDAR_URL } from '@/lib/ventures-content'
+import { CONTACT_FORM_HREF } from '@/lib/site-routes'
 
 export function BlogArticleSidebar() {
   const t = useTranslations('blog.sidebar')
@@ -61,13 +61,13 @@ export function BlogArticleSidebar() {
         <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
           {t('bookCall.description')}
         </p>
-        <a
-          href={CALENDAR_URL}
+        <Link
+          href={CONTACT_FORM_HREF}
           className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-primary-600 hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300"
         >
           {t('bookCall.link')}
           <IconArrowRight className="size-4" aria-hidden="true" />
-        </a>
+        </Link>
       </div>
     </aside>
   )

@@ -10,10 +10,11 @@ import Image from 'next/image'
 import { Link, usePathname } from '@/i18n/navigation'
 
 const navigation = [
+  { key: 'home' as const, href: '/' },
   { key: 'pricing' as const, href: '/pricing' },
-  { key: 'insights' as const, href: '/insights' },
   { key: 'betacodeVentures' as const, href: '/betacode-ventures' },
   { key: 'contact' as const, href: '/contact' },
+  { key: 'insights' as const, href: '/insights' },
 ]
 
 function isNavActive(pathname: string, href: string) {
