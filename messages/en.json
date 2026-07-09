@@ -384,6 +384,14 @@
     "suggestedServices": "Suggested services",
     "submitErrorNameEmail": "Please fill in your name and email.",
     "submitErrorFailed": "Failed to submit your details. Please try again.",
+    "successTitle": "Thank you!",
+    "successMessage": "We've received your details and will get back to you soon.",
+    "validation": {
+      "nameRequired": "Please enter your name.",
+      "emailRequired": "Please enter your email.",
+      "emailInvalid": "Please enter a valid email address.",
+      "websiteInvalid": "Please enter a valid website address."
+    },
     "summaryLabels": {
       "businessStage": "Business",
       "startupFunding": "Funding",

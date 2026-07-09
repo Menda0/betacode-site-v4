@@ -2,6 +2,9 @@
 
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react"
 import { useCallback, useEffect, useMemo, useRef, useState, type RefObject } from "react"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { z } from "zod"
 import { Link } from "@/i18n/navigation"
 import { useTranslations, useLocale } from "next-intl"
 import { IconArrowLeft, IconArrowRight, IconBox, IconBuilding, IconCalculator, IconCheck, IconChevronDown, IconCompass, IconInfoCircle, IconListDetails, IconPlayerSkipForward, IconRefresh, IconRocket, IconSchool, IconTool, IconUserPlus, IconUsersGroup } from "@tabler/icons-react"
@@ -270,7 +273,6 @@ export function PriceCalculator() {
   const [showWizard, setShowWizard] = useState(false)
   const [phase, setPhase] = useState<Phase>("questions")
   const [answers, setAnswers] = useState<CalculatorAnswers>({})
-  const [contactDetails, setContactDetails] = useState<CalculatorAnswers>({})
   const [currentQuestionId, setCurrentQuestionId] = useState<string>(startQuestion.id)
   const [outcomes, setOutcomes] = useState<CalculatorOutcome[]>([])
   const [expandedOutcomeId, setExpandedOutcomeId] = useState<OutcomeId | null>(null)
@@ -400,7 +402,6 @@ export function PriceCalculator() {
   function reset() {
     setPhase("questions")
     setAnswers({})
-    setContactDetails({})
     setCurrentQuestionId(startQuestion.id)
     setOutcomes([])
     setExpandedOutcomeId(null)
@@ -408,20 +409,13 @@ export function PriceCalculator() {
     setSubmitError(null)
   }
 
-  async function handleContactSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault()
+  async function handleContactSubmit(values: ContactFormValues) {
     setSubmitError(null)
     setIsSubmitting(true)
 
-    const name = contactDetails.name?.trim()
-    const email = contactDetails.email?.trim()
-    const website = contactDetails.website?.trim()
-
-    if (!name || !email) {
-      setSubmitError(t("submitErrorNameEmail"))
-      setIsSubmitting(false)
-      return
-    }
+    const name = values.name.trim()
+    const email = values.email.trim()
+    const website = values.website?.trim()
 
     const priceSummary = outcomes
       .map((outcome) => {
@@ -573,39 +567,16 @@ export function PriceCalculator() {
                     />
                   )}
 
-                  {phase === "contact" && (
+                  {(phase === "contact" || phase === "submitted") && (
                     <ContactStep
                       contact={config.contact}
-                      contactDetails={contactDetails}
+                      isSuccess={phase === "submitted"}
                       submitError={submitError}
                       isSubmitting={isSubmitting}
                       onBack={handleBack}
-                      onChange={(fieldId, value) =>
-                        setContactDetails((prev) => ({ ...prev, [fieldId]: value }))
-                      }
                       onSubmit={handleContactSubmit}
+                      onStartOver={reset}
                     />
-                  )}
-
-                  {phase === "submitted" && (
-                    <div className="text-center">
-                      <div className="mx-auto flex size-12 items-center justify-center rounded-full bg-primary-600/10 text-primary-600 dark:bg-primary-500/10 dark:text-primary-400">
-                        <IconCheck className="size-6" aria-hidden="true" />
-                      </div>
-                      <h2 className="mt-4 text-xl font-semibold text-gray-900 dark:text-white">
-                        {t("thankYou")}
-                      </h2>
-                      <p className="mt-2 max-w-sm text-gray-600 dark:text-gray-300">
-                        {t("thankYouMessage")}
-                      </p>
-                      <button
-                        type="button"
-                        onClick={reset}
-                        className="mt-6 text-sm font-semibold text-primary-600 hover:text-primary-500 dark:text-primary-400"
-                      >
-                        {t("startOver")}
-                      </button>
-                    </div>
                   )}
                   </div>
                   </div>
@@ -1614,24 +1585,90 @@ function EstimatesGrid({
   )
 }
 
+function isValidOptionalWebsite(value: string) {
+  if (!value.trim()) return true
+
+  try {
+    const normalized = /^https?:\/\//i.test(value) ? value : `https://${value}`
+    const url = new URL(normalized)
+    return Boolean(url.hostname)
+  } catch {
+    return false
+  }
+}
+
 function ContactStep({
   contact,
-  contactDetails,
+  isSuccess,
   submitError,
   isSubmitting,
   onBack,
-  onChange,
   onSubmit,
+  onStartOver,
 }: {
   contact: CalculatorConfig["contact"]
-  contactDetails: CalculatorAnswers
+  isSuccess: boolean
   submitError: string | null
   isSubmitting: boolean
   onBack: () => void
-  onChange: (fieldId: string, value: string) => void
-  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void | Promise<void>
+  onSubmit: (values: ContactFormValues) => Promise<void>
+  onStartOver: () => void
 }) {
   const t = useTranslations("pricing")
+
+  const contactFormSchema = useMemo(
+    () =>
+      z.object({
+        name: z.string().trim().min(1, t("validation.nameRequired")),
+        email: z
+          .string()
+          .trim()
+          .min(1, t("validation.emailRequired"))
+          .pipe(z.email(t("validation.emailInvalid"))),
+        website: z
+          .string()
+          .trim()
+          .refine(isValidOptionalWebsite, { message: t("validation.websiteInvalid") }),
+      }),
+    [t]
+  )
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ContactFormValues>({
+    resolver: zodResolver(contactFormSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      website: "",
+    },
+    mode: "onTouched",
+  })
+
+  if (isSuccess) {
+    return (
+      <div className="text-center">
+        <div className="mx-auto flex size-12 items-center justify-center rounded-full bg-primary-600/10 text-primary-600 dark:bg-primary-500/10 dark:text-primary-400">
+          <IconCheck className="size-6" aria-hidden="true" />
+        </div>
+        <h2 className="mt-4 text-xl font-semibold text-gray-900 dark:text-white">
+          {t("successTitle")}
+        </h2>
+        <p className="mx-auto mt-2 max-w-sm text-sm text-gray-600 dark:text-gray-300">
+          {t("successMessage")}
+        </p>
+        <button
+          type="button"
+          onClick={onStartOver}
+          className="mt-6 text-sm font-semibold text-primary-600 hover:text-primary-500 dark:text-primary-400"
+        >
+          {t("startOver")}
+        </button>
+      </div>
+    )
+  }
 
   return (
     <div>
@@ -1652,8 +1689,9 @@ function ContactStep({
 
       <form
         id="price-calculator-contact-form"
-        onSubmit={onSubmit}
+        onSubmit={handleSubmit(onSubmit)}
         className="mt-6 space-y-4"
+        noValidate
       >
         <TooltipProvider delayDuration={0}>
         {submitError && (
@@ -1661,7 +1699,11 @@ function ContactStep({
             {submitError}
           </p>
         )}
-        {contact.fields.map((field) => (
+        {contact.fields.map((field) => {
+          const fieldName = field.id as keyof ContactFormValues
+          const error = errors[fieldName]
+
+          return (
           <div key={field.id} className="space-y-2">
             <div className="space-y-1">
               <div className="flex items-center gap-1.5">
@@ -1707,18 +1749,43 @@ function ContactStep({
             <input
               id={field.id}
               type={field.type}
-              value={contactDetails[field.id] ?? ""}
-              onChange={(event) => onChange(field.id, event.target.value)}
               placeholder={field.placeholder}
-              required={!field.optional}
               disabled={isSubmitting}
-              aria-describedby={field.description ? `${field.id}-description` : undefined}
-              className="block w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm text-gray-900 shadow-xs placeholder:text-gray-400 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-500"
+              aria-invalid={Boolean(error)}
+              aria-describedby={
+                error
+                  ? `${field.id}-error`
+                  : field.description
+                    ? `${field.id}-description`
+                    : undefined
+              }
+              className={cn(
+                "block w-full rounded-lg border bg-white px-3 py-2.5 text-sm text-gray-900 shadow-xs placeholder:text-gray-400 focus:outline-none focus:ring-2 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-500",
+                error
+                  ? "border-red-400 focus:border-red-500 focus:ring-red-500/20 dark:border-red-500"
+                  : "border-gray-300 focus:border-primary-500 focus:ring-primary-500/20 dark:border-gray-700"
+              )}
+              {...register(fieldName)}
             />
+            {error?.message && (
+              <p
+                id={`${field.id}-error`}
+                className="text-xs text-red-600 dark:text-red-400"
+                role="alert"
+              >
+                {error.message}
+              </p>
+            )}
           </div>
-        ))}
+        )})}
         </TooltipProvider>
       </form>
     </div>
   )
+}
+
+type ContactFormValues = {
+  name: string
+  email: string
+  website: string
 }
