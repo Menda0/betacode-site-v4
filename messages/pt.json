@@ -59,14 +59,22 @@
   },
   "hero": {
     "slides": [
-      "A sua equipa dedicada para software à medida",
+      "Tem o negócio. Nós trazemos o software.",
+      "Software à medida, entregue por pessoas que conhecem o seu negócio",
       "Do MVP à produção em três meses",
-      "Escale a engenharia sem o risco de contratar",
-      "Parcerias tecnológicas que crescem com o seu negócio",
-      "Entregue produtos que chegam a utilizadores reais",
-      "Uma equipa, totalmente dedicada — não um banco rotativo"
+      "Transforme a sua visão de produto em software pronto para produção",
+      "Ainda sem equipa de desenvolvimento? Sem problema — estamos aqui para ajudar.",
+      "Engenharia que cresce com o seu negócio — do MVP à escala",
+      "Produtos reais nas mãos de utilizadores reais, mais depressa",
+      "Software que chega ao mercado — e continua a chegar",
+      "O seu produto. A nossa equipa. Um objetivo partilhado.",
+      "Lance em meses, não em anos",
+      "Engenheiros dedicados. Entrega real.",
+      "A sua visão. A nossa engenharia.",
+      "Parcerias de software que realmente entregam",
+      "A equipa por trás do produto que está a construir"
     ],
-    "subheadline": "Integramos engenheiros dedicados, líderes de produto e co-fundadores técnicos — para que possa entregar software à medida, validar ideias de startup e escalar sem montar um departamento do zero."
+    "subheadline": "Lance software à medida, valide a sua ideia e escale com uma equipa que já traz engenheiros, liderança de produto e visão de co-fundador."
   },
   "services": {
     "eyebrow": "O que fazemos",

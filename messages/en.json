@@ -59,14 +59,22 @@
   },
   "hero": {
     "slides": [
-      "Your dedicated team for custom software",
+      "You have the business. We bring the software.",
+      "Custom software, delivered by people who know your business",
       "From MVP to production in three months",
-      "Scale engineering without the hiring gamble",
-      "Technology partnerships that grow with your business",
-      "Ship products that reach real users",
-      "One team, fully committed — not a rotating bench"
+      "Turn your product vision into production-ready software",
+      "No dev team yet? No problem — we are to help you.",
+      "Engineering that grows with your business — from MVP to scale",
+      "Real products in real users' hands, faster",
+      "Software that ships — and keeps shipping",
+      "Your product. Our team. One shared goal",
+      "Launch in months, not years",
+      "Dedicated engineers. Real delivery.",
+      "Your vision. Our engineering",
+      "Software partnerships that actually ship",
+      "The team behind the product you're building"
     ],
-    "subheadline": "We embed dedicated engineers, product leads, and technical co-founders — so you can ship custom software, validate startup ideas, and scale without building a department from scratch."
+    "subheadline": "Ship custom software, validate your idea, and scale with a team that brings engineers, product leadership, and a co-founder mindset."
   },
   "services": {
     "eyebrow": "What we do",
