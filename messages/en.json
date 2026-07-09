@@ -381,6 +381,9 @@
     "exploreVentures": "Explore Betacode Ventures",
     "selectOption": "Select an option",
     "optional": "optional",
+    "suggestedServices": "Suggested services",
+    "submitErrorNameEmail": "Please fill in your name and email.",
+    "submitErrorFailed": "Failed to submit your details. Please try again.",
     "summaryLabels": {
       "businessStage": "Business",
       "startupFunding": "Funding",

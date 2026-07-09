@@ -2,16 +2,19 @@
 
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react"
 import { useCallback, useEffect, useMemo, useRef, useState, type RefObject } from "react"
-import Link from "next/link"
+import { Link } from "@/i18n/navigation"
 import { useTranslations, useLocale } from "next-intl"
-import { IconArrowLeft, IconArrowRight, IconBox, IconBuilding, IconCalculator, IconCheck, IconChevronDown, IconCompass, IconListDetails, IconPlayerSkipForward, IconRefresh, IconRocket, IconSchool, IconTool, IconUserPlus, IconUsersGroup } from "@tabler/icons-react"
+import { IconArrowLeft, IconArrowRight, IconBox, IconBuilding, IconCalculator, IconCheck, IconChevronDown, IconCompass, IconInfoCircle, IconListDetails, IconPlayerSkipForward, IconRefresh, IconRocket, IconSchool, IconTool, IconUserPlus, IconUsersGroup } from "@tabler/icons-react"
+import type { Locale } from "@/i18n/routing"
 import {
   clearBranchAnswers,
+  createPricingUiLabels,
   formatEuroRange,
   formatHourlyRange,
   getAnswersSummary,
   getBriefPriceSummary,
   getOutcomeSummary,
+  getPricingCalculatorConfig,
   getPricingModelNote,
   getExpectedBranchingQuestionCount,
   getProductDescriptionQuestion,
@@ -19,22 +22,28 @@ import {
   getServiceGroupLabel,
   getStartQuestion,
   isQuestionFlowComplete,
-  pricingCalculatorConfig,
   resolveOutcomes,
   sortOutcomesForDisplay,
   type AnswerSummaryItem,
   type CalculatorAnswers,
+  type CalculatorConfig,
   type CalculatorOutcome,
   type CalculatorQuestion,
   type OutcomeId,
+  type PricingUiLabels,
   type TeamConfiguration,
   type TeamMember,
 } from "@/lib/pricing-calculator"
 import { cn } from "@/lib/utils"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 type Phase = "questions" | "results" | "product" | "contact" | "submitted"
 
-const productDescriptionQuestion = getProductDescriptionQuestion()
 const POST_BRANCHING_STEPS = 3
 
 const CARD_HEIGHT_CLASS =
@@ -185,6 +194,15 @@ function PricingHeroBackground() {
   )
 }
 
+function usePricingCalculatorLabels() {
+  const locale = useLocale() as Locale
+  const t = useTranslations("pricing")
+  const config = useMemo(() => getPricingCalculatorConfig(locale), [locale])
+  const uiLabels = useMemo(() => createPricingUiLabels(t), [t])
+
+  return { config, uiLabels, t }
+}
+
 function PricingIntroContent({
   variant = "hero",
   onStart,
@@ -242,8 +260,12 @@ function PricingIntroContent({
 }
 
 export function PriceCalculator() {
-  const t = useTranslations("pricing")
-  const startQuestion = getStartQuestion()
+  const { config, uiLabels, t } = usePricingCalculatorLabels()
+  const startQuestion = useMemo(() => getStartQuestion(config), [config])
+  const productDescriptionQuestion = useMemo(
+    () => getProductDescriptionQuestion(config),
+    [config]
+  )
   const wizardRef = useRef<HTMLDivElement>(null)
   const [showWizard, setShowWizard] = useState(false)
   const [phase, setPhase] = useState<Phase>("questions")
@@ -256,13 +278,13 @@ export function PriceCalculator() {
   const [submitError, setSubmitError] = useState<string | null>(null)
   const locale = useLocale()
 
-  const questionPath = useMemo(() => getQuestionPath(answers), [answers])
+  const questionPath = useMemo(() => getQuestionPath(answers, config), [answers, config])
   const currentQuestion =
-    pricingCalculatorConfig.questions.find((question) => question.id === currentQuestionId) ?? startQuestion
+    config.questions.find((question) => question.id === currentQuestionId) ?? startQuestion
 
   const branchingQuestionCount = useMemo(
-    () => getExpectedBranchingQuestionCount(answers),
-    [answers]
+    () => getExpectedBranchingQuestionCount(answers, config),
+    [answers, config]
   )
   const totalSteps = branchingQuestionCount + POST_BRANCHING_STEPS
   const currentQuestionIndex = questionPath.findIndex((question) => question.id === currentQuestionId)
@@ -281,7 +303,7 @@ export function PriceCalculator() {
     phase === "questions" && isProductHelpQuestion(currentQuestionId)
 
   const hasCardFooter = phase === "results" || phase === "contact" || phase === "product"
-  const shouldCenterCardContent = !hasCardFooter || phase === "product"
+  const shouldCenterCardContent = !hasCardFooter || phase === "product" || phase === "contact"
   const enableCardScrollFade =
     (phase === "results" && expandedOutcomeId !== null) || isCompactQuestionStep
   const { scrollRef: cardScrollRef, showFade: showCardScrollFade, onScroll: onCardScroll } =
@@ -299,8 +321,8 @@ export function PriceCalculator() {
       return
     }
 
-    if (isQuestionFlowComplete(nextAnswers)) {
-      const resolvedOutcomes = resolveOutcomes(nextAnswers)
+    if (isQuestionFlowComplete(nextAnswers, config)) {
+      const resolvedOutcomes = resolveOutcomes(nextAnswers, config)
       setOutcomes(resolvedOutcomes)
       setExpandedOutcomeId(getDefaultExpandedOutcomeId(resolvedOutcomes))
       setPhase("results")
@@ -396,14 +418,14 @@ export function PriceCalculator() {
     const website = contactDetails.website?.trim()
 
     if (!name || !email) {
-      setSubmitError("Please fill in your name and email.")
+      setSubmitError(t("submitErrorNameEmail"))
       setIsSubmitting(false)
       return
     }
 
     const priceSummary = outcomes
       .map((outcome) => {
-        const brief = getBriefPriceSummary(outcome)
+        const brief = getBriefPriceSummary(outcome, uiLabels)
         return `${getOutcomeSummary(outcome)} — ${brief.label}: ${brief.value}`
       })
       .join(" | ")
@@ -420,7 +442,7 @@ export function PriceCalculator() {
           },
           answers,
           outcomes: outcomes.map((outcome) => outcome.id),
-          answerSummary: getAnswersSummary(answers),
+          answerSummary: getAnswersSummary(answers, config, uiLabels),
           priceSummary,
           locale,
         }),
@@ -428,7 +450,7 @@ export function PriceCalculator() {
 
       if (!response.ok) {
         const data = (await response.json().catch(() => null)) as { error?: string } | null
-        throw new Error(data?.error ?? "Failed to submit your details. Please try again.")
+        throw new Error(data?.error ?? t("submitErrorFailed"))
       }
 
       setPhase("submitted")
@@ -436,7 +458,7 @@ export function PriceCalculator() {
       setSubmitError(
         error instanceof Error
           ? error.message
-          : "Failed to submit your details. Please try again."
+          : t("submitErrorFailed")
       )
     } finally {
       setIsSubmitting(false)
@@ -477,7 +499,11 @@ export function PriceCalculator() {
             className="flex w-full max-w-5xl flex-col animate-in fade-in slide-in-from-bottom-3 fill-mode-both duration-500 focus:outline-none"
           >
             <div className="flex w-full flex-col">
-              <StepIndicator currentStep={questionStep} totalSteps={totalSteps} />
+              <StepIndicator
+                currentStep={questionStep}
+                totalSteps={totalSteps}
+                compact={isCompactQuestionStep}
+              />
 
               <div
                 className={cn(
@@ -499,9 +525,9 @@ export function PriceCalculator() {
                       "mx-auto flex w-full flex-col",
                       shouldCenterCardContent && "justify-center",
                       phase !== "results" &&
-                        (isCompactQuestionStep ? "p-4 sm:p-5" : "p-6 sm:p-8"),
+                        (isCompactQuestionStep ? "p-3 sm:p-5" : "p-6 sm:p-8"),
                       shouldCenterCardContent &&
-                        (hasCardFooter && phase === "product"
+                        (hasCardFooter && (phase === "product" || phase === "contact")
                           ? "min-h-full"
                           : CARD_INNER_MIN_HEIGHT_CLASS),
                       phase === "results" && "min-h-full flex-1",
@@ -528,6 +554,8 @@ export function PriceCalculator() {
                       expandedId={expandedOutcomeId}
                       onExpandedChange={setExpandedOutcomeId}
                       onBack={handleBack}
+                      config={config}
+                      uiLabels={uiLabels}
                       scrollRef={cardScrollRef}
                       onScroll={onCardScroll}
                       showScrollFade={showCardScrollFade}
@@ -547,6 +575,7 @@ export function PriceCalculator() {
 
                   {phase === "contact" && (
                     <ContactStep
+                      contact={config.contact}
                       contactDetails={contactDetails}
                       submitError={submitError}
                       isSubmitting={isSubmitting}
@@ -792,20 +821,38 @@ function FooterPrimaryButton({
   )
 }
 
-function StepIndicator({ currentStep, totalSteps }: { currentStep: number; totalSteps: number }) {
+function StepIndicator({
+  currentStep,
+  totalSteps,
+  compact = false,
+}: {
+  currentStep: number
+  totalSteps: number
+  compact?: boolean
+}) {
   return (
-    <div className="mb-3 flex shrink-0 items-center justify-center gap-1.5 sm:mb-6 sm:gap-4">
+    <div
+      className={cn(
+        "flex shrink-0 items-center justify-center gap-1.5 sm:mb-6 sm:gap-4",
+        compact ? "mb-2 max-sm:mb-1.5" : "mb-3"
+      )}
+    >
       {Array.from({ length: totalSteps }, (_, index) => index + 1).map((value) => (
         <div key={value} className="flex items-center gap-2 sm:gap-4">
           <div
             className={cn(
-              "flex size-8 items-center justify-center rounded-full text-sm font-semibold transition-colors",
+              "flex items-center justify-center rounded-full font-semibold transition-colors",
+              compact ? "size-7 text-xs sm:size-8 sm:text-sm" : "size-8 text-sm",
               currentStep >= value
                 ? "bg-primary-600 text-white dark:bg-primary-500"
                 : "bg-gray-200 text-gray-500 dark:bg-gray-800 dark:text-gray-400"
             )}
           >
-            {currentStep > value ? <IconCheck className="size-4" aria-hidden="true" /> : value}
+            {currentStep > value ? (
+              <IconCheck className={compact ? "size-3.5 sm:size-4" : "size-4"} aria-hidden="true" />
+            ) : (
+              value
+            )}
           </div>
           {value < totalSteps && (
             <div
@@ -827,7 +874,6 @@ function QuestionStep({
   canGoBack,
   compact = false,
   actionsInFooter = false,
-  continueLabel = "Continue",
   onBack,
   onChoiceSelect,
   onDropdownChange,
@@ -841,7 +887,6 @@ function QuestionStep({
   canGoBack: boolean
   compact?: boolean
   actionsInFooter?: boolean
-  continueLabel?: string
   onBack: () => void
   onChoiceSelect?: (question: CalculatorQuestion, optionId: string) => void
   onDropdownChange?: (question: CalculatorQuestion, optionId: string) => void
@@ -850,16 +895,21 @@ function QuestionStep({
   onTextareaContinue?: () => void
   onTextareaSkip?: () => void
 }) {
+  const t = useTranslations("pricing")
+
   return (
     <div>
       {canGoBack && (
         <button
           type="button"
           onClick={onBack}
-          className="mb-3 inline-flex shrink-0 items-center gap-1 text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+          className={cn(
+            "inline-flex shrink-0 items-center gap-1 text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white",
+            compact ? "mb-2 max-sm:mb-1.5" : "mb-3"
+          )}
         >
           <IconArrowLeft className="size-4" aria-hidden="true" />
-          Back
+          {t("back")}
         </button>
       )}
 
@@ -867,7 +917,7 @@ function QuestionStep({
         <h2
           className={cn(
             "font-semibold text-gray-900 dark:text-white",
-            compact ? "text-lg" : "text-xl"
+            compact ? "text-lg max-sm:text-base" : "text-xl"
           )}
         >
           {question.title}
@@ -876,7 +926,9 @@ function QuestionStep({
           <p
             className={cn(
               "text-gray-600 dark:text-gray-400",
-              compact ? "mt-1 text-xs leading-relaxed" : "mt-2 text-sm"
+              compact
+                ? "mt-1 text-xs leading-snug max-sm:mt-0.5 max-sm:text-[11px]"
+                : "mt-2 text-sm"
             )}
           >
             {question.description}
@@ -888,7 +940,7 @@ function QuestionStep({
         <div
           className={cn(
             "grid sm:grid-cols-2",
-            compact ? "mt-4 gap-2.5" : "mt-6 gap-4"
+            compact ? "mt-3 gap-2 max-sm:mt-2 max-sm:gap-1.5" : "mt-6 gap-4"
           )}
         >
           {question.options.map((option) => {
@@ -902,8 +954,8 @@ function QuestionStep({
               onClick={() => onChoiceSelect?.(question, option.id)}
               className={cn(
                 "rounded-xl border text-left transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600",
-                compact ? "rounded-lg p-3" : "p-4",
-                iconStyle && "flex items-start gap-3",
+                compact ? "rounded-lg p-3 max-sm:p-2" : "p-4",
+                iconStyle && "flex items-start gap-3 max-sm:gap-2",
                 getChoiceOptionColSpan(question.options, option.id),
                 answers[question.id] === option.id
                   ? "border-primary-400 bg-primary-50/70 dark:border-primary-500 dark:bg-primary-800/50"
@@ -914,12 +966,12 @@ function QuestionStep({
                 <div
                   className={cn(
                     "flex shrink-0 items-center justify-center rounded-lg",
-                    compact ? "size-9" : "size-10",
+                    compact ? "size-9 max-sm:size-7" : "size-10",
                     iconStyle.bg,
                     iconStyle.text
                   )}
                 >
-                  <Icon className={compact ? "size-4" : "size-5"} aria-hidden="true" />
+                  <Icon className={compact ? "size-4 max-sm:size-3.5" : "size-5"} aria-hidden="true" />
                 </div>
               )}
 
@@ -927,7 +979,7 @@ function QuestionStep({
               <span
                 className={cn(
                   "font-semibold text-gray-900 dark:text-white",
-                  compact ? "text-sm" : "text-base"
+                  compact ? "text-sm leading-snug max-sm:text-xs" : "text-base"
                 )}
               >
                 {option.label}
@@ -936,7 +988,9 @@ function QuestionStep({
                 <p
                   className={cn(
                     "text-gray-600 dark:text-gray-300",
-                    compact ? "mt-1 text-xs leading-relaxed" : "mt-2 text-sm"
+                    compact
+                      ? "mt-1 text-xs leading-snug max-sm:hidden"
+                      : "mt-2 text-sm"
                   )}
                 >
                   {option.description}
@@ -957,7 +1011,7 @@ function QuestionStep({
             onChange={(event) => onDropdownChange?.(question, event.target.value)}
             className="block w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-gray-900 shadow-xs focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
           >
-            <option value="" disabled>Select an option</option>
+            <option value="" disabled>{t("selectOption")}</option>
             {question.options.map((option) => (
               <option key={option.id} value={option.id}>{option.label}</option>
             ))}
@@ -968,7 +1022,7 @@ function QuestionStep({
             onClick={() => onDropdownContinue?.(question)}
             className="inline-flex items-center gap-2 rounded-md bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-primary-500 disabled:pointer-events-none disabled:opacity-50 dark:bg-primary-500 dark:hover:bg-primary-400"
           >
-            Continue
+            {t("continue")}
             <IconArrowRight className="size-4" aria-hidden="true" />
           </button>
         </div>
@@ -991,7 +1045,7 @@ function QuestionStep({
                 onClick={onTextareaContinue}
                 className="inline-flex items-center gap-2 rounded-md bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-primary-500 dark:bg-primary-500 dark:hover:bg-primary-400"
               >
-                {continueLabel}
+                {t("continue")}
                 <IconArrowRight className="size-4" aria-hidden="true" />
               </button>
               {question.optional && (
@@ -1000,7 +1054,7 @@ function QuestionStep({
                   onClick={onTextareaSkip}
                   className="rounded-md px-4 py-2.5 text-sm font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
                 >
-                  Skip
+                  {t("skip")}
                 </button>
               )}
             </div>
@@ -1017,6 +1071,8 @@ function ResultsStep({
   expandedId,
   onExpandedChange,
   onBack,
+  config,
+  uiLabels,
   scrollRef,
   onScroll,
   showScrollFade = false,
@@ -1026,13 +1082,15 @@ function ResultsStep({
   expandedId: OutcomeId | null
   onExpandedChange: (id: OutcomeId | null) => void
   onBack: () => void
+  config: CalculatorConfig
+  uiLabels: PricingUiLabels
   scrollRef?: RefObject<HTMLDivElement | null>
   onScroll?: () => void
   showScrollFade?: boolean
 }) {
   const t = useTranslations("pricing")
   const sortedOutcomes = sortOutcomesForDisplay(outcomes)
-  const choiceSummary = getAnswersSummary(answers)
+  const choiceSummary = getAnswersSummary(answers, config, uiLabels)
   const isSingleOutcome = sortedOutcomes.length === 1
   const activeExpandedId = expandedId
   const expandedOutcome = activeExpandedId
@@ -1043,7 +1101,7 @@ function ResultsStep({
     return (
       <div className="text-center">
         <p className="text-gray-700 dark:text-gray-300">
-          We couldn&apos;t match your answers to a recommendation. Try adjusting your responses or book a call with us.
+          {t("noMatch")}
         </p>
       </div>
     )
@@ -1097,12 +1155,13 @@ function ResultsStep({
                     <div
                       className="flex flex-wrap items-center gap-2"
                       role="tablist"
-                      aria-label="Suggested services"
+                      aria-label={t("suggestedServices")}
                     >
                       {sortedOutcomes.map((outcome) => (
                         <ServiceTab
                           key={outcome.id}
                           outcome={outcome}
+                          uiLabels={uiLabels}
                           isActive={outcome.id === activeExpandedId}
                           onClick={() => onExpandedChange(outcome.id)}
                         />
@@ -1113,6 +1172,8 @@ function ResultsStep({
                   <ExpandedServicePanel
                     className="flex-1"
                     outcome={expandedOutcome}
+                    config={config}
+                    uiLabels={uiLabels}
                     showHide={!isSingleOutcome}
                     onHide={() => onExpandedChange(null)}
                   />
@@ -1123,6 +1184,8 @@ function ResultsStep({
                     <ServiceResultCard
                       key={outcome.id}
                       outcome={outcome}
+                      config={config}
+                      uiLabels={uiLabels}
                       onSelect={() => onExpandedChange(outcome.id)}
                     />
                   ))}
@@ -1223,15 +1286,20 @@ const OUTCOME_ICON_STYLES: Record<
 
 function ServiceResultCard({
   outcome,
+  config,
+  uiLabels,
   onSelect,
 }: {
   outcome: CalculatorOutcome
+  config: CalculatorConfig
+  uiLabels: PricingUiLabels
   onSelect: () => void
 }) {
+  const t = useTranslations("pricing")
   const iconStyle = OUTCOME_ICON_STYLES[outcome.id]
   const Icon = iconStyle.icon
-  const briefPrice = getBriefPriceSummary(outcome)
-  const groupLabel = getServiceGroupLabel(outcome.serviceGroup)
+  const briefPrice = getBriefPriceSummary(outcome, uiLabels)
+  const groupLabel = getServiceGroupLabel(outcome.serviceGroup, config)
 
   return (
     <button
@@ -1270,7 +1338,7 @@ function ServiceResultCard({
           {getOutcomeSummary(outcome)}
         </p>
         <span className="mt-2 inline-flex items-center gap-1 text-xs font-medium text-primary-600 dark:text-primary-400">
-          See full pricing
+          {t("seeFullPricing")}
           <IconChevronDown className="size-3.5 -rotate-90" aria-hidden="true" />
         </span>
       </div>
@@ -1280,19 +1348,24 @@ function ServiceResultCard({
 
 function ExpandedServicePanel({
   outcome,
+  config,
+  uiLabels,
   showHide = true,
   onHide,
   className,
 }: {
   outcome: CalculatorOutcome
+  config: CalculatorConfig
+  uiLabels: PricingUiLabels
   showHide?: boolean
   onHide: () => void
   className?: string
 }) {
+  const t = useTranslations("pricing")
   const iconStyle = OUTCOME_ICON_STYLES[outcome.id]
   const Icon = iconStyle.icon
-  const briefPrice = getBriefPriceSummary(outcome)
-  const groupLabel = getServiceGroupLabel(outcome.serviceGroup)
+  const briefPrice = getBriefPriceSummary(outcome, uiLabels)
+  const groupLabel = getServiceGroupLabel(outcome.serviceGroup, config)
 
   return (
     <div
@@ -1331,13 +1404,13 @@ function ExpandedServicePanel({
             onClick={onHide}
             className="shrink-0 rounded-md border border-gray-300 px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-800"
           >
-            Hide
+            {t("hide")}
           </button>
         )}
       </div>
 
       <div className="mt-5 flex flex-1 flex-col border-t border-gray-100 pt-5 dark:border-gray-800">
-        <OutcomePricingDetails outcome={outcome} />
+        <OutcomePricingDetails outcome={outcome} uiLabels={uiLabels} />
       </div>
     </div>
   )
@@ -1345,16 +1418,18 @@ function ExpandedServicePanel({
 
 function ServiceTab({
   outcome,
+  uiLabels,
   isActive = false,
   onClick,
 }: {
   outcome: CalculatorOutcome
+  uiLabels: PricingUiLabels
   isActive?: boolean
   onClick: () => void
 }) {
   const iconStyle = OUTCOME_ICON_STYLES[outcome.id]
   const Icon = iconStyle.icon
-  const briefPrice = getBriefPriceSummary(outcome)
+  const briefPrice = getBriefPriceSummary(outcome, uiLabels)
 
   return (
     <button
@@ -1391,8 +1466,15 @@ function ServiceTab({
   )
 }
 
-function OutcomePricingDetails({ outcome }: { outcome: CalculatorOutcome }) {
-  const pricingNote = getPricingModelNote(outcome.pricingModel)
+function OutcomePricingDetails({
+  outcome,
+  uiLabels,
+}: {
+  outcome: CalculatorOutcome
+  uiLabels: PricingUiLabels
+}) {
+  const t = useTranslations("pricing")
+  const pricingNote = getPricingModelNote(outcome.pricingModel, uiLabels)
   const teamConfigurations = outcome.teamConfigurations ?? []
   const showTeamConfigurations = teamConfigurations.length > 0
   const showTeamTable = outcome.teamComposition.length > 0
@@ -1419,7 +1501,7 @@ function OutcomePricingDetails({ outcome }: { outcome: CalculatorOutcome }) {
 
           {showRate && outcome.rate && (
             <div className="rounded-lg bg-gray-50 p-3 dark:bg-gray-800/50">
-              <p className="text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">Pricing</p>
+              <p className="text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">{t("pricing")}</p>
               <p className="mt-2 text-lg font-semibold text-gray-900 dark:text-white">
                 {formatHourlyRange(outcome.rate.rateMin, outcome.rate.rateMax)}/h
               </p>
@@ -1445,7 +1527,7 @@ function OutcomePricingDetails({ outcome }: { outcome: CalculatorOutcome }) {
             href="/betacode-ventures"
             className="inline-flex items-center gap-2 rounded-md bg-primary-600 px-5 py-3 text-sm font-semibold text-white shadow-sm hover:bg-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:bg-white dark:text-purple-900 dark:hover:bg-purple-50 dark:focus-visible:outline-white"
           >
-            Explore Betacode Ventures
+            {t("exploreVentures")}
             <IconArrowRight className="size-4" aria-hidden="true" />
           </Link>
         </div>
@@ -1475,18 +1557,20 @@ function TeamConfigurationSection({ config }: { config: TeamConfiguration }) {
 }
 
 function TeamCompositionTable({ members }: { members: TeamMember[] }) {
+  const t = useTranslations("pricing")
+
   return (
     <div className="w-full rounded-lg bg-gray-50 p-3 sm:col-span-2 dark:bg-gray-800/50">
       <p className="text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">
-        Team configuration
+        {t("teamConfiguration")}
       </p>
       <div className="mt-2 w-full overflow-x-auto">
         <table className="w-full table-fixed text-sm">
           <thead>
             <tr className="border-b border-gray-200 text-left dark:border-gray-700">
-              <th className="w-[45%] pb-1.5 pr-3 font-semibold text-primary-600 dark:text-primary-400">Profile</th>
-              <th className="w-[30%] pb-1.5 pr-3 font-semibold text-primary-600 dark:text-primary-400">Regime</th>
-              <th className="w-[25%] pb-1.5 font-semibold text-primary-600 dark:text-primary-400">Rate</th>
+              <th className="w-[45%] pb-1.5 pr-3 font-semibold text-primary-600 dark:text-primary-400">{t("profile")}</th>
+              <th className="w-[30%] pb-1.5 pr-3 font-semibold text-primary-600 dark:text-primary-400">{t("regime")}</th>
+              <th className="w-[25%] pb-1.5 font-semibold text-primary-600 dark:text-primary-400">{t("rate")}</th>
             </tr>
           </thead>
           <tbody className="text-gray-700 dark:text-gray-300">
@@ -1509,10 +1593,12 @@ function EstimatesGrid({
 }: {
   estimates: { label: string; min: number; max: number }[]
 }) {
+  const t = useTranslations("pricing")
+
   return (
     <div className="rounded-lg bg-gray-50 p-3 dark:bg-gray-800/50 sm:col-span-2">
       <p className="text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">
-        Estimated prices
+        {t("estimatedPrices")}
       </p>
       <div className="mt-2 grid gap-3 sm:grid-cols-2">
         {estimates.map((estimate) => (
@@ -1529,6 +1615,7 @@ function EstimatesGrid({
 }
 
 function ContactStep({
+  contact,
   contactDetails,
   submitError,
   isSubmitting,
@@ -1536,6 +1623,7 @@ function ContactStep({
   onChange,
   onSubmit,
 }: {
+  contact: CalculatorConfig["contact"]
   contactDetails: CalculatorAnswers
   submitError: string | null
   isSubmitting: boolean
@@ -1543,7 +1631,7 @@ function ContactStep({
   onChange: (fieldId: string, value: string) => void
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void | Promise<void>
 }) {
-  const contact = pricingCalculatorConfig.contact
+  const t = useTranslations("pricing")
 
   return (
     <div>
@@ -1551,10 +1639,10 @@ function ContactStep({
         type="button"
         onClick={onBack}
         disabled={isSubmitting}
-        className="mb-4 inline-flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+        className="mb-3 inline-flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
       >
         <IconArrowLeft className="size-4" aria-hidden="true" />
-        Back
+        {t("back")}
       </button>
 
       <h2 className="text-xl font-semibold text-gray-900 dark:text-white">{contact.title}</h2>
@@ -1562,7 +1650,12 @@ function ContactStep({
         <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">{contact.description}</p>
       )}
 
-      <form id="price-calculator-contact-form" onSubmit={onSubmit} className="mt-6 space-y-4">
+      <form
+        id="price-calculator-contact-form"
+        onSubmit={onSubmit}
+        className="mt-6 space-y-4"
+      >
+        <TooltipProvider delayDuration={0}>
         {submitError && (
           <p className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700 dark:border-red-900/50 dark:bg-red-950/40 dark:text-red-300" role="alert">
             {submitError}
@@ -1571,19 +1664,41 @@ function ContactStep({
         {contact.fields.map((field) => (
           <div key={field.id} className="space-y-2">
             <div className="space-y-1">
-              <label
-                htmlFor={field.id}
-                className="block text-sm font-medium leading-none text-gray-900 dark:text-white"
-              >
-                {field.label}
-                {field.optional && (
-                  <span className="ml-1 font-normal text-gray-500 dark:text-gray-400">(optional)</span>
+              <div className="flex items-center gap-1.5">
+                <label
+                  htmlFor={field.id}
+                  className="text-sm font-medium leading-none text-gray-900 dark:text-white"
+                >
+                  {field.label}
+                  {field.optional && (
+                    <span className="ml-1 font-normal text-gray-500 dark:text-gray-400">({t("optional")})</span>
+                  )}
+                </label>
+                {field.description && (
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <button
+                        type="button"
+                        className="inline-flex shrink-0 text-gray-400 hover:text-gray-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 sm:hidden dark:text-gray-500 dark:hover:text-gray-300"
+                        aria-label={field.description}
+                      >
+                        <IconInfoCircle className="size-4" aria-hidden="true" />
+                      </button>
+                    </TooltipTrigger>
+                    <TooltipContent
+                      side="top"
+                      sideOffset={6}
+                      className="max-w-[min(16rem,calc(100vw-2rem))] text-left"
+                    >
+                      {field.description}
+                    </TooltipContent>
+                  </Tooltip>
                 )}
-              </label>
+              </div>
               {field.description && (
                 <p
                   id={`${field.id}-description`}
-                  className="text-xs leading-normal text-gray-500 dark:text-gray-400"
+                  className="hidden text-xs leading-normal text-gray-500 sm:block dark:text-gray-400"
                 >
                   {field.description}
                 </p>
@@ -1602,6 +1717,7 @@ function ContactStep({
             />
           </div>
         ))}
+        </TooltipProvider>
       </form>
     </div>
   )

@@ -2,6 +2,8 @@ import calculatorEn from "@/data/pricing-calculator.json"
 import calculatorPt from "@/data/pricing-calculator.pt.json"
 import type { Locale } from "@/i18n/routing"
 
+export type PricingTranslator = (key: string) => string
+
 export type OutcomeId =
   | "self-managed-tech-teams"
   | "team-augmentation"
@@ -155,6 +157,38 @@ const calculatorByLocale: Record<Locale, CalculatorConfig> = {
 
 export function getPricingCalculatorConfig(locale: Locale = "en"): CalculatorConfig {
   return calculatorByLocale[locale] ?? calculatorByLocale.en
+}
+
+export function createPricingUiLabels(t: PricingTranslator): PricingUiLabels {
+  return {
+    summaryLabels: {
+      businessStage: t("summaryLabels.businessStage"),
+      startupFunding: t("summaryLabels.startupFunding"),
+      teamDimensions: t("summaryLabels.teamDimensions"),
+      hasTechTeam: t("summaryLabels.hasTechTeam"),
+      productHelpStartup: t("summaryLabels.productHelpStartup"),
+      productHelpEstablished: t("summaryLabels.productHelpEstablished"),
+    },
+    fundingWith: t("summaryLabels.fundingWith"),
+    fundingWithout: t("summaryLabels.fundingWithout"),
+    hasTechTeamYes: t("summaryLabels.hasTechTeamYes"),
+    hasTechTeamNo: t("summaryLabels.hasTechTeamNo"),
+    briefPrice: {
+      model: t("briefPrice.model"),
+      equityPartnership: t("briefPrice.equityPartnership"),
+      hourlyRate: t("briefPrice.hourlyRate"),
+      mvpEstimate: t("briefPrice.mvpEstimate"),
+      priceRange: t("briefPrice.priceRange"),
+      hourlyRates: t("briefPrice.hourlyRates"),
+      contactForQuote: t("briefPrice.contactForQuote"),
+      pricing: t("briefPrice.pricing"),
+    },
+    pricingNotes: {
+      hourly: t("pricingNotes.hourly"),
+      project: t("pricingNotes.project"),
+      partnership: t("pricingNotes.partnership"),
+    },
+  }
 }
 
 export const pricingCalculatorConfig = getPricingCalculatorConfig("en")
