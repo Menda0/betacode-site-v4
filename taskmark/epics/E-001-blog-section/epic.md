@@ -14,7 +14,7 @@ blocked: false
 cancelled: false
 tags: [blog, admin]
 created: 2026-07-21
-updated: 2026-07-21T15:01:28Z
+updated: 2026-07-21T16:39:39Z
 started_at: null
 completed_at: null
 ---
@@ -52,6 +52,7 @@ Create a blog section admin dashboard that feeds the existing public blog sectio
 
 | SHA | Repo | Date (UTC) | Message |
 |-----|------|------------|---------|
+| 77be012 | betacode-site-v2 | 2026-07-21T16:39:39Z | add taskmark board for blog section |
 
 ## Work log
 
