@@ -4,8 +4,10 @@ import {
   INSTAGRAM_URL,
   SITE_NAME,
   SITE_URL,
+  TWITTER_URL,
 } from '@/lib/metadata'
-import type { BlogPost } from '@/lib/blog-types'
+import type { ArticleMeta } from '@/lib/insights/articles'
+import { AUTHORS, CATEGORIES } from '@/lib/insights/taxonomy'
 import type { Locale } from '@/i18n/routing'
 
 type JsonLd = Record<string, unknown>
@@ -20,7 +22,7 @@ function organizationSchema(): JsonLd {
     name: SITE_NAME,
     url: SITE_URL,
     logo: `${SITE_URL}/android-chrome-512x512.png`,
-    sameAs: [FACEBOOK_URL, INSTAGRAM_URL, GITHUB_URL],
+    sameAs: [FACEBOOK_URL, INSTAGRAM_URL, TWITTER_URL, GITHUB_URL],
   }
 }
 
@@ -41,35 +43,27 @@ export function createWebsiteSchema(locale: Locale): JsonLd {
   }
 }
 
-export function createBlogSchema(locale: Locale, posts: BlogPost[]): JsonLd {
+export function createBlogSchema(locale: Locale, articles: ArticleMeta[]): JsonLd {
   return {
     '@context': 'https://schema.org',
     '@type': 'Blog',
     name: 'Betacode Insights',
-    description:
-      'Insights on software development, startups, and building products.',
     url: `${SITE_URL}/${locale}/insights`,
     inLanguage: locale,
     publisher: organizationSchema(),
-    blogPost: posts.map((post) => ({
+    blogPost: articles.map((article) => ({
       '@type': 'BlogPosting',
-      headline: post.title,
-      description: post.excerpt,
-      datePublished: post.publishedAt,
-      url: `${SITE_URL}/${locale}/insights/${post.slug}`,
-      author: {
-        '@type': 'Person',
-        name: post.author.name,
-      },
+      headline: article.title,
+      description: article.excerpt,
+      datePublished: article.date,
+      url: `${SITE_URL}/${locale}/insights/${article.slug}`,
+      author: { '@type': 'Person', name: AUTHORS[article.author].name },
     })),
   }
 }
 
-export function createBlogPostSchema(
-  locale: Locale,
-  post: BlogPost
-): JsonLd {
-  const pageUrl = `${SITE_URL}/${locale}/insights/${post.slug}`
+export function createArticleSchema(locale: Locale, article: ArticleMeta): JsonLd {
+  const pageUrl = `${SITE_URL}/${locale}/insights/${article.slug}`
 
   return {
     '@context': 'https://schema.org',
@@ -77,43 +71,27 @@ export function createBlogPostSchema(
       organizationSchema(),
       {
         '@type': 'BlogPosting',
-        headline: post.title,
-        description: post.excerpt,
-        datePublished: post.publishedAt,
-        inLanguage: locale,
+        headline: article.title,
+        description: article.lead,
+        datePublished: article.date,
+        inLanguage: locale === 'pt' ? 'pt-PT' : 'en-US',
         url: pageUrl,
-        mainEntityOfPage: {
-          '@type': 'WebPage',
-          '@id': pageUrl,
-        },
+        image: `${pageUrl}/opengraph-image`,
+        mainEntityOfPage: { '@type': 'WebPage', '@id': pageUrl },
         author: {
           '@type': 'Person',
-          name: post.author.name,
+          name: AUTHORS[article.author].name,
+          jobTitle: AUTHORS[article.author].role,
         },
-        publisher: organizationSchema(),
-        articleSection: post.category,
+        publisher: { '@id': ORGANIZATION_ID },
+        articleSection: CATEGORIES[article.category].label[locale],
       },
       {
         '@type': 'BreadcrumbList',
         itemListElement: [
-          {
-            '@type': 'ListItem',
-            position: 1,
-            name: 'Home',
-            item: `${SITE_URL}/${locale}`,
-          },
-          {
-            '@type': 'ListItem',
-            position: 2,
-            name: 'Insights',
-            item: `${SITE_URL}/${locale}/insights`,
-          },
-          {
-            '@type': 'ListItem',
-            position: 3,
-            name: post.title,
-            item: pageUrl,
-          },
+          { '@type': 'ListItem', position: 1, name: 'Betacode', item: `${SITE_URL}/${locale}` },
+          { '@type': 'ListItem', position: 2, name: 'Insights', item: `${SITE_URL}/${locale}/insights` },
+          { '@type': 'ListItem', position: 3, name: article.title, item: pageUrl },
         ],
       },
     ],

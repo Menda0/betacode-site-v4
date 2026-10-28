@@ -1,0 +1,173 @@
+{
+  "t": {
+    "navLabel": "Principal",
+    "navHome": "Início",
+    "navPricing": "Preços",
+    "navContact": "Contacto",
+    "langLabel": "Idioma",
+    "themeLabel": "Mudar para modo claro",
+    "kicker": "contacto",
+    "title": "Vamos falar sobre o seu projeto.",
+    "sub": "Tem uma ideia para lançar, um sistema para modernizar ou uma equipa para reforçar? Conte-nos o que precisa. Respondemos o mais depressa possível.",
+    "phone": "telefone",
+    "office": "escritório",
+    "mapAlt": "Mapa: o escritório da Betacode no Madan Parque, junto à FCT NOVA, na Caparica",
+    "mapFct": "Faculdade de Ciências e Tecnologia",
+    "mapLib": "Biblioteca",
+    "mapWalk": "ao lado do campus da FCT NOVA",
+    "directions": "Ver no mapa",
+    "formTitle": "Envie-nos uma mensagem",
+    "formSub": "Quanto mais contexto nos der, mais útil será a nossa primeira resposta.",
+    "topicLabel": "Sobre o que quer falar?",
+    "name": "Nome",
+    "namePh": "O seu nome",
+    "emailPh": "nome@empresa.pt",
+    "phoneL": "Telefone",
+    "company": "Empresa",
+    "companyPh": "Nome da empresa",
+    "optional": "opcional",
+    "msg": "Mensagem",
+    "errName": "Indique o seu nome.",
+    "errEmail": "Indique um email válido.",
+    "errMsg": "Escreva uma mensagem com pelo menos 10 caracteres.",
+    "privacy": "Usamos os seus dados apenas para responder a este pedido.",
+    "send": "Enviar mensagem",
+    "okRead": "Ler os nossos insights",
+    "okAgain": "Enviar outra mensagem",
+    "otherK": "outras formas de começar",
+    "otherTitle": "Ainda não está pronto para escrever?",
+    "venTitle": "Procura um co-fundador técnico?",
+    "venText": "Com a Betacode Ventures construímos o produto consigo, da ideia ao lançamento, em troca de equity.",
+    "venCta": "Explorar Betacode Ventures",
+    "calcK": "calculadora",
+    "calcTitle": "Quer ter uma ideia de custos primeiro?",
+    "calcText": "Responda a algumas perguntas sobre o projeto e a fase do seu negócio e receba uma estimativa à medida.",
+    "calcCta": "Estimar preço",
+    "footTag": "Equipas de software dedicadas para empresas e startups.",
+    "footNav": "navegação",
+    "altEu": "Cofinanciado pela União Europeia",
+    "funding": "Projeto financiado pelo programa AVANÇAR, no âmbito do Portugal 2030, cofinanciado pelo Fundo Social Europeu Mais (FSE+).",
+    "copy": "© 2026 Betacode, Inc. Todos os direitos reservados.",
+    "made": "{ feito em Portugal }"
+  },
+  "links": {
+    "pricing": "https://www.betacode.tech/pt/pricing",
+    "ventures": "https://www.betacode.tech/pt/betacode-ventures",
+    "insights": "https://www.betacode.tech/pt/insights",
+    "contact": "https://www.betacode.tech/pt/contact"
+  },
+  "base": "https://www.betacode.tech/pt",
+  "rootStyle": "--bg:#0D0E24;--surface:#16173A;--card:#1D1E48;--text:#F2F2FA;--muted:#B9BADB;--border:#272960;--border2:#3A3C7A;--band:#1B1C51;--kicker:#FF8A7D",
+  "dark": true,
+  "light": false,
+  "logo": "assets/brand/logo-white.png",
+  "logoAnimStyle": "height: 38px; width: auto; display: block; filter: invert(1) hue-rotate(180deg) saturate(1.3); mix-blend-mode: screen",
+  "foot": {
+    "style": "background: #08091A; color: #FFFFFF; border-top: 1px solid #272960; --ft: #FFFFFF; --fm: #B9BADB; --fk: #FF8A7D; --fb: rgba(255,255,255,0.1)",
+    "logo": "assets/brand/logo-white.png",
+    "iefp": "assets/funding/iefp-dark.png",
+    "pessoas": "assets/funding/pessoas2030-dark.png",
+    "pt": "assets/funding/portugal2030-dark.png",
+    "ue": "assets/funding/ue-dark.png"
+  },
+  "map": {
+    "ground": "#14153A",
+    "green": "#1A2E3A",
+    "campus": "#1A1C4A",
+    "bld": "#262862",
+    "house": "#2A2550",
+    "street": "#2C2E6A",
+    "road": "#3A3D85",
+    "label": "#9EA1D8",
+    "place": "#E8E9FA",
+    "halo": "#14153A",
+    "madan": "#5A5DB0"
+  },
+  "isPt": "true",
+  "isEn": "false",
+  "copyLabel": "copiar",
+  "topics": [
+    {
+      "id": "project",
+      "ic": "{ }",
+      "label": "Novo projeto",
+      "ph": "Fale-nos da ideia, de quem a vai usar e do prazo que tem em mente.",
+      "cmd": "new project",
+      "on": "true"
+    },
+    {
+      "id": "legacy",
+      "ic": "⟳",
+      "label": "Modernizar software",
+      "ph": "Que sistema tem hoje, o que o está a travar e o que gostaria de mudar?",
+      "cmd": "modernise",
+      "on": "false"
+    },
+    {
+      "id": "team",
+      "ic": "+1",
+      "label": "Reforçar a equipa",
+      "ph": "Que perfis procura, para que projeto e durante quanto tempo?",
+      "cmd": "team",
+      "on": "false"
+    },
+    {
+      "id": "ventures",
+      "ic": "{B}",
+      "label": "Betacode Ventures",
+      "ph": "Em que fase está a sua startup e que problema resolve?",
+      "cmd": "ventures",
+      "on": "false"
+    },
+    {
+      "id": "other",
+      "ic": "?",
+      "label": "Outro assunto",
+      "ph": "Como podemos ajudar?",
+      "cmd": "hello",
+      "on": "false"
+    }
+  ],
+  "f": {
+    "name": "",
+    "email": "",
+    "phone": "",
+    "company": "",
+    "msg": ""
+  },
+  "er": {
+    "name": false,
+    "email": false,
+    "msg": false
+  },
+  "inv": {
+    "name": "false",
+    "email": "false",
+    "msg": "false"
+  },
+  "on": {},
+  "msgPh": "Fale-nos da ideia, de quem a vai usar e do prazo que tem em mente.",
+  "msgCount": "0 / 2000",
+  "termLine": "",
+  "editing": true,
+  "sent": false,
+  "okTitle": "Obrigado. Mensagem recebida.",
+  "okText": "Enviámos uma confirmação para o seu email. Eis o que acontece a seguir:",
+  "steps": [
+    {
+      "n": "01",
+      "h": "Lemos o seu pedido",
+      "x": "Alguém da equipa analisa a mensagem e o contexto que partilhou."
+    },
+    {
+      "n": "02",
+      "h": "Respondemos",
+      "x": "Por email ou telefone, com perguntas ou uma primeira opinião sobre o caminho."
+    },
+    {
+      "n": "03",
+      "h": "Marcamos uma conversa",
+      "x": "Se fizer sentido para os dois lados, combinamos uma chamada para aprofundar."
+    }
+  ]
+}

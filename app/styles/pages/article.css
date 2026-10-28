@@ -1,0 +1,38 @@
+/* Scoped port of the prototype stylesheet (insights/the-agentic-era-of-software.html). */
+
+:where(.pg-article) a{color:#1B1C51}:where(.pg-article) a:hover{color:#D8402F}
+.site:where(.pg-article){font-family:var(--font-inter),system-ui,sans-serif;background:var(--bg);color:var(--text);min-width:0}
+.site:where(.pg-article) a{color:var(--text)}
+:where(.pg-article) .mono{font-family:var(--font-jetbrains),ui-monospace,monospace}
+:where(.pg-article) .mono[aria-hidden="true"]{white-space:nowrap;flex:none}
+:where(.pg-article) .disp{font-family:var(--font-montserrat),system-ui,sans-serif}
+:where(.pg-article) .navlink{color:var(--text) !important;text-decoration:none;font-size:15px;font-weight:500;padding:12px 2px;border-bottom:2px solid transparent}
+:where(.pg-article) .navlink:hover{border-bottom-color:#EB5648}
+:where(.pg-article) .navlink.on{color:#D8402F !important;border-bottom-color:#EB5648}
+:where(.pg-article) .flink{color:var(--fm) !important;text-decoration:none;font-size:15px;padding:8px 0}
+:where(.pg-article) .flink:hover{color:var(--ft) !important}
+:where(.pg-article) .seg{display:flex;background:var(--surface);border-radius:12px;padding:3px;gap:2px}
+:where(.pg-article) .seg button{appearance:none;border:0;cursor:pointer;background:transparent;color:var(--muted);font:600 13px/1 var(--font-jetbrains),monospace;min-width:44px;min-height:38px;border-radius:9px}
+:where(.pg-article) .seg button[aria-pressed="true"]{background:var(--card);color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+:where(.pg-article) .iconbtn{appearance:none;cursor:pointer;border:0;background:var(--surface);color:var(--text);width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center}
+:where(.pg-article) .btn-coral{appearance:none;border:0;cursor:pointer;background:#D8402F;color:#FFFFFF !important;text-decoration:none;font:600 15px/1 var(--font-inter),sans-serif;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 24px}
+:where(.pg-article) .btn-coral:hover{background:#BF3424}
+:where(.pg-article) .btn-line{appearance:none;cursor:pointer;background:transparent;border:1.5px solid currentColor;text-decoration:none;font:600 15px/1 var(--font-inter),sans-serif;border-radius:12px;display:inline-flex;align-items:center;gap:8px;min-height:52px;padding:0 22px}
+:where(.pg-article) .chip{font:500 12px/1 var(--font-jetbrains),monospace;padding:7px 11px;border-radius:999px;background:var(--surface);color:var(--text);white-space:nowrap}
+:where(.pg-article) .cover{position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:28px;box-sizing:border-box;background-image:radial-gradient(rgba(255,255,255,.08) 1.2px,transparent 1.6px);background-size:16px 16px}
+:where(.pg-article) .cover-code{font:500 20px/1.6 var(--font-jetbrains),monospace;color:#fff;white-space:pre}
+:where(.pg-article) .prose{font-size:18px;line-height:1.75;color:var(--text)}
+:where(.pg-article) .prose p{margin:0}
+:where(.pg-article) .prose h2{font-family:var(--font-montserrat),system-ui,sans-serif;font-size:28px;line-height:1.2;font-weight:800;letter-spacing:-.015em;margin:20px 0 0;scroll-margin-top:90px}
+:where(.pg-article) .prose ul,:where(.pg-article) .prose ol{margin:0;padding-left:24px;display:flex;flex-direction:column;gap:8px}
+:where(.pg-article) .prose li::marker{color:#EB5648;font-weight:700}
+:where(.pg-article) .toc a{display:flex;gap:10px;text-decoration:none;font-size:14px;line-height:1.4;padding:8px 0;color:var(--muted) !important;border-bottom:1px solid var(--border)}
+:where(.pg-article) .toc a:hover{color:var(--text) !important}
+:where(.pg-article) .rel{text-decoration:none;display:flex;flex-direction:column;background:var(--card);border:1px solid var(--border);border-radius:20px;overflow:hidden;transition:transform .2s, box-shadow .2s}
+:where(.pg-article) .rel:hover{transform:translateY(-3px);box-shadow:0 16px 36px rgba(27,28,81,.12)}
+:where(.pg-article) .logo-static{display:none}
+@media (prefers-reduced-motion:reduce){:where(.pg-article) .logo-anim{display:none !important}:where(.pg-article) .logo-static{display:block}:where(.pg-article) .rel{transition:none}}
+:where(.pg-article) .toc a[aria-current="location"]{color:var(--text) !important}
+@media (min-width:868px){:where(.pg-article) .art-aside{position:sticky;top:96px}}
+@media (max-width:760px){:where(.pg-article) .hide-sm{display:none !important}:where(.pg-article) .hero-h{font-size:34px !important}:where(.pg-article) .prose{font-size:17px}:where(.pg-article) .prose h2{font-size:23px}}
+

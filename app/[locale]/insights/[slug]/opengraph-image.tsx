@@ -1,5 +1,8 @@
 import { ImageResponse } from 'next/og'
-import { getBlogPost } from '@/lib/blog-content'
+import { hasLocale } from 'next-intl'
+import { routing } from '@/i18n/routing'
+import { getArticle } from '@/lib/insights/articles'
+import { CATEGORIES } from '@/lib/insights/taxonomy'
 
 export const alt = 'Betacode Insights'
 export const size = { width: 1200, height: 630 }
@@ -11,10 +14,12 @@ type Props = {
 
 export default async function Image({ params }: Props) {
   const { locale, slug } = await params
-  const post = getBlogPost(slug, locale)
+  const article = hasLocale(routing.locales, locale) ? getArticle(slug, locale) : undefined
+  const category = article ? CATEGORIES[article.category] : undefined
 
-  const title = post?.title ?? 'Betacode Insights'
-  const category = post?.category ?? 'Insights'
+  const title = article?.title ?? 'Betacode Insights'
+  const label = category && hasLocale(routing.locales, locale) ? category.label[locale] : 'Insights'
+  const cover = category?.cover ?? '#1B1C51'
 
   return new ImageResponse(
     (
@@ -25,7 +30,9 @@ export default async function Image({ params }: Props) {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
-          backgroundColor: '#eb5648',
+          backgroundColor: cover,
+          backgroundImage: 'radial-gradient(rgba(255,255,255,0.08) 1.2px, transparent 1.6px)',
+          backgroundSize: '16px 16px',
           padding: '64px',
         }}
       >
@@ -38,14 +45,15 @@ export default async function Image({ params }: Props) {
             letterSpacing: '0.08em',
           }}
         >
-          {category}
+          {label}
         </div>
         <div
           style={{
-            fontSize: 56,
-            fontWeight: 700,
+            fontSize: 60,
+            fontWeight: 800,
             color: '#ffffff',
-            lineHeight: 1.15,
+            lineHeight: 1.12,
+            letterSpacing: '-0.02em',
             maxWidth: '1000px',
           }}
         >

@@ -1,0 +1,95 @@
+/* Scoped port of the prototype stylesheet (contact.html). */
+
+:where(.pg-contact) a{color:#1B1C51}:where(.pg-contact) a:hover{color:#D8402F}
+.site:where(.pg-contact){font-family:var(--font-inter),system-ui,sans-serif;background:var(--bg);color:var(--text);min-width:0}
+.site:where(.pg-contact) a{color:var(--text)}
+:where(.pg-contact) .mono{font-family:var(--font-jetbrains),ui-monospace,monospace}
+:where(.pg-contact) .mono[aria-hidden="true"]{white-space:nowrap;flex:none}
+:where(.pg-contact) .disp{font-family:var(--font-montserrat),system-ui,sans-serif}
+:where(.pg-contact) .navlink{color:var(--text) !important;text-decoration:none;font-size:15px;font-weight:500;padding:12px 2px;border-bottom:2px solid transparent}
+:where(.pg-contact) .navlink:hover{border-bottom-color:#EB5648}
+:where(.pg-contact) .navlink.on{color:#D8402F !important;border-bottom-color:#EB5648}
+:where(.pg-contact) .flink{color:var(--fm) !important;text-decoration:none;font-size:15px;padding:8px 0}
+:where(.pg-contact) .flink:hover{color:var(--ft) !important}
+:where(.pg-contact) .seg{display:flex;background:var(--surface);border-radius:12px;padding:3px;gap:2px}
+:where(.pg-contact) .seg button{appearance:none;border:0;cursor:pointer;background:transparent;color:var(--muted);font:600 13px/1 var(--font-jetbrains),monospace;min-width:44px;min-height:38px;border-radius:9px}
+:where(.pg-contact) .seg button[aria-pressed="true"]{background:var(--card);color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+:where(.pg-contact) .iconbtn{appearance:none;cursor:pointer;border:0;background:var(--surface);color:var(--text);width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center}
+:where(.pg-contact) .btn-coral{appearance:none;border:0;cursor:pointer;background:#D8402F;color:#FFFFFF !important;text-decoration:none;font:600 15px/1 var(--font-inter),sans-serif;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 24px}
+:where(.pg-contact) .btn-coral:hover{background:#BF3424}
+:where(.pg-contact) .btn-line{appearance:none;cursor:pointer;background:transparent;border:1.5px solid currentColor;text-decoration:none;font:600 15px/1 var(--font-inter),sans-serif;border-radius:12px;display:inline-flex;align-items:center;gap:8px;min-height:52px;padding:0 22px}
+:where(.pg-contact) .filter{appearance:none;cursor:pointer;background:var(--card);border:1.5px solid var(--border);color:var(--text);font:600 14px/1 var(--font-inter),sans-serif;min-height:44px;padding:0 16px;border-radius:999px;display:inline-flex;align-items:center;gap:8px}
+:where(.pg-contact) .filter:hover{border-color:var(--border2)}
+:where(.pg-contact) .filter[aria-pressed="true"]{background:var(--text);border-color:var(--text);color:var(--bg)}
+:where(.pg-contact) .filter .n{font:500 11px/1 var(--font-jetbrains),monospace;opacity:.6}
+:where(.pg-contact) .search{display:flex;align-items:center;gap:10px;background:var(--card);border:1.5px solid var(--border);border-radius:999px;padding:0 16px;min-height:44px;flex:0 1 300px;box-sizing:border-box}
+:where(.pg-contact) .search:focus-within{border-color:#EB5648}
+:where(.pg-contact) .search input{border:0;outline:0;background:transparent;color:var(--text);font:400 15px/1 var(--font-inter),sans-serif;width:100%;min-height:40px}
+:where(.pg-contact) .card{text-decoration:none;display:flex;flex-direction:column;background:var(--card);border:1px solid var(--border);border-radius:22px;overflow:hidden;transition:transform .2s, box-shadow .2s, border-color .2s}
+:where(.pg-contact) .card:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(27,28,81,.12);border-color:var(--border2)}
+:where(.pg-contact) .card:hover .go{color:#EB5648}
+:where(.pg-contact) .card:hover .cover-code{transform:translateX(6px)}
+:where(.pg-contact) .cover{position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:22px;box-sizing:border-box;background-image:radial-gradient(rgba(255,255,255,.08) 1.2px,transparent 1.6px);background-size:16px 16px}
+:where(.pg-contact) .cover-code{font:500 15px/1.6 var(--font-jetbrains),monospace;color:#fff;transition:transform .3s;white-space:pre}
+:where(.pg-contact) .chip{font:500 12px/1 var(--font-jetbrains),monospace;padding:7px 11px;border-radius:999px;background:var(--surface);color:var(--text);white-space:nowrap}
+:where(.pg-contact) .logo-static{display:none}
+@media (prefers-reduced-motion:reduce){:where(.pg-contact) .logo-anim{display:none !important}:where(.pg-contact) .logo-static{display:block}:where(.pg-contact) .card,:where(.pg-contact) .cover-code{transition:none}}
+:where(.pg-contact) .field{display:flex;flex-direction:column;gap:8px;min-width:0}
+:where(.pg-contact) .field label,:where(.pg-contact) .lbl{font:600 14px/1.3 var(--font-inter),sans-serif;color:var(--text)}
+:where(.pg-contact) .field .opt{font:400 12px/1 var(--font-jetbrains),monospace;color:var(--muted);margin-left:6px}
+:where(.pg-contact) .inp{appearance:none;box-sizing:border-box;width:100%;background:var(--card);border:1.5px solid var(--border2);border-radius:12px;color:var(--text);font:400 16px/1.4 var(--font-inter),sans-serif;padding:13px 15px;min-height:52px;outline:0;transition:border-color .2s, box-shadow .2s}
+:where(.pg-contact) .inp::placeholder{color:var(--muted);opacity:.75}
+:where(.pg-contact) .inp:focus{border-color:#EB5648;box-shadow:0 0 0 4px rgba(235,86,72,.16)}
+:where(.pg-contact) .inp[aria-invalid="true"]{border-color:#D8402F}
+:where(.pg-contact) textarea.inp{min-height:150px;resize:vertical}
+:where(.pg-contact) .err{font:500 13px/1.3 var(--font-inter),sans-serif;color:var(--kicker)}
+:where(.pg-contact) .topic{appearance:none;cursor:pointer;background:var(--card);border:1.5px solid var(--border2);color:var(--text);font:600 14px/1 var(--font-inter),sans-serif;min-height:44px;padding:0 16px;border-radius:999px;display:inline-flex;align-items:center;gap:8px;transition:all .15s}
+:where(.pg-contact) .topic:hover{border-color:#EB5648}
+:where(.pg-contact) .topic[aria-pressed="true"]{background:#1B1C51;border-color:#1B1C51;color:#fff}
+:where(.pg-contact) .topic .ic{font:500 12px/1 var(--font-jetbrains),monospace;color:#EB5648;white-space:nowrap}
+:where(.pg-contact) .ccard{display:flex;gap:16px;align-items:flex-start;background:var(--card);border:1px solid var(--border);border-radius:18px;padding:20px;text-decoration:none;transition:border-color .2s, transform .2s}
+:where(.pg-contact) .ccard:hover{border-color:#EB5648;transform:translateY(-2px)}
+:where(.pg-contact) .cic{flex:none;width:46px;height:46px;border-radius:13px;background:var(--surface);display:flex;align-items:center;justify-content:center;color:#EB5648}
+:where(.pg-contact) .copy{appearance:none;cursor:pointer;border:1px solid var(--border2);background:transparent;color:var(--text);font:500 12px/1 var(--font-jetbrains),monospace;border-radius:8px;min-height:36px;padding:0 12px;white-space:nowrap}
+:where(.pg-contact) .copy:hover{border-color:#EB5648}
+:where(.pg-contact) .pulse{transform-origin:center;transform-box:fill-box;animation:pg-contact-pulse 2.2s ease-out infinite}
+@keyframes pg-contact-pulse{0%{transform:scale(.4);opacity:.7}100%{transform:scale(2.6);opacity:0}}
+:where(.pg-contact) .caret{display:inline-block;width:9px;height:18px;background:#EB5648;vertical-align:-3px;margin-left:4px;animation:pg-contact-blink 1s steps(1) infinite}
+@keyframes pg-contact-blink{50%{opacity:0}}
+:where(.pg-contact) .pop{animation:pg-contact-pop .5s cubic-bezier(.2,.9,.3,1.3) both}
+@keyframes pg-contact-pop{0%{transform:scale(.6);opacity:0}100%{transform:scale(1);opacity:1}}
+@media (prefers-reduced-motion:reduce){:where(.pg-contact) .pulse,:where(.pg-contact) .caret,:where(.pg-contact) .pop{animation:none}}
+@media (max-width:760px){:where(.pg-contact) .hide-sm{display:none !important}:where(.pg-contact) .hero-h{font-size:42px !important}:where(.pg-contact) .sec-h{font-size:30px !important}}
+
+/* Port additions: theme-dependent map palette (prototype `map` object) and form sending state. */
+:where(.pg-contact){--map-ground:#F1F1F6;--map-green:#DCEBD9;--map-campus:#E7E8F2;--map-bld:#CFD1E3;--map-house:#EED9D3;--map-street:#FFFFFF;--map-road:#FFFFFF;--map-label:#6A6C99;--map-place:#1B1C51;--map-halo:#F1F1F6;--map-madan:#1B1C51}
+:root.dark :where(.pg-contact){--map-ground:#14153A;--map-green:#1A2E3A;--map-campus:#1A1C4A;--map-bld:#262862;--map-house:#2A2550;--map-street:#2C2E6A;--map-road:#3A3D85;--map-label:#9EA1D8;--map-place:#E8E9FA;--map-halo:#14153A;--map-madan:#5A5DB0}
+:where(.pg-contact) .btn-coral:disabled{opacity:.7;cursor:progress}
+
+/* The navy selected chip disappears against dark cards; outline it. */
+:root.dark :where(.pg-contact) .topic[aria-pressed="true"]{border-color:var(--text)}
+
+/* Narrow maps crop the illustrated viewBox on both sides. Keep the desktop
+   placement until a label would leave the frame, then use the inset copy. */
+:where(.pg-contact) .map-frame{container-type:inline-size;container-name:contact-map}
+:where(.pg-contact) .map-fct-sm,:where(.pg-contact) .map-lib-sm,:where(.pg-contact) .map-callout-sm{display:none}
+@container contact-map (max-width: 500px){
+  :where(.pg-contact) .map-callout-lg{display:none}
+  :where(.pg-contact) .map-callout-sm{display:inline}
+}
+@container contact-map (max-width: 450px){
+  :where(.pg-contact) .map-fct-lg{display:none}
+  :where(.pg-contact) .map-fct-sm{display:inline}
+}
+@container contact-map (max-width: 360px){
+  :where(.pg-contact) .map-lib-lg{display:none}
+  :where(.pg-contact) .map-lib-sm{display:inline}
+}
+
+/* The typed command wraps on a phone. Reserve two lines so the card below
+   does not jump while the line types or the topic changes. */
+:where(.pg-contact) .contact-form{container-type:inline-size;container-name:contact-form}
+@container contact-form (max-width: 440px){
+  :where(.pg-contact) .termbar{height:68px;box-sizing:border-box}
+  :where(.pg-contact) .termbar-cmd{flex:1 1 auto;min-width:0;line-height:18px}
+}

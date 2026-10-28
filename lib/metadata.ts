@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { routing, type Locale } from '@/i18n/routing'
+import enMetadata from '@/messages/en/metadata.json'
 
 export const SITE_NAME = 'Betacode'
 export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://betacode.tech'
@@ -7,12 +8,15 @@ export const TWITTER_HANDLE = '@betacode_tech'
 export const FACEBOOK_URL = 'https://www.facebook.com/betacode.tech/'
 export const INSTAGRAM_URL = 'https://www.instagram.com/betacode.tech'
 export const GITHUB_URL = 'https://github.com/BetacodeTech'
+export const TWITTER_URL = 'https://twitter.com/betacode_tech'
+
+const SITE_DESCRIPTION = enMetadata.siteDescription
 
 export const DEFAULT_OG_IMAGE = {
   url: '/images/betacode-facebook.png',
   width: 1200,
   height: 630,
-  alt: 'Betacode — Dedicated software teams for businesses and startups',
+  alt: 'Betacode | Software that transforms your business',
 } as const
 
 const OPEN_GRAPH_LOCALE: Record<Locale, string> = {
@@ -129,11 +133,10 @@ export function createPageMetadata({
 export const rootMetadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: 'Betacode — Dedicated software teams for businesses and startups',
+    default: 'Betacode | Software that transforms your business',
     template: '%s',
   },
-  description:
-    'Custom software, dedicated engineering teams, and technical co-founder partnerships. From MVPs in three months to long-term team augmentation.',
+  description: SITE_DESCRIPTION,
   applicationName: SITE_NAME,
   authors: [{ name: SITE_NAME, url: SITE_URL }],
   creator: SITE_NAME,
@@ -159,8 +162,7 @@ export const rootMetadata: Metadata = {
     locale: OPEN_GRAPH_LOCALE.en,
     alternateLocale: [OPEN_GRAPH_LOCALE.pt],
     title: SITE_NAME,
-    description:
-      'Custom software, dedicated engineering teams, and technical co-founder partnerships. From MVPs in three months to long-term team augmentation.',
+    description: SITE_DESCRIPTION,
     url: '/en',
     images: [DEFAULT_OG_IMAGE],
   },

@@ -1,0 +1,264 @@
+{
+  "t": {
+    "heroChip": "Software à medida · Equipas dedicadas · Co-fundador técnico · Formação",
+    "heroChips": ["Software à medida", "Equipas dedicadas", "Co-fundador técnico", "Formação"],
+    "heroL1": "que transforma o seu negócio.",
+    "heroSub": "Transformação digital e desenvolvimento de software à medida.",
+    "heroCta": "Começar um projeto",
+    "heroCta2": "Estimar preço",
+    "heroCta3": "Ver como ajudamos ↓",
+    "clientsTitle": "Empresas já constroem connosco",
+    "svcKicker": "// o que fazemos",
+    "svcTitle": "Onde está o seu negócio hoje?",
+    "svcSub": "Escolha o ponto de partida e montamos a equipa certa para o seu projeto.",
+    "svcTabsLabel": "Tipo de cliente",
+    "venTitle": "O seu co-fundador técnico, pago em equity.",
+    "venText": "Com a Betacode Ventures não paga o desenvolvimento. Entramos no capital da empresa e construímos o produto consigo.",
+    "venCta": "Conhecer a Ventures",
+    "venCta2": "Ver o primeiro projeto",
+    "venStat1": "custo de desenvolvimento",
+    "venStatValue": "em troca de equity",
+    "venStat2": "modelo",
+    "venStat3L": "equipa",
+    "venStat3": "Dedicada",
+    "teamKicker": "// quem somos",
+    "teamTitle": "A equipa por trás do código.",
+    "teamText": "Somos uma equipa de engenharia em Portugal e trabalhamos lado a lado com os nossos clientes durante todo o projeto.",
+    "insTitle": "O que aprendemos a construir produtos.",
+    "insBy1": "Por Pedro Gorrão, CEO",
+    "insBy2": "e Marco Mendão, CTO",
+    "insRead": "Ler artigo",
+    "insAll": "Todos os insights →",
+    "ctaKicker": "// próximo passo",
+    "ctaTitle": "Tem uma ideia? Vamos falar.",
+    "ctaText": "Não precisa de pitch deck. Conte-nos o projeto e marcamos uma conversa.",
+    "ctaBtn": "Fale connosco",
+    "altTshirts": "A equipa Betacode de t-shirts da marca",
+    "altPortrait": "Software Developer da equipa Betacode",
+    "altBeagle": "Software Developer Betacode com o beagle da equipa",
+    "altTeam": "A equipa Betacode com os casacos da marca",
+    "altDuo": "Dois membros da equipa Betacode a rir",
+    "altHoodies": "A equipa Betacode de hoodies, com o cão da equipa"
+  },
+  "tracks": [
+    {
+      "id": "trad",
+      "num": "01",
+      "label": "Negócios tradicionais",
+      "kicker": "// para negócios tradicionais",
+      "title": "Digitalize a operação sem criar um departamento de TI.",
+      "text": "Uma equipa técnica externa que trabalha como se fosse da casa. Digitalizamos processos, ajudamos nas decisões técnicas e damos formação à sua equipa.",
+      "services": [
+        "Equipa externa dedicada",
+        "Consultoria técnica",
+        "Suporte técnico",
+        "Formação"
+      ],
+      "cta": "Falar sobre o meu negócio"
+    },
+    {
+      "id": "tech",
+      "num": "02",
+      "label": "Empresas tecnológicas",
+      "kicker": "// para empresas tecnológicas",
+      "title": "Software Developers na sua equipa, sem meses de recrutamento.",
+      "text": "Reforçamos a sua equipa com Software Developers, com o nível de experiência que o projeto precisa. Se fizer sentido, ajudamos também a contratar internamente.",
+      "services": [
+        "Reforço de equipa",
+        "Software Developers",
+        "Equipa interna",
+        "Consultoria técnica"
+      ],
+      "cta": "Reforçar a minha equipa"
+    },
+    {
+      "id": "start",
+      "num": "03",
+      "label": "Startups",
+      "kicker": "// para startups",
+      "title": "Da ideia ao MVP, validado com utilizadores reais.",
+      "text": "Antes de construir, validamos a ideia com utilizadores reais. Depois desenvolvemos o MVP em conjunto com a sua equipa.",
+      "services": [
+        "Desenvolvimento de MVP",
+        "Validação de produto",
+        "Equipa dedicada",
+        "Consultoria técnica"
+      ],
+      "cta": "Construir o meu MVP"
+    },
+    {
+      "id": "vent",
+      "num": "04",
+      "label": "Betacode Ventures",
+      "kicker": "// co-fundação técnica",
+      "title": "Construímos o produto consigo, sem custos de desenvolvimento.",
+      "text": "Em vez de faturar o desenvolvimento, entramos no capital da empresa e trabalhamos no produto como parte da equipa fundadora.",
+      "services": [
+        "Em troca de equity",
+        "Parceria em equity",
+        "Desenvolvimento do MVP",
+        "Equipa técnica fundadora"
+      ],
+      "cta": "Conhecer a Ventures"
+    }
+  ],
+  "an": {
+    "paper": "papel → digital",
+    "team": "a sua equipa",
+    "join": "+2 Software Developers",
+    "idea": "ideia",
+    "validate": "validar",
+    "mvp": "MVP",
+    "build": "a construir o MVP",
+    "founder": "fundador",
+    "deal": "em troca de equity"
+  },
+  "articles": [
+    {
+      "tag": "Produto",
+      "title": "A abordagem Lean Startup"
+    },
+    {
+      "tag": "Produto",
+      "title": "Como construir um MVP"
+    },
+    {
+      "tag": "Engenharia",
+      "title": "JavaScript e TypeScript"
+    },
+    {
+      "tag": "IA",
+      "title": "IA no desenvolvimento de software"
+    },
+    {
+      "tag": "Engenharia",
+      "title": "Modernizar sistemas legacy"
+    },
+    {
+      "tag": "Startups",
+      "title": "Porquê ter um co-fundador técnico"
+    }
+  ],
+  "sessions": [
+    {
+      "title": "~/projetos/loja — zsh",
+      "lines": [
+        [
+          "c",
+          "git checkout -b feature/pagamentos"
+        ],
+        [
+          "o",
+          "Switched to a new branch 'feature/pagamentos'"
+        ],
+        [
+          "c",
+          "npm test"
+        ],
+        [
+          "ok",
+          "✓ 128 testes passaram (2.4s)"
+        ],
+        [
+          "c",
+          "git commit -m \"feat: pagamentos com MB Way\""
+        ],
+        [
+          "o",
+          "[feature/pagamentos 3f9a2c1] 4 files changed"
+        ],
+        [
+          "c",
+          "git push && npm run deploy"
+        ],
+        [
+          "ok",
+          "✓ live em produção"
+        ]
+      ]
+    },
+    {
+      "title": "ideia.ts",
+      "lines": [
+        [
+          "k",
+          "const ideia = await cliente.partilhar()"
+        ],
+        [
+          "k",
+          "const produto = betacode.construir(ideia)"
+        ],
+        [
+          "k",
+          "await produto.testar({ utilizadores: \"reais\" })"
+        ],
+        [
+          "k",
+          "deploy(produto) // e vamos a isso"
+        ],
+        [
+          "ok",
+          "✓ compilado sem erros"
+        ]
+      ]
+    },
+    {
+      "title": "~/projetos/backoffice — zsh",
+      "lines": [
+        [
+          "c",
+          "python manage.py migrate"
+        ],
+        [
+          "o",
+          "Applying faturas.0007_add_nif... OK"
+        ],
+        [
+          "c",
+          "pytest -q"
+        ],
+        [
+          "ok",
+          "64 passed in 1.12s"
+        ],
+        [
+          "c",
+          "docker compose up -d"
+        ],
+        [
+          "ok",
+          "✔ api  ✔ web  ✔ db  Started"
+        ]
+      ]
+    },
+    {
+      "title": "~/projetos/app — zsh",
+      "lines": [
+        [
+          "c",
+          "git log --oneline -3"
+        ],
+        [
+          "o",
+          "a1c9e0f fix: validação do NIF"
+        ],
+        [
+          "o",
+          "7b2d4aa feat: dashboard de vendas"
+        ],
+        [
+          "o",
+          "2e8f1b3 chore: atualizar dependências"
+        ],
+        [
+          "c",
+          "curl -s api.cliente.pt/health"
+        ],
+        [
+          "ok",
+          "{\"status\":\"ok\"}"
+        ]
+      ]
+    }
+  ]
+}

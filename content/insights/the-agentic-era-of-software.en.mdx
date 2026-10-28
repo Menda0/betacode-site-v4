@@ -1,0 +1,85 @@
+---
+slug: the-agentic-era-of-software
+title: "The agentic era of software"
+lead: "Coding assistants used to complete lines. Today’s agents take a task, read the repository, write the code, run the tests and open the pull request. That changes how we build software and the kind of products our clients ask us for."
+excerpt: "Agents now read the repo, write code, run tests and open pull requests. What changes for developers, how we use them safely and how they make their way into our clients’ products."
+category: eng
+author: marco
+date: 2026-10-28
+readingTime: 9
+takeaways:
+  - "An agent works in loops: plan, execute, verify and correct."
+  - "The developer’s job becomes writing good specs, reviewing rigorously and owning the architecture."
+  - "Tests, permissions and human review are what make an agent safe in production."
+glyph: ">_"
+coverCode: "agent.plan(task)\n  .run()\n  .review();"
+related:
+  - how-ai-can-help-you-create-your-next-project
+  - building-applications-with-javascript-typescript-as-the-backbone
+---
+A year ago I wrote about how AI helps you create your next project. Since then the tools have taken a leap. We are no longer talking about suggestions in the editor. We are talking about agents that work for minutes or hours on a task, with access to the terminal, the repository and the docs, and hand back work ready for review.
+
+## What an agent is, in practice
+
+A language model answers a question. An agent uses that model inside a loop, with tools at hand, until it reaches a goal:
+
+1. Understands the task and context: reads files, tickets and docs.
+2. Makes a plan and breaks it into steps.
+3. Executes: edits code, runs commands, calls APIs.
+4. Checks the result with tests, linters or the browser itself.
+5. Fixes what failed and repeats until the task is done or it needs help.
+
+The difference lies in step four. An agent that can check its own work delivers with far less supervision.
+
+## How our day-to-day has changed
+
+At Betacode we use agents on almost every project. Well-scoped tasks, like a dependency migration, a new endpoint with tests, coverage for an old module or a screen built from a design, go to an agent. The team reviews, adjusts and decides what gets merged.
+
+- Several agents can work in parallel on different branches.
+- Tasks that were always pushed back, like tests and docs, actually get done.
+- One developer can keep more workstreams moving at once.
+- The team’s time goes into architecture, product and conversations with the client.
+
+## The developer’s new role
+
+People who work well with agents have three skills that already mattered and now matter even more.
+
+- Specifying: describing the task, its limits and the definition of done clearly. A good spec is worth more than a good prompt.
+- Reviewing: reading code you didn’t write and spotting what is subtly wrong. Review is where quality is won or lost.
+- Owning the architecture: agents follow the patterns they find. If the codebase is messy, they multiply the mess.
+
+> Agents write more and more of the code. Responsibility for that code is still ours.
+
+## How we work with agents safely
+
+1. Small, well-scoped tasks with a written acceptance criterion.
+2. Tests as the contract: if tests pass and cover the right behaviour, we can trust the result.
+3. Least privilege: the agent accesses only what it needs, with no production credentials.
+4. Mandatory human review before any merge.
+5. CI pipelines that block anything that breaks the project’s rules.
+
+<Note title="A simple rule">
+We treat an agent’s work like that of a very fast new team member: we trust the process, not the author.
+</Note>
+
+## Agents inside products
+
+The other half of the shift is in the products we build. More and more clients want agentic features: an assistant that books meetings, drafts proposals, answers customers from company data or automates a back-office process end to end.
+
+- Well-defined tools: the agent can only do what the exposed APIs allow. Protocols like MCP make that connection simpler.
+- A human in the loop for high-impact actions: payments, messages to customers, data changes.
+- Observability: log every step to understand why the agent did what it did.
+- Continuous evals: a set of test cases that runs on every prompt or model change.
+
+{/* TODO(betacode): confirm or remove the next step of the Coach ID assistant (IMPLEMENTATION.md §10, point 5). */}
+<Note title="Example: Coach ID">
+The Coach ID assistant started by answering questions. The next step is helping coaches assemble a full training plan from the team’s goals, with the coach approving each session.
+</Note>
+
+## What this means if you want to build
+
+The cost of getting a first version live has dropped a lot. That is good news for founders and companies. It also means the advantage shifts to those who know what to build, validate quickly with real users and keep a healthy codebase as the product grows.
+
+The principles we have followed for ten years still hold: start with the problem, launch small, measure and decide. Agents let us run that loop more times in the same amount of time.
+
+> The agentic era rewards teams with good judgement. Anyone can have the tools.

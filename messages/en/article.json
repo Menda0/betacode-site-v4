@@ -1,0 +1,26 @@
+{
+  "crumbs": "Breadcrumb",
+  "back": "← Insights",
+  "toc": "In this article",
+  "keyTake": "Key takeaways",
+  "writtenBy": "written by",
+  "related": "Keep reading",
+  "all": "All insights",
+  "read": "Read article",
+  "estimate": "Estimate price",
+  "mins": "{n} min",
+  "cta": {
+    "contact": {
+      "k": "// next step",
+      "h": "Want to apply this to your project?",
+      "p": "Tell us what you are building and we will talk about the best approach.",
+      "btn": "Talk to us"
+    },
+    "ventures": {
+      "k": "// betacode ventures",
+      "h": "Have the vision but need a technical co-founder?",
+      "p": "No development fees: we take equity and build the product with you.",
+      "btn": "Explore Betacode Ventures"
+    }
+  }
+}

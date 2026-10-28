@@ -1,0 +1,470 @@
+{
+  "t": {
+    "navLabel": "Principal",
+    "navHome": "Início",
+    "navPricing": "Preços",
+    "navContact": "Contacto",
+    "langLabel": "Idioma",
+    "themeLabel": "Mudar para modo escuro",
+    "crumbs": "Navegação estrutural",
+    "toc": "Neste artigo",
+    "keyTake": "Em resumo",
+    "writtenBy": "escrito por",
+    "related": "Continue a ler",
+    "all": "Todos os insights",
+    "read": "Ler artigo",
+    "estimate": "Estimar preço",
+    "footTag": "Equipas de software dedicadas para empresas e startups.",
+    "footNav": "navegação",
+    "altEu": "Cofinanciado pela União Europeia",
+    "funding": "Projeto financiado pelo programa AVANÇAR, no âmbito do Portugal 2030, cofinanciado pelo Fundo Social Europeu Mais (FSE+).",
+    "copy": "© 2026 Betacode, Inc. Todos os direitos reservados.",
+    "made": "{ feito em Portugal }"
+  },
+  "links": {
+    "pricing": "https://www.betacode.tech/pt/pricing",
+    "ventures": "https://www.betacode.tech/pt/betacode-ventures",
+    "insights": "https://www.betacode.tech/pt/insights",
+    "contact": "https://www.betacode.tech/pt/contact"
+  },
+  "base": "https://www.betacode.tech/pt",
+  "rootStyle": "--bg:#FFFFFF;--surface:#F4F4F8;--card:#FFFFFF;--text:#1B1C51;--muted:#4A4B7A;--border:#E6E6EF;--border2:#C9CAE0;--band:#1B1C51;--kicker:#B83324",
+  "dark": false,
+  "light": true,
+  "a": {
+    "title": "A era agêntica do software",
+    "lead": "Os assistentes de código completavam linhas. Os agentes de hoje recebem uma tarefa, leem o repositório, escrevem o código, correm os testes e abrem o pull request. Isto muda a forma como construímos software e o tipo de produtos que os nossos clientes nos pedem.",
+    "take": [
+      "Um agente trabalha em ciclos: planeia, executa, verifica e corrige.",
+      "O trabalho do developer passa a ser especificar bem, rever com rigor e decidir a arquitetura.",
+      "Testes, permissões e revisão humana são o que torna um agente seguro em produção."
+    ],
+    "date": "28 out 2026",
+    "mins": "9 min",
+    "cat": "Engenharia",
+    "glyph": ">_",
+    "code": "agent.plan(task)\n  .run()\n  .review();",
+    "coverStyle": "background-color: #1B1C51"
+  },
+  "au": {
+    "name": "Marco Mendão",
+    "role": "Co-Founder & CTO",
+    "av": "../assets/avatars/marco-mendao.jpg",
+    "pos": "center",
+    "bio": "Co-fundador e CTO da Betacode. Escreve sobre arquitetura, engenharia de produto e como usar a tecnologia certa para entregar mais depressa."
+  },
+  "blocks": [
+    {
+      "t": "p",
+      "x": "Há um ano escrevi sobre como a IA ajuda a criar o próximo projeto. Desde então as ferramentas deram um salto. Já não falamos de sugestões no editor. Falamos de agentes que trabalham durante minutos ou horas numa tarefa, com acesso ao terminal, ao repositório e à documentação, e que devolvem trabalho pronto para rever.",
+      "items": [],
+      "isH": false,
+      "isP": true,
+      "isUl": false,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s0",
+      "n": "",
+      "h": ""
+    },
+    {
+      "t": "h",
+      "x": "O que é um agente, na prática",
+      "items": [],
+      "isH": true,
+      "isP": false,
+      "isUl": false,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s1",
+      "n": "01",
+      "h": ""
+    },
+    {
+      "t": "p",
+      "x": "Um modelo de linguagem responde a uma pergunta. Um agente usa esse modelo dentro de um ciclo, com ferramentas à disposição, até atingir um objetivo:",
+      "items": [],
+      "isH": false,
+      "isP": true,
+      "isUl": false,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s1",
+      "n": "",
+      "h": ""
+    },
+    {
+      "t": "ol",
+      "items": [
+        "Percebe a tarefa e o contexto: lê ficheiros, tickets e documentação.",
+        "Faz um plano e divide-o em passos.",
+        "Executa: edita código, corre comandos, chama APIs.",
+        "Verifica o resultado com testes, linters ou o próprio browser.",
+        "Corrige o que falhou e repete até a tarefa estar feita ou precisar de ajuda."
+      ],
+      "isH": false,
+      "isP": false,
+      "isUl": false,
+      "isOl": true,
+      "isQ": false,
+      "isNote": false,
+      "id": "s1",
+      "n": "",
+      "h": ""
+    },
+    {
+      "t": "p",
+      "x": "A diferença está no passo quatro. Um agente que consegue verificar o próprio trabalho entrega com muito menos supervisão.",
+      "items": [],
+      "isH": false,
+      "isP": true,
+      "isUl": false,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s1",
+      "n": "",
+      "h": ""
+    },
+    {
+      "t": "h",
+      "x": "Como mudou o nosso dia a dia",
+      "items": [],
+      "isH": true,
+      "isP": false,
+      "isUl": false,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s2",
+      "n": "02",
+      "h": ""
+    },
+    {
+      "t": "p",
+      "x": "Na Betacode usamos agentes em quase todos os projetos. Tarefas bem delimitadas, como uma migração de dependências, um novo endpoint com testes, a cobertura de um módulo antigo ou um ecrã a partir de um design, são entregues a um agente. A equipa revê, ajusta e decide o que entra.",
+      "items": [],
+      "isH": false,
+      "isP": true,
+      "isUl": false,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s2",
+      "n": "",
+      "h": ""
+    },
+    {
+      "t": "ul",
+      "items": [
+        "Vários agentes podem trabalhar em paralelo em ramos diferentes.",
+        "Tarefas que ficavam sempre para depois, como testes e documentação, passam a ser feitas.",
+        "Um developer consegue acompanhar mais frentes de trabalho ao mesmo tempo.",
+        "O tempo da equipa vai para arquitetura, produto e conversas com o cliente."
+      ],
+      "isH": false,
+      "isP": false,
+      "isUl": true,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s2",
+      "n": "",
+      "h": ""
+    },
+    {
+      "t": "h",
+      "x": "O novo papel do developer",
+      "items": [],
+      "isH": true,
+      "isP": false,
+      "isUl": false,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s3",
+      "n": "03",
+      "h": ""
+    },
+    {
+      "t": "p",
+      "x": "Quem trabalha bem com agentes tem três competências que já eram importantes e agora pesam ainda mais.",
+      "items": [],
+      "isH": false,
+      "isP": true,
+      "isUl": false,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s3",
+      "n": "",
+      "h": ""
+    },
+    {
+      "t": "ul",
+      "items": [
+        "Especificar: descrever a tarefa, os limites e o critério de \"feito\" com clareza. Uma boa especificação vale mais do que um bom prompt.",
+        "Rever: ler código que não escreveu e encontrar o que está subtilmente errado. A revisão é onde se ganha ou perde qualidade.",
+        "Decidir a arquitetura: os agentes seguem os padrões que encontram. Se a base for confusa, multiplicam a confusão."
+      ],
+      "isH": false,
+      "isP": false,
+      "isUl": true,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s3",
+      "n": "",
+      "h": ""
+    },
+    {
+      "t": "q",
+      "x": "Os agentes escrevem cada vez mais código. A responsabilidade por esse código continua a ser nossa.",
+      "items": [],
+      "isH": false,
+      "isP": false,
+      "isUl": false,
+      "isOl": false,
+      "isQ": true,
+      "isNote": false,
+      "id": "s3",
+      "n": "",
+      "h": ""
+    },
+    {
+      "t": "h",
+      "x": "Como trabalhamos com agentes em segurança",
+      "items": [],
+      "isH": true,
+      "isP": false,
+      "isUl": false,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s4",
+      "n": "04",
+      "h": ""
+    },
+    {
+      "t": "ol",
+      "items": [
+        "Tarefas pequenas e bem delimitadas, com um critério de aceitação escrito.",
+        "Testes como contrato: se os testes passam e cobrem o comportamento certo, temos confiança no resultado.",
+        "Permissões mínimas: o agente acede só ao que precisa, sem credenciais de produção.",
+        "Revisão humana obrigatória antes de qualquer merge.",
+        "Pipelines de CI que bloqueiam o que não cumpre as regras do projeto."
+      ],
+      "isH": false,
+      "isP": false,
+      "isUl": false,
+      "isOl": true,
+      "isQ": false,
+      "isNote": false,
+      "id": "s4",
+      "n": "",
+      "h": ""
+    },
+    {
+      "t": "note",
+      "h": "Uma regra simples",
+      "x": "Tratamos o trabalho de um agente como o de um novo membro da equipa muito rápido: confiamos no processo, não no autor.",
+      "items": [],
+      "isH": false,
+      "isP": false,
+      "isUl": false,
+      "isOl": false,
+      "isQ": false,
+      "isNote": true,
+      "id": "s4",
+      "n": ""
+    },
+    {
+      "t": "h",
+      "x": "Agentes dentro dos produtos",
+      "items": [],
+      "isH": true,
+      "isP": false,
+      "isUl": false,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s5",
+      "n": "05",
+      "h": ""
+    },
+    {
+      "t": "p",
+      "x": "A outra metade da mudança está nos produtos que construímos. Cada vez mais clientes querem funcionalidades agênticas: um assistente que marca reuniões, prepara propostas, responde a clientes com base nos dados da empresa ou automatiza um processo de back-office de ponta a ponta.",
+      "items": [],
+      "isH": false,
+      "isP": true,
+      "isUl": false,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s5",
+      "n": "",
+      "h": ""
+    },
+    {
+      "t": "ul",
+      "items": [
+        "Ferramentas bem definidas: o agente só pode fazer o que as APIs expostas permitem. Protocolos como o MCP tornam esta ligação mais simples.",
+        "Humano no circuito para ações com impacto: pagamentos, envios a clientes, alterações de dados.",
+        "Observabilidade: registar cada passo para perceber porque é que o agente fez o que fez.",
+        "Avaliações contínuas: um conjunto de casos de teste que corre a cada alteração do prompt ou do modelo."
+      ],
+      "isH": false,
+      "isP": false,
+      "isUl": true,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s5",
+      "n": "",
+      "h": ""
+    },
+    {
+      "t": "note",
+      "h": "Exemplo: Coach ID",
+      "x": "O assistente da Coach ID começou por responder a perguntas. O passo seguinte é ajudar o treinador a montar um plano de treino completo a partir dos objetivos da equipa, com o treinador a aprovar cada sessão.",
+      "items": [],
+      "isH": false,
+      "isP": false,
+      "isUl": false,
+      "isOl": false,
+      "isQ": false,
+      "isNote": true,
+      "id": "s5",
+      "n": ""
+    },
+    {
+      "t": "h",
+      "x": "O que isto significa para quem quer construir",
+      "items": [],
+      "isH": true,
+      "isP": false,
+      "isUl": false,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s6",
+      "n": "06",
+      "h": ""
+    },
+    {
+      "t": "p",
+      "x": "O custo de pôr uma primeira versão no ar caiu muito. Isso é uma boa notícia para fundadores e empresas. Também significa que a vantagem passa para quem sabe o que construir, valida depressa com utilizadores reais e mantém uma base de código saudável à medida que o produto cresce.",
+      "items": [],
+      "isH": false,
+      "isP": true,
+      "isUl": false,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s6",
+      "n": "",
+      "h": ""
+    },
+    {
+      "t": "p",
+      "x": "Os princípios que seguimos há dez anos continuam a servir: começar pelo problema, lançar pequeno, medir e decidir. Os agentes deixam-nos percorrer esse ciclo mais vezes no mesmo tempo.",
+      "items": [],
+      "isH": false,
+      "isP": true,
+      "isUl": false,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s6",
+      "n": "",
+      "h": ""
+    },
+    {
+      "t": "q",
+      "x": "A era agêntica premeia equipas com bom critério. Ferramentas qualquer um tem.",
+      "items": [],
+      "isH": false,
+      "isP": false,
+      "isUl": false,
+      "isOl": false,
+      "isQ": true,
+      "isNote": false,
+      "id": "s6",
+      "n": "",
+      "h": ""
+    }
+  ],
+  "toc": [
+    {
+      "href": "#s1",
+      "n": "01",
+      "x": "O que é um agente, na prática"
+    },
+    {
+      "href": "#s2",
+      "n": "02",
+      "x": "Como mudou o nosso dia a dia"
+    },
+    {
+      "href": "#s3",
+      "n": "03",
+      "x": "O novo papel do developer"
+    },
+    {
+      "href": "#s4",
+      "n": "04",
+      "x": "Como trabalhamos com agentes em segurança"
+    },
+    {
+      "href": "#s5",
+      "n": "05",
+      "x": "Agentes dentro dos produtos"
+    },
+    {
+      "href": "#s6",
+      "n": "06",
+      "x": "O que isto significa para quem quer construir"
+    }
+  ],
+  "related": [
+    {
+      "href": "ArtAi.dc.html",
+      "title": "Como a IA pode ajudar a criar o seu próximo projeto",
+      "cat": "Engenharia",
+      "mins": "8 min",
+      "code": "ai.multiply(devs);\n// não substitui",
+      "coverStyle": "background-color: #1B1C51"
+    },
+    {
+      "href": "ArtStack.dc.html",
+      "title": "Construir aplicações com JavaScript/TypeScript como base",
+      "cat": "Engenharia",
+      "mins": "9 min",
+      "code": "const stack = [\n  \"next\", \"nest\", \"ts\"\n];",
+      "coverStyle": "background-color: #1B1C51"
+    }
+  ],
+  "cta": {
+    "k": "// próximo passo",
+    "h": "Quer aplicar isto ao seu projeto?",
+    "p": "Conte-nos o que está a construir e falamos sobre a melhor abordagem.",
+    "btn": "Fale connosco",
+    "href": "https://www.betacode.tech/pt/contact"
+  },
+  "logo": "../assets/brand/logo.png",
+  "logoAnimStyle": "height: 38px; width: auto; display: block; mix-blend-mode: multiply",
+  "foot": {
+    "style": "background: #F4F4F8; color: #1B1C51; border-top: 1px solid #E6E6EF; --ft: #1B1C51; --fm: #4A4B7A; --fk: #B83324; --fb: #E2E2EC",
+    "logo": "../assets/brand/logo.png",
+    "iefp": "../assets/funding/iefp-light.png",
+    "pessoas": "../assets/funding/pessoas2030-light.png",
+    "pt": "../assets/funding/portugal2030-light.png",
+    "ue": "../assets/funding/ue-light.png"
+  },
+  "isPt": "true",
+  "isEn": "false"
+}

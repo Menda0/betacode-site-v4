@@ -1,0 +1,264 @@
+{
+  "t": {
+    "heroChip": "Custom software · Dedicated teams · Technical co-founder · Training",
+    "heroChips": ["Custom software", "Dedicated teams", "Technical co-founder", "Training"],
+    "heroL1": "that transforms your business.",
+    "heroSub": "Digital transformation and custom software development.",
+    "heroCta": "Start a project",
+    "heroCta2": "Get a price estimate",
+    "heroCta3": "See how we help ↓",
+    "clientsTitle": "Companies already build with us",
+    "svcKicker": "// what we do",
+    "svcTitle": "Where is your business today?",
+    "svcSub": "Pick your starting point and we’ll put the right team together for your project.",
+    "svcTabsLabel": "Client type",
+    "venTitle": "Your technical co-founder, paid in equity.",
+    "venText": "With Betacode Ventures you don’t pay for development. We take equity in the company and build the product with you.",
+    "venCta": "Explore Ventures",
+    "venCta2": "See our first project",
+    "venStat1": "development cost",
+    "venStatValue": "in exchange for equity",
+    "venStat2": "model",
+    "venStat3L": "team",
+    "venStat3": "Dedicated",
+    "teamKicker": "// who we are",
+    "teamTitle": "The team behind the code.",
+    "teamText": "We’re an engineering team based in Portugal, and we work side by side with our clients throughout the project.",
+    "insTitle": "What we’ve learned building products.",
+    "insBy1": "By Pedro Gorrão, CEO",
+    "insBy2": "and Marco Mendão, CTO",
+    "insRead": "Read article",
+    "insAll": "All insights →",
+    "ctaKicker": "// next step",
+    "ctaTitle": "Got an idea? Let’s talk.",
+    "ctaText": "You don’t need a pitch deck. Tell us about the project and we’ll set up a call.",
+    "ctaBtn": "Get in touch",
+    "altTshirts": "The Betacode team in branded t-shirts",
+    "altPortrait": "Betacode team Software Developer",
+    "altBeagle": "Betacode Software Developer with the team beagle",
+    "altTeam": "The Betacode team in branded jackets",
+    "altDuo": "Two Betacode team members laughing",
+    "altHoodies": "The Betacode team in hoodies, with the team dog"
+  },
+  "tracks": [
+    {
+      "id": "trad",
+      "num": "01",
+      "label": "Traditional businesses",
+      "kicker": "// for traditional businesses",
+      "title": "Go digital without building an IT department.",
+      "text": "An external tech team that works like part of your company. We digitise processes, help with technical decisions and train your team.",
+      "services": [
+        "Dedicated external team",
+        "Technical consulting",
+        "Technical support",
+        "Training"
+      ],
+      "cta": "Talk about my business"
+    },
+    {
+      "id": "tech",
+      "num": "02",
+      "label": "Tech companies",
+      "kicker": "// for tech companies",
+      "title": "Software Developers on your team, without months of hiring.",
+      "text": "We add Software Developers to your team, at the experience level your project needs. If it makes sense, we also help you hire in-house.",
+      "services": [
+        "Team augmentation",
+        "Software Developers",
+        "In-house team building",
+        "Technical consulting"
+      ],
+      "cta": "Grow my team"
+    },
+    {
+      "id": "start",
+      "num": "03",
+      "label": "Startups",
+      "kicker": "// for startups",
+      "title": "From idea to MVP, validated with real users.",
+      "text": "Before building, we validate the idea with real users. Then we develop the MVP together with your team.",
+      "services": [
+        "MVP development",
+        "Product validation",
+        "Dedicated team",
+        "Technical consulting"
+      ],
+      "cta": "Build my MVP"
+    },
+    {
+      "id": "vent",
+      "num": "04",
+      "label": "Betacode Ventures",
+      "kicker": "// technical co-founding",
+      "title": "We build the product with you, with no development fees.",
+      "text": "Instead of billing for development, we take equity in the company and work on the product as part of the founding team.",
+      "services": [
+        "In exchange for equity",
+        "Equity partnership",
+        "MVP development",
+        "Founding tech team"
+      ],
+      "cta": "Explore Ventures"
+    }
+  ],
+  "an": {
+    "paper": "paper → digital",
+    "team": "your team",
+    "join": "+2 Software Developers",
+    "idea": "idea",
+    "validate": "validate",
+    "mvp": "MVP",
+    "build": "building the MVP",
+    "founder": "founder",
+    "deal": "in exchange for equity"
+  },
+  "articles": [
+    {
+      "tag": "Product",
+      "title": "The Lean Startup approach"
+    },
+    {
+      "tag": "Product",
+      "title": "How to build an MVP"
+    },
+    {
+      "tag": "Engineering",
+      "title": "JavaScript and TypeScript"
+    },
+    {
+      "tag": "AI",
+      "title": "AI in software development"
+    },
+    {
+      "tag": "Engineering",
+      "title": "Modernising legacy systems"
+    },
+    {
+      "tag": "Startups",
+      "title": "Why have a technical co-founder"
+    }
+  ],
+  "sessions": [
+    {
+      "title": "~/projetos/loja — zsh",
+      "lines": [
+        [
+          "c",
+          "git checkout -b feature/payments"
+        ],
+        [
+          "o",
+          "Switched to a new branch 'feature/payments'"
+        ],
+        [
+          "c",
+          "npm test"
+        ],
+        [
+          "ok",
+          "✓ 128 tests passed (2.4s)"
+        ],
+        [
+          "c",
+          "git commit -m \"feat: checkout with Stripe\""
+        ],
+        [
+          "o",
+          "[feature/payments 3f9a2c1] 4 files changed"
+        ],
+        [
+          "c",
+          "git push && npm run deploy"
+        ],
+        [
+          "ok",
+          "✓ live in production"
+        ]
+      ]
+    },
+    {
+      "title": "ideia.ts",
+      "lines": [
+        [
+          "k",
+          "const idea = await client.share()"
+        ],
+        [
+          "k",
+          "const product = betacode.build(idea)"
+        ],
+        [
+          "k",
+          "await product.test({ users: \"real\" })"
+        ],
+        [
+          "k",
+          "deploy(product) // ship it"
+        ],
+        [
+          "ok",
+          "✓ compiled with no errors"
+        ]
+      ]
+    },
+    {
+      "title": "~/projetos/backoffice — zsh",
+      "lines": [
+        [
+          "c",
+          "python manage.py migrate"
+        ],
+        [
+          "o",
+          "Applying invoices.0007_add_vat... OK"
+        ],
+        [
+          "c",
+          "pytest -q"
+        ],
+        [
+          "ok",
+          "64 passed in 1.12s"
+        ],
+        [
+          "c",
+          "docker compose up -d"
+        ],
+        [
+          "ok",
+          "✔ api  ✔ web  ✔ db  Started"
+        ]
+      ]
+    },
+    {
+      "title": "~/projetos/app — zsh",
+      "lines": [
+        [
+          "c",
+          "git log --oneline -3"
+        ],
+        [
+          "o",
+          "a1c9e0f fix: VAT number validation"
+        ],
+        [
+          "o",
+          "7b2d4aa feat: sales dashboard"
+        ],
+        [
+          "o",
+          "2e8f1b3 chore: update dependencies"
+        ],
+        [
+          "c",
+          "curl -s api.client.com/health"
+        ],
+        [
+          "ok",
+          "{\"status\":\"ok\"}"
+        ]
+      ]
+    }
+  ]
+}

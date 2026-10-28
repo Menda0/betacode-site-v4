@@ -1,0 +1,167 @@
+{
+  "apply": "Candidatar-se",
+  "seeCase": "Ver o nosso primeiro projeto",
+  "heroChip": "Betacode Ventures · co-fundação técnica",
+  "heroL1": "O seu co-fundador técnico,",
+  "heroL2": "de 0 a 100%.",
+  "heroSub": "Juntamo-nos a fundadores que têm a visão, mas precisam de um líder técnico para validar a ideia, construir o produto e escalá-lo. Sem custos de desenvolvimento: entramos no capital e construímos consigo.",
+  "heroFacts": [
+    {
+      "v": "Em troca de Equity",
+      "l": ""
+    },
+    {
+      "v": "Full-stack",
+      "l": "equipa dedicada"
+    }
+  ],
+  "s1short": "validar e planear",
+  "s2short": "construir e lançar",
+  "s3short": "iterar e escalar",
+  "howKicker": "// como funciona",
+  "howTitle": "Três fases, um produto, dois fundadores.",
+  "steps": [
+    {
+      "n": "1",
+      "tag": "validar",
+      "t": "Validar e planear",
+      "d": "Testamos a ideia, definimos o âmbito e criamos o roadmap para chegar ao mercado."
+    },
+    {
+      "n": "2",
+      "tag": "construir",
+      "t": "Construir e lançar",
+      "d": "Uma equipa full-stack dedicada trata da arquitetura, do desenvolvimento e da implementação."
+    },
+    {
+      "n": "3",
+      "tag": "escalar",
+      "t": "Iterar e escalar",
+      "d": "Depois do lançamento, recolhemos feedback, entregamos melhorias e ajudamos a crescer a equipa, incluindo contratar talento-chave internamente."
+    }
+  ],
+  "parKicker": "// a parceria",
+  "parTitle": "Dois fundadores. Um produto.",
+  "parSub": "Partilhamos o risco e o retorno. Por isso escolhemos os projetos com cuidado e pedimos compromisso em troca.",
+  "weBring": "A Betacode traz",
+  "youBring": "O fundador traz",
+  "we": [
+    {
+      "t": "Um co-fundador técnico dedicado",
+      "d": "Não uma rotação de freelancers."
+    },
+    {
+      "t": "Execução full-stack",
+      "d": "Arquitetura, backend, frontend, infraestrutura e implementação."
+    },
+    {
+      "t": "Responsabilidade de dono",
+      "d": "Orientação sobre stack, escalabilidade e trade-offs, não consultoria à hora."
+    },
+    {
+      "t": "Bases prontas para lançar",
+      "d": "Pagamentos, painéis de administração e análise de dados."
+    },
+    {
+      "t": "Apoio a contratar",
+      "d": "Ajuda a internalizar talento quando chegar o momento."
+    }
+  ],
+  "you": [
+    {
+      "t": "Equity, não faturas",
+      "d": "Sem custos de desenvolvimento: o nosso retorno está ligado ao produto."
+    },
+    {
+      "t": "Conhecimento do domínio",
+      "d": "Do mercado, dos utilizadores e do problema."
+    },
+    {
+      "t": "Feedback rápido",
+      "d": "Compromisso com decisões rápidas e prioridades claras."
+    },
+    {
+      "t": "Transparência na tração",
+      "d": "Feedback de utilizadores, métricas e conversas com clientes."
+    },
+    {
+      "t": "Ambição com substância",
+      "d": "Uma ideia com caminho real para utilizadores e receita."
+    }
+  ],
+  "caseKicker": "// primeiro projeto",
+  "caseTitle": "Coach ID: reconstruída de raiz, com um co-fundador técnico.",
+  "caseDesc": "Uma plataforma que ajuda treinadores de futebol a planear, criar, executar e acompanhar o trabalho semanal da equipa. Depois de 8 anos no mercado, o produto foi reconstruído de raiz.",
+  "caseTags": [
+    "Treinadores licenciados pela UEFA",
+    "Milhares de treinadores no mundo",
+    "Progressive Web App"
+  ],
+  "builtTitle": "O que construímos",
+  "built": [
+    "MVP de 0 a 100% em 3 meses",
+    "Gateway de pagamentos",
+    "Painel de administração",
+    "PWA para desktop, tablet e telemóvel",
+    "Assistente virtual com IA"
+  ],
+  "resultsKicker": "// resultados",
+  "stats": [
+    {
+      "v": "100+",
+      "l": "clientes na primeira semana"
+    },
+    {
+      "v": "60+",
+      "l": "clientes pagantes"
+    }
+  ],
+  "alsoTitle": "E para lá dos números",
+  "also": [
+    "Feedback real de utilizadores desde o primeiro dia",
+    "Um editor de exercícios gratuito que gera registos orgânicos, sem anúncios pagos",
+    "Uma plataforma pronta para planos de subscrição e onboarding de equipas"
+  ],
+  "applyKicker": "// candidatura",
+  "applyTitle": "Pronto para construir a sua startup com um co-fundador técnico?",
+  "applySub": "Conte-nos a sua ideia e descubra se a Betacode Ventures é o parceiro certo.",
+  "applySteps": [
+    {
+      "n": "1",
+      "t": "Conta-nos a sua ideia."
+    },
+    {
+      "n": "2",
+      "t": "Analisamos e entramos em contacto."
+    },
+    {
+      "n": "3",
+      "t": "Se fizer sentido, planeamos juntos a primeira fase."
+    }
+  ],
+  "fName": "Nome",
+  "fEmail": "E-mail",
+  "fStage": "Em que fase está a ideia?",
+  "stagesL": [
+    "Só uma ideia",
+    "Protótipo ou MVP",
+    "Já tem utilizadores"
+  ],
+  "fSite": "Sítio web",
+  "fDesc": "Fale-nos da sua venture",
+  "optional": "opcional",
+  "phName": "O seu nome",
+  "phDesc": "O problema, para quem é, o que já tem e porquê agora…",
+  "eName": "Indique o seu nome.",
+  "eEmail": "Indique um e-mail válido.",
+  "eSite": "Indique um endereço válido (https://…).",
+  "eDesc": "Conte-nos um pouco sobre a venture.",
+  "privacy": "Usamos os seus dados apenas para responder à candidatura.",
+  "applyBtn": "Candidatar-se à Betacode Ventures",
+  "sentKicker": "// candidatura enviada",
+  "home": "Voltar à página inicial",
+  "readInsights": "Ler os nossos insights",
+  "phEmail": "nome@empresa.com",
+  "thanks": "Obrigado",
+  "sentText": "Recebemos a sua candidatura. Vamos analisar a ideia e entrar em contacto através de {email}."
+}

@@ -8,10 +8,9 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useMemo,
-  useState,
 } from 'react'
+import { useMounted } from '@/lib/use-mounted'
 
 type Theme = 'light' | 'dark'
 
@@ -23,11 +22,7 @@ const ThemeContext = createContext<{
 
 function ThemeBridge({ children }: { children: React.ReactNode }) {
   const { theme, resolvedTheme, setTheme } = useNextTheme()
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
+  const mounted = useMounted()
 
   const currentTheme = (mounted ? (resolvedTheme ?? theme) : 'light') as Theme
 
@@ -58,8 +53,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   return (
     <NextThemesProvider
       attribute="class"
-      defaultTheme="light"
-      enableSystem={false}
+      defaultTheme="system"
+      enableSystem
       storageKey="betacode-theme"
       disableTransitionOnChange
     >

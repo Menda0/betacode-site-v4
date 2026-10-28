@@ -1,0 +1,6 @@
+{
+  "sending": "A enviar…",
+  "errorGeneric": "Não foi possível enviar o pedido. Tente novamente dentro de momentos ou escreva-nos para info@betacode.tech.",
+  "errorRateLimit": "Recebemos vários pedidos seguidos. Aguarde alguns minutos e tente novamente.",
+  "honeypotLabel": "Deixe este campo em branco"
+}

@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next'
 import { routing } from '@/i18n/routing'
-import { getBlogPosts } from '@/lib/blog-content'
+import { getArticles } from '@/lib/insights/articles'
 import { SITE_URL } from '@/lib/metadata'
 
 const STATIC_PATHS = [
@@ -25,10 +25,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
       })
     }
 
-    for (const post of getBlogPosts(locale)) {
+    for (const article of getArticles(locale)) {
       entries.push({
-        url: `${SITE_URL}/${locale}/insights/${post.slug}`,
-        lastModified: new Date(post.publishedAt),
+        url: `${SITE_URL}/${locale}/insights/${article.slug}`,
+        lastModified: new Date(`${article.date}T00:00:00Z`),
         changeFrequency: 'monthly',
         priority: 0.6,
       })

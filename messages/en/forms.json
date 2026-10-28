@@ -1,0 +1,6 @@
+{
+  "sending": "Sending…",
+  "errorGeneric": "We couldn’t send your request. Please try again in a moment or write to us at info@betacode.tech.",
+  "errorRateLimit": "We received several requests in a row. Please wait a few minutes and try again.",
+  "honeypotLabel": "Leave this field empty"
+}

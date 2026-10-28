@@ -1,0 +1,30 @@
+{
+  "siteDescription": "Transformação digital e desenvolvimento de software à medida. Trabalhamos com empresas tradicionais, empresas tecnológicas e startups, desde a primeira ideia até ao produto em produção.",
+  "home": {
+    "title": "Betacode | Software que transforma o seu negócio",
+    "description": "Transformação digital e desenvolvimento de software à medida. Trabalhamos com empresas tradicionais, empresas tecnológicas e startups, desde a primeira ideia até ao produto em produção, e continuamos a acompanhar a sua evolução."
+  },
+  "pricing": {
+    "title": "Calculadora de preços | Betacode",
+    "description": "Responda a três perguntas e mostramos o serviço indicado para o seu caso e uma faixa de preço."
+  },
+  "insights": {
+    "title": "Insights | Betacode",
+    "description": "O que aprendemos a construir produtos. Artigos sobre engenharia, negócio, startups e Betacode Ventures."
+  },
+  "ventures": {
+    "title": "Betacode Ventures | O seu co-fundador técnico",
+    "description": "Com a Betacode Ventures não paga o desenvolvimento. Entramos no capital da empresa e construímos o produto consigo."
+  },
+  "contact": {
+    "title": "Contacto | Betacode",
+    "description": "Vamos falar sobre o seu projeto. Escreva-nos, ligue-nos ou visite-nos no Madan Parque, em Caparica."
+  },
+  "articleNotFound": {
+    "title": "Artigo não encontrado | Betacode",
+    "description": "O artigo que procura não foi encontrado."
+  },
+  "notFound": {
+    "title": "Página não encontrada | Betacode"
+  }
+}

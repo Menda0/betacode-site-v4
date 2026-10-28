@@ -58,8 +58,8 @@ import {
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { getContactSourceLabel } from "@/lib/contact-source"
 import type { ContactSource } from "@/lib/types/contact"
-import type { AnswerSummaryItem } from "@/lib/pricing-calculator"
-import type { OutcomeId } from "@/lib/pricing-calculator"
+import type { AnswerSummaryItem } from "@/lib/types/contact"
+import type { OutcomeId } from "@/lib/types/contact"
 
 export type ContactRow = {
   id: string
@@ -67,7 +67,12 @@ export type ContactRow = {
   email: string
   website?: string
   phone?: string
+  company?: string
   message?: string
+  topic?: string
+  stage?: string
+  when?: string
+  selectedService?: string
   source: ContactSource
   locale: "en" | "pt"
   outcomes: OutcomeId[]
@@ -130,6 +135,21 @@ function ContactDetailsDialog({
                   {contact.website}
                 </a>
               </p>
+            )}
+            {(
+              [
+                ["Company", contact.company],
+                ["Topic", contact.topic],
+                ["Startup stage", contact.stage],
+                ["When to start", contact.when],
+                ["Selected service", contact.selectedService],
+              ] as const
+            ).map(([label, value]) =>
+              value ? (
+                <p key={label}>
+                  <span className="text-muted-foreground">{label}:</span> {value}
+                </p>
+              ) : null
             )}
           </section>
 

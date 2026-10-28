@@ -1,0 +1,26 @@
+{
+  "crumbs": "Navegação estrutural",
+  "back": "← Insights",
+  "toc": "Neste artigo",
+  "keyTake": "Em resumo",
+  "writtenBy": "escrito por",
+  "related": "Continue a ler",
+  "all": "Todos os insights",
+  "read": "Ler artigo",
+  "estimate": "Estimar preço",
+  "mins": "{n} min",
+  "cta": {
+    "contact": {
+      "k": "// próximo passo",
+      "h": "Quer aplicar isto ao seu projeto?",
+      "p": "Conte-nos o que está a construir e falamos sobre a melhor abordagem.",
+      "btn": "Fale connosco"
+    },
+    "ventures": {
+      "k": "// betacode ventures",
+      "h": "Tem a visão mas precisa de um co-fundador técnico?",
+      "p": "Sem custos de desenvolvimento: entramos no capital e construímos o produto consigo.",
+      "btn": "Explorar Betacode Ventures"
+    }
+  }
+}

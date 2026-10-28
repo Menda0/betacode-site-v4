@@ -1,0 +1,235 @@
+{
+  "t": {
+    "navLabel": "Principal",
+    "navHome": "Início",
+    "navPricing": "Preços",
+    "navContact": "Contacto",
+    "langLabel": "Idioma",
+    "themeLabel": "Mudar para modo claro",
+    "apply": "Candidatar-se",
+    "seeCase": "Ver o nosso primeiro projeto",
+    "heroChip": "Betacode Ventures · co-fundação técnica",
+    "heroL1": "O seu co-fundador técnico,",
+    "heroL2": "de 0 a 100%.",
+    "heroSub": "Juntamo-nos a fundadores que têm a visão, mas precisam de um líder técnico para validar a ideia, construir o produto e escalá-lo. Sem custos de desenvolvimento: entramos no capital e construímos consigo.",
+    "heroFacts": [
+      {
+        "v": "0 €",
+        "l": "de desenvolvimento"
+      },
+      {
+        "v": "Equity",
+        "l": "incentivos alinhados"
+      },
+      {
+        "v": "Full-stack",
+        "l": "equipa dedicada"
+      }
+    ],
+    "s1short": "validar e planear",
+    "s2short": "construir e lançar",
+    "s3short": "iterar e escalar",
+    "howKicker": "// como funciona",
+    "howTitle": "Três fases, um produto, dois fundadores.",
+    "steps": [
+      {
+        "n": "1",
+        "tag": "validar",
+        "t": "Validar e planear",
+        "d": "Testamos a ideia, definimos o âmbito e criamos o roadmap para chegar ao mercado."
+      },
+      {
+        "n": "2",
+        "tag": "construir",
+        "t": "Construir e lançar",
+        "d": "Uma equipa full-stack dedicada trata da arquitetura, do desenvolvimento e da implementação."
+      },
+      {
+        "n": "3",
+        "tag": "escalar",
+        "t": "Iterar e escalar",
+        "d": "Depois do lançamento, recolhemos feedback, entregamos melhorias e ajudamos a crescer a equipa, incluindo contratar talento-chave internamente."
+      }
+    ],
+    "parKicker": "// a parceria",
+    "parTitle": "Dois fundadores. Um produto.",
+    "parSub": "Partilhamos o risco e o retorno. Por isso escolhemos os projetos com cuidado e pedimos compromisso em troca.",
+    "weBring": "A Betacode traz",
+    "youBring": "O fundador traz",
+    "we": [
+      {
+        "t": "Um co-fundador técnico dedicado",
+        "d": "Não uma rotação de freelancers."
+      },
+      {
+        "t": "Execução full-stack",
+        "d": "Arquitetura, backend, frontend, infraestrutura e implementação."
+      },
+      {
+        "t": "Responsabilidade de dono",
+        "d": "Orientação sobre stack, escalabilidade e trade-offs, não consultoria à hora."
+      },
+      {
+        "t": "Bases prontas para lançar",
+        "d": "Pagamentos, painéis de administração e análise de dados."
+      },
+      {
+        "t": "Apoio a contratar",
+        "d": "Ajuda a internalizar talento quando chegar o momento."
+      }
+    ],
+    "you": [
+      {
+        "t": "Equity, não faturas",
+        "d": "Sem custos de desenvolvimento: o nosso retorno está ligado ao produto."
+      },
+      {
+        "t": "Conhecimento do domínio",
+        "d": "Do mercado, dos utilizadores e do problema."
+      },
+      {
+        "t": "Feedback rápido",
+        "d": "Compromisso com decisões rápidas e prioridades claras."
+      },
+      {
+        "t": "Transparência na tração",
+        "d": "Feedback de utilizadores, métricas e conversas com clientes."
+      },
+      {
+        "t": "Ambição com substância",
+        "d": "Uma ideia com caminho real para utilizadores e receita."
+      }
+    ],
+    "caseKicker": "// primeiro projeto",
+    "caseTitle": "Coach ID: reconstruída de raiz, com um co-fundador técnico.",
+    "caseDesc": "Uma plataforma que ajuda treinadores de futebol a planear, criar, executar e acompanhar o trabalho semanal da equipa. Depois de 8 anos no mercado, o produto foi reconstruído de raiz.",
+    "caseTags": [
+      "Treinadores licenciados pela UEFA",
+      "Milhares de treinadores no mundo",
+      "Progressive Web App"
+    ],
+    "builtTitle": "O que construímos",
+    "built": [
+      "MVP de 0 a 100% em 3 meses",
+      "Gateway de pagamentos",
+      "Painel de administração",
+      "PWA para desktop, tablet e telemóvel",
+      "Assistente virtual com IA"
+    ],
+    "resultsKicker": "// resultados",
+    "stats": [
+      {
+        "v": "100+",
+        "l": "clientes na primeira semana"
+      },
+      {
+        "v": "60+",
+        "l": "clientes pagantes"
+      }
+    ],
+    "alsoTitle": "E para lá dos números",
+    "also": [
+      "Feedback real de utilizadores desde o primeiro dia",
+      "Um editor de exercícios gratuito que gera registos orgânicos, sem anúncios pagos",
+      "Uma plataforma pronta para planos de subscrição e onboarding de equipas"
+    ],
+    "applyKicker": "// candidatura",
+    "applyTitle": "Pronto para construir a sua startup com um co-fundador técnico?",
+    "applySub": "Conte-nos a sua ideia e descubra se a Betacode Ventures é o parceiro certo.",
+    "applySteps": [
+      {
+        "n": "1",
+        "t": "Conta-nos a sua ideia."
+      },
+      {
+        "n": "2",
+        "t": "Analisamos e entramos em contacto."
+      },
+      {
+        "n": "3",
+        "t": "Se fizer sentido, planeamos juntos a primeira fase."
+      }
+    ],
+    "fName": "Nome",
+    "fEmail": "E-mail",
+    "fStage": "Em que fase está a ideia?",
+    "stagesL": [
+      "Só uma ideia",
+      "Protótipo ou MVP",
+      "Já tem utilizadores"
+    ],
+    "fSite": "Sítio web",
+    "fDesc": "Fale-nos da sua venture",
+    "optional": "opcional",
+    "phName": "O seu nome",
+    "phDesc": "O problema, para quem é, o que já tem e porquê agora…",
+    "eName": "Indique o seu nome.",
+    "eEmail": "Indique um e-mail válido.",
+    "eSite": "Indique um endereço válido (https://…).",
+    "eDesc": "Conte-nos um pouco sobre a venture.",
+    "privacy": "Usamos os seus dados apenas para responder à candidatura.",
+    "applyBtn": "Candidatar-se à Betacode Ventures",
+    "sentKicker": "// candidatura enviada",
+    "home": "Voltar à página inicial",
+    "readInsights": "Ler os nossos insights",
+    "footTag": "Equipas de software dedicadas para empresas e startups.",
+    "footNav": "navegação",
+    "altEu": "Cofinanciado pela União Europeia",
+    "funding": "Projeto financiado pelo programa AVANÇAR, no âmbito do Portugal 2030, cofinanciado pelo Fundo Social Europeu Mais (FSE+).",
+    "copy": "© 2026 Betacode, Inc. Todos os direitos reservados.",
+    "made": "{ feito em Portugal }"
+  },
+  "links": {
+    "pricing": "https://www.betacode.tech/pt/pricing",
+    "ventures": "https://www.betacode.tech/pt/betacode-ventures",
+    "insights": "https://www.betacode.tech/pt/insights",
+    "contact": "https://www.betacode.tech/pt/contact"
+  },
+  "base": "https://www.betacode.tech/pt",
+  "rootStyle": "--bg:#0D0E24;--surface:#16173A;--card:#1D1E48;--text:#F2F2FA;--muted:#B9BADB;--border:#272960;--border2:#3A3C7A;--band:#1B1C51;--kicker:#FF8A7D;--footer:#08091A;--sel:rgba(235,86,72,0.12)",
+  "dark": true,
+  "light": false,
+  "logo": "assets/brand/logo-white.png",
+  "foot": {
+    "style": "background: #08091A; color: #FFFFFF; border-top: 1px solid #272960; --ft: #FFFFFF; --fm: #B9BADB; --fk: #FF8A7D; --fb: rgba(255,255,255,0.1)",
+    "logo": "assets/brand/logo-white.png",
+    "iefp": "assets/funding/iefp-dark.png",
+    "pessoas": "assets/funding/pessoas2030-dark.png",
+    "pt": "assets/funding/portugal2030-dark.png",
+    "ue": "assets/funding/ue-dark.png"
+  },
+  "logoAnimStyle": "height: 38px; width: auto; display: block; filter: invert(1) hue-rotate(180deg) saturate(1.3); mix-blend-mode: screen",
+  "isPt": "true",
+  "isEn": "false",
+  "form": {
+    "name": "",
+    "email": "",
+    "site": "",
+    "desc": "",
+    "stage": null
+  },
+  "err": {
+    "name": false,
+    "email": false,
+    "site": false,
+    "desc": false
+  },
+  "stages": [
+    {
+      "label": "Só uma ideia",
+      "on": "false"
+    },
+    {
+      "label": "Protótipo ou MVP",
+      "on": "false"
+    },
+    {
+      "label": "Já tem utilizadores",
+      "on": "false"
+    }
+  ],
+  "sent": false,
+  "sentNo": true,
+  "thanks": "Obrigado!",
+  "sentText": "Recebemos a sua candidatura. Vamos analisar a ideia e entrar em contacto através de ."
+}

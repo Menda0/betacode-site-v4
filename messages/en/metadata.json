@@ -1,0 +1,30 @@
+{
+  "siteDescription": "Digital transformation and custom software development. We work with traditional businesses, tech companies and startups, from the first idea to a product running in production.",
+  "home": {
+    "title": "Betacode | Software that transforms your business",
+    "description": "Digital transformation and custom software development. We work with traditional businesses, tech companies and startups, from the first idea to a product running in production, and we keep supporting it as it grows."
+  },
+  "pricing": {
+    "title": "Price calculator | Betacode",
+    "description": "Answer three questions and we’ll show you the right service for your case and a price range."
+  },
+  "insights": {
+    "title": "Insights | Betacode",
+    "description": "What we’ve learned building products. Articles on engineering, business, startups and Betacode Ventures."
+  },
+  "ventures": {
+    "title": "Betacode Ventures | Your technical co-founder",
+    "description": "With Betacode Ventures you don’t pay for development. We take equity in the company and build the product with you."
+  },
+  "contact": {
+    "title": "Contact | Betacode",
+    "description": "Let’s talk about your project. Write to us, call us or visit us at Madan Parque, in Caparica."
+  },
+  "articleNotFound": {
+    "title": "Article not found | Betacode",
+    "description": "The article you are looking for could not be found."
+  },
+  "notFound": {
+    "title": "Page not found | Betacode"
+  }
+}

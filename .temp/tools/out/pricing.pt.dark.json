@@ -1,0 +1,382 @@
+{
+  "t": {
+    "navLabel": "Principal",
+    "navHome": "Início",
+    "navPricing": "Preços",
+    "navContact": "Contacto",
+    "langLabel": "Idioma",
+    "themeLabel": "Mudar para modo claro",
+    "kicker": "// calculadora de preços",
+    "title": "Quanto pode custar o seu projeto?",
+    "sub": "Responda a 3 perguntas rápidas. Indicamos o serviço mais adequado, com preços reais e a forma como os calculamos.",
+    "promises": [
+      "Cerca de um minuto",
+      "Preços reais, sem letra pequena",
+      "Sem compromisso"
+    ],
+    "yourAnswers": "As suas respostas:",
+    "fWhen": "Quando gostaria de começar?",
+    "whenOpts": [
+      "O quanto antes",
+      "Nos próximos 3 meses",
+      "Ainda estou a explorar"
+    ],
+    "railLabel": "Passos da calculadora",
+    "railHelp": "Prefere conversar?",
+    "railTalk": "Fale connosco diretamente",
+    "back": "Voltar",
+    "hintAuto": "Ao escolher uma opção, avança para o passo seguinte.",
+    "best": "Recomendado",
+    "bestShort": "TOP",
+    "why": "Porque recomendamos",
+    "how": "Ver equipa e taxas horárias",
+    "alsoFit": "Também pode fazer sentido",
+    "cfgLabel": "Configuração da equipa",
+    "small": "Equipa pequena",
+    "baseTeam": "Equipa base",
+    "nextHint": "Os valores são indicativos. Uma conversa curta permite confirmar o âmbito e dar-lhe uma proposta fechada.",
+    "toContact": "Pedir proposta à medida",
+    "formTitle": "Vamos transformar esta estimativa numa proposta.",
+    "formSub": "Deixe os seus dados e respondemos com uma proposta para o seu projeto. Sem compromisso.",
+    "fName": "Nome",
+    "fEmail": "E-mail",
+    "fSite": "Sítio web da empresa ou projeto",
+    "fDesc": "Fale-nos do produto",
+    "optional": "opcional",
+    "phName": "O seu nome",
+    "phDesc": "Ex.: somos uma empresa de logística a construir um portal de clientes, integrado com o nosso ERP…",
+    "eName": "Indique o seu nome.",
+    "eEmail": "Indique um e-mail válido.",
+    "eSite": "Indique um endereço válido (https://…).",
+    "privacy": "Usamos os seus dados apenas para responder a esta estimativa.",
+    "send": "Enviar pedido",
+    "yourEstimate": "// a sua estimativa",
+    "nextTitle": "O que acontece a seguir",
+    "next": [
+      {
+        "n": "1",
+        "t": "Analisamos as suas respostas e a descrição."
+      },
+      {
+        "n": "2",
+        "t": "Entramos em contacto para perceber o projeto."
+      },
+      {
+        "n": "3",
+        "t": "Recebe uma proposta à medida."
+      }
+    ],
+    "sentText": "Recebemos o seu pedido e vamos entrar em contacto consigo em breve com uma proposta à medida.",
+    "home": "Voltar à página inicial",
+    "restart": "Recomeçar",
+    "sentKicker": "// pedido enviado",
+    "reqTitle": "// o seu pedido",
+    "readWhile": "Enquanto espera",
+    "newEstimate": "Fazer nova estimativa",
+    "reads": [
+      {
+        "tag": "Produto",
+        "title": "Como construir um MVP"
+      },
+      {
+        "tag": "Startups",
+        "title": "Porquê ter um co-fundador técnico"
+      },
+      {
+        "tag": "Engenharia",
+        "title": "Modernizar sistemas legacy"
+      }
+    ],
+    "copy": "© 2026 Betacode, Inc. Todos os direitos reservados.",
+    "made": "{ feito em Portugal }",
+    "footTag": "Equipas de software dedicadas para empresas e startups.",
+    "footNav": "navegação",
+    "altEu": "Cofinanciado pela União Europeia",
+    "funding": "Projeto financiado pelo programa AVANÇAR, no âmbito do Portugal 2030, cofinanciado pelo Fundo Social Europeu Mais (FSE+)."
+  },
+  "links": {
+    "pricing": "https://www.betacode.tech/pt/pricing",
+    "ventures": "https://www.betacode.tech/pt/betacode-ventures",
+    "insights": "https://www.betacode.tech/pt/insights",
+    "contact": "https://www.betacode.tech/pt/contact"
+  },
+  "base": "https://www.betacode.tech/pt",
+  "rootStyle": "--bg:#0D0E24;--surface:#16173A;--card:#1D1E48;--text:#F2F2FA;--muted:#B9BADB;--border:#272960;--border2:#3A3C7A;--band:#1B1C51;--kicker:#FF8A7D;--footer:#08091A;--sel:rgba(235,86,72,0.12);--dot:rgba(255,255,255,0.08);--barc:#9A9CE0",
+  "dark": true,
+  "light": false,
+  "logo": "assets/brand/logo-white.png",
+  "foot": {
+    "style": "background: #08091A; color: #FFFFFF; border-top: 1px solid #272960; --ft: #FFFFFF; --fm: #B9BADB; --fk: #FF8A7D; --fb: rgba(255,255,255,0.1)",
+    "logo": "assets/brand/logo-white.png",
+    "iefp": "assets/funding/iefp-dark.png",
+    "pessoas": "assets/funding/pessoas2030-dark.png",
+    "pt": "assets/funding/portugal2030-dark.png",
+    "ue": "assets/funding/ue-dark.png"
+  },
+  "logoAnimStyle": "height: 38px; width: auto; display: block; filter: invert(1) hue-rotate(180deg) saturate(1.3); mix-blend-mode: screen",
+  "isPt": "true",
+  "isEn": "false",
+  "rail": [
+    {
+      "label": "O seu negócio",
+      "value": "Agora",
+      "cur": "step",
+      "canGo": "false",
+      "locked": false,
+      "labelColor": "var(--text)",
+      "mark": "1",
+      "lineStyle": "background: var(--border)",
+      "dotStyle": "background: #EB5648; color: #fff"
+    },
+    {
+      "label": "Contexto",
+      "value": "",
+      "cur": "false",
+      "canGo": "false",
+      "locked": true,
+      "labelColor": "var(--muted)",
+      "mark": "2",
+      "lineStyle": "background: var(--border)",
+      "dotStyle": "border: 1.5px solid var(--border2); color: var(--muted)"
+    },
+    {
+      "label": "Objetivo",
+      "value": "",
+      "cur": "false",
+      "canGo": "false",
+      "locked": true,
+      "labelColor": "var(--muted)",
+      "mark": "3",
+      "lineStyle": "background: var(--border)",
+      "dotStyle": "border: 1.5px solid var(--border2); color: var(--muted)"
+    },
+    {
+      "label": "Estimativa",
+      "value": "",
+      "cur": "false",
+      "canGo": "false",
+      "locked": true,
+      "labelColor": "var(--muted)",
+      "mark": "4",
+      "lineStyle": "background: var(--border)",
+      "dotStyle": "border: 1.5px solid var(--border2); color: var(--muted)"
+    },
+    {
+      "label": "Proposta",
+      "value": "",
+      "cur": "false",
+      "canGo": "false",
+      "locked": true,
+      "labelColor": "var(--muted)",
+      "mark": "5",
+      "lineStyle": "display: none",
+      "dotStyle": "border: 1.5px solid var(--border2); color: var(--muted)"
+    }
+  ],
+  "q": {
+    "title": "Em que fase está o seu negócio?",
+    "why": "Ajuda-nos a perceber que tipo de parceria faz mais sentido para si.",
+    "opts": [
+      {
+        "v": "startup",
+        "i": {
+          "rocket": true,
+          "building": false,
+          "yes": false,
+          "no": false,
+          "box": false,
+          "users": false,
+          "plus": false,
+          "refresh": false,
+          "wrench": false,
+          "compass": false
+        },
+        "label": "Negócio novo (startup)",
+        "desc": "Está a lançar algo novo: validar uma ideia, construir um MVP ou escalar do zero.",
+        "on": "false",
+        "span": ""
+      },
+      {
+        "v": "est",
+        "i": {
+          "rocket": false,
+          "building": true,
+          "yes": false,
+          "no": false,
+          "box": false,
+          "users": false,
+          "plus": false,
+          "refresh": false,
+          "wrench": false,
+          "compass": false
+        },
+        "label": "Negócio estabelecido",
+        "desc": "A empresa já opera, com clientes, receita ou equipas, e quer que o software apoie o negócio.",
+        "on": "false",
+        "span": ""
+      }
+    ]
+  },
+  "isQ": true,
+  "isResult": false,
+  "isContact": false,
+  "canBack": false,
+  "noBack": true,
+  "stepLabel": "Passo 1 de 5",
+  "pct": "20%",
+  "an": {
+    "founder": "fundador",
+    "yourTeam": "a sua equipa",
+    "join": "+2 profissionais",
+    "plan": "planear",
+    "build": "desenvolver",
+    "launch": "lançar",
+    "fixed": "resolvido",
+    "team": [
+      {
+        "role": "júnior",
+        "delay": "animation-delay: 0s"
+      },
+      {
+        "role": "PO",
+        "delay": "animation-delay: 0.4s"
+      }
+    ],
+    "skills": [
+      {
+        "l": "linguagens",
+        "c": "",
+        "d": ""
+      },
+      {
+        "l": "frameworks",
+        "c": "c",
+        "d": "animation-delay: .25s"
+      },
+      {
+        "l": "boas práticas",
+        "c": "",
+        "d": "animation-delay: .5s"
+      }
+    ]
+  },
+  "success": {
+    "text": "Recebemos o seu pedido. Vamos analisá-lo e entrar em contacto através de  com uma proposta à medida.",
+    "hasWhen": false,
+    "when": "",
+    "contact": " · ",
+    "steps": [
+      {
+        "mark": "✓",
+        "style": "background: #EB5648; color: #fff",
+        "weight": "700",
+        "t": "Pedido enviado",
+        "s": "Agora mesmo"
+      },
+      {
+        "mark": "2",
+        "style": "border: 1.5px solid var(--border2); color: var(--muted)",
+        "weight": "500",
+        "t": "Analisamos o seu caso",
+        "s": "Respostas, descrição e sítio web"
+      },
+      {
+        "mark": "3",
+        "style": "border: 1.5px solid var(--border2); color: var(--muted)",
+        "weight": "500",
+        "t": "Recebe uma proposta à medida",
+        "s": "Por e-mail, depois de falarmos"
+      }
+    ]
+  },
+  "sel": {
+    "name": "Equipas técnicas autogeridas",
+    "model": "projeto",
+    "short": "Uma equipa dedicada, dona da entrega",
+    "desc": "Uma equipa dedicada assume a entrega do produto: planeamento, desenvolvimento e lançamento.",
+    "price": "20.000 € – 30.000 €",
+    "priceL": "MVP · 3 meses de equipa",
+    "why": [
+      "Não precisa de gerir freelancers: a equipa trata da entrega de ponta a ponta.",
+      "Funciona como o seu departamento técnico, sem contratar internamente."
+    ],
+    "rows": [
+      {
+        "who": "Programador júnior",
+        "time": "Tempo inteiro",
+        "rate": "20 – 30 €/h"
+      },
+      {
+        "who": "Product Owner",
+        "time": "Tempo parcial",
+        "rate": "50 – 60 €/h"
+      }
+    ],
+    "figs": [
+      {
+        "label": "MVP · 3 meses de equipa",
+        "value": "20.000 € – 30.000 €"
+      },
+      {
+        "label": "Primeiro ano",
+        "value": "85.000 € – 120.000 €"
+      }
+    ],
+    "note": "Faixas baseadas nas nossas configurações de equipa habituais. O preço final depende do âmbito e dos requisitos.",
+    "isBest": true,
+    "isE": false,
+    "notE": true,
+    "inc": [],
+    "isV": false,
+    "isR": false,
+    "isF": false,
+    "isS": false,
+    "hasFigs": true,
+    "hasRows": true
+  },
+  "res": {
+    "kicker": "// a nossa recomendação",
+    "title": "Com base nas suas respostas, este é o caminho certo.",
+    "hasAlts": false,
+    "alts": [],
+    "tabsLabel": "Serviços recomendados",
+    "tabs": [],
+    "bodyMin": "auto"
+  },
+  "cfg": {
+    "small": "true",
+    "base": "false",
+    "desc": "Júnior + product owner parcial"
+  },
+  "summary": [],
+  "when": [
+    {
+      "label": "O quanto antes",
+      "on": "false"
+    },
+    {
+      "label": "Nos próximos 3 meses",
+      "on": "false"
+    },
+    {
+      "label": "Ainda estou a explorar",
+      "on": "false"
+    }
+  ],
+  "answers": [],
+  "hasAnswers": false,
+  "form": {
+    "name": "",
+    "email": "",
+    "site": "",
+    "desc": ""
+  },
+  "err": {
+    "name": false,
+    "email": false,
+    "site": false
+  },
+  "sent": false,
+  "sentNo": true,
+  "thanks": "Obrigado!"
+}

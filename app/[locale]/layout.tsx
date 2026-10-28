@@ -1,31 +1,14 @@
-import Script from "next/script";
 import { notFound } from "next/navigation";
-import { NextIntlClientProvider } from "next-intl";
+import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
-import { hasLocale } from "next-intl";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { ThemeProvider } from "../components/theme-provider";
 import { SiteHeader } from "../components/site-header";
-import { geistMono, geistSans } from "../layout";
+import { SiteFooter } from "../components/site-footer";
+import { siteFontVariables } from "../fonts";
 import { routing } from "@/i18n/routing";
-
-const themeScript = `
-(function() {
-  const key = 'betacode-theme';
-  const stored = localStorage.getItem(key);
-  const dark = stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches);
-  const root = document.documentElement;
-  if (dark) {
-    root.classList.add('dark');
-    root.classList.remove('light');
-    root.style.colorScheme = 'dark';
-  } else {
-    root.classList.remove('dark');
-    root.classList.add('light');
-    root.style.colorScheme = 'light';
-  }
-})();
-`;
+import { getCopy, type ChromeCopy } from "@/lib/copy";
+import "../styles/site.css";
 
 type Props = {
   children: React.ReactNode;
@@ -45,19 +28,29 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   setRequestLocale(locale);
   const messages = await getMessages();
+  const chrome = await getCopy<ChromeCopy>(locale, "chrome");
 
   return (
-    <html lang={locale} className="scroll-smooth" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} overflow-x-hidden antialiased`}
-      >
-        <Script id="theme-init" strategy="beforeInteractive">
-          {themeScript}
-        </Script>
+    <html lang={locale} suppressHydrationWarning>
+      <head>
+        <link rel="stylesheet" href="/betacode-intro/betacode-intro.css?v=1.1.0" />
+        {/* 'always' plays on every full document load (direct visit or refresh); client-side
+            navigation never re-runs these head scripts, so moving between pages skips it. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.BetacodeIntroConfig={lang:${JSON.stringify(locale)},mode:'always'};`,
+          }}
+        />
+        <script src="/betacode-intro/betacode-intro.min.js?v=1.1.0" />
+      </head>
+      <body className={siteFontVariables} suppressHydrationWarning>
         <NextIntlClientProvider messages={messages}>
           <ThemeProvider>
-            <SiteHeader />
-            {children}
+            <div className="bc-root">
+              <SiteHeader />
+              {children}
+              <SiteFooter copy={chrome} />
+            </div>
           </ThemeProvider>
         </NextIntlClientProvider>
         <GoogleAnalytics gaId="G-TTP70YDXYR" />

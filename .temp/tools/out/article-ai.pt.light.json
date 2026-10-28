@@ -1,0 +1,359 @@
+{
+  "t": {
+    "navLabel": "Principal",
+    "navHome": "Início",
+    "navPricing": "Preços",
+    "navContact": "Contacto",
+    "langLabel": "Idioma",
+    "themeLabel": "Mudar para modo escuro",
+    "crumbs": "Navegação estrutural",
+    "toc": "Neste artigo",
+    "keyTake": "Em resumo",
+    "writtenBy": "escrito por",
+    "related": "Continue a ler",
+    "all": "Todos os insights",
+    "read": "Ler artigo",
+    "estimate": "Estimar preço",
+    "footTag": "Equipas de software dedicadas para empresas e startups.",
+    "footNav": "navegação",
+    "altEu": "Cofinanciado pela União Europeia",
+    "funding": "Projeto financiado pelo programa AVANÇAR, no âmbito do Portugal 2030, cofinanciado pelo Fundo Social Europeu Mais (FSE+).",
+    "copy": "© 2026 Betacode, Inc. Todos os direitos reservados.",
+    "made": "{ feito em Portugal }"
+  },
+  "links": {
+    "pricing": "https://www.betacode.tech/pt/pricing",
+    "ventures": "https://www.betacode.tech/pt/betacode-ventures",
+    "insights": "https://www.betacode.tech/pt/insights",
+    "contact": "https://www.betacode.tech/pt/contact"
+  },
+  "base": "https://www.betacode.tech/pt",
+  "rootStyle": "--bg:#FFFFFF;--surface:#F4F4F8;--card:#FFFFFF;--text:#1B1C51;--muted:#4A4B7A;--border:#E6E6EF;--border2:#C9CAE0;--band:#1B1C51;--kicker:#B83324",
+  "dark": false,
+  "light": true,
+  "a": {
+    "title": "Como a IA pode ajudar a criar o seu próximo projeto",
+    "lead": "A IA não substitui developers, multiplica-os. Trata do trabalho repetitivo para que a equipa passe o tempo a resolver os problemas dos clientes.",
+    "take": [
+      "O maior ganho é autonomia, não só velocidade.",
+      "Construir barato aumenta a tentação de construir o que ninguém pediu.",
+      "A IA amplifica boas e más decisões por igual."
+    ],
+    "date": "15 set 2025",
+    "mins": "8 min",
+    "cat": "Engenharia",
+    "glyph": "AI",
+    "code": "ai.multiply(devs);\n// não substitui",
+    "coverStyle": "background-color: #1B1C51"
+  },
+  "au": {
+    "name": "Marco Mendão",
+    "role": "Co-Founder & CTO",
+    "av": "../assets/avatars/marco-mendao.jpg",
+    "pos": "center",
+    "bio": "Co-fundador e CTO da Betacode. Escreve sobre arquitetura, engenharia de produto e como usar a tecnologia certa para entregar mais depressa."
+  },
+  "blocks": [
+    {
+      "t": "p",
+      "x": "Construir um MVP costumava exigir semanas de trabalho repetitivo: configurar o projeto, endpoints CRUD, esquemas, testes e documentação. Hoje a IA faz muito disso em horas. O objetivo não é ter menos pessoas, é que cada pessoa renda mais.",
+      "items": [],
+      "isH": false,
+      "isP": true,
+      "isUl": false,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s0",
+      "n": "",
+      "h": ""
+    },
+    {
+      "t": "h",
+      "x": "Developers mais autónomos",
+      "items": [],
+      "isH": true,
+      "isP": false,
+      "isUl": false,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s1",
+      "n": "01",
+      "h": ""
+    },
+    {
+      "t": "ul",
+      "items": [
+        "Gerar scaffolding, endpoints, modelos e configuração em minutos.",
+        "Depurar mais depressa e perceber código desconhecido.",
+        "Escrever testes ao mesmo tempo que as funcionalidades.",
+        "Fazer refactors repetitivos sem esforço.",
+        "Explorar terreno novo, como um developer de frontend a prototipar lógica de backend."
+      ],
+      "isH": false,
+      "isP": false,
+      "isUl": true,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s1",
+      "n": "",
+      "h": ""
+    },
+    {
+      "t": "p",
+      "x": "O resultado são equipas mais pequenas a produzir o que antes exigia equipas maiores.",
+      "items": [],
+      "isH": false,
+      "isP": true,
+      "isUl": false,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s1",
+      "n": "",
+      "h": ""
+    },
+    {
+      "t": "h",
+      "x": "Foco nos clientes, não no software",
+      "items": [],
+      "isH": true,
+      "isP": false,
+      "isUl": false,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s2",
+      "n": "02",
+      "h": ""
+    },
+    {
+      "t": "p",
+      "x": "Quando construir fica barato, a tentação de construir o que ninguém pediu aumenta. Por isso aplicamos o lean startup ao desenvolvimento: as horas poupadas vão para entrevistas, testes com protótipos e decisões de produto.",
+      "items": [],
+      "isH": false,
+      "isP": true,
+      "isUl": false,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s2",
+      "n": "",
+      "h": ""
+    },
+    {
+      "t": "ul",
+      "items": [
+        "Comece pelo problema do utilizador, não pela lista de funcionalidades.",
+        "Valide antes de automatizar.",
+        "Meça resultados, não output.",
+        "Corte funcionalidades cedo: manter o que não é preciso continua a custar."
+      ],
+      "isH": false,
+      "isP": false,
+      "isUl": true,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s2",
+      "n": "",
+      "h": ""
+    },
+    {
+      "t": "h",
+      "x": "Menos esforço nos detalhes, mais no essencial",
+      "items": [],
+      "isH": true,
+      "isP": false,
+      "isUl": false,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s3",
+      "n": "03",
+      "h": ""
+    },
+    {
+      "t": "p",
+      "x": "A IA trata bem da configuração do projeto, de CRUD normal, documentação, componentes de interface, migrações e integrações standard. As pessoas continuam donas da arquitetura, da direção do produto, da experiência do utilizador, do debugging em produção e da segurança.",
+      "items": [],
+      "isH": false,
+      "isP": true,
+      "isUl": false,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s3",
+      "n": "",
+      "h": ""
+    },
+    {
+      "t": "note",
+      "h": "Na prática",
+      "x": "Uma equipa que gastava 60% do tempo em infraestrutura e código repetitivo pode baixar para 20%, e dedicar o resto às funcionalidades e à experiência.",
+      "items": [],
+      "isH": false,
+      "isP": false,
+      "isUl": false,
+      "isOl": false,
+      "isQ": false,
+      "isNote": true,
+      "id": "s3",
+      "n": ""
+    },
+    {
+      "t": "h",
+      "x": "A IA num MVP de três meses",
+      "items": [],
+      "isH": true,
+      "isP": false,
+      "isUl": false,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s4",
+      "n": "04",
+      "h": ""
+    },
+    {
+      "t": "ol",
+      "items": [
+        "Semanas 1–2: setup, scaffolding da arquitetura e primeiros endpoints.",
+        "Semanas 3–6: a equipa foca-se no fluxo principal; a IA trata de testes, docs e integrações.",
+        "Semanas 7–8: ajuda na correção de bugs e refactoring.",
+        "Semanas 9–12: o lançamento foca-se em onboarding e feedback."
+      ],
+      "isH": false,
+      "isP": false,
+      "isUl": false,
+      "isOl": true,
+      "isQ": false,
+      "isNote": false,
+      "id": "s4",
+      "n": "",
+      "h": ""
+    },
+    {
+      "t": "note",
+      "h": "Exemplo: Coach ID",
+      "x": "A Coach ID foi lançada com um assistente virtual de IA usado todos os dias pelos treinadores. Sem estas ferramentas, teria exigido uma equipa de machine learning dedicada e meses extra.",
+      "items": [],
+      "isH": false,
+      "isP": false,
+      "isUl": false,
+      "isOl": false,
+      "isQ": false,
+      "isNote": true,
+      "id": "s4",
+      "n": ""
+    },
+    {
+      "t": "h",
+      "x": "O que a IA não muda",
+      "items": [],
+      "isH": true,
+      "isP": false,
+      "isUl": false,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s5",
+      "n": "05",
+      "h": ""
+    },
+    {
+      "t": "p",
+      "x": "A IA é um multiplicador, não uma varinha mágica. Uma equipa a construir o produto errado mais depressa está pior do que uma a construir o certo devagar. Continua a ser preciso um plano de produto, developers experientes a rever e decidir a arquitetura, conversas diretas com utilizadores e a disciplina de lançar e medir.",
+      "items": [],
+      "isH": false,
+      "isP": true,
+      "isUl": false,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s5",
+      "n": "",
+      "h": ""
+    },
+    {
+      "t": "q",
+      "x": "A IA torna-nos mais rápidos. O método torna-nos focados. A stack torna-nos consistentes.",
+      "items": [],
+      "isH": false,
+      "isP": false,
+      "isUl": false,
+      "isOl": false,
+      "isQ": true,
+      "isNote": false,
+      "id": "s5",
+      "n": "",
+      "h": ""
+    }
+  ],
+  "toc": [
+    {
+      "href": "#s1",
+      "n": "01",
+      "x": "Developers mais autónomos"
+    },
+    {
+      "href": "#s2",
+      "n": "02",
+      "x": "Foco nos clientes, não no software"
+    },
+    {
+      "href": "#s3",
+      "n": "03",
+      "x": "Menos esforço nos detalhes, mais no essencial"
+    },
+    {
+      "href": "#s4",
+      "n": "04",
+      "x": "A IA num MVP de três meses"
+    },
+    {
+      "href": "#s5",
+      "n": "05",
+      "x": "O que a IA não muda"
+    }
+  ],
+  "related": [
+    {
+      "href": "ArtAgentic.dc.html",
+      "title": "A era agêntica do software",
+      "cat": "Engenharia",
+      "mins": "9 min",
+      "code": "agent.plan(task)\n  .run()\n  .review();",
+      "coverStyle": "background-color: #1B1C51"
+    },
+    {
+      "href": "ArtStack.dc.html",
+      "title": "Construir aplicações com JavaScript/TypeScript como base",
+      "cat": "Engenharia",
+      "mins": "9 min",
+      "code": "const stack = [\n  \"next\", \"nest\", \"ts\"\n];",
+      "coverStyle": "background-color: #1B1C51"
+    }
+  ],
+  "cta": {
+    "k": "// próximo passo",
+    "h": "Quer aplicar isto ao seu projeto?",
+    "p": "Conte-nos o que está a construir e falamos sobre a melhor abordagem.",
+    "btn": "Fale connosco",
+    "href": "https://www.betacode.tech/pt/contact"
+  },
+  "logo": "../assets/brand/logo.png",
+  "logoAnimStyle": "height: 38px; width: auto; display: block; mix-blend-mode: multiply",
+  "foot": {
+    "style": "background: #F4F4F8; color: #1B1C51; border-top: 1px solid #E6E6EF; --ft: #1B1C51; --fm: #4A4B7A; --fk: #B83324; --fb: #E2E2EC",
+    "logo": "../assets/brand/logo.png",
+    "iefp": "../assets/funding/iefp-light.png",
+    "pessoas": "../assets/funding/pessoas2030-light.png",
+    "pt": "../assets/funding/portugal2030-light.png",
+    "ue": "../assets/funding/ue-light.png"
+  },
+  "isPt": "true",
+  "isEn": "false"
+}

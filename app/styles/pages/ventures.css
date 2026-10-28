@@ -1,0 +1,65 @@
+/* Scoped port of the prototype stylesheet (betacode-ventures.html). */
+
+:where(.pg-ventures) a{color:#1B1C51}:where(.pg-ventures) a:hover{color:#D8402F}
+.site:where(.pg-ventures){font-family:var(--font-inter),system-ui,sans-serif;background:var(--bg);color:var(--text);min-width:0}
+.site:where(.pg-ventures) a{color:var(--text)}
+:where(.pg-ventures) .mono{font-family:var(--font-jetbrains),ui-monospace,monospace}
+:where(.pg-ventures) .mono[aria-hidden="true"]{white-space:nowrap;flex:none}
+:where(.pg-ventures) .disp{font-family:var(--font-montserrat),system-ui,sans-serif}
+:where(.pg-ventures) .navlink{color:var(--text) !important;text-decoration:none;font-size:15px;font-weight:500;padding:12px 2px;border-bottom:2px solid transparent}
+:where(.pg-ventures) .navlink:hover{border-bottom-color:#EB5648}
+:where(.pg-ventures) .navlink.on{color:#D8402F !important;border-bottom-color:#EB5648}
+:where(.pg-ventures) .flink{color:var(--fm) !important;text-decoration:none;font-size:15px;padding:8px 0}
+:where(.pg-ventures) .flink:hover{color:var(--ft) !important}
+:where(.pg-ventures) .seg{display:flex;background:var(--surface);border-radius:12px;padding:3px;gap:2px}
+:where(.pg-ventures) .seg button{appearance:none;border:0;cursor:pointer;background:transparent;color:var(--muted);font:600 13px/1 var(--font-jetbrains),monospace;min-width:44px;min-height:38px;border-radius:9px}
+:where(.pg-ventures) .seg button[aria-pressed="true"]{background:var(--card);color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+:where(.pg-ventures) .iconbtn{appearance:none;cursor:pointer;border:0;background:var(--surface);color:var(--text);width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center}
+:where(.pg-ventures) .btn-coral{appearance:none;border:0;cursor:pointer;background:#D8402F;color:#FFFFFF !important;text-decoration:none;font:600 15px/1 var(--font-inter),sans-serif;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 24px}
+:where(.pg-ventures) .btn-coral:hover{background:#BF3424}
+:where(.pg-ventures) .btn-line{appearance:none;cursor:pointer;background:transparent;border:1.5px solid currentColor;text-decoration:none;font:600 15px/1 var(--font-inter),sans-serif;border-radius:12px;display:inline-flex;align-items:center;gap:8px;min-height:52px;padding:0 22px}
+:where(.pg-ventures) .btn-ghost{appearance:none;cursor:pointer;background:transparent;border:1.5px solid var(--border2);color:var(--text) !important;text-decoration:none;font:600 14px/1 var(--font-inter),sans-serif;border-radius:12px;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px}
+:where(.pg-ventures) .chip{font:500 12px/1 var(--font-jetbrains),monospace;padding:7px 11px;border-radius:999px;background:var(--surface);color:var(--text);white-space:nowrap}
+:where(.pg-ventures) .pill{appearance:none;cursor:pointer;background:var(--card);border:1.5px solid var(--border2);color:var(--text);font:500 14px/1 var(--font-inter),sans-serif;min-height:42px;padding:0 16px;border-radius:999px}
+:where(.pg-ventures) .pill[aria-pressed="true"]{border-color:#EB5648;background:var(--sel)}
+:where(.pg-ventures) .field{display:flex;flex-direction:column;gap:6px}
+:where(.pg-ventures) .field label{font-weight:600;font-size:14px}
+:where(.pg-ventures) .field input,:where(.pg-ventures) .field textarea{font:400 15px/1.4 var(--font-inter),sans-serif;color:var(--text);background:var(--card);border:1.5px solid var(--border2);border-radius:12px;padding:12px 14px;min-height:48px;box-sizing:border-box;width:100%}
+:where(.pg-ventures) .field input:focus,:where(.pg-ventures) .field textarea:focus{outline:2px solid #EB5648;outline-offset:1px;border-color:transparent}
+:where(.pg-ventures) .err{color:#C0362B;font-size:13px}
+:where(.pg-ventures) .logo-static{display:none}
+/* hero animation: 0 -> 100% */
+:where(.pg-ventures) .hz-ring{transform:rotate(-90deg);transform-origin:50% 50%}
+:where(.pg-ventures) .hz-arc{stroke-dasharray:0 660;animation:pg-ventures-hz-arc 7s ease-in-out infinite}
+@keyframes pg-ventures-hz-arc{0%,6%{stroke-dasharray:0 660}30%{stroke-dasharray:220 660}55%{stroke-dasharray:440 660}80%,94%{stroke-dasharray:660 660}100%{stroke-dasharray:0 660}}
+:where(.pg-ventures) .hz-st{opacity:.35;transition:opacity .3s}
+:where(.pg-ventures) .hz-st.s1{animation:pg-ventures-hz-s1 7s linear infinite}:where(.pg-ventures) .hz-st.s2{animation:pg-ventures-hz-s2 7s linear infinite}:where(.pg-ventures) .hz-st.s3{animation:pg-ventures-hz-s3 7s linear infinite}
+@keyframes pg-ventures-hz-s1{0%,6%{opacity:.35}8%,96%{opacity:1}100%{opacity:.35}}
+@keyframes pg-ventures-hz-s2{0%,32%{opacity:.35}34%,96%{opacity:1}100%{opacity:.35}}
+@keyframes pg-ventures-hz-s3{0%,57%{opacity:.35}59%,96%{opacity:1}100%{opacity:.35}}
+:where(.pg-ventures) .hz-pct span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0}
+:where(.pg-ventures) .hz-pct .p0{animation:pg-ventures-hz-p0 7s linear infinite}:where(.pg-ventures) .hz-pct .p1{animation:pg-ventures-hz-p1 7s linear infinite}:where(.pg-ventures) .hz-pct .p2{animation:pg-ventures-hz-p2 7s linear infinite}:where(.pg-ventures) .hz-pct .p3{animation:pg-ventures-hz-p3 7s linear infinite}
+@keyframes pg-ventures-hz-p0{0%,20%{opacity:1}21%,100%{opacity:0}}
+@keyframes pg-ventures-hz-p1{0%,20%{opacity:0}21%,45%{opacity:1}46%,100%{opacity:0}}
+@keyframes pg-ventures-hz-p2{0%,45%{opacity:0}46%,70%{opacity:1}71%,100%{opacity:0}}
+@keyframes pg-ventures-hz-p3{0%,70%{opacity:0}71%,98%{opacity:1}99%,100%{opacity:0}}
+/* partnership handshake */
+:where(.pg-ventures) .hs-l{animation:pg-ventures-hs-l 5.5s cubic-bezier(.3,.7,.2,1) infinite}:where(.pg-ventures) .hs-r{animation:pg-ventures-hs-r 5.5s cubic-bezier(.3,.7,.2,1) infinite}
+@keyframes pg-ventures-hs-l{0%,4%{transform:translateY(-30px);opacity:0}38%,88%{transform:none;opacity:1}100%{opacity:0}}
+@keyframes pg-ventures-hs-r{0%,4%{transform:translateY(30px);opacity:0}38%,88%{transform:none;opacity:1}100%{opacity:0}}
+:where(.pg-ventures) .hs-c{animation:pg-ventures-hs-c 5.5s ease-out infinite;transform:scale(0)}
+@keyframes pg-ventures-hs-c{0%,38%{transform:scale(0)}46%{transform:scale(1.18)}52%{transform:scale(.95)}58%,88%{transform:scale(1)}100%{transform:scale(0)}}
+:where(.pg-ventures) .hs-ring{position:absolute;inset:0;border-radius:50%;border:2px solid #EB5648;opacity:0;animation:pg-ventures-hs-ring 5.5s ease-out infinite}
+@keyframes pg-ventures-hs-ring{0%,42%{transform:scale(.8);opacity:0}44%{opacity:.9}64%,100%{transform:scale(2);opacity:0}}
+:where(.pg-ventures) .ok-wrap{position:relative;width:80px;height:80px}
+:where(.pg-ventures) .ok-disc{position:absolute;inset:0;border-radius:50%;background:#EB5648;color:#fff;display:flex;align-items:center;justify-content:center;animation:pg-ventures-ok-pop .5s cubic-bezier(.3,1.5,.5,1) both}
+:where(.pg-ventures) .ok-path{stroke-dasharray:24;stroke-dashoffset:24;animation:pg-ventures-ok-draw .45s .35s ease-out forwards}
+@keyframes pg-ventures-ok-pop{from{transform:scale(0)}to{transform:scale(1)}}
+@keyframes pg-ventures-ok-draw{to{stroke-dashoffset:0}}
+:where(.pg-ventures) .step-card{background:var(--card);border:1px solid var(--border);border-radius:22px;padding:28px;display:flex;flex-direction:column;gap:14px;position:relative}
+@media (prefers-reduced-motion:reduce){:where(.pg-ventures) .logo-anim{display:none !important}:where(.pg-ventures) .logo-static{display:block}:where(.pg-ventures) .hz-arc{animation:none;stroke-dasharray:660 660}:where(.pg-ventures) .hz-st{animation:none !important;opacity:1}:where(.pg-ventures) .hz-pct span{animation:none !important}:where(.pg-ventures) .hz-pct .p3{opacity:1}:where(.pg-ventures) .hs-l,:where(.pg-ventures) .hs-r,:where(.pg-ventures) .hs-c{animation:none;transform:none;opacity:1}:where(.pg-ventures) .hs-ring{display:none}:where(.pg-ventures) .ok-disc{animation:none}:where(.pg-ventures) .ok-path{animation:none;stroke-dashoffset:0}}
+@media (max-width:760px){:where(.pg-ventures) .hide-sm{display:none !important}:where(.pg-ventures) .hero-h{font-size:42px !important}:where(.pg-ventures) .sec-h{font-size:32px !important}}
+
+
+/* Stage pills are role="radio": selected state is driven by aria-checked. */
+:where(.pg-ventures) .pill[aria-checked="true"]{border-color:#EB5648;background:var(--sel)}

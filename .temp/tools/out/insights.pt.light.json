@@ -1,0 +1,193 @@
+{
+  "t": {
+    "navLabel": "Principal",
+    "navHome": "Início",
+    "navPricing": "Preços",
+    "navContact": "Contacto",
+    "langLabel": "Idioma",
+    "themeLabel": "Mudar para modo escuro",
+    "title": "Da equipa Betacode.",
+    "sub": "Conselhos práticos sobre construir software, lançar startups e escolher a tecnologia certa para o seu negócio.",
+    "byLine1": "Escrito por Pedro Gorrão, CEO",
+    "byLine2": "e Marco Mendão, CTO",
+    "filterLabel": "Filtrar por tema",
+    "searchLabel": "Pesquisar artigos",
+    "searchPh": "Pesquisar artigos…",
+    "featured": "Em destaque",
+    "read": "Ler artigo",
+    "emptyTitle": "Nenhum artigo encontrado",
+    "emptyText": "Experimente outro tema ou outra pesquisa.",
+    "clear": "Ver todos os artigos",
+    "venTitle": "Tem a visão mas precisa de um co-fundador técnico?",
+    "venText": "Com a Betacode Ventures não paga o desenvolvimento: entramos no capital e construímos o produto consigo.",
+    "venCta": "Explorar Betacode Ventures",
+    "venCase": "Ver o primeiro projeto",
+    "nextStep": "próximo passo",
+    "ctaTitle": "Pronto para construir algo que faça a diferença?",
+    "ctaText": "Conte-nos o seu projeto, ou veja primeiro quanto pode custar.",
+    "ctaPrice": "Estimar preço",
+    "footTag": "Equipas de software dedicadas para empresas e startups.",
+    "footNav": "navegação",
+    "altEu": "Cofinanciado pela União Europeia",
+    "funding": "Projeto financiado pelo programa AVANÇAR, no âmbito do Portugal 2030, cofinanciado pelo Fundo Social Europeu Mais (FSE+).",
+    "copy": "© 2026 Betacode, Inc. Todos os direitos reservados.",
+    "made": "{ feito em Portugal }"
+  },
+  "links": {
+    "pricing": "https://www.betacode.tech/pt/pricing",
+    "ventures": "https://www.betacode.tech/pt/betacode-ventures",
+    "insights": "https://www.betacode.tech/pt/insights",
+    "contact": "https://www.betacode.tech/pt/contact"
+  },
+  "base": "https://www.betacode.tech/pt",
+  "rootStyle": "--bg:#FFFFFF;--surface:#F4F4F8;--card:#FFFFFF;--text:#1B1C51;--muted:#4A4B7A;--border:#E6E6EF;--border2:#C9CAE0;--band:#1B1C51;--kicker:#B83324",
+  "dark": false,
+  "light": true,
+  "logo": "assets/brand/logo.png",
+  "logoAnimStyle": "height: 38px; width: auto; display: block; mix-blend-mode: multiply",
+  "foot": {
+    "style": "background: #F4F4F8; color: #1B1C51; border-top: 1px solid #E6E6EF; --ft: #1B1C51; --fm: #4A4B7A; --fk: #B83324; --fb: #E2E2EC",
+    "logo": "assets/brand/logo.png",
+    "iefp": "assets/funding/iefp-light.png",
+    "pessoas": "assets/funding/pessoas2030-light.png",
+    "pt": "assets/funding/portugal2030-light.png",
+    "ue": "assets/funding/ue-light.png"
+  },
+  "isPt": "true",
+  "isEn": "false",
+  "cats": [
+    {
+      "id": "all",
+      "label": "Todos",
+      "count": 7,
+      "on": "true"
+    },
+    {
+      "id": "eng",
+      "label": "Engenharia",
+      "count": 4,
+      "on": "false"
+    },
+    {
+      "id": "biz",
+      "label": "Negócio",
+      "count": 1,
+      "on": "false"
+    },
+    {
+      "id": "start",
+      "label": "Startups",
+      "count": 1,
+      "on": "false"
+    },
+    {
+      "id": "ven",
+      "label": "Ventures",
+      "count": 1,
+      "on": "false"
+    }
+  ],
+  "q": "",
+  "hasFeat": true,
+  "feat": {
+    "href": "ArtAgentic.dc.html",
+    "cat": "Engenharia",
+    "mins": "9 min",
+    "title": "A era agêntica do software",
+    "ex": "Os agentes já leem o repositório, escrevem código, correm testes e abrem pull requests. O que muda no trabalho dos developers, como os usamos em segurança e como entram nos produtos dos nossos clientes.",
+    "glyph": ">_",
+    "code": "agent.plan(task)\n  .run()\n  .review();",
+    "coverStyle": "background-color: #1B1C51",
+    "author": "Marco Mendão",
+    "role": "Co-Founder & CTO",
+    "av": "assets/avatars/marco-mendao.jpg",
+    "avPos": "center"
+  },
+  "rest": [
+    {
+      "href": "ArtCofounder.dc.html",
+      "cat": "Ventures",
+      "mins": "8 min",
+      "title": "Porque as startups precisam de um co-fundador técnico",
+      "ex": "Tem a visão e o conhecimento do domínio, mas sem alguém que assuma a tecnologia acaba a gerir fornecedores. O que faz um co-fundador técnico e como a Betacode Ventures pode sê-lo.",
+      "glyph": "{B}",
+      "code": "founders.push(\"tech\");\n// visão + execução",
+      "coverStyle": "background-color: #13143A",
+      "author": "Pedro Gorrão",
+      "role": "Co-Founder & CEO",
+      "av": "assets/avatars/pedro-gorrao.jpg",
+      "avPos": "60% 20%"
+    },
+    {
+      "href": "ArtStack.dc.html",
+      "cat": "Engenharia",
+      "mins": "9 min",
+      "title": "Construir aplicações com JavaScript/TypeScript como base",
+      "ex": "Porque usamos JS/TS em todas as camadas: deploys rápidos com Next.js e NestJS, equipas full-stack e acesso a um grande mercado de talento.",
+      "glyph": "TS",
+      "code": "const stack = [\n  \"next\", \"nest\", \"ts\"\n];",
+      "coverStyle": "background-color: #1B1C51",
+      "author": "Marco Mendão",
+      "role": "Co-Founder & CTO",
+      "av": "assets/avatars/marco-mendao.jpg",
+      "avPos": "center"
+    },
+    {
+      "href": "ArtLean.dc.html",
+      "cat": "Negócio",
+      "mins": "10 min",
+      "title": "Porque o Lean Startup é a pedra de Rosetta da Betacode",
+      "ex": "Do nosso primeiro produto, o Wishmood, a cada projeto com clientes: como o ciclo construir, medir, aprender se tornou a nossa forma de trabalhar.",
+      "glyph": "↻",
+      "code": "build()\n  .measure()\n  .learn();",
+      "coverStyle": "background-color: #D8402F",
+      "author": "Pedro Gorrão",
+      "role": "Co-Founder & CEO",
+      "av": "assets/avatars/pedro-gorrao.jpg",
+      "avPos": "60% 20%"
+    },
+    {
+      "href": "ArtLegacy.dc.html",
+      "cat": "Engenharia",
+      "mins": "11 min",
+      "title": "Como transformar software legacy num produto moderno",
+      "ex": "Um guia prático para empresas presas a código e infraestrutura desatualizados: dividir o monólito, entregar por partes e migrar sem parar o negócio.",
+      "glyph": "⟳",
+      "code": "monolith\n  .split()\n  .migrate();",
+      "coverStyle": "background-color: #1B1C51",
+      "author": "Marco Mendão",
+      "role": "Co-Founder & CTO",
+      "av": "assets/avatars/marco-mendao.jpg",
+      "avPos": "center"
+    },
+    {
+      "href": "ArtMvp.dc.html",
+      "cat": "Startups",
+      "mins": "10 min",
+      "title": "Como construir um MVP em 3 meses",
+      "ex": "Porque três meses é o ponto certo para ir da ideia ao produto em produção, com um roadmap baseado em princípios lean.",
+      "glyph": "▲",
+      "code": "idea → mvp → live",
+      "coverStyle": "background-color: #2A2C6E",
+      "author": "Pedro Gorrão",
+      "role": "Co-Founder & CEO",
+      "av": "assets/avatars/pedro-gorrao.jpg",
+      "avPos": "60% 20%"
+    },
+    {
+      "href": "ArtAi.dc.html",
+      "cat": "Engenharia",
+      "mins": "8 min",
+      "title": "Como a IA pode ajudar a criar o seu próximo projeto",
+      "ex": "A IA não substitui developers, multiplica-os. Como a usamos para lançar MVPs mais depressa e gastar menos tempo no que não importa.",
+      "glyph": "AI",
+      "code": "ai.multiply(devs);\n// não substitui",
+      "coverStyle": "background-color: #1B1C51",
+      "author": "Marco Mendão",
+      "role": "Co-Founder & CTO",
+      "av": "assets/avatars/marco-mendao.jpg",
+      "avPos": "center"
+    }
+  ],
+  "empty": false
+}

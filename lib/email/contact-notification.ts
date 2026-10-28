@@ -14,7 +14,7 @@ function formatAnswerSummary(contact: ContactRecord) {
     .join("")}</ul>`
 }
 
-function escapeHtml(value: string) {
+export function escapeHtml(value: string) {
   return value
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
@@ -71,6 +71,11 @@ function buildEmailHtml(contact: ContactRecord) {
         ? `<p><strong>Phone:</strong> ${escapeHtml(contact.phone)}</p>`
         : ""
     }
+    ${contact.company ? `<p><strong>Company:</strong> ${escapeHtml(contact.company)}</p>` : ""}
+    ${contact.topic ? `<p><strong>Topic:</strong> ${escapeHtml(contact.topic)}</p>` : ""}
+    ${contact.stage ? `<p><strong>Startup stage:</strong> ${escapeHtml(contact.stage)}</p>` : ""}
+    ${contact.when ? `<p><strong>When to start:</strong> ${escapeHtml(contact.when)}</p>` : ""}
+    ${contact.selectedService ? `<p><strong>Selected service:</strong> ${escapeHtml(contact.selectedService)}</p>` : ""}
     ${
       contact.website
         ? `<p><strong>Website:</strong> <a href="${escapeHtml(contact.website)}">${escapeHtml(contact.website)}</a></p>`

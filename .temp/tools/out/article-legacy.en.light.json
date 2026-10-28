@@ -1,0 +1,398 @@
+{
+  "t": {
+    "navLabel": "Main",
+    "navHome": "Home",
+    "navPricing": "Pricing",
+    "navContact": "Contact",
+    "langLabel": "Language",
+    "themeLabel": "Switch to dark mode",
+    "crumbs": "Breadcrumb",
+    "toc": "In this article",
+    "keyTake": "Key takeaways",
+    "writtenBy": "written by",
+    "related": "Keep reading",
+    "all": "All insights",
+    "read": "Read article",
+    "estimate": "Estimate price",
+    "footTag": "Dedicated software teams for businesses and startups.",
+    "footNav": "navigation",
+    "altEu": "Co-funded by the European Union",
+    "funding": "Project funded by the AVANÇAR programme under Portugal 2030, co-financed by the European Social Fund Plus (ESF+).",
+    "copy": "© 2026 Betacode, Inc. All rights reserved.",
+    "made": "{ made in Portugal }"
+  },
+  "links": {
+    "pricing": "https://www.betacode.tech/en/pricing",
+    "ventures": "https://www.betacode.tech/en/betacode-ventures",
+    "insights": "https://www.betacode.tech/en/insights",
+    "contact": "https://www.betacode.tech/en/contact"
+  },
+  "base": "https://www.betacode.tech/en",
+  "rootStyle": "--bg:#FFFFFF;--surface:#F4F4F8;--card:#FFFFFF;--text:#1B1C51;--muted:#4A4B7A;--border:#E6E6EF;--border2:#C9CAE0;--band:#1B1C51;--kicker:#B83324",
+  "dark": false,
+  "light": true,
+  "a": {
+    "title": "How to transform legacy software into a modern product",
+    "lead": "Nobody chooses legacy software. It builds up until every feature takes longer, every deploy feels risky and hiring developers gets harder. The good news: you don’t need a full rewrite.",
+    "take": [
+      "Avoid big-bang rewrites: evolve the product in slices.",
+      "Use infrastructure as the bridge between old and new.",
+      "Each slice should reach production in 4 to 8 weeks."
+    ],
+    "date": "Jun 15, 2026",
+    "mins": "11 min",
+    "cat": "Engineering",
+    "glyph": "⟳",
+    "code": "monolith\n  .split()\n  .migrate();",
+    "coverStyle": "background-color: #1B1C51"
+  },
+  "au": {
+    "name": "Marco Mendão",
+    "role": "Co-Founder & CTO",
+    "av": "../assets/avatars/marco-mendao.jpg",
+    "pos": "center",
+    "bio": "Co-founder and CTO at Betacode. Writes about architecture, product engineering and using the right technology to ship faster."
+  },
+  "blocks": [
+    {
+      "t": "h",
+      "x": "When software and infrastructure are both behind",
+      "items": [],
+      "isH": true,
+      "isP": false,
+      "isUl": false,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s1",
+      "n": "01",
+      "h": ""
+    },
+    {
+      "t": "p",
+      "x": "Legacy is not just old code. It is the whole stack:",
+      "items": [],
+      "isH": false,
+      "isP": true,
+      "isUl": false,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s1",
+      "n": "",
+      "h": ""
+    },
+    {
+      "t": "ul",
+      "items": [
+        "Application: monoliths, outdated dependencies, no tests, tightly coupled features.",
+        "Data: old schemas, missing indexes, business logic buried in stored procedures.",
+        "Infrastructure: bare metal or early cloud, manual deploys, no staging that mirrors production.",
+        "Operations: teams firefighting and quarterly releases because each one is feared."
+      ],
+      "isH": false,
+      "isP": false,
+      "isUl": true,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s1",
+      "n": "",
+      "h": ""
+    },
+    {
+      "t": "h",
+      "x": "Breaking the monolith into manageable parts",
+      "items": [],
+      "isH": true,
+      "isP": false,
+      "isUl": false,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s2",
+      "n": "02",
+      "h": ""
+    },
+    {
+      "t": "p",
+      "x": "The monolith is not bad in itself. The problem is shared tables and implicit dependencies that make any change risky. The goal is not microservices for their own sake. It is finding bounded contexts: billing, user management, reporting or the workflow customers use every day.",
+      "items": [],
+      "isH": false,
+      "isP": true,
+      "isUl": false,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s2",
+      "n": "",
+      "h": ""
+    },
+    {
+      "t": "ol",
+      "items": [
+        "Map the system: what exists, who uses it and where it hurts most.",
+        "Find the natural seams: modules with few dependencies.",
+        "Extract one slice at a time, starting with something valuable but isolated.",
+        "Define clear interfaces: APIs, events or shared contracts.",
+        "Keep the monolith running while new services take on responsibilities."
+      ],
+      "isH": false,
+      "isP": false,
+      "isUl": false,
+      "isOl": true,
+      "isQ": false,
+      "isNote": false,
+      "id": "s2",
+      "n": "",
+      "h": ""
+    },
+    {
+      "t": "h",
+      "x": "Rebuilding features is a product decision",
+      "items": [],
+      "isH": true,
+      "isP": false,
+      "isUl": false,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s3",
+      "n": "03",
+      "h": ""
+    },
+    {
+      "t": "p",
+      "x": "Rebuilding a feature is not translating code. It is the chance to question every screen, field and step. Talk to users and support before coding, simplify workflows that piled up \"just one more field\", write tests for the new version and run both systems in parallel until you trust parity.",
+      "items": [],
+      "isH": false,
+      "isP": true,
+      "isUl": false,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s3",
+      "n": "",
+      "h": ""
+    },
+    {
+      "t": "note",
+      "h": "Example: Coach ID",
+      "x": "Eight years of market feedback were condensed into a ground-up rebuild that kept what worked and left behind what didn’t.",
+      "items": [],
+      "isH": false,
+      "isP": false,
+      "isUl": false,
+      "isOl": false,
+      "isQ": false,
+      "isNote": true,
+      "id": "s3",
+      "n": ""
+    },
+    {
+      "t": "p",
+      "x": "Choose technology the team can run in production, not the newest: a PWA instead of a desktop-only client, managed databases instead of servers nobody maintains, automated deploys instead of FTP uploads.",
+      "items": [],
+      "isH": false,
+      "isP": true,
+      "isUl": false,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s3",
+      "n": "",
+      "h": ""
+    },
+    {
+      "t": "h",
+      "x": "Infrastructure as the bridge",
+      "items": [],
+      "isH": true,
+      "isP": false,
+      "isUl": false,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s4",
+      "n": "04",
+      "h": ""
+    },
+    {
+      "t": "p",
+      "x": "Both systems will live side by side for months. Infrastructure makes that invisible to users:",
+      "items": [],
+      "isH": false,
+      "isP": true,
+      "isUl": false,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s4",
+      "n": "",
+      "h": ""
+    },
+    {
+      "t": "ul",
+      "items": [
+        "Reverse proxies (nginx, Traefik, Cloudflare) route traffic to old or new by URL, feature flag or segment.",
+        "Load balancers allow zero-downtime deploys and instant rollback.",
+        "API gateways centralise authentication, rate limiting and routing.",
+        "Message queues let both systems talk without tight coupling.",
+        "Feature flags release to a share of users before full cutover."
+      ],
+      "isH": false,
+      "isP": false,
+      "isUl": true,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s4",
+      "n": "",
+      "h": ""
+    },
+    {
+      "t": "q",
+      "x": "This is the strangler fig pattern: the new system gradually wraps and replaces the old one, branch by branch, without users changing URL.",
+      "items": [],
+      "isH": false,
+      "isP": false,
+      "isUl": false,
+      "isOl": false,
+      "isQ": true,
+      "isNote": false,
+      "id": "s4",
+      "n": "",
+      "h": ""
+    },
+    {
+      "t": "h",
+      "x": "Divide and conquer, but stay lean",
+      "items": [],
+      "isH": true,
+      "isP": false,
+      "isUl": false,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s5",
+      "n": "05",
+      "h": ""
+    },
+    {
+      "t": "ol",
+      "items": [
+        "Pick the highest-impact, lowest-risk slice.",
+        "Set a hard deadline: 4 to 8 weeks until the first slice is live.",
+        "Keep a small, dedicated squad.",
+        "Measure outcomes: deploy frequency, incidents, satisfaction and time to the next feature.",
+        "Celebrate each cutover as real progress."
+      ],
+      "isH": false,
+      "isP": false,
+      "isUl": false,
+      "isOl": true,
+      "isQ": false,
+      "isNote": false,
+      "id": "s5",
+      "n": "",
+      "h": ""
+    },
+    {
+      "t": "h",
+      "x": "Where to start",
+      "items": [],
+      "isH": true,
+      "isP": false,
+      "isUl": false,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s6",
+      "n": "06",
+      "h": ""
+    },
+    {
+      "t": "p",
+      "x": "Start with an honest audit and find the biggest cost: slow releases, developer turnover, customer complaints or infrastructure bills. Then pick the pain that maps to an isolable product slice and build the bridge.",
+      "items": [],
+      "isH": false,
+      "isP": true,
+      "isUl": false,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s6",
+      "n": "",
+      "h": ""
+    }
+  ],
+  "toc": [
+    {
+      "href": "#s1",
+      "n": "01",
+      "x": "When software and infrastructure are both behind"
+    },
+    {
+      "href": "#s2",
+      "n": "02",
+      "x": "Breaking the monolith into manageable parts"
+    },
+    {
+      "href": "#s3",
+      "n": "03",
+      "x": "Rebuilding features is a product decision"
+    },
+    {
+      "href": "#s4",
+      "n": "04",
+      "x": "Infrastructure as the bridge"
+    },
+    {
+      "href": "#s5",
+      "n": "05",
+      "x": "Divide and conquer, but stay lean"
+    },
+    {
+      "href": "#s6",
+      "n": "06",
+      "x": "Where to start"
+    }
+  ],
+  "related": [
+    {
+      "href": "ArtStack.dc.html",
+      "title": "Building applications with JavaScript/TypeScript as the backbone",
+      "cat": "Engineering",
+      "mins": "9 min",
+      "code": "const stack = [\n  \"next\", \"nest\", \"ts\"\n];",
+      "coverStyle": "background-color: #1B1C51"
+    },
+    {
+      "href": "ArtLean.dc.html",
+      "title": "Why Lean Startup is Betacode’s Rosetta Stone",
+      "cat": "Business",
+      "mins": "10 min",
+      "code": "build()\n  .measure()\n  .learn();",
+      "coverStyle": "background-color: #D8402F"
+    }
+  ],
+  "cta": {
+    "k": "// next step",
+    "h": "Want to apply this to your project?",
+    "p": "Tell us what you are building and we will talk about the best approach.",
+    "btn": "Talk to us",
+    "href": "https://www.betacode.tech/en/contact"
+  },
+  "logo": "../assets/brand/logo.png",
+  "logoAnimStyle": "height: 38px; width: auto; display: block; mix-blend-mode: multiply",
+  "foot": {
+    "style": "background: #F4F4F8; color: #1B1C51; border-top: 1px solid #E6E6EF; --ft: #1B1C51; --fm: #4A4B7A; --fk: #B83324; --fb: #E2E2EC",
+    "logo": "../assets/brand/logo.png",
+    "iefp": "../assets/funding/iefp-light.png",
+    "pessoas": "../assets/funding/pessoas2030-light.png",
+    "pt": "../assets/funding/portugal2030-light.png",
+    "ue": "../assets/funding/ue-light.png"
+  },
+  "isPt": "false",
+  "isEn": "true"
+}

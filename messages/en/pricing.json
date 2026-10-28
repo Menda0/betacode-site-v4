@@ -1,0 +1,244 @@
+{
+  "intro": {
+    "kicker": "// pricing calculator",
+    "title": "What could your project cost?",
+    "sub": "Answer 3 quick questions. We point you to the right service, with real prices and how we calculate them.",
+    "promises": ["About a minute", "Real prices, no fine print", "No commitment"]
+  },
+  "ui": {
+    "railLabel": "Calculator steps",
+    "railHelp": "Prefer to talk it through?",
+    "railTalk": "Contact us directly",
+    "yourAnswers": "Your answers:",
+    "back": "Back",
+    "stepLabel": "Step {n} of {total}",
+    "railContext": "Context",
+    "railEstimate": "Estimate",
+    "railProposal": "Proposal"
+  },
+  "questions": {
+    "biz": {
+      "rail": "Your business",
+      "title": "What stage is your business at?",
+      "why": "It helps us understand which kind of partnership makes most sense for you.",
+      "opts": {
+        "startup": { "label": "New business (startup)", "desc": "You are launching something new: validating an idea, building an MVP or scaling from zero." },
+        "est": { "label": "Established business", "desc": "You already operate, with customers, revenue or teams, and want software to support the business." }
+      }
+    },
+    "funding": {
+      "rail": "Funding",
+      "title": "Do you have funding for the product?",
+      "why": "It shapes the pace, the team size and whether an equity partnership makes sense.",
+      "opts": {
+        "yes": { "label": "Yes", "desc": "You have raised capital or have a dedicated product budget." },
+        "no": { "label": "Not yet", "desc": "You are bootstrapping or still raising." }
+      }
+    },
+    "techTeam": {
+      "rail": "Tech team",
+      "title": "Do you have an in-house tech team?",
+      "why": "So we know whether to join your team or take on the whole technical side.",
+      "opts": {
+        "yes": { "label": "Yes", "desc": "You have Software Developers or a tech lead." },
+        "no": { "label": "No", "desc": "Technology is not in-house yet." }
+      }
+    },
+    "goalStartup": {
+      "rail": "Goal",
+      "title": "What is your main goal?",
+      "why": "Pick the closest option. You can always change it later.",
+      "opts": {
+        "mvp": { "label": "Build an MVP", "desc": "A first working version to validate with real users." },
+        "team": { "label": "Build a tech team", "desc": "A dedicated team that owns the product long term." },
+        "support": { "label": "Technical support", "desc": "Scoped help: integrations, bugs, scripts or maintenance." },
+        "unsure": { "label": "Not sure, help me decide", "desc": "We recommend based on your previous answers." }
+      }
+    },
+    "goalEst": {
+      "rail": "Goal",
+      "title": "What is your main goal?",
+      "why": "Pick the closest option. You can always change it later.",
+      "opts": {
+        "new": { "label": "Build a new product", "desc": "SaaS platform, client portal, internal tool or app." },
+        "modern": { "label": "Modernise a legacy app", "desc": "Improve, refactor or migrate without a risky rewrite." },
+        "aug": { "label": "Augment the team (outsourcing)", "desc": "More people on your roadmap and processes." },
+        "support": { "label": "Technical support", "desc": "Scoped help: integrations, bugs, scripts or maintenance." },
+        "unsure": { "label": "Not sure, help me decide", "desc": "We recommend based on your previous answers." }
+      }
+    }
+  },
+  "summary": {
+    "funded": "Funded",
+    "notFunded": "Not funded",
+    "hasTeam": "Has tech team",
+    "noTeam": "No tech team"
+  },
+  "result": {
+    "kicker": "// our recommendation",
+    "titleMany": "Based on your answers, we suggest {n} paths.",
+    "titleOne": "Based on your answers, this is the right path.",
+    "tabsLabel": "Recommended services",
+    "best": "Recommended",
+    "bestShort": "TOP",
+    "why": "Why we recommend it",
+    "how": "See the team and hourly rates",
+    "cfgLabel": "Team setup",
+    "small": "Small team",
+    "baseTeam": "Core team",
+    "cfgSmallDesc": "Junior + part-time product owner",
+    "cfgBaseDesc": "Junior + mid/senior + product owner",
+    "nextHint": "Estimates are indicative. A short conversation lets us confirm scope and give you a closed proposal.",
+    "toContact": "Get a tailored proposal",
+    "toContactShort": "Get a proposal"
+  },
+  "anim": {
+    "founder": "founder",
+    "deal": "in exchange for equity",
+    "yourTeam": "your team",
+    "join": "+2 professionals",
+    "plan": "plan",
+    "build": "build",
+    "launch": "launch",
+    "fixed": "fixed",
+    "junior": "junior",
+    "midSenior": "mid/senior",
+    "languages": "languages",
+    "frameworks": "frameworks",
+    "bestPractice": "best practice"
+  },
+  "rates": {
+    "jr": { "who": "Junior developer", "time": "Full time", "rate": "20 – 30 €/h" },
+    "mid": { "who": "Mid/senior developer", "time": "Full time", "rate": "30 – 50 €/h" },
+    "po": { "who": "Product Owner", "time": "Part time", "rate": "50 – 60 €/h" },
+    "tr": { "who": "Senior trainer", "time": "Part time", "rate": "50 – 60 €/h" }
+  },
+  "services": {
+    "V": {
+      "name": "Betacode Ventures",
+      "model": "equity",
+      "desc": "Technical co-founder partnership, from validation to launch and scale.",
+      "price": "in exchange for equity",
+      "priceL": "development cost",
+      "why": "You do not pay for development: we invest our team in exchange for equity.",
+      "whyUnfunded": "A good fit while you are not yet funded.",
+      "whyOther": "You get a tech partner with as much at stake as you.",
+      "inc": ["Technical co-founder", "Validation to launch", "Dedicated team"],
+      "figs": [
+        { "label": "Development cost", "value": "no development cost" },
+        { "label": "How you pay", "value": "equity exchange" }
+      ],
+      "rows": [{ "who": "Betacode team", "time": "Validation to launch", "rate": "equity" }],
+      "note": "The model is adapted to your stage and product."
+    },
+    "E": {
+      "name": "Self-managed tech teams",
+      "model": "project",
+      "desc": "A dedicated team owns product delivery: planning, development and launch.",
+      "priceSmall": "€20,000 – €30,000",
+      "priceBase": "€30,000 – €45,000",
+      "priceL": "MVP · 3 months of team",
+      "why": "No freelancers to manage: the team handles delivery end to end.",
+      "whyNoTeam": "Works as your tech department, without hiring in-house.",
+      "whyOther": "You choose the team size to match the scope.",
+      "figsSmall": [
+        { "label": "MVP · 3 months of team", "value": "€20,000 – €30,000" },
+        { "label": "First year", "value": "€85,000 – €120,000" }
+      ],
+      "figsBase": [
+        { "label": "MVP · 3 months of team", "value": "€30,000 – €45,000" },
+        { "label": "First year", "value": "€120,000 – €180,000" }
+      ],
+      "note": "Ranges for our usual teams. The final price depends on scope."
+    },
+    "R": {
+      "name": "Team augmentation",
+      "model": "hourly",
+      "desc": "Hourly developers and product owners, integrated into your team and processes.",
+      "price": "20 – 60 €/h",
+      "priceL": "depending on profile",
+      "why": "You only pay for the hours you need and adjust capacity at any time.",
+      "whyTeam": "Builds on the tech team and processes you already have.",
+      "whyNoTeam": "It can later grow into an in-house team.",
+      "inc": ["Junior to senior", "In your processes", "Flexible capacity"],
+      "figs": [
+        { "label": "Hourly rate", "value": "20 – 60 €/h" },
+        { "label": "Typical project (reference)", "value": "€85,000 – €180,000" }
+      ],
+      "note": "You only pay for hours worked."
+    },
+    "F": {
+      "name": "Training",
+      "model": "hourly",
+      "desc": "Sessions on languages, frameworks and best practices, one-to-one or for groups.",
+      "price": "50 – 60 €/h",
+      "priceL": "senior trainer",
+      "why": ["Your team learns new technologies from people who use them daily.", "It can be combined with another service."],
+      "inc": ["Languages", "Frameworks", "Best practices"],
+      "figs": [
+        { "label": "Hourly rate", "value": "50 – 60 €/h" },
+        { "label": "Format", "value": "One-to-one or group" }
+      ],
+      "note": "Programme tailored to your team level."
+    },
+    "S": {
+      "name": "Support",
+      "model": "hourly",
+      "desc": "Integrations, bug fixes, scripts and maintenance on existing systems.",
+      "price": "50 – 60 €/h",
+      "priceL": "part time",
+      "why": ["Scoped work with no long-term team commitment.", "Ideal for something you already have that needs fixing."],
+      "inc": ["Integrations", "Bug fixes", "Scripts & maintenance"],
+      "figs": [
+        { "label": "Hourly rate", "value": "50 – 60 €/h" },
+        { "label": "Arrangement", "value": "Part time" }
+      ],
+      "rows": [{ "who": "Technical support", "time": "Part time", "rate": "50 – 60 €/h" }],
+      "note": "No long-term commitment."
+    }
+  },
+  "form": {
+    "formTitle": "Let’s turn this estimate into a proposal.",
+    "formSub": "Leave your details and we will get back to you with a proposal for your project. No commitment.",
+    "fName": "Name",
+    "fEmail": "Email",
+    "fSite": "Company or project website",
+    "fWhen": "When would you like to start?",
+    "fDesc": "Tell us about the product",
+    "optional": "optional",
+    "phName": "Your name",
+    "phEmail": "nome@empresa.com",
+    "phSite": "https://",
+    "phDesc": "E.g.: we are a logistics company building a client portal, integrated with our ERP…",
+    "whenOpts": ["As soon as possible", "In the next 3 months", "Just exploring"],
+    "eName": "Please enter your name.",
+    "eEmail": "Please enter a valid email.",
+    "eSite": "Please enter a valid web address (https://…).",
+    "privacy": "We only use your details to reply about this estimate.",
+    "send": "Send request",
+    "yourEstimate": "// your estimate",
+    "nextTitle": "What happens next",
+    "next": ["We review your answers and description.", "We get in touch to understand the project.", "You receive a tailored proposal."]
+  },
+  "success": {
+    "sentKicker": "// request sent",
+    "thanks": "Thank you",
+    "textBefore": "We received your request. We will review it and get in touch at ",
+    "textAfter": " with a tailored proposal.",
+    "reqTitle": "// your request",
+    "nextTitle": "What happens next",
+    "steps": [
+      { "t": "Request sent", "s": "Just now" },
+      { "t": "We review your case", "s": "Answers, description and website" },
+      { "t": "You get a tailored proposal", "s": "By email, after we talk" }
+    ],
+    "readWhile": "While you wait",
+    "reads": [
+      { "tag": "Product", "title": "How to build an MVP" },
+      { "tag": "Startups", "title": "Why have a technical co-founder" },
+      { "tag": "Engineering", "title": "Modernising legacy systems" }
+    ],
+    "home": "Back to home",
+    "newEstimate": "New estimate"
+  }
+}

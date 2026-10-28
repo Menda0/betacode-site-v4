@@ -1,0 +1,71 @@
+---
+slug: how-to-transform-legacy-software-into-a-modern-product
+title: "Como transformar software legacy num produto moderno"
+lead: "Ninguém escolhe ter software legacy. Vai-se acumulando até cada funcionalidade demorar mais, cada deploy parecer arriscado e contratar developers ficar mais difícil. A boa notícia: não precisa de uma reescrita total."
+excerpt: "Um guia prático para empresas presas a código e infraestrutura desatualizados: dividir o monólito, entregar por partes e migrar sem parar o negócio."
+category: eng
+author: marco
+date: 2026-06-15
+readingTime: 11
+takeaways:
+  - "Evite reescritas big-bang: evolua o produto por partes."
+  - "Use a infraestrutura como ponte entre o sistema antigo e o novo."
+  - "Cada fatia deve chegar a produção em 4 a 8 semanas."
+glyph: "⟳"
+coverCode: "monolith\n  .split()\n  .migrate();"
+related:
+  - building-applications-with-javascript-typescript-as-the-backbone
+  - why-lean-startup-is-the-rosetta-stone-of-betacode
+---
+## Quando o software e a infraestrutura estão ambos atrasados
+
+Legacy não é só código antigo. É a stack toda:
+
+- Aplicação: monólitos, dependências desatualizadas, sem testes, funcionalidades muito acopladas.
+- Dados: esquemas antigos, índices em falta, lógica de negócio escondida em stored procedures.
+- Infraestrutura: servidores físicos ou cloud antiga, deploys manuais, sem staging igual a produção.
+- Operações: equipas a apagar fogos e releases trimestrais porque cada uma mete medo.
+
+## Partir o monólito em partes geríveis
+
+O monólito não é mau por si. O problema são as tabelas partilhadas e as dependências implícitas que tornam qualquer mudança arriscada. O objetivo não é ter microserviços por ter. É identificar contextos delimitados: faturação, gestão de utilizadores, relatórios ou o fluxo que os clientes usam todos os dias.
+
+1. Mapear o sistema: o que existe, quem o usa e onde dói mais.
+2. Encontrar as costuras naturais: módulos com poucas dependências.
+3. Extrair uma fatia de cada vez, começando por algo valioso mas isolado.
+4. Definir interfaces claras: APIs, eventos ou contratos partilhados.
+5. Manter o monólito a funcionar enquanto os novos serviços assumem responsabilidades.
+
+## Refazer funcionalidades é uma decisão de produto
+
+Reconstruir uma funcionalidade não é traduzir código. É a oportunidade de questionar cada ecrã, campo e passo. Fale com utilizadores e com o suporte antes de programar, simplifique fluxos que acumularam "só mais um campo", escreva testes para a nova versão e corra os dois sistemas em paralelo até confiar na paridade.
+
+<Note title="Exemplo: Evolve RH">
+O software da Evolve RH já existia, mas a gestão dos envios de recibos de vencimento tinha lacunas. Encontrámos um módulo claro no software antigo, isolámo-lo e reescrevemo-lo: resolvemos o problema e acrescentámos novas valências à funcionalidade.
+</Note>
+
+Escolha tecnologia que a equipa consiga operar em produção, não a mais recente: uma PWA em vez de um cliente só para desktop, bases de dados geridas em vez de servidores que ninguém mantém, deploys automáticos em vez de uploads por FTP.
+
+## A infraestrutura como ponte
+
+Os dois sistemas vão conviver durante meses. A infraestrutura torna isso invisível para os utilizadores:
+
+- Reverse proxies (nginx, Traefik, Cloudflare) encaminham o tráfego para o sistema antigo ou novo por URL, feature flag ou segmento.
+- Load balancers permitem deploys sem downtime e rollback imediato.
+- API gateways centralizam autenticação, rate limiting e routing.
+- Filas de mensagens deixam os dois sistemas falar sem acoplamento.
+- Feature flags libertam para uma percentagem de utilizadores antes da mudança total.
+
+> É o padrão strangler fig: o sistema novo vai envolvendo e substituindo o antigo, ramo a ramo, sem que o utilizador mude de URL.
+
+## Dividir para conquistar, mas manter-se lean
+
+1. Escolha a fatia de maior impacto e menor risco.
+2. Defina um prazo firme: 4 a 8 semanas até a primeira fatia estar em produção.
+3. Mantenha uma equipa pequena e dedicada.
+4. Meça resultados: frequência de deploy, incidentes, satisfação e tempo até à próxima funcionalidade.
+5. Celebre cada migração como progresso real.
+
+## Por onde começar
+
+Comece por uma auditoria honesta e identifique o maior custo: releases lentas, rotação de developers, queixas dos clientes ou faturas de infraestrutura. Depois escolha a dor que corresponde a uma fatia isolável do produto e construa a ponte.

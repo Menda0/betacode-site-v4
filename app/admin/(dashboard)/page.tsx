@@ -2,8 +2,8 @@ import { getContactModel } from "@/lib/models/contact"
 import { normalizeContactSource } from "@/lib/contact-source"
 import { ContactsDataTable, type ContactRow } from "@/components/admin/contacts-data-table"
 import { ContactsSectionCards } from "@/components/admin/contacts-section-cards"
-import type { OutcomeId } from "@/lib/pricing-calculator"
-import type { AnswerSummaryItem } from "@/lib/pricing-calculator"
+import type { OutcomeId } from "@/lib/types/contact"
+import type { AnswerSummaryItem } from "@/lib/types/contact"
 
 export const dynamic = "force-dynamic"
 
@@ -16,8 +16,13 @@ export default async function AdminDashboardPage() {
     name: contact.name,
     email: contact.email,
     website: contact.website,
-    phone: contact.phone,
-    message: contact.message,
+    phone: contact.phone ?? undefined,
+    company: contact.company ?? undefined,
+    message: contact.message ?? undefined,
+    topic: contact.topic ?? undefined,
+    stage: contact.stage ?? undefined,
+    when: contact.when ?? undefined,
+    selectedService: contact.selectedService ?? undefined,
     source: normalizeContactSource(contact.source),
     locale: contact.locale,
     outcomes: contact.outcomes as OutcomeId[],

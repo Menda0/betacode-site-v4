@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Betacode — Insights</title>
+<link rel="icon" href="assets/brand/mark.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#1B1C51}a:hover{color:#D8402F}
+.site{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);min-width:0}
+.site a{color:var(--text)}
+.mono{font-family:'JetBrains Mono',ui-monospace,monospace}
+.mono[aria-hidden="true"]{white-space:nowrap;flex:none}
+.disp{font-family:'Montserrat',system-ui,sans-serif}
+.navlink{color:var(--text) !important;text-decoration:none;font-size:15px;font-weight:500;padding:12px 2px;border-bottom:2px solid transparent}
+.navlink:hover{border-bottom-color:#EB5648}
+.navlink.on{color:#D8402F !important;border-bottom-color:#EB5648}
+.flink{color:var(--fm) !important;text-decoration:none;font-size:15px;padding:8px 0}
+.flink:hover{color:var(--ft) !important}
+.seg{display:flex;background:var(--surface);border-radius:12px;padding:3px;gap:2px}
+.seg button{appearance:none;border:0;cursor:pointer;background:transparent;color:var(--muted);font:600 13px/1 'JetBrains Mono',monospace;min-width:44px;min-height:38px;border-radius:9px}
+.seg button[aria-pressed="true"]{background:var(--card);color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.iconbtn{appearance:none;cursor:pointer;border:0;background:var(--surface);color:var(--text);width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center}
+.btn-coral{appearance:none;border:0;cursor:pointer;background:#D8402F;color:#FFFFFF !important;text-decoration:none;font:600 15px/1 'Inter',sans-serif;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 24px}
+.btn-coral:hover{background:#BF3424}
+.btn-line{appearance:none;cursor:pointer;background:transparent;border:1.5px solid currentColor;text-decoration:none;font:600 15px/1 'Inter',sans-serif;border-radius:12px;display:inline-flex;align-items:center;gap:8px;min-height:52px;padding:0 22px}
+.filter{appearance:none;cursor:pointer;background:var(--card);border:1.5px solid var(--border);color:var(--text);font:600 14px/1 'Inter',sans-serif;min-height:44px;padding:0 16px;border-radius:999px;display:inline-flex;align-items:center;gap:8px}
+.filter:hover{border-color:var(--border2)}
+.filter[aria-pressed="true"]{background:var(--text);border-color:var(--text);color:var(--bg)}
+.filter .n{font:500 11px/1 'JetBrains Mono',monospace;opacity:.6}
+.search{display:flex;align-items:center;gap:10px;background:var(--card);border:1.5px solid var(--border);border-radius:999px;padding:0 16px;min-height:44px;flex:0 1 300px;box-sizing:border-box}
+.search:focus-within{border-color:#EB5648}
+.search input{border:0;outline:0;background:transparent;color:var(--text);font:400 15px/1 'Inter',sans-serif;width:100%;min-height:40px}
+.card{text-decoration:none;display:flex;flex-direction:column;background:var(--card);border:1px solid var(--border);border-radius:22px;overflow:hidden;transition:transform .2s, box-shadow .2s, border-color .2s}
+.card:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(27,28,81,.12);border-color:var(--border2)}
+.card:hover .go{color:#EB5648}
+.card:hover .cover-code{transform:translateX(6px)}
+.cover{position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:22px;box-sizing:border-box;background-image:radial-gradient(rgba(255,255,255,.08) 1.2px,transparent 1.6px);background-size:16px 16px}
+.cover-code{font:500 15px/1.6 'JetBrains Mono',monospace;color:#fff;transition:transform .3s;white-space:pre}
+.chip{font:500 12px/1 'JetBrains Mono',monospace;padding:7px 11px;border-radius:999px;background:var(--surface);color:var(--text);white-space:nowrap}
+.logo-static{display:none}
+@media (prefers-reduced-motion:reduce){.logo-anim{display:none !important}.logo-static{display:block}.card,.cover-code{transition:none}}
+@media (max-width:760px){.hide-sm{display:none !important}.hero-h{font-size:42px !important}.sec-h{font-size:30px !important}}
+</style>
+<style>html,body{margin:0}#root{min-height:100vh}</style>
+</head>
+<body>
+<div id="root"></div>
+<template id="dc-tpl">
+<div class="site" style="{{rootStyle}}">
+
+  <!-- NAV -->
+  <header style="position: sticky; top: 0; z-index: 10; background: var(--bg); border-bottom: 1px solid var(--border)">
+    <nav aria-label="{{t.navLabel}}" style="max-width: 1240px; margin: 0 auto; padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap">
+      <a href="{{base}}" aria-label="Betacode" style="display: flex; align-items: center; min-height: 44px">
+        <img class="logo-anim" src="assets/brand/logo-animated.gif" alt="Betacode" style="{{logoAnimStyle}}">
+        <img class="logo-static" src="{{logo}}" alt="Betacode" style="height: 34px; width: auto">
+      </a>
+      <div style="display: flex; align-items: center; gap: 28px; flex-wrap: wrap">
+        <a class="navlink" href="{{base}}">{{t.navHome}}</a>
+        <a class="navlink" href="{{links.pricing}}">{{t.navPricing}}</a>
+        <a class="navlink" href="{{links.ventures}}">Betacode Ventures</a>
+        <a class="navlink on" href="{{links.insights}}" aria-current="page">Insights</a>
+      </div>
+      <div style="display: flex; align-items: center; gap: 10px">
+        <div class="seg" role="group" aria-label="{{t.langLabel}}">
+          <button aria-pressed="{{isPt}}" onClick="{{setPt}}">PT</button>
+          <button aria-pressed="{{isEn}}" onClick="{{setEn}}">EN</button>
+        </div>
+        <button class="iconbtn" aria-label="{{t.themeLabel}}" onClick="{{toggleTheme}}">
+          <sc-if value="{{dark}}" hint-placeholder-val="{{ false }}">
+            <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+          </sc-if>
+          <sc-if value="{{light}}" hint-placeholder-val="{{ true }}">
+            <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>
+          </sc-if>
+        </button>
+        <a class="btn-coral" href="{{links.contact}}" style="min-height: 44px; padding: 0 20px">{{t.navContact}}</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section style="max-width: 1240px; margin: 0 auto; padding: 72px 24px 40px; display: flex; flex-wrap: wrap; gap: 28px 56px; align-items: flex-end; justify-content: space-between">
+    <div style="display: flex; flex-direction: column; gap: 16px; max-width: 720px">
+      <span class="mono" style="font-size: 13px; color: var(--kicker)">// insights</span>
+      <h1 class="disp hero-h" style="margin: 0; font-size: 60px; line-height: 1.04; font-weight: 800; letter-spacing: -0.035em">{{t.title}}</h1>
+      <p style="margin: 0; font-size: 19px; line-height: 1.6; color: var(--muted)">{{t.sub}}</p>
+    </div>
+    <div style="display: flex; align-items: center; gap: 14px">
+      <div style="display: flex" aria-hidden="true">
+        <img src="assets/avatars/pedro-gorrao.jpg" alt="" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; object-position: 60% 20%; border: 3px solid var(--bg); display: block">
+        <img src="assets/avatars/marco-mendao.jpg" alt="" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 3px solid var(--bg); margin-left: -14px; display: block">
+      </div>
+      <span style="font-size: 14px; line-height: 1.45; color: var(--muted)">{{t.byLine1}}<br>{{t.byLine2}}</span>
+    </div>
+  </section>
+
+  <!-- FILTERS -->
+  <section aria-label="{{t.filterLabel}}" style="max-width: 1240px; margin: 0 auto; padding: 0 24px 28px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between">
+    <div role="group" aria-label="{{t.filterLabel}}" style="display: flex; flex-wrap: wrap; gap: 8px">
+      <sc-for list="{{cats}}" as="c" hint-placeholder-count="5">
+        <button class="filter" aria-pressed="{{c.on}}" onClick="{{c.pick}}">{{c.label}} <span class="n">{{c.count}}</span></button>
+      </sc-for>
+    </div>
+    <label class="search">
+      <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="color: var(--muted); flex: none"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg>
+      <span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">{{t.searchLabel}}</span>
+      <input type="search" value="{{q}}" onInput="{{onQ}}" placeholder="{{t.searchPh}}">
+    </label>
+  </section>
+
+  <!-- ARTICLES -->
+  <section aria-live="polite" style="max-width: 1240px; margin: 0 auto; padding: 0 24px 96px; display: flex; flex-direction: column; gap: 18px">
+
+    <sc-if value="{{hasFeat}}" hint-placeholder-val="{{ true }}">
+      <a class="card" href="{{feat.href}}" style="flex-direction: row; flex-wrap: wrap">
+        <div class="cover" style="{{feat.coverStyle}}; flex: 1 1 420px; min-height: 320px">
+          <span aria-hidden="true" class="mono" style="position: absolute; right: -10px; top: -40px; font-size: 260px; line-height: 1; font-weight: 700; color: rgba(255,255,255,0.07)">{{feat.glyph}}</span>
+          <span class="cover-code" aria-hidden="true" style="font-size: 18px">{{feat.code}}</span>
+        </div>
+        <div style="flex: 1 1 420px; min-width: 0; padding: 36px; box-sizing: border-box; display: flex; flex-direction: column; gap: 16px; justify-content: center">
+          <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center">
+            <span class="chip" style="background: #EB5648; color: #13143A; font-weight: 700">{{t.featured}}</span>
+            <span class="chip">{{feat.cat}}</span>
+            <span class="mono" style="font-size: 12px; color: var(--muted)">{{feat.mins}}</span>
+          </div>
+          <h2 class="disp sec-h" style="margin: 0; font-size: 36px; line-height: 1.12; font-weight: 800; letter-spacing: -0.02em">{{feat.title}}</h2>
+          <p style="margin: 0; font-size: 17px; line-height: 1.6; color: var(--muted)">{{feat.ex}}</p>
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding-top: 6px">
+            <span style="display: flex; align-items: center; gap: 10px">
+              <img src="{{feat.av}}" alt="" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; object-position: {{feat.avPos}}; display: block">
+              <span style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 600">{{feat.author}}</span><span style="font-size: 12px; color: var(--muted)">{{feat.role}}</span></span>
+            </span>
+            <span class="go" style="font-weight: 700; font-size: 15px; transition: color .2s">{{t.read}} →</span>
+          </div>
+        </div>
+      </a>
+    </sc-if>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 18px">
+      <sc-for list="{{rest}}" as="a" hint-placeholder-count="5">
+        <a class="card" href="{{a.href}}">
+          <div class="cover" style="{{a.coverStyle}}; height: 170px">
+            <span aria-hidden="true" class="mono" style="position: absolute; right: -6px; top: -30px; font-size: 160px; line-height: 1; font-weight: 700; color: rgba(255,255,255,0.07)">{{a.glyph}}</span>
+            <span class="cover-code" aria-hidden="true">{{a.code}}</span>
+          </div>
+          <div style="padding: 24px; display: flex; flex-direction: column; gap: 12px; flex: 1">
+            <div style="display: flex; gap: 8px; align-items: center; justify-content: space-between">
+              <span class="chip">{{a.cat}}</span>
+              <span class="mono" style="font-size: 12px; color: var(--muted)">{{a.mins}}</span>
+            </div>
+            <h3 class="disp" style="margin: 0; font-size: 21px; line-height: 1.22; font-weight: 800; letter-spacing: -0.01em">{{a.title}}</h3>
+            <p style="margin: 0; font-size: 14px; line-height: 1.55; color: var(--muted); flex: 1">{{a.ex}}</p>
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; border-top: 1px solid var(--border); padding-top: 14px; margin-top: 4px">
+              <span style="display: flex; align-items: center; gap: 10px">
+                <img src="{{a.av}}" alt="" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover; object-position: {{a.avPos}}; display: block">
+                <span style="font-size: 13px; font-weight: 600">{{a.author}}</span>
+              </span>
+              <span class="go" style="font-weight: 700; font-size: 14px; transition: color .2s">{{t.read}} →</span>
+            </div>
+          </div>
+        </a>
+      </sc-for>
+    </div>
+
+    <sc-if value="{{empty}}" hint-placeholder-val="{{ false }}">
+      <div style="border: 1.5px dashed var(--border2); border-radius: 22px; padding: 48px 24px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px">
+        <span class="mono" aria-hidden="true" style="font-size: 28px; color: #EB5648; font-weight: 700">{ }</span>
+        <span class="disp" style="font-size: 20px; font-weight: 800">{{t.emptyTitle}}</span>
+        <span style="font-size: 15px; color: var(--muted)">{{t.emptyText}}</span>
+        <button class="filter" onClick="{{clear}}">{{t.clear}}</button>
+      </div>
+    </sc-if>
+  </section>
+
+  <!-- CTAs -->
+  <section style="max-width: 1240px; margin: 0 auto; padding: 0 24px 104px; display: flex; flex-wrap: wrap; gap: 18px">
+    <div style="flex: 1 1 440px; min-width: 0; background: var(--band); color: #fff; border-radius: 26px; padding: 40px; box-sizing: border-box; display: flex; flex-direction: column; gap: 16px; align-items: flex-start">
+      <span class="mono" style="font-size: 13px; color: #FF8A7D">// betacode ventures</span>
+      <h2 class="disp" style="margin: 0; font-size: 30px; line-height: 1.12; font-weight: 800; letter-spacing: -0.02em">{{t.venTitle}}</h2>
+      <p style="margin: 0; font-size: 16px; line-height: 1.6; color: #C9CAE6">{{t.venText}}</p>
+      <div style="display: flex; gap: 10px; flex-wrap: wrap; padding-top: 4px">
+        <a class="btn-coral" href="{{links.ventures}}">{{t.venCta}} <span aria-hidden="true">→</span></a>
+        <a class="btn-line" href="{{links.ventures}}" style="color: #fff">{{t.venCase}}</a>
+      </div>
+    </div>
+    <div style="flex: 1 1 440px; min-width: 0; background: #EB5648; color: #13143A; border-radius: 26px; padding: 40px; box-sizing: border-box; display: flex; flex-direction: column; gap: 16px; align-items: flex-start">
+      <span class="mono" style="font-size: 13px; font-weight: 500">// {{t.nextStep}}</span>
+      <h2 class="disp" style="margin: 0; font-size: 30px; line-height: 1.12; font-weight: 800; letter-spacing: -0.02em">{{t.ctaTitle}}</h2>
+      <p style="margin: 0; font-size: 16px; line-height: 1.6; font-weight: 500">{{t.ctaText}}</p>
+      <div style="display: flex; gap: 10px; flex-wrap: wrap; padding-top: 4px">
+        <a href="{{links.contact}}" style="background: #1B1C51; color: #fff; text-decoration: none; font-weight: 600; font-size: 15px; border-radius: 12px; min-height: 52px; padding: 0 24px; display: inline-flex; align-items: center; gap: 10px">{{t.navContact}} <span aria-hidden="true">→</span></a>
+        <a href="{{links.pricing}}" style="border: 1.5px solid #13143A; color: #13143A; text-decoration: none; font-weight: 600; font-size: 15px; border-radius: 12px; min-height: 52px; padding: 0 22px; display: inline-flex; align-items: center">{{t.ctaPrice}}</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="{{foot.style}}">
+    <div style="max-width: 1240px; margin: 0 auto; padding: 64px 24px 36px; display: flex; flex-direction: column; gap: 44px">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 36px">
+        <div style="display: flex; flex-direction: column; gap: 16px; max-width: 320px">
+          <img src="{{foot.logo}}" alt="Betacode" style="height: 36px; width: auto; align-self: flex-start; display: block">
+          <p style="margin: 0; color: var(--fm); font-size: 15px; line-height: 1.6">{{t.footTag}}</p>
+        </div>
+        <div style="display: flex; gap: 64px; flex-wrap: wrap">
+          <div style="display: flex; flex-direction: column">
+            <span class="mono" style="font-size: 12px; color: var(--fk); margin-bottom: 10px">{{t.footNav}}</span>
+            <a class="flink" href="{{links.pricing}}">{{t.navPricing}}</a>
+            <a class="flink" href="{{links.ventures}}">Betacode Ventures</a>
+            <a class="flink" href="{{links.insights}}">Insights</a>
+            <a class="flink" href="{{links.contact}}">{{t.navContact}}</a>
+          </div>
+          <div style="display: flex; flex-direction: column">
+            <span class="mono" style="font-size: 12px; color: var(--fk); margin-bottom: 10px">social</span>
+            <a class="flink" href="https://www.facebook.com/betacode.tech/">Facebook</a>
+            <a class="flink" href="https://www.instagram.com/betacode.tech">Instagram</a>
+            <a class="flink" href="https://twitter.com/betacode_tech">X / Twitter</a>
+            <a class="flink" href="https://github.com/BetacodeTech">GitHub</a>
+          </div>
+        </div>
+      </div>
+      <div style="border-top: 1px solid var(--fb); border-bottom: 1px solid var(--fb); padding: 28px 0; display: flex; flex-wrap: wrap; align-items: center; gap: 20px 40px">
+        <div style="display: flex; gap: 28px; flex-wrap: wrap; align-items: center">
+          <img src="{{foot.iefp}}" alt="IEFP" style="height: 48px; width: auto; display: block">
+          <img src="{{foot.pessoas}}" alt="Pessoas 2030" style="height: 40px; width: auto; display: block">
+          <img src="{{foot.pt}}" alt="Portugal 2030" style="height: 44px; width: auto; display: block">
+          <img src="{{foot.ue}}" alt="{{t.altEu}}" style="height: 44px; width: auto; display: block">
+        </div>
+        <p style="margin: 0; flex: 1 1 300px; font-size: 13px; line-height: 1.55; color: var(--fm)">{{t.funding}}</p>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; color: var(--fm); font-size: 13px">
+        <span>{{t.copy}}</span>
+        <span class="mono">{{t.made}}</span>
+      </div>
+    </div>
+  </footer>
+</div>
+</template>
+<script type="text/x-dc-logic">
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { lang: null, theme: null, cat: 'all', q: '' };
+  }
+  renderVals() {
+    const S = this.state;
+    const lang = S.lang || this.props.lang || 'pt';
+    const theme = S.theme || this.props.theme || 'light';
+    const dark = theme === 'dark';
+    const en = lang === 'en';
+    const L = (pt, e) => (en ? e : pt);
+    const base = 'https://www.betacode.tech/' + lang;
+    const links = { pricing: base + '/pricing', ventures: base + '/betacode-ventures', insights: base + '/insights', contact: base + '/contact' };
+    const P = dark ? {
+      bg: '#0D0E24', surface: '#16173A', card: '#1D1E48', text: '#F2F2FA', muted: '#B9BADB', border: '#272960', border2: '#3A3C7A',
+      band: '#1B1C51', kicker: '#FF8A7D'
+    } : {
+      bg: '#FFFFFF', surface: '#F4F4F8', card: '#FFFFFF', text: '#1B1C51', muted: '#4A4B7A', border: '#E6E6EF', border2: '#C9CAE0',
+      band: '#1B1C51', kicker: '#B83324'
+    };
+    const rootStyle = Object.keys(P).map((k) => '--' + k + ':' + P[k]).join(';');
+
+    const t = {
+      navLabel: L('Principal', 'Main'), navHome: L('Início', 'Home'), navPricing: L('Preços', 'Pricing'), navContact: L('Contacto', 'Contact'),
+      langLabel: L('Idioma', 'Language'), themeLabel: dark ? L('Mudar para modo claro', 'Switch to light mode') : L('Mudar para modo escuro', 'Switch to dark mode'),
+      title: L('Da equipa Betacode.', 'From the Betacode team.'),
+      sub: L('Conselhos práticos sobre construir software, lançar startups e escolher a tecnologia certa para o seu negócio.', 'Practical advice on building software, launching startups and choosing the right technology for your business.'),
+      byLine1: L('Escrito por Pedro Gorrão, CEO', 'Written by Pedro Gorrão, CEO'), byLine2: L('e Marco Mendão, CTO', 'and Marco Mendão, CTO'),
+      filterLabel: L('Filtrar por tema', 'Filter by topic'), searchLabel: L('Pesquisar artigos', 'Search articles'), searchPh: L('Pesquisar artigos…', 'Search articles…'),
+      featured: L('Em destaque', 'Featured'), read: L('Ler artigo', 'Read article'),
+      emptyTitle: L('Nenhum artigo encontrado', 'No articles found'), emptyText: L('Experimente outro tema ou outra pesquisa.', 'Try another topic or search.'), clear: L('Ver todos os artigos', 'See all articles'),
+      venTitle: L('Tem a visão mas precisa de um co-fundador técnico?', 'Have the vision but need a technical co-founder?'),
+      venText: L('Com a Betacode Ventures não paga o desenvolvimento: entramos no capital e construímos o produto consigo.', 'With Betacode Ventures you don’t pay for development: we take equity and build the product with you.'),
+      venCta: L('Explorar Betacode Ventures', 'Explore Betacode Ventures'), venCase: L('Ver o primeiro projeto', 'See our first project'),
+      nextStep: L('próximo passo', 'next step'), ctaTitle: L('Pronto para construir algo que faça a diferença?', 'Ready to build something that makes a difference?'),
+      ctaText: L('Conte-nos o seu projeto, ou veja primeiro quanto pode custar.', 'Tell us about your project, or first see what it could cost.'), ctaPrice: L('Estimar preço', 'Estimate price'),
+      footTag: L('Equipas de software dedicadas para empresas e startups.', 'Dedicated software teams for businesses and startups.'), footNav: L('navegação', 'navigation'),
+      altEu: L('Cofinanciado pela União Europeia', 'Co-funded by the European Union'),
+      funding: L('Projeto financiado pelo programa AVANÇAR, no âmbito do Portugal 2030, cofinanciado pelo Fundo Social Europeu Mais (FSE+).', 'Project funded by the AVANÇAR programme under Portugal 2030, co-financed by the European Social Fund Plus (ESF+).'),
+      copy: L('© 2026 Betacode, Inc. Todos os direitos reservados.', '© 2026 Betacode, Inc. All rights reserved.'), made: L('{ feito em Portugal }', '{ made in Portugal }')
+    };
+
+    const AUTH = {
+      marco: { name: 'Marco Mendão', role: 'Co-Founder & CTO', av: 'assets/avatars/marco-mendao.jpg', pos: 'center' },
+      pedro: { name: 'Pedro Gorrão', role: 'Co-Founder & CEO', av: 'assets/avatars/pedro-gorrao.jpg', pos: '60% 20%' }
+    };
+    const CATS = { eng: L('Engenharia', 'Engineering'), biz: L('Negócio', 'Business'), start: 'Startups', ven: 'Ventures' };
+    const COVER = {
+      eng: 'background-color: #1B1C51',
+      biz: 'background-color: #D8402F',
+      start: 'background-color: #2A2C6E',
+      ven: 'background-color: #13143A'
+    };
+    const ART = [
+      { cat: 'eng', by: 'marco', mins: 9, slug: 'the-agentic-era-of-software', glyph: '>_', code: 'agent.plan(task)\n  .run()\n  .review();',
+        title: L('A era agêntica do software', 'The agentic era of software'),
+        ex: L('Os agentes já leem o repositório, escrevem código, correm testes e abrem pull requests. O que muda no trabalho dos developers, como os usamos em segurança e como entram nos produtos dos nossos clientes.', 'Agents now read the repo, write code, run tests and open pull requests. What changes for developers, how we use them safely and how they make their way into our clients’ products.') },
+      { cat: 'ven', by: 'pedro', mins: 8, slug: 'why-startups-need-a-technical-co-founder', glyph: '{B}', code: 'founders.push("tech");\n// visão + execução',
+        title: L('Porque as startups precisam de um co-fundador técnico', 'Why startups need a technical co-founder'),
+        ex: L('Tem a visão e o conhecimento do domínio, mas sem alguém que assuma a tecnologia acaba a gerir fornecedores. O que faz um co-fundador técnico e como a Betacode Ventures pode sê-lo.', 'You have the vision and domain knowledge, but without someone owning the technology you end up managing vendors. What a technical co-founder does and how Betacode Ventures can be one.') },
+      { cat: 'eng', by: 'marco', mins: 9, slug: 'building-applications-with-javascript-typescript-as-the-backbone', glyph: 'TS', code: 'const stack = [\n  "next", "nest", "ts"\n];',
+        title: L('Construir aplicações com JavaScript/TypeScript como base', 'Building applications with JavaScript/TypeScript as the backbone'),
+        ex: L('Porque usamos JS/TS em todas as camadas: deploys rápidos com Next.js e NestJS, equipas full-stack e acesso a um grande mercado de talento.', 'Why we use JS/TS across every layer: fast deploys with Next.js and NestJS, full-stack teams and access to a large talent pool.') },
+      { cat: 'biz', by: 'pedro', mins: 10, slug: 'why-lean-startup-is-the-rosetta-stone-of-betacode', glyph: '↻', code: 'build()\n  .measure()\n  .learn();',
+        title: L('Porque o Lean Startup é a pedra de Rosetta da Betacode', 'Why Lean Startup is Betacode’s Rosetta Stone'),
+        ex: L('Do nosso primeiro produto, o Wishmood, a cada projeto com clientes: como o ciclo construir, medir, aprender se tornou a nossa forma de trabalhar.', 'From our first product, Wishmood, to every client project: how the build, measure, learn loop became the way we work.') },
+      { cat: 'eng', by: 'marco', mins: 11, slug: 'how-to-transform-legacy-software-into-a-modern-product', glyph: '⟳', code: 'monolith\n  .split()\n  .migrate();',
+        title: L('Como transformar software legacy num produto moderno', 'How to transform legacy software into a modern product'),
+        ex: L('Um guia prático para empresas presas a código e infraestrutura desatualizados: dividir o monólito, entregar por partes e migrar sem parar o negócio.', 'A practical guide for companies stuck with outdated code and infrastructure: split the monolith, deliver in slices and migrate without stopping the business.') },
+      { cat: 'start', by: 'pedro', mins: 10, slug: 'how-to-build-an-mvp-in-3-months', glyph: '▲', code: 'idea → mvp → live',
+        title: L('Como construir um MVP em 3 meses', 'How to build an MVP in 3 months'),
+        ex: L('Porque três meses é o ponto certo para ir da ideia ao produto em produção, com um roadmap baseado em princípios lean.', 'Why three months is the sweet spot to go from idea to a live product, with a roadmap based on lean principles.') },
+      { cat: 'eng', by: 'marco', mins: 8, slug: 'how-ai-can-help-you-create-your-next-project', glyph: 'AI', code: 'ai.multiply(devs);\n// não substitui',
+        title: L('Como a IA pode ajudar a criar o seu próximo projeto', 'How AI can help you create your next project'),
+        ex: L('A IA não substitui developers, multiplica-os. Como a usamos para lançar MVPs mais depressa e gastar menos tempo no que não importa.', 'AI doesn’t replace developers, it multiplies them. How we use it to ship MVPs faster and spend less time on what doesn’t matter.') }
+    ];
+    const q = S.q.trim().toLowerCase();
+    const filtered = ART.filter((a) => (S.cat === 'all' || a.cat === S.cat) && (!q || (a.title + ' ' + a.ex).toLowerCase().indexOf(q) >= 0));
+    const view = (a) => ({
+      href: ({ 'the-agentic-era-of-software': 'ArtAgentic', 'why-startups-need-a-technical-co-founder': 'ArtCofounder', 'building-applications-with-javascript-typescript-as-the-backbone': 'ArtStack', 'why-lean-startup-is-the-rosetta-stone-of-betacode': 'ArtLean', 'how-to-transform-legacy-software-into-a-modern-product': 'ArtLegacy', 'how-to-build-an-mvp-in-3-months': 'ArtMvp', 'how-ai-can-help-you-create-your-next-project': 'ArtAi' })[a.slug] + '.dc.html', cat: CATS[a.cat], mins: a.mins + ' min', title: a.title, ex: a.ex, glyph: a.glyph, code: a.code,
+      coverStyle: COVER[a.cat], author: AUTH[a.by].name, role: AUTH[a.by].role, av: AUTH[a.by].av, avPos: AUTH[a.by].pos
+    });
+    const list = filtered.map(view);
+    const cats = [{ id: 'all', label: L('Todos', 'All'), count: ART.length }].concat(['eng', 'biz', 'start', 'ven'].map((id) => ({ id, label: CATS[id], count: ART.filter((a) => a.cat === id).length })))
+      .map((c) => ({ ...c, on: S.cat === c.id ? 'true' : 'false', pick: () => this.setState({ cat: c.id }) }));
+
+    return {
+      t, links, base, rootStyle, dark, light: !dark,
+      logo: dark ? 'assets/brand/logo-white.png' : 'assets/brand/logo.png',
+      logoAnimStyle: 'height: 38px; width: auto; display: block; ' + (dark ? 'filter: invert(1) hue-rotate(180deg) saturate(1.3); mix-blend-mode: screen' : 'mix-blend-mode: multiply'),
+      foot: dark ? {
+        style: 'background: #08091A; color: #FFFFFF; border-top: 1px solid #272960; --ft: #FFFFFF; --fm: #B9BADB; --fk: #FF8A7D; --fb: rgba(255,255,255,0.1)',
+        logo: 'assets/brand/logo-white.png', iefp: 'assets/funding/iefp-dark.png', pessoas: 'assets/funding/pessoas2030-dark.png', pt: 'assets/funding/portugal2030-dark.png', ue: 'assets/funding/ue-dark.png'
+      } : {
+        style: 'background: #F4F4F8; color: #1B1C51; border-top: 1px solid #E6E6EF; --ft: #1B1C51; --fm: #4A4B7A; --fk: #B83324; --fb: #E2E2EC',
+        logo: 'assets/brand/logo.png', iefp: 'assets/funding/iefp-light.png', pessoas: 'assets/funding/pessoas2030-light.png', pt: 'assets/funding/portugal2030-light.png', ue: 'assets/funding/ue-light.png'
+      },
+      isPt: en ? 'false' : 'true', isEn: en ? 'true' : 'false',
+      setPt: () => this.setState({ lang: 'pt' }), setEn: () => this.setState({ lang: 'en' }),
+      toggleTheme: () => this.setState({ theme: dark ? 'light' : 'dark' }),
+      cats, q: S.q, onQ: (e) => this.setState({ q: e.target.value }),
+      hasFeat: list.length > 0, feat: list[0] || view(ART[0]), rest: list.slice(1), empty: list.length === 0,
+      clear: () => this.setState({ cat: 'all', q: '' })
+    };
+  }
+}
+</script>
+<script>window.DC_ROOT = ""; window.DC_PROPS = {"lang": "pt", "theme": "light"};</script>
+<script src="assets/vendor/react.production.min.js"></script>
+<script src="assets/vendor/react-dom.production.min.js"></script>
+<script src="assets/vendor/dc-runtime.js"></script>
+</body>
+</html>

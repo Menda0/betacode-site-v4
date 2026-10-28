@@ -1,0 +1,167 @@
+{
+  "apply": "Apply",
+  "seeCase": "See our first project",
+  "heroChip": "Betacode Ventures · technical co-founding",
+  "heroL1": "Your technical co-founder,",
+  "heroL2": "from 0 to 100%.",
+  "heroSub": "We partner with founders who have the vision but need a technical lead to validate the idea, build the product and scale it. No development fees: we take equity and build alongside you.",
+  "heroFacts": [
+    {
+      "v": "In exchange for Equity",
+      "l": ""
+    },
+    {
+      "v": "Full-stack",
+      "l": "dedicated team"
+    }
+  ],
+  "s1short": "validate & plan",
+  "s2short": "build & launch",
+  "s3short": "iterate & scale",
+  "howKicker": "// how it works",
+  "howTitle": "Three stages, one product, two founders.",
+  "steps": [
+    {
+      "n": "1",
+      "tag": "validate",
+      "t": "Validate and plan",
+      "d": "We test the idea, define the scope and build a roadmap to reach the market."
+    },
+    {
+      "n": "2",
+      "tag": "build",
+      "t": "Build and launch",
+      "d": "A dedicated full-stack team handles architecture, development and deployment."
+    },
+    {
+      "n": "3",
+      "tag": "scale",
+      "t": "Iterate and scale",
+      "d": "After launch we gather feedback, ship improvements and help grow the team, including hiring key talent in-house."
+    }
+  ],
+  "parKicker": "// the partnership",
+  "parTitle": "Two founders. One product.",
+  "parSub": "We share the risk and the upside. That is why we choose projects carefully and ask for commitment in return.",
+  "weBring": "Betacode brings",
+  "youBring": "You bring",
+  "we": [
+    {
+      "t": "A dedicated technical co-founder",
+      "d": "Not a rotating bench of freelancers."
+    },
+    {
+      "t": "Full-stack execution",
+      "d": "Architecture, backend, frontend, infrastructure and deployment."
+    },
+    {
+      "t": "Ownership, not hourly advice",
+      "d": "Guidance on stack, scalability and trade-offs, taken on as an owner."
+    },
+    {
+      "t": "Launch-ready foundations",
+      "d": "Payments, admin dashboards and analytics."
+    },
+    {
+      "t": "Help hiring",
+      "d": "Support bringing key talent in-house when the time comes."
+    }
+  ],
+  "you": [
+    {
+      "t": "Equity, not invoices",
+      "d": "No development fees: our return is tied to the product."
+    },
+    {
+      "t": "Domain expertise",
+      "d": "Knowledge of the market, the users and the problem."
+    },
+    {
+      "t": "Fast feedback",
+      "d": "Commitment to quick decisions and clear priorities."
+    },
+    {
+      "t": "Transparency on traction",
+      "d": "User feedback, metrics and customer conversations."
+    },
+    {
+      "t": "Ambition with substance",
+      "d": "An idea with a real path to users and revenue."
+    }
+  ],
+  "caseKicker": "// first project",
+  "caseTitle": "Coach ID: rebuilt from scratch, with a technical co-founder.",
+  "caseDesc": "A platform that helps football coaches plan, create, run and track their team’s weekly work. After 8 years on the market, the product was rebuilt from scratch.",
+  "caseTags": [
+    "UEFA-licensed coaches",
+    "Thousands of coaches worldwide",
+    "Progressive Web App"
+  ],
+  "builtTitle": "What we built",
+  "built": [
+    "MVP from 0 to 100% in 3 months",
+    "Payment gateway",
+    "Admin dashboard",
+    "PWA for desktop, tablet and mobile",
+    "AI virtual assistant"
+  ],
+  "resultsKicker": "// results",
+  "stats": [
+    {
+      "v": "100+",
+      "l": "customers in the first week"
+    },
+    {
+      "v": "60+",
+      "l": "paying customers"
+    }
+  ],
+  "alsoTitle": "And beyond the numbers",
+  "also": [
+    "Real user feedback from day one",
+    "A free drill editor that drives organic sign-ups, no paid ads",
+    "A platform ready for subscription plans and team onboarding"
+  ],
+  "applyKicker": "// apply",
+  "applyTitle": "Ready to build your startup with a technical co-founder?",
+  "applySub": "Tell us about your idea and find out whether Betacode Ventures is the right partner.",
+  "applySteps": [
+    {
+      "n": "1",
+      "t": "You tell us about the idea."
+    },
+    {
+      "n": "2",
+      "t": "We review it and get in touch."
+    },
+    {
+      "n": "3",
+      "t": "If there is a fit, we plan the first stage together."
+    }
+  ],
+  "fName": "Name",
+  "fEmail": "Email",
+  "fStage": "Where is the idea today?",
+  "stagesL": [
+    "Just an idea",
+    "Prototype or MVP",
+    "Already has users"
+  ],
+  "fSite": "Website",
+  "fDesc": "Tell us about the venture",
+  "optional": "optional",
+  "phName": "Your name",
+  "phDesc": "The problem, who it is for, what you have so far and why now…",
+  "eName": "Please enter your name.",
+  "eEmail": "Please enter a valid email.",
+  "eSite": "Please enter a valid web address (https://…).",
+  "eDesc": "Tell us a little about the venture.",
+  "privacy": "We only use your details to reply to your application.",
+  "applyBtn": "Apply to Betacode Ventures",
+  "sentKicker": "// application sent",
+  "home": "Back to home",
+  "readInsights": "Read our insights",
+  "phEmail": "nome@empresa.com",
+  "thanks": "Thank you",
+  "sentText": "We received your application. We will review your idea and get in touch at {email}."
+}

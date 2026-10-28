@@ -15,7 +15,12 @@ const contactSchema = new mongoose.Schema({
   email: { type: String, required: true, lowercase: true },
   website: { type: String },
   phone: { type: String },
+  company: { type: String },
   message: { type: String },
+  topic: { type: String },
+  stage: { type: String },
+  when: { type: String },
+  selectedService: { type: String },
   source: {
     type: String,
     enum: ["general", "betacode-ventures", "price-calculator"],

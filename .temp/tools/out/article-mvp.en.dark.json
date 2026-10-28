@@ -1,0 +1,357 @@
+{
+  "t": {
+    "navLabel": "Main",
+    "navHome": "Home",
+    "navPricing": "Pricing",
+    "navContact": "Contact",
+    "langLabel": "Language",
+    "themeLabel": "Switch to light mode",
+    "crumbs": "Breadcrumb",
+    "toc": "In this article",
+    "keyTake": "Key takeaways",
+    "writtenBy": "written by",
+    "related": "Keep reading",
+    "all": "All insights",
+    "read": "Read article",
+    "estimate": "Estimate price",
+    "footTag": "Dedicated software teams for businesses and startups.",
+    "footNav": "navigation",
+    "altEu": "Co-funded by the European Union",
+    "funding": "Project funded by the AVANÇAR programme under Portugal 2030, co-financed by the European Social Fund Plus (ESF+).",
+    "copy": "© 2026 Betacode, Inc. All rights reserved.",
+    "made": "{ made in Portugal }"
+  },
+  "links": {
+    "pricing": "https://www.betacode.tech/en/pricing",
+    "ventures": "https://www.betacode.tech/en/betacode-ventures",
+    "insights": "https://www.betacode.tech/en/insights",
+    "contact": "https://www.betacode.tech/en/contact"
+  },
+  "base": "https://www.betacode.tech/en",
+  "rootStyle": "--bg:#0D0E24;--surface:#16173A;--card:#1D1E48;--text:#F2F2FA;--muted:#B9BADB;--border:#272960;--border2:#3A3C7A;--band:#1B1C51;--kicker:#FF8A7D",
+  "dark": true,
+  "light": false,
+  "a": {
+    "title": "How to build an MVP in 3 months",
+    "lead": "Most founders don’t fail because the idea is bad. They fail because they spend six months building the wrong thing, or twelve building something nobody asked for. Three months is enough to build something real and still have runway to act on what you learn.",
+    "take": [
+      "A short, shared plan beats a 200-page spec.",
+      "Cut everything that isn’t essential to the core workflow.",
+      "The deadline is the method."
+    ],
+    "date": "Nov 12, 2025",
+    "mins": "10 min",
+    "cat": "Startups",
+    "glyph": "▲",
+    "code": "idea → mvp → live",
+    "coverStyle": "background-color: #2A2C6E"
+  },
+  "au": {
+    "name": "Pedro Gorrão",
+    "role": "Co-Founder & CEO",
+    "av": "../assets/avatars/pedro-gorrao.jpg",
+    "pos": "60% 20%",
+    "bio": "Co-founder and CEO at Betacode. Writes about lean startup, building products and what we learn launching companies with our partners."
+  },
+  "blocks": [
+    {
+      "t": "h",
+      "x": "Why three months",
+      "items": [],
+      "isH": true,
+      "isP": false,
+      "isUl": false,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s1",
+      "n": "01",
+      "h": ""
+    },
+    {
+      "t": "ul",
+      "items": [
+        "Preserves runway: a time limit keeps burn under control.",
+        "Speeds up learning: real users tell you early whether to persevere, pivot or stop.",
+        "Gives you an edge over those still wireframing in month six.",
+        "Changes investor conversations: \"we launched six weeks ago, here are the numbers\".",
+        "Kills scope creep: every feature has to earn its place."
+      ],
+      "isH": false,
+      "isP": false,
+      "isUl": true,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s1",
+      "n": "",
+      "h": ""
+    },
+    {
+      "t": "h",
+      "x": "1. Start with a written plan",
+      "items": [],
+      "isH": true,
+      "isP": false,
+      "isUl": false,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s2",
+      "n": "02",
+      "h": ""
+    },
+    {
+      "t": "p",
+      "x": "Short and shared: the problem, the core user journey, the technical approach, a build list and a don’t-build list, success metrics and who decides what. At Betacode we co-create it with the founder in the first two weeks.",
+      "items": [],
+      "isH": false,
+      "isP": true,
+      "isUl": false,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s2",
+      "n": "",
+      "h": ""
+    },
+    {
+      "t": "h",
+      "x": "2. Identify the essentials",
+      "items": [],
+      "isH": true,
+      "isP": false,
+      "isUl": false,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s3",
+      "n": "03",
+      "h": ""
+    },
+    {
+      "t": "ul",
+      "items": [
+        "If removing a feature makes the product useless, build it.",
+        "If it only makes it less convenient, defer it.",
+        "If it only matters at scale, wait for scale.",
+        "If no user asked for it, don’t build it."
+      ],
+      "isH": false,
+      "isP": false,
+      "isUl": true,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s3",
+      "n": "",
+      "h": ""
+    },
+    {
+      "t": "note",
+      "h": "Example: Coach ID",
+      "x": "The MVP focused on one thing: letting coaches plan and run weekly training. Payments, the AI assistant, the admin dashboard and the drill editor came after the core loop was validated.",
+      "items": [],
+      "isH": false,
+      "isP": false,
+      "isUl": false,
+      "isOl": false,
+      "isQ": false,
+      "isNote": true,
+      "id": "s3",
+      "n": ""
+    },
+    {
+      "t": "h",
+      "x": "3. Two-week milestones",
+      "items": [],
+      "isH": true,
+      "isP": false,
+      "isUl": false,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s4",
+      "n": "04",
+      "h": ""
+    },
+    {
+      "t": "ol",
+      "items": [
+        "Weeks 1–2: plan locked, architecture set, environment ready.",
+        "Weeks 3–4: data models and endpoints for the core flow.",
+        "Weeks 5–6: frontend wired to backend, full flow in staging.",
+        "Weeks 7–8: internal testing and critical bug fixes.",
+        "Weeks 9–10: production, monitoring and first users.",
+        "Weeks 11–12: feedback, fixes and the persevere-or-pivot decision."
+      ],
+      "isH": false,
+      "isP": false,
+      "isUl": false,
+      "isOl": true,
+      "isQ": false,
+      "isNote": false,
+      "id": "s4",
+      "n": "",
+      "h": ""
+    },
+    {
+      "t": "p",
+      "x": "Weekly demos of working software (not slides), blockers escalated after a day and a founder who is always reachable. Waiting three days for a product decision kills momentum.",
+      "items": [],
+      "isH": false,
+      "isP": true,
+      "isUl": false,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s4",
+      "n": "",
+      "h": ""
+    },
+    {
+      "t": "h",
+      "x": "4. AI as an accelerator",
+      "items": [],
+      "isH": true,
+      "isP": false,
+      "isUl": false,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s5",
+      "n": "05",
+      "h": ""
+    },
+    {
+      "t": "p",
+      "x": "AI doesn’t replace the team, but it compresses repetitive work: scaffolding, CRUD endpoints, schemas, tests and docs. People still own architecture, experience and production debugging. The time saved becomes extra polish or an on-time launch.",
+      "items": [],
+      "isH": false,
+      "isP": true,
+      "isUl": false,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s5",
+      "n": "",
+      "h": ""
+    },
+    {
+      "t": "h",
+      "x": "What kills a three-month timeline",
+      "items": [],
+      "isH": true,
+      "isP": false,
+      "isUl": false,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s6",
+      "n": "06",
+      "h": ""
+    },
+    {
+      "t": "ul",
+      "items": [
+        "\"While we’re at it…\": every addition costs weeks.",
+        "Perfectionism in design, architecture or naming.",
+        "Building in stealth, without talking to users.",
+        "The wrong team: disappearing freelancers or hourly agencies.",
+        "No metrics, or defending the product instead of listening."
+      ],
+      "isH": false,
+      "isP": false,
+      "isUl": true,
+      "isOl": false,
+      "isQ": false,
+      "isNote": false,
+      "id": "s6",
+      "n": "",
+      "h": ""
+    },
+    {
+      "t": "q",
+      "x": "Three months is enough to build something real, launch it and learn whether the idea has traction. The deadline is the method.",
+      "items": [],
+      "isH": false,
+      "isP": false,
+      "isUl": false,
+      "isOl": false,
+      "isQ": true,
+      "isNote": false,
+      "id": "s6",
+      "n": "",
+      "h": ""
+    }
+  ],
+  "toc": [
+    {
+      "href": "#s1",
+      "n": "01",
+      "x": "Why three months"
+    },
+    {
+      "href": "#s2",
+      "n": "02",
+      "x": "1. Start with a written plan"
+    },
+    {
+      "href": "#s3",
+      "n": "03",
+      "x": "2. Identify the essentials"
+    },
+    {
+      "href": "#s4",
+      "n": "04",
+      "x": "3. Two-week milestones"
+    },
+    {
+      "href": "#s5",
+      "n": "05",
+      "x": "4. AI as an accelerator"
+    },
+    {
+      "href": "#s6",
+      "n": "06",
+      "x": "What kills a three-month timeline"
+    }
+  ],
+  "related": [
+    {
+      "href": "ArtCofounder.dc.html",
+      "title": "Why startups need a technical co-founder",
+      "cat": "Ventures",
+      "mins": "8 min",
+      "code": "founders.push(\"tech\");\n// visão + execução",
+      "coverStyle": "background-color: #13143A"
+    },
+    {
+      "href": "ArtAi.dc.html",
+      "title": "How AI can help you create your next project",
+      "cat": "Engineering",
+      "mins": "8 min",
+      "code": "ai.multiply(devs);\n// não substitui",
+      "coverStyle": "background-color: #1B1C51"
+    }
+  ],
+  "cta": {
+    "k": "// betacode ventures",
+    "h": "Have the vision but need a technical co-founder?",
+    "p": "No development fees: we take equity and build the product with you.",
+    "btn": "Explore Betacode Ventures",
+    "href": "https://www.betacode.tech/en/betacode-ventures"
+  },
+  "logo": "../assets/brand/logo-white.png",
+  "logoAnimStyle": "height: 38px; width: auto; display: block; filter: invert(1) hue-rotate(180deg) saturate(1.3); mix-blend-mode: screen",
+  "foot": {
+    "style": "background: #08091A; color: #FFFFFF; border-top: 1px solid #272960; --ft: #FFFFFF; --fm: #B9BADB; --fk: #FF8A7D; --fb: rgba(255,255,255,0.1)",
+    "logo": "../assets/brand/logo-white.png",
+    "iefp": "../assets/funding/iefp-dark.png",
+    "pessoas": "../assets/funding/pessoas2030-dark.png",
+    "pt": "../assets/funding/portugal2030-dark.png",
+    "ue": "../assets/funding/ue-dark.png"
+  },
+  "isPt": "false",
+  "isEn": "true"
+}

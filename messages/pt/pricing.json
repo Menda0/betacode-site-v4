@@ -1,0 +1,244 @@
+{
+  "intro": {
+    "kicker": "// calculadora de preços",
+    "title": "Quanto pode custar o seu projeto?",
+    "sub": "Responda a 3 perguntas rápidas. Indicamos o serviço mais adequado, com preços reais e a forma como os calculamos.",
+    "promises": ["Cerca de um minuto", "Preços reais, sem letra pequena", "Sem compromisso"]
+  },
+  "ui": {
+    "railLabel": "Passos da calculadora",
+    "railHelp": "Prefere conversar?",
+    "railTalk": "Fale connosco diretamente",
+    "yourAnswers": "As suas respostas:",
+    "back": "Voltar",
+    "stepLabel": "Passo {n} de {total}",
+    "railContext": "Contexto",
+    "railEstimate": "Estimativa",
+    "railProposal": "Proposta"
+  },
+  "questions": {
+    "biz": {
+      "rail": "O seu negócio",
+      "title": "Em que fase está o seu negócio?",
+      "why": "Ajuda-nos a perceber que tipo de parceria faz mais sentido para si.",
+      "opts": {
+        "startup": { "label": "Negócio novo (startup)", "desc": "Está a lançar algo novo: validar uma ideia, construir um MVP ou escalar do zero." },
+        "est": { "label": "Negócio estabelecido", "desc": "A empresa já opera, com clientes, receita ou equipas, e quer que o software apoie o negócio." }
+      }
+    },
+    "funding": {
+      "rail": "Financiamento",
+      "title": "Já tem financiamento para o produto?",
+      "why": "Influencia o ritmo, o tamanho da equipa e se uma parceria por equity faz sentido.",
+      "opts": {
+        "yes": { "label": "Sim", "desc": "Levantou capital ou tem orçamento dedicado ao produto." },
+        "no": { "label": "Ainda não", "desc": "Está em bootstrapping ou ainda à procura de investimento." }
+      }
+    },
+    "techTeam": {
+      "rail": "Equipa técnica",
+      "title": "Tem uma equipa técnica interna?",
+      "why": "Para sabermos se nos juntamos à sua equipa ou se assumimos toda a parte técnica.",
+      "opts": {
+        "yes": { "label": "Sim", "desc": "Tem Software Developers ou um líder técnico." },
+        "no": { "label": "Não", "desc": "A tecnologia ainda não está dentro de casa." }
+      }
+    },
+    "goalStartup": {
+      "rail": "Objetivo",
+      "title": "Qual é o seu principal objetivo?",
+      "why": "Escolha a opção mais próxima. Pode sempre mudar depois.",
+      "opts": {
+        "mvp": { "label": "Desenvolver um MVP", "desc": "Uma primeira versão funcional para validar com utilizadores reais." },
+        "team": { "label": "Criar uma equipa técnica", "desc": "Uma equipa dedicada, dona do produto a longo prazo." },
+        "support": { "label": "Suporte técnico", "desc": "Ajuda delimitada: integrações, bugs, scripts ou manutenção." },
+        "unsure": { "label": "Não sei, ajudem-me a decidir", "desc": "Recomendamos com base nas respostas anteriores." }
+      }
+    },
+    "goalEst": {
+      "rail": "Objetivo",
+      "title": "Qual é o seu principal objetivo?",
+      "why": "Escolha a opção mais próxima. Pode sempre mudar depois.",
+      "opts": {
+        "new": { "label": "Desenvolver um produto novo", "desc": "Plataforma SaaS, portal de clientes, ferramenta interna ou app." },
+        "modern": { "label": "Modernizar uma aplicação antiga", "desc": "Melhorar, refatorar ou migrar sem uma reescrita arriscada." },
+        "aug": { "label": "Reforçar a equipa (outsourcing)", "desc": "Mais pessoas no seu roadmap e processos." },
+        "support": { "label": "Suporte técnico", "desc": "Ajuda delimitada: integrações, bugs, scripts ou manutenção." },
+        "unsure": { "label": "Não sei, ajudem-me a decidir", "desc": "Recomendamos com base nas respostas anteriores." }
+      }
+    }
+  },
+  "summary": {
+    "funded": "Com financiamento",
+    "notFunded": "Sem financiamento",
+    "hasTeam": "Com equipa técnica",
+    "noTeam": "Sem equipa técnica"
+  },
+  "result": {
+    "kicker": "// a nossa recomendação",
+    "titleMany": "Com base nas suas respostas, sugerimos {n} caminhos.",
+    "titleOne": "Com base nas suas respostas, este é o caminho certo.",
+    "tabsLabel": "Serviços recomendados",
+    "best": "Recomendado",
+    "bestShort": "TOP",
+    "why": "Porque recomendamos",
+    "how": "Ver equipa e taxas horárias",
+    "cfgLabel": "Configuração da equipa",
+    "small": "Equipa pequena",
+    "baseTeam": "Equipa base",
+    "cfgSmallDesc": "Júnior + product owner parcial",
+    "cfgBaseDesc": "Júnior + médio/sénior + product owner",
+    "nextHint": "Os valores são indicativos. Uma conversa curta permite confirmar o âmbito e dar-lhe uma proposta fechada.",
+    "toContact": "Pedir proposta à medida",
+    "toContactShort": "Pedir proposta"
+  },
+  "anim": {
+    "founder": "fundador",
+    "deal": "em troca de equity",
+    "yourTeam": "a sua equipa",
+    "join": "+2 profissionais",
+    "plan": "planear",
+    "build": "desenvolver",
+    "launch": "lançar",
+    "fixed": "resolvido",
+    "junior": "júnior",
+    "midSenior": "médio/sénior",
+    "languages": "linguagens",
+    "frameworks": "frameworks",
+    "bestPractice": "boas práticas"
+  },
+  "rates": {
+    "jr": { "who": "Programador júnior", "time": "Tempo inteiro", "rate": "20 – 30 €/h" },
+    "mid": { "who": "Programador médio/sénior", "time": "Tempo inteiro", "rate": "30 – 50 €/h" },
+    "po": { "who": "Product Owner", "time": "Tempo parcial", "rate": "50 – 60 €/h" },
+    "tr": { "who": "Formador sénior", "time": "Tempo parcial", "rate": "50 – 60 €/h" }
+  },
+  "services": {
+    "V": {
+      "name": "Betacode Ventures",
+      "model": "equity",
+      "desc": "Parceria de co-fundador técnico, da validação ao lançamento e escala.",
+      "price": "em troca de equity",
+      "priceL": "custo de desenvolvimento",
+      "why": "Não paga o desenvolvimento: investimos a nossa equipa em troca de equity.",
+      "whyUnfunded": "Encaixa quando ainda não tem financiamento.",
+      "whyOther": "Tem um parceiro técnico com tanto em jogo quanto você.",
+      "inc": ["Co-fundador técnico", "Da validação ao lançamento", "Equipa dedicada"],
+      "figs": [
+        { "label": "Custo de desenvolvimento", "value": "sem custo de desenvolvimento" },
+        { "label": "Forma de pagamento", "value": "troca de equity" }
+      ],
+      "rows": [{ "who": "Equipa Betacode", "time": "Da validação ao lançamento", "rate": "equity" }],
+      "note": "O modelo é adaptado à fase e ao produto."
+    },
+    "E": {
+      "name": "Equipas técnicas autogeridas",
+      "model": "projeto",
+      "desc": "Uma equipa dedicada assume a entrega do produto: planeamento, desenvolvimento e lançamento.",
+      "priceSmall": "20.000 € – 30.000 €",
+      "priceBase": "30.000 € – 45.000 €",
+      "priceL": "MVP · 3 meses de equipa",
+      "why": "Não precisa de gerir freelancers: a equipa trata da entrega de ponta a ponta.",
+      "whyNoTeam": "Funciona como o seu departamento técnico, sem contratar internamente.",
+      "whyOther": "Escolhe o tamanho da equipa consoante o âmbito.",
+      "figsSmall": [
+        { "label": "MVP · 3 meses de equipa", "value": "20.000 € – 30.000 €" },
+        { "label": "Primeiro ano", "value": "85.000 € – 120.000 €" }
+      ],
+      "figsBase": [
+        { "label": "MVP · 3 meses de equipa", "value": "30.000 € – 45.000 €" },
+        { "label": "Primeiro ano", "value": "120.000 € – 180.000 €" }
+      ],
+      "note": "Faixas das nossas equipas habituais. O valor final depende do âmbito."
+    },
+    "R": {
+      "name": "Reforço de equipa",
+      "model": "à hora",
+      "desc": "Programadores e product owners à hora, integrados na sua equipa e processos.",
+      "price": "20 – 60 €/h",
+      "priceL": "consoante o perfil",
+      "why": "Paga só as horas de que precisa e ajusta a capacidade quando quiser.",
+      "whyTeam": "Aproveita a equipa técnica e os processos que já tem.",
+      "whyNoTeam": "Pode crescer depois para uma equipa interna.",
+      "inc": ["Júnior a sénior", "Nos seus processos", "Capacidade ajustável"],
+      "figs": [
+        { "label": "Taxa horária", "value": "20 – 60 €/h" },
+        { "label": "Projeto típico (referência)", "value": "85.000 € – 180.000 €" }
+      ],
+      "note": "Paga apenas as horas trabalhadas."
+    },
+    "F": {
+      "name": "Formação",
+      "model": "à hora",
+      "desc": "Sessões sobre linguagens, frameworks e boas práticas, individuais ou para grupos.",
+      "price": "50 – 60 €/h",
+      "priceL": "formador sénior",
+      "why": ["A sua equipa aprende novas tecnologias com quem as usa todos os dias.", "Pode combinar com outro serviço."],
+      "inc": ["Linguagens", "Frameworks", "Boas práticas"],
+      "figs": [
+        { "label": "Taxa horária", "value": "50 – 60 €/h" },
+        { "label": "Formato", "value": "Individual ou grupo" }
+      ],
+      "note": "Programa ajustado ao nível da equipa."
+    },
+    "S": {
+      "name": "Suporte",
+      "model": "à hora",
+      "desc": "Integrações, correção de bugs, scripts e manutenção em sistemas existentes.",
+      "price": "50 – 60 €/h",
+      "priceL": "tempo parcial",
+      "why": ["Trabalho delimitado, sem compromisso de equipa a longo prazo.", "Ideal para algo que já tem e precisa de afinar."],
+      "inc": ["Integrações", "Correção de bugs", "Scripts e manutenção"],
+      "figs": [
+        { "label": "Taxa horária", "value": "50 – 60 €/h" },
+        { "label": "Regime", "value": "Tempo parcial" }
+      ],
+      "rows": [{ "who": "Suporte técnico", "time": "Tempo parcial", "rate": "50 – 60 €/h" }],
+      "note": "Sem compromisso de longo prazo."
+    }
+  },
+  "form": {
+    "formTitle": "Vamos transformar esta estimativa numa proposta.",
+    "formSub": "Deixe os seus dados e respondemos com uma proposta para o seu projeto. Sem compromisso.",
+    "fName": "Nome",
+    "fEmail": "E-mail",
+    "fSite": "Sítio web da empresa ou projeto",
+    "fWhen": "Quando gostaria de começar?",
+    "fDesc": "Fale-nos do produto",
+    "optional": "opcional",
+    "phName": "O seu nome",
+    "phEmail": "nome@empresa.com",
+    "phSite": "https://",
+    "phDesc": "Ex.: somos uma empresa de logística a construir um portal de clientes, integrado com o nosso ERP…",
+    "whenOpts": ["O quanto antes", "Nos próximos 3 meses", "Ainda estou a explorar"],
+    "eName": "Indique o seu nome.",
+    "eEmail": "Indique um e-mail válido.",
+    "eSite": "Indique um endereço válido (https://…).",
+    "privacy": "Usamos os seus dados apenas para responder a esta estimativa.",
+    "send": "Enviar pedido",
+    "yourEstimate": "// a sua estimativa",
+    "nextTitle": "O que acontece a seguir",
+    "next": ["Analisamos as suas respostas e a descrição.", "Entramos em contacto para perceber o projeto.", "Recebe uma proposta à medida."]
+  },
+  "success": {
+    "sentKicker": "// pedido enviado",
+    "thanks": "Obrigado",
+    "textBefore": "Recebemos o seu pedido. Vamos analisá-lo e entrar em contacto através de ",
+    "textAfter": " com uma proposta à medida.",
+    "reqTitle": "// o seu pedido",
+    "nextTitle": "O que acontece a seguir",
+    "steps": [
+      { "t": "Pedido enviado", "s": "Agora mesmo" },
+      { "t": "Analisamos o seu caso", "s": "Respostas, descrição e sítio web" },
+      { "t": "Recebe uma proposta à medida", "s": "Por e-mail, depois de falarmos" }
+    ],
+    "readWhile": "Enquanto espera",
+    "reads": [
+      { "tag": "Produto", "title": "Como construir um MVP" },
+      { "tag": "Startups", "title": "Porquê ter um co-fundador técnico" },
+      { "tag": "Engenharia", "title": "Modernizar sistemas legacy" }
+    ],
+    "home": "Voltar à página inicial",
+    "newEstimate": "Fazer nova estimativa"
+  }
+}
