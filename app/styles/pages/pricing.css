@@ -139,7 +139,8 @@
 /* Figure cards: each amount stays with its euro sign; the range may wrap before the dash. */
 :where(.pg-pricing) .pr-figcard{container-type:inline-size;background:var(--surface);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;justify-content:center;gap:4px;min-height:76px;box-sizing:border-box;min-width:0}
 :where(.pg-pricing) .pr-fig{font-size:clamp(11px, 15cqi, 20px);font-weight:800;line-height:1.2;display:flex;flex-wrap:wrap;align-items:baseline;column-gap:.28em;row-gap:.04em;min-width:0;max-width:100%}
-:where(.pg-pricing) .pr-fig:not(:has(.pr-amt)):not(.pr-fig-single){display:block;font-size:clamp(13px, 17cqi, 20px)}
+/* Phrase figures have no euro amount. Shrink so the longest word ("desenvolvimento") stays inside a ~100px card; break only if it still cannot fit. */
+:where(.pg-pricing) .pr-fig:not(:has(.pr-amt)):not(.pr-fig-single){display:block;max-width:100%;overflow-wrap:break-word;line-height:1.15;font-size:clamp(11px, 10cqi, 20px)}
 :where(.pg-pricing) .pr-amt,:where(.pg-pricing) .pr-fig-single{white-space:nowrap}
 @media (max-width:480px){:where(.pg-pricing) .pr-figcard{padding:12px 10px}}
 /* Radio options expose aria-checked (aria-pressed is invalid on role="radio"); mirror the pressed styles. */

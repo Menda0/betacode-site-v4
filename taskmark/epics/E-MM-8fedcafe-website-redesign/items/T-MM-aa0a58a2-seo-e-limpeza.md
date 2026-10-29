@@ -43,6 +43,7 @@ Metadata por página a partir das mensagens, sitemap a partir dos artigos MDX, r
 |------------|------|--------|---------|
 | 2026-10-28T17:29:23Z | prompt | Marco Mendão | Tarefa criada a partir do plano Cursor "Betacode website redesign" para implementar o redesign do protótipo. |
 | 2026-10-28T18:09:47Z | prompt | Marco Mendão | /tkmd-save-do do plano "Betacode website redesign": implementar todo o redesign com a interface igual ao protótipo HTML. |
+| 2026-10-29T00:12:20Z | prompt | Marco Mendão | Usar as imagens de partilha Open Graph por idioma (PT e EN) em todas as páginas, incluindo os artigos, no lugar da imagem antiga e do cartão gerado. |
 
 ## Commits
 

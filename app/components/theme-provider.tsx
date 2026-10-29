@@ -8,8 +8,10 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
 } from 'react'
+import { themeChoice, themeCookieAssignment } from '@/lib/theme-cookie'
 import { useMounted } from '@/lib/use-mounted'
 
 type Theme = 'light' | 'dark'
@@ -36,6 +38,12 @@ function ThemeBridge({ children }: { children: React.ReactNode }) {
   const toggleTheme = useCallback(() => {
     setTheme(currentTheme === 'dark' ? 'light' : 'dark')
   }, [currentTheme, setTheme])
+
+  useEffect(() => {
+    const choice = themeChoice(theme)
+    if (!choice) return
+    document.cookie = themeCookieAssignment(choice)
+  }, [theme])
 
   const value = useMemo(
     () => ({

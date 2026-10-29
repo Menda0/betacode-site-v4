@@ -5,6 +5,7 @@ import {
   SITE_NAME,
   SITE_URL,
   TWITTER_URL,
+  ogImageAbsoluteUrl,
 } from '@/lib/metadata'
 import type { ArticleMeta } from '@/lib/insights/articles'
 import { AUTHORS, CATEGORIES } from '@/lib/insights/taxonomy'
@@ -76,7 +77,7 @@ export function createArticleSchema(locale: Locale, article: ArticleMeta): JsonL
         datePublished: article.date,
         inLanguage: locale === 'pt' ? 'pt-PT' : 'en-US',
         url: pageUrl,
-        image: `${pageUrl}/opengraph-image`,
+        image: ogImageAbsoluteUrl(locale),
         mainEntityOfPage: { '@type': 'WebPage', '@id': pageUrl },
         author: {
           '@type': 'Person',

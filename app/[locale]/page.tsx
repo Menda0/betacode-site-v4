@@ -38,6 +38,9 @@ const TEASER_SLUGS = [
 
 const BRACE = { color: '#EB5648', fontWeight: 700 } as const
 
+/** Navy phrase size; Equity and the team value use the same computed size. */
+const VEN_STAT_VALUE_SIZE = 'clamp(26px, 4vw, 36px)'
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const locale = (await params).locale as Locale
   const meta = await getCopy<typeof ptMetadata>(locale, 'metadata')
@@ -143,18 +146,18 @@ export default async function Home({ params }: Props) {
               <Link href={VENTURES_CASE_HREF} style={{ border: '1.5px solid #13143A', color: '#13143A', textDecoration: 'none', fontWeight: 600, fontSize: '16px', padding: '0 26px', minHeight: '54px', display: 'flex', alignItems: 'center', borderRadius: '12px' }}>{t.venCta2}</Link>
             </div>
           </div>
-          <div style={{ flex: '1 1 380px', minWidth: 0, display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: '12px' }}>
+          <div style={{ flex: '1 1 520px', minWidth: 'min(100%, 500px)', display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: '12px' }}>
             <div style={{ background: '#1B1C51', color: '#FFFFFF', borderRadius: '22px', padding: '28px', display: 'flex', flexDirection: 'column', gap: '10px', gridColumn: 'span 2' }}>
               <span className="mono" style={{ fontSize: '12px', color: '#FF8A7D' }}>{t.venStat1}</span>
-              <span className="disp" style={{ fontSize: 'clamp(26px, 4vw, 36px)', lineHeight: '1.08', fontWeight: 800, letterSpacing: '-0.03em', maxWidth: '12em' }}>{t.venStatValue}</span>
+              <span className="disp" style={{ fontSize: VEN_STAT_VALUE_SIZE, lineHeight: '1.08', fontWeight: 800, letterSpacing: '-0.03em', maxWidth: '12em' }}>{t.venStatValue}</span>
             </div>
-            <div style={{ background: '#FFFFFF', borderRadius: '22px', padding: '24px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <div style={{ background: '#FFFFFF', borderRadius: '22px', padding: '24px 16px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <span className="mono" style={{ fontSize: '12px', color: '#4A4B7A' }}>{t.venStat2}</span>
-              <span className="disp" style={{ fontSize: '32px', lineHeight: '1', fontWeight: 800, color: '#1B1C51' }}>Equity</span>
+              <span className="disp" style={{ fontSize: VEN_STAT_VALUE_SIZE, lineHeight: '1', fontWeight: 800, color: '#1B1C51' }}>Equity</span>
             </div>
-            <div style={{ background: '#FFFFFF', borderRadius: '22px', padding: '24px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <div style={{ background: '#FFFFFF', borderRadius: '22px', padding: '24px 16px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <span className="mono" style={{ fontSize: '12px', color: '#4A4B7A' }}>{t.venStat3L}</span>
-              <span className="disp" style={{ fontSize: t.venStat3.length > 8 ? '24px' : '28px', lineHeight: '1', fontWeight: 800, color: '#1B1C51' }}>{t.venStat3}</span>
+              <span className="disp" style={{ fontSize: VEN_STAT_VALUE_SIZE, lineHeight: '1', fontWeight: 800, color: '#1B1C51' }}>{t.venStat3}</span>
             </div>
           </div>
         </div>

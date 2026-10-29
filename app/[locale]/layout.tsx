@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
@@ -7,7 +9,9 @@ import { SiteHeader } from "../components/site-header";
 import { SiteFooter } from "../components/site-footer";
 import { siteFontVariables } from "../fonts";
 import { routing } from "@/i18n/routing";
+import { ogImageForLocale, SITE_NAME, TWITTER_HANDLE } from "@/lib/metadata";
 import { getCopy, type ChromeCopy } from "@/lib/copy";
+import { THEME_COOKIE, themeChoice, themeInitScript } from "@/lib/theme-cookie";
 import "../styles/site.css";
 
 type Props = {
@@ -17,6 +21,30 @@ type Props = {
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+
+  if (!hasLocale(routing.locales, locale)) {
+    return {};
+  }
+
+  const image = ogImageForLocale(locale);
+
+  return {
+    openGraph: {
+      type: "website",
+      siteName: SITE_NAME,
+      locale: locale === "pt" ? "pt_PT" : "en_US",
+      images: [image],
+    },
+    twitter: {
+      card: "summary_large_image",
+      site: TWITTER_HANDLE,
+      images: [image.url],
+    },
+  };
 }
 
 export default async function LocaleLayout({ children, params }: Props) {
@@ -29,10 +57,12 @@ export default async function LocaleLayout({ children, params }: Props) {
   setRequestLocale(locale);
   const messages = await getMessages();
   const chrome = await getCopy<ChromeCopy>(locale, "chrome");
+  const theme = themeChoice((await cookies()).get(THEME_COOKIE)?.value);
 
   return (
-    <html lang={locale} suppressHydrationWarning>
+    <html lang={locale} className={theme ?? undefined} suppressHydrationWarning>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         <link rel="stylesheet" href="/betacode-intro/betacode-intro.css?v=1.1.0" />
         {/* 'always' plays on every full document load (direct visit or refresh); client-side
             navigation never re-runs these head scripts, so moving between pages skips it. */}

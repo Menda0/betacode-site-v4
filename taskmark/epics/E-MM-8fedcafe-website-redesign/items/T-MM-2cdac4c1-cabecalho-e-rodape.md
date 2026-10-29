@@ -45,6 +45,7 @@ Reescrever o cabeçalho (sticky, fundo sólido, logo GIF animado, navegação, s
 | 2026-10-28T17:29:23Z | prompt | Marco Mendão | Tarefa criada a partir do plano Cursor "Betacode website redesign" para implementar o redesign do protótipo. |
 | 2026-10-28T18:09:47Z | prompt | Marco Mendão | /tkmd-save-do do plano "Betacode website redesign": implementar todo o redesign com a interface igual ao protótipo HTML. |
 | 2026-10-28T19:53:17Z | prompt | Marco Mendão | A versão mobile deve ter o menu de ecrã inteiro do mockup: logo, Contacto e hambúrguer; lista 01–05, idioma, tema, contactos e dois botões. |
+| 2026-10-28T23:58:00Z | prompt | Marco Mendão | O tema claro ou escuro fica numa cookie quando o utilizador escolhe; sem escolha segue o modo do sistema operativo. |
 
 ## Commits
 

@@ -12,12 +12,40 @@ export const TWITTER_URL = 'https://twitter.com/betacode_tech'
 
 const SITE_DESCRIPTION = enMetadata.siteDescription
 
-export const DEFAULT_OG_IMAGE = {
-  url: '/images/betacode-facebook.png',
-  width: 1200,
-  height: 630,
-  alt: 'Betacode | Software that transforms your business',
-} as const
+const OG_IMAGE_BY_LOCALE = {
+  en: {
+    url: '/og/betacode-og-en.jpg',
+    width: 1200,
+    height: 630,
+    alt: 'Betacode: Software that transforms your business. Digital transformation and custom software for businesses and startups.',
+    type: 'image/jpeg',
+  },
+  pt: {
+    url: '/og/betacode-og-pt.jpg',
+    width: 1200,
+    height: 630,
+    alt: 'Betacode: Software que transforma o seu negócio. Transformação digital e software à medida para empresas e startups.',
+    type: 'image/jpeg',
+  },
+} as const satisfies Record<
+  Locale,
+  {
+    url: string
+    width: number
+    height: number
+    alt: string
+    type: 'image/jpeg'
+  }
+>
+
+export function ogImageForLocale(locale: string) {
+  return OG_IMAGE_BY_LOCALE[resolveLocale(locale)]
+}
+
+/** Absolute share-image URL on the metadata site origin. */
+export function ogImageAbsoluteUrl(locale: string) {
+  return new URL(ogImageForLocale(locale).url, SITE_URL).href
+}
 
 const OPEN_GRAPH_LOCALE: Record<Locale, string> = {
   en: 'en_US',
@@ -42,7 +70,7 @@ function getAlternateLanguages(path: string): Record<string, string> {
 function getTwitterImages(
   image: NonNullable<Metadata['openGraph']>['images']
 ): string[] {
-  const images = image ?? DEFAULT_OG_IMAGE
+  const images = image ?? ogImageForLocale(routing.defaultLocale)
 
   if (typeof images === 'string') {
     return [images]
@@ -82,13 +110,14 @@ export function createPageMetadata({
   title,
   description,
   ogTitle,
-  image = DEFAULT_OG_IMAGE,
+  image,
   ogType = 'website',
   publishedTime,
   authors,
   section,
 }: CreatePageMetadataOptions): Metadata {
   const resolvedLocale = resolveLocale(locale)
+  const socialImage = image ?? ogImageForLocale(resolvedLocale)
   const canonicalPath = `/${resolvedLocale}${path}`
   const alternateLocales = routing.locales.filter(
     (entry) => entry !== resolvedLocale
@@ -110,7 +139,7 @@ export function createPageMetadata({
       title: socialTitle,
       description,
       url: canonicalPath,
-      images: image,
+      images: socialImage,
       ...(ogType === 'article' && publishedTime
         ? {
             publishedTime,
@@ -125,7 +154,7 @@ export function createPageMetadata({
       creator: TWITTER_HANDLE,
       title: socialTitle,
       description,
-      images: getTwitterImages(image),
+      images: getTwitterImages(socialImage),
     },
   }
 }
@@ -164,13 +193,13 @@ export const rootMetadata: Metadata = {
     title: SITE_NAME,
     description: SITE_DESCRIPTION,
     url: '/en',
-    images: [DEFAULT_OG_IMAGE],
+    images: [ogImageForLocale('en')],
   },
   twitter: {
     card: 'summary_large_image',
     site: TWITTER_HANDLE,
     creator: TWITTER_HANDLE,
-    images: [DEFAULT_OG_IMAGE.url],
+    images: [ogImageForLocale('en').url],
   },
   robots: {
     index: true,

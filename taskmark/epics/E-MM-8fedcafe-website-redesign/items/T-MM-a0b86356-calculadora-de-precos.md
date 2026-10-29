@@ -22,7 +22,7 @@ tags:
   - redesign
   - pricing
 created: 2026-10-28
-updated: 2026-10-28T23:43:22Z
+updated: 2026-10-29T00:24:17Z
 started_at: 2026-10-28T17:29:23Z
 completed_at: 2026-10-28T18:09:47Z
 ---
@@ -51,6 +51,7 @@ Reconstruir o wizard de `Pricing.dc.html` com 5 passos (O seu negócio, Contexto
 | 2026-10-28T23:11:00Z | prompt | Marco Mendão | Na pergunta da equipa interna, a menção a engenheiros passa a Software Developers. |
 | 2026-10-28T23:43:22Z | prompt | Marco Mendão | No telemóvel, a linha fechada da estimativa na proposta ultrapassa o cartão. As palavras devem partir para caber na largura, sem scroll horizontal. |
 | 2026-10-28T23:50:00Z | prompt | Marco Mendão | No telemóvel, o intervalo de dois euros empilha montante, «a» e montante, e as tabs mostram todas as opções sem scroll. Nos cartões da Ventures, o custo passa a «sem custo de desenvolvimento» e o pagamento a «troca de equity». Na tab, «em troca de equity» fica do mesmo tamanho que os montantes em euro. |
+| 2026-10-29T00:24:17Z | prompt | Marco Mendão | No cartão da estimativa da Ventures, «sem custo de desenvolvimento» sai da caixa no telemóvel. A frase tem de caber por inteiro, em PT e em EN, sem cortar. A etiqueta «Custo de desenvolvimento» mantém-se legível. |
 
 ## Commits
 
@@ -66,3 +67,4 @@ Reconstruir o wizard de `Pricing.dc.html` com 5 passos (O seu negócio, Contexto
 | Cursor agent | 2026-10-28T20:11:00Z | 2026-10-28T20:26:38Z | Nos cartões da estimativa cada montante fica com o seu € e o intervalo pode partir antes do travessão; a animação encaixa no painel estreito sem cortar legendas nem avatares. |
 | Cursor agent | 2026-10-28T23:05:00Z | 2026-10-28T23:40:00Z | Abaixo de 760px a mesma calculadora passa a barra de progresso segmentada, tabs com scroll, barra fixa na estimativa, resumo recolhível na proposta e Voltar do browser a recuar um passo. O desktop fica igual. |
 | Cursor agent | 2026-10-28T23:11:00Z | 2026-10-28T23:14:21Z | A descrição de quem já tem equipa interna deixa de dizer engenheiros e passa a Software Developers, em PT e EN. |
+| Cursor agent | 2026-10-29T00:13:00Z | 2026-10-29T00:24:17Z | O valor textual dos cartões da estimativa encolhe com a largura do cartão, para «desenvolvimento» e «development» caberem inteiros no telemóvel e no desktop, sem cortar e sem mexer nos intervalos em euro. |

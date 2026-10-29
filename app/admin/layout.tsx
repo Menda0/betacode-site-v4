@@ -4,44 +4,30 @@ import { Toaster } from "@/components/ui/sonner"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { AuthProvider } from "@/components/admin/auth-provider"
 import { ThemeProvider } from "@/app/components/theme-provider"
+import { cookies } from "next/headers"
 import { geistMono, geistSans } from "@/app/layout"
+import { THEME_COOKIE, themeChoice, themeInitScript } from "@/lib/theme-cookie"
 import "@/app/globals.css"
-
-const themeScript = `
-(function() {
-  const key = 'betacode-theme';
-  const stored = localStorage.getItem(key);
-  const dark = stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches);
-  const root = document.documentElement;
-  if (dark) {
-    root.classList.add('dark');
-    root.classList.remove('light');
-    root.style.colorScheme = 'dark';
-  } else {
-    root.classList.remove('dark');
-    root.classList.add('light');
-    root.style.colorScheme = 'light';
-  }
-})();
-`
 
 export const metadata: Metadata = {
   title: "Admin | Betacode",
   robots: { index: false, follow: false },
 }
 
-export default function AdminRootLayout({
+export default async function AdminRootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const theme = themeChoice((await cookies()).get(THEME_COOKIE)?.value)
+
   return (
-    <html lang="en" className="h-full" suppressHydrationWarning>
+    <html lang="en" className={theme ? `h-full ${theme}` : "h-full"} suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} h-full min-h-dvh bg-background font-sans text-foreground antialiased`}
       >
         <Script id="admin-theme-init" strategy="beforeInteractive">
-          {themeScript}
+          {themeInitScript}
         </Script>
         <ThemeProvider>
           <TooltipProvider>

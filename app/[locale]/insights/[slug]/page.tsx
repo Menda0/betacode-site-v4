@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation'
 import { hasLocale } from 'next-intl'
 import { setRequestLocale } from 'next-intl/server'
 import { Link } from '@/i18n/navigation'
-import { routing, type Locale } from '@/i18n/routing'
+import { routing } from '@/i18n/routing'
 import { getCopy, fill } from '@/lib/copy'
 import { createPageMetadata, SITE_NAME } from '@/lib/metadata'
 import { createArticleSchema } from '@/lib/structured-data'
@@ -43,8 +43,6 @@ function resolve(locale: string, slug: string) {
   return article ? { locale, article } : undefined
 }
 
-const ogImagePath = (locale: Locale, slug: string) => `/${locale}${articleHref(slug)}/opengraph-image`
-
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, slug } = await params
   const found = resolve(locale, slug)
@@ -66,7 +64,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${article.title} | ${SITE_NAME}`,
     ogTitle: article.title,
     description: article.lead,
-    image: { url: ogImagePath(found.locale, article.slug), width: 1200, height: 630, alt: article.title },
     ogType: 'article',
     publishedTime: article.date,
     authors: [AUTHORS[article.author].name],

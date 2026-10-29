@@ -21,7 +21,7 @@ cancelled: false
 tags:
   - redesign
 created: 2026-10-28
-updated: 2026-10-28T23:14:21Z
+updated: 2026-10-29T00:29:12Z
 started_at: 2026-10-28T17:29:23Z
 completed_at: 2026-10-28T18:09:47Z
 ---
@@ -49,6 +49,7 @@ Reconstruir a homepage de `Main.dc.html`: hero com terminal animado, clientes, "
 | 2026-10-28T20:10:31Z | prompt | Marco Mendão | Em todo o site, onde a Betacode Ventures mostrava 0 €, passar a "em troca de equity". |
 | 2026-10-28T23:06:00Z | prompt | Marco Mendão | No mobile o hero segue a captura: três etiquetas, botões empilhados e "Estimar preço" só com contorno. O subtítulo fica só a primeira frase. |
 | 2026-10-28T23:11:00Z | prompt | Marco Mendão | O título dos clientes deixa de referir a Europa. As etiquetas passam a incluir Co-fundador técnico e Formação. Onde a interface falava de engenheiros, passa a Software Developers. |
+| 2026-10-29T00:14:00Z | prompt | Marco Mendão | Nos cartões da banda Ventures, os três valores passam ao tamanho da frase do cartão azul. A frase fica "Em troca de Equity" (EN: "In exchange for Equity"). |
 
 ## Commits
 
@@ -65,3 +66,4 @@ Reconstruir a homepage de `Main.dc.html`: hero com terminal animado, clientes, "
 | Cursor agent | 2026-10-28T20:00:00Z | 2026-10-28T20:10:31Z | O cartão da banda Ventures e o chip da tab deixam de mostrar 0 € e passam a "em troca de equity" (EN: "in exchange for equity"). |
 | Cursor agent | 2026-10-28T22:59:00Z | 2026-10-28T23:08:41Z | Abaixo de 760px o hero passa a três etiquetas, o botão fantasma fica só com contorno no escuro e o menu ganha borda. O subtítulo mantém-se na primeira frase, em PT e EN. |
 | Cursor agent | 2026-10-28T23:09:00Z | 2026-10-28T23:14:21Z | Título dos clientes sem Europa. Quatro etiquetas no mobile e a etiqueta única no desktop. Menções a engenheiros na homepage passam a Software Developers, também no texto PT. |
+| Cursor agent | 2026-10-29T00:14:00Z | 2026-10-29T00:29:12Z | Equity, Dedicada e Dedicated usam o mesmo tamanho da frase do cartão azul. A frase passa a "Em troca de Equity" e "In exchange for Equity". No desktop a coluna alarga para a palavra caber no cartão. |
