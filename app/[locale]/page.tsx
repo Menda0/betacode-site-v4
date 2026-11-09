@@ -1,5 +1,5 @@
-/* eslint-disable @next/next/no-img-element */
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import { setRequestLocale } from 'next-intl/server'
 import { Link } from '@/i18n/navigation'
 import type { Locale } from '@/i18n/routing'
@@ -19,11 +19,11 @@ type HomeCopy = typeof ptHome
 type Props = { params: Promise<{ locale: string }> }
 
 const CLIENTS = [
-  { name: 'UNICEF', src: '/assets/clients/unicef.png', h: '34px' },
-  { name: 'Evolve', src: '/assets/clients/evolve.png', h: '30px' },
-  { name: 'Tymber', src: '/assets/clients/tymber.png', h: '30px' },
-  { name: 'Rupeal Group', src: '/assets/clients/rupeal.png', h: '38px' },
-  { name: 'Coach ID', src: '/assets/clients/coach-id.png', h: '40px' },
+  { name: 'UNICEF', src: '/assets/clients/unicef.png', w: 600, h: 144, maxH: '34px' },
+  { name: 'Evolve', src: '/assets/clients/evolve.png', w: 271, h: 68, maxH: '30px' },
+  { name: 'Tymber', src: '/assets/clients/tymber.png', w: 314, h: 82, maxH: '30px' },
+  { name: 'Rupeal Group', src: '/assets/clients/rupeal.png', w: 360, h: 105, maxH: '38px' },
+  { name: 'Coach ID', src: '/assets/clients/coach-id.png', w: 210, h: 73, maxH: '40px' },
 ]
 
 /** Slugs for the teaser cards, in the same order as `articles` in home.json. */
@@ -114,7 +114,7 @@ export default async function Home({ params }: Props) {
           <ul style={{ listStyle: 'none', margin: 0, padding: 0, flex: '1 1 640px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '12px' }}>
             {CLIENTS.map((c) => (
               <li key={c.name} className="logo-cell" style={{ height: '76px', background: 'var(--card)', borderRadius: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '14px 18px', boxSizing: 'border-box' }}>
-                <img src={c.src} alt={c.name} style={{ maxWidth: '100%', maxHeight: c.h, objectFit: 'contain', display: 'block' }} />
+                <Image src={c.src} alt={c.name} width={c.w} height={c.h} style={{ maxWidth: '100%', maxHeight: c.maxH, width: 'auto', height: 'auto', objectFit: 'contain' }} />
               </li>
             ))}
           </ul>
@@ -173,14 +173,14 @@ export default async function Home({ params }: Props) {
           <p style={{ margin: 0, fontSize: '18px', lineHeight: '1.6', color: 'var(--muted)', maxWidth: '440px' }}>{t.teamText}</p>
         </div>
         <div className="team-grid">
-          <img className="span2 tall" src="/assets/team/tshirts.jpg" alt={t.altTshirts} loading="lazy" style={{ objectPosition: 'center 70%' }} />
-          <img src="/assets/team/portrait-1.jpg" alt={t.altPortrait} loading="lazy" style={{ objectPosition: 'center 30%' }} />
-          <img src="/assets/team/portrait-2.jpg" alt={t.altPortrait} loading="lazy" style={{ objectPosition: 'center 30%' }} />
-          <img src="/assets/team/portrait-3.jpg" alt={t.altPortrait} loading="lazy" style={{ objectPosition: 'center 35%' }} />
-          <img src="/assets/team/beagle.jpg" alt={t.altBeagle} loading="lazy" style={{ objectPosition: 'center 35%' }} />
-          <img className="span2" src="/assets/team/team.jpg" alt={t.altTeam} loading="lazy" style={{ objectPosition: 'center 30%' }} />
-          <img src="/assets/team/duo.jpg" alt={t.altDuo} loading="lazy" style={{ objectPosition: 'center 25%' }} />
-          <img src="/assets/team/portrait-4.jpg" alt={t.altPortrait} loading="lazy" style={{ objectPosition: 'center 25%' }} />
+          <Image className="span2 tall" src="/assets/team/tshirts.jpg" alt={t.altTshirts} width={1080} height={1080} sizes="(max-width: 760px) 100vw, 50vw" style={{ objectPosition: 'center 70%' }} />
+          <Image src="/assets/team/portrait-1.jpg" alt={t.altPortrait} width={1000} height={982} sizes="(max-width: 760px) 50vw, 25vw" style={{ objectPosition: 'center 30%' }} />
+          <Image src="/assets/team/portrait-2.jpg" alt={t.altPortrait} width={1000} height={867} sizes="(max-width: 760px) 50vw, 25vw" style={{ objectPosition: 'center 30%' }} />
+          <Image src="/assets/team/portrait-3.jpg" alt={t.altPortrait} width={1000} height={933} sizes="(max-width: 760px) 50vw, 25vw" style={{ objectPosition: 'center 35%' }} />
+          <Image src="/assets/team/beagle.jpg" alt={t.altBeagle} width={1350} height={1600} sizes="(max-width: 760px) 50vw, 25vw" style={{ objectPosition: 'center 35%' }} />
+          <Image className="span2" src="/assets/team/team.jpg" alt={t.altTeam} width={1600} height={792} sizes="(max-width: 760px) 100vw, 50vw" style={{ objectPosition: 'center 30%' }} />
+          <Image src="/assets/team/duo.jpg" alt={t.altDuo} width={1600} height={1493} sizes="(max-width: 760px) 50vw, 25vw" style={{ objectPosition: 'center 25%' }} />
+          <Image src="/assets/team/portrait-4.jpg" alt={t.altPortrait} width={1000} height={963} sizes="(max-width: 760px) 50vw, 25vw" style={{ objectPosition: 'center 25%' }} />
         </div>
       </section>
 
@@ -193,8 +193,8 @@ export default async function Home({ params }: Props) {
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
             <div style={{ display: 'flex' }} aria-hidden="true">
-              <img src="/assets/avatars/pedro-gorrao.jpg" alt="" loading="lazy" style={{ width: '52px', height: '52px', borderRadius: '50%', objectFit: 'cover', objectPosition: '60% 20%', border: '3px solid var(--bg)', display: 'block' }} />
-              <img src="/assets/avatars/marco-mendao.jpg" alt="" loading="lazy" style={{ width: '52px', height: '52px', borderRadius: '50%', objectFit: 'cover', border: '3px solid var(--bg)', marginLeft: '-14px', display: 'block' }} />
+              <Image src="/assets/avatars/pedro-gorrao.jpg" alt="" width={52} height={52} style={{ width: 52, height: 52, borderRadius: '50%', objectFit: 'cover', objectPosition: '60% 20%', border: '3px solid var(--bg)' }} />
+              <Image src="/assets/avatars/marco-mendao.jpg" alt="" width={52} height={52} style={{ width: 52, height: 52, borderRadius: '50%', objectFit: 'cover', border: '3px solid var(--bg)', marginLeft: -14 }} />
             </div>
             <div style={{ fontSize: '14px', lineHeight: '1.45', color: 'var(--muted)' }}>{t.insBy1}<br />{t.insBy2}</div>
           </div>
@@ -228,7 +228,7 @@ export default async function Home({ params }: Props) {
             <Link className="btn-coral" href={CONTACT_FORM_HREF} style={{ fontSize: '17px', padding: '0 30px', minHeight: '56px' }}>{t.ctaBtn} <span aria-hidden="true">→</span></Link>
           </div>
           <div style={{ flex: '1 1 360px', minHeight: '340px', position: 'relative' }}>
-            <img src="/assets/photos/hoodies.jpg" alt={t.altHoodies} loading="lazy" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 45%', display: 'block' }} />
+            <Image src="/assets/photos/hoodies.jpg" alt={t.altHoodies} fill sizes="(max-width: 900px) 100vw, 480px" style={{ objectFit: 'cover', objectPosition: 'center 45%' }} />
           </div>
         </div>
       </section>

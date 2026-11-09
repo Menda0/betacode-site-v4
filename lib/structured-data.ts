@@ -44,13 +44,21 @@ export function createWebsiteSchema(locale: Locale): JsonLd {
   }
 }
 
-export function createBlogSchema(locale: Locale, articles: ArticleMeta[]): JsonLd {
+export function createBlogSchema(
+  locale: Locale,
+  articles: ArticleMeta[],
+  copy: { name: string; description: string },
+): JsonLd {
+  const pageUrl = `${SITE_URL}/${locale}/insights`
+
   return {
     '@context': 'https://schema.org',
     '@type': 'Blog',
-    name: 'Betacode Insights',
-    url: `${SITE_URL}/${locale}/insights`,
-    inLanguage: locale,
+    '@id': `${pageUrl}#blog`,
+    name: copy.name,
+    description: copy.description,
+    url: pageUrl,
+    inLanguage: locale === 'pt' ? 'pt-PT' : 'en-US',
     publisher: organizationSchema(),
     blogPost: articles.map((article) => ({
       '@type': 'BlogPosting',

@@ -6,8 +6,10 @@ import { notFound } from 'next/navigation'
 import { Link } from '@/i18n/navigation'
 import { routing, type Locale } from '@/i18n/routing'
 import { getCopy } from '@/lib/copy'
-import { createPageMetadata, SITE_NAME, SITE_URL } from '@/lib/metadata'
+import { createPageMetadata } from '@/lib/metadata'
+import { createBlogSchema } from '@/lib/structured-data'
 import { articleHref, SITE_ROUTES, VENTURES_CASE_HREF } from '@/lib/site-routes'
+import { JsonLd } from '@/app/components/json-ld'
 import { getArticles } from '@/lib/insights/articles'
 import { AUTHORS, CATEGORIES, CATEGORY_IDS } from '@/lib/insights/taxonomy'
 import { InsightsBrowser, type InsightCard } from '@/app/components/insights/insights-browser'
@@ -70,31 +72,13 @@ export default async function InsightsPage({ params }: Props) {
   })
   const categories = CATEGORY_IDS.map((id) => ({ id, label: CATEGORIES[id].label[locale] }))
 
-  const pageUrl = `${SITE_URL}/${locale}${SITE_ROUTES.insights}`
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Blog',
-    '@id': `${pageUrl}#blog`,
-    name: meta.insights.title,
-    description: meta.insights.description,
-    url: pageUrl,
-    inLanguage: locale === 'pt' ? 'pt-PT' : 'en-US',
-    publisher: { '@type': 'Organization', name: SITE_NAME, url: SITE_URL },
-    blogPost: articles.map((a) => ({
-      '@type': 'BlogPosting',
-      headline: a.title,
-      description: a.excerpt,
-      datePublished: a.date,
-      url: `${SITE_URL}/${locale}${articleHref(a.slug)}`,
-      author: { '@type': 'Person', name: AUTHORS[a.author].name },
-    })),
-  }
-
   return (
     <main className="site pg-insights">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }}
+      <JsonLd
+        data={createBlogSchema(locale, articles, {
+          name: meta.insights.title,
+          description: meta.insights.description,
+        })}
       />
 
       {/* HERO */}
