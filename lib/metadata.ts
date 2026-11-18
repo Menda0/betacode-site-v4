@@ -3,7 +3,9 @@ import { routing, type Locale } from '@/i18n/routing'
 import enMetadata from '@/messages/en/metadata.json'
 
 export const SITE_NAME = 'Betacode'
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://betacode.tech'
+// Must match the host Vercel serves as primary (betacode.tech redirects to www).
+// A mismatch makes canonical, sitemap and hreflang URLs point at a redirect.
+export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.betacode.tech').replace(/\/+$/, '')
 export const TWITTER_HANDLE = '@betacode_tech'
 export const FACEBOOK_URL = 'https://www.facebook.com/betacode.tech/'
 export const INSTAGRAM_URL = 'https://www.instagram.com/betacode.tech'
