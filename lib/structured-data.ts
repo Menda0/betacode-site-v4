@@ -7,6 +7,7 @@ import {
   TWITTER_URL,
   ogImageAbsoluteUrl,
 } from '@/lib/metadata'
+import { CONTACT_EMAIL, CONTACT_PHONE_TEL } from '@/lib/site-routes'
 import type { ArticleMeta } from '@/lib/insights/articles'
 import { AUTHORS, CATEGORIES } from '@/lib/insights/taxonomy'
 import type { Locale } from '@/i18n/routing'
@@ -23,6 +24,23 @@ function organizationSchema(): JsonLd {
     name: SITE_NAME,
     url: SITE_URL,
     logo: `${SITE_URL}/android-chrome-512x512.png`,
+    email: CONTACT_EMAIL,
+    telephone: CONTACT_PHONE_TEL,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'Madan Parque, Rua dos Inventores',
+      postalCode: '2825-182',
+      addressLocality: 'Caparica',
+      addressCountry: 'PT',
+    },
+    contactPoint: {
+      '@type': 'ContactPoint',
+      contactType: 'sales',
+      email: CONTACT_EMAIL,
+      telephone: CONTACT_PHONE_TEL,
+      availableLanguage: ['Portuguese', 'English'],
+    },
+    areaServed: 'PT',
     sameAs: [FACEBOOK_URL, INSTAGRAM_URL, TWITTER_URL, GITHUB_URL],
   }
 }
